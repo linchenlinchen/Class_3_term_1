@@ -1,0 +1,1 @@
+本书以循序渐进的方式介绍了Paint Shop Pro 图形图像处理软件，包括Paint Shop Pro的基础知识、工具及参数设置；图像的编辑、Paint Shop Pro 与Web等内容。 全书共分24学时，每学时后均附有思考题和练习题。 
