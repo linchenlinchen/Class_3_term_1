@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://data.qq.com/article?id=2879 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./大型web系统数据缓存设计_腾讯大数据_files/id.php" charset="utf-8"></script>
+    
+    <title>大型web系统数据缓存设计_腾讯大数据</title>
+    <meta name="description" content="在高访问量的web系统中，缓存几乎是离不开的；但是一个适当、高效的缓存方案设计却并不容易；所以接下来将讨论一下应用系统缓存的设计方面应该注意哪些东西，包括缓存的选型等等。">
+    <meta name="keywords" content="Redis腾讯大数据，Tair,web缓存">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="http://data.qq.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://data.qq.com/favicon.ico" type="image/x-icon">
+    <!-- 控件样式 start -->
+    <link rel="stylesheet" type="text/css" href="./大型web系统数据缓存设计_腾讯大数据_files/gri.controls.css">
+    <!-- 控件样式 end -->
+    <link href="./大型web系统数据缓存设计_腾讯大数据_files/global.css" rel="stylesheet">
+    <link href="./大型web系统数据缓存设计_腾讯大数据_files/pages.css" rel="stylesheet">
+    <link rel="stylesheet" href="./大型web系统数据缓存设计_腾讯大数据_files/player.css">
+</head>
+<body><link href="./大型web系统数据缓存设计_腾讯大数据_files/jiathis_share.css" rel="stylesheet" type="text/css"><iframe frameborder="0" style="position: absolute; display: none; opacity: 0;" src="./大型web系统数据缓存设计_腾讯大数据_files/saved_resource.html"></iframe><div class="jiathis_style" style="position: absolute; z-index: 1000000000; display: none; top: 50%; left: 50%; overflow: auto;"></div><div class="jiathis_style" style="position: absolute; z-index: 1000000000; display: none; overflow: auto;"></div><iframe frameborder="0" src="./大型web系统数据缓存设计_腾讯大数据_files/jiathis_utility.html" style="display: none;"></iframe>
+<!-- 头部 start -->
+<div class="header" id="header">
+    <div class="bg"></div>
+    <div class="inner">
+        <h1 class="logo"><a href="http://data.qq.com/" title="腾讯大数据"><img src="./大型web系统数据缓存设计_腾讯大数据_files/logo.png" alt=""></a></h1>
+        <ul class="nav">
+            <li><a href="http://data.qq.com/reports">数据报告</a></li>
+            <li><a href="http://data.qq.com/academy">大数据学院</a></li>
+            <li><a href="http://data.qq.com/application">大数据应用</a></li>
+            <li><a href="http://developer.qq.com/" target="_blank">开发者中心</a></li>
+        </ul>
+    </div>
+</div>
+<!-- 头部 end --><style>
+    @media screen and (max-width: 640px){
+        .body{padding-top: 0;}
+        .header,.footer{display: none;}
+        .main{width:auto;}
+        .ft-widgets{visibility: hidden;}
+        .gmd-crumb{display: none;}
+
+        .pg-content{padding-top: 0;}
+        .pg-content .article-detail{padding: 20px;}
+        .pg-content .gmd-links{display: none;}
+    }
+</style>
+<!-- 主体 start -->
+<div class="body" id="body">
+    <div class="main pg-content">
+        <!-- 面包屑 start -->
+        <div class="gmd-crumb">
+            我的位置：<a href="http://data.qq.com/">首页</a><span class="line">&gt;</span>
+            <a href="http://data.qq.com/academy/article"></a>
+            <span class="line">&gt;</span><span class="current">正文</span>
+        </div>
+        <div class="article-detail">
+                        <h3 class="title">大型web系统数据缓存设计</h3>
+            <p class="infos">2015-12-03<span><span>分类：技术文章</span></span></p>
+            <div class="gmd-links">
+                                <div class="gmd-share-bar bottom">
+                    <a href="javascript:;" title="分享" class="trigger"><i class="icon share"></i></a>
+                    <div class="bar">
+                        <div class="inner">
+                            <b class="arrow"><i></i></b>
+                            <a href="javascript:;" title="微信" class="jiathis_button_weixin"><span class="jiathis_txt jiathis_separator jtico jtico_weixin"><i class="s-icon"></i></span></a>
+                            <a href="javascript:;" title="linkedin" class="jiathis_button_linkedin"><span class="jiathis_txt jiathis_separator jtico jtico_linkedin"><i class="s-icon in "></i></span></a>
+                            <a href="javascript:;" title="豆瓣" class="jiathis_button_douban"><span class="jiathis_txt jiathis_separator jtico jtico_douban"><i class="s-icon douban "></i></span></a>
+                            <a href="javascript:;" title="QQ" class="jiathis_button_cqq"><span class="jiathis_txt jiathis_separator jtico jtico_cqq"><i class="s-icon qq "></i></span></a>
+                            <a href="javascript:;" title="QQ空间" class="jiathis_button_qzone"><span class="jiathis_txt jiathis_separator jtico jtico_qzone"><i class="s-icon qzone "></i></span></a>
+                            <a href="javascript:;" title="新浪微博" class="jiathis_button_tsina"><span class="jiathis_txt jiathis_separator jtico jtico_tsina"><i class="s-icon weibo "></i></span></a>
+                            <a href="javascript:;" title="人人网" class="jiathis_button_renren"><span class="jiathis_txt jiathis_separator jtico jtico_renren"><i class="s-icon renren "></i></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <!-- 文章内容 start -->
+            <div class="article-ctn">
+              <p></p><h1><strong>1. &nbsp; 前言</strong></h1>
+<p></p><p><span style="font-size: 14pt;"> &nbsp; &nbsp; &nbsp; 在高访问量的web系统中，缓存几乎是离不开的；但是一个适当、高效的缓存方案设计却并不容易；所以接下来将讨论一下应用系统缓存的设计方面应该注意哪些东西，包括缓存的选型、常见缓存系统的特点和数据指标、缓存对象结构设计和失效策略以及缓存对象的压缩等等，以期让有需求的同学尤其是初学者能够快速、系统的了解相关知识。</span>
+</p><p></p><h1><strong>2. &nbsp; 数据库的瓶颈</strong></h1>
+<p></p><p></p><h2><strong>2.1 &nbsp; &nbsp; &nbsp; &nbsp; 数据量</strong></h2>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 关系型数据库的数据量是比较小的，以我们常用的MySQL为例，单表数据条数一般应该控制在2000w以内，如果业务很复杂的话，可能还要低一些。即便是对于Oracle这些大型商业数据库来讲，其能存储的数据量也很难满足一个拥有几千万甚至数亿用户的大型互联网系统。</span>
+</p><p></p><h2><strong>2.2 &nbsp; &nbsp; &nbsp; &nbsp; TPS</strong></h2>
+<p></p><p><span style="font-size: 14pt;">&nbsp; 在实际开发中我们经常会发现，关系型数据库在TPS上的瓶颈往往会比其他瓶颈更容易暴露出来，尤其对于大型web系统，由于每天大量的并发访问，对数据库的读写性能要求非常高；而传统的关系型数据库的处理能力确实捉襟见肘；以我们常用的MySQL数据库为例，常规情况下的TPS大概只有1500左右（各种极端场景下另当别论）；下图是MySQL官方所给出的一份测试数据：</span>
+</p><p>
+</p><p><img src="./大型web系统数据缓存设计_腾讯大数据_files/0" alt="" data-s="300,640" data-type="jpeg" data-ratio="0.4748201438848921" data-w="">
+</p><p>
+</p><p><span style="font-size: 14pt;"> &nbsp; 而对于一个日均PV千万的大型网站来讲，每个PV所产生的数据库读写量可能要超出几倍，这种情况下，每天所有的数据读写请求量可能远超出关系型数据的处理能力，更别说在流量峰值的情况下了；所以我们必须要有高效的缓存手段来抵挡住大部分的数据请求！</span>
+</p><p></p><h2><strong>2.3 &nbsp; &nbsp; &nbsp; &nbsp; 响应时间</strong></h2>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 正常情况下，关系型数据的响应时间是相当不错的，一般在10ms以内甚至更短，尤其是在配置得当的情况下。但是就如前面所言，我们的需求是不一般的：当拥有几亿条数据，1wTPS的时候，响应时间也要在10ms以内，这几乎是任何一款关系型数据都无法做到的。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">那么这个问题如何解决呢？最简单有效的办法当然是缓存！</span>
+</p><p></p><h1><strong>3. &nbsp; 缓存系统选型</strong></h1>
+<p></p><p></p><h2><strong>3.1 &nbsp;缓存的类型</strong></h2>
+<p></p><p></p><h3><strong>3.1.1 本地缓存</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 本地缓存可能是大家用的最多的一种缓存方式了，不管是本地内存还是磁盘，其速度快，成本低，在有些场合非常有效；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 但是对于web系统的集群负载均衡结构来说，本地缓存使用起来就比较受限制，因为当数据库数据发生变化时，你没有一个简单有效的方法去更新本地缓存；然而，你如果在不同的服务器之间去同步本地缓存信息，由于缓存的低时效性和高访问量的影响，其成本和性能恐怕都是难以接受的。</span>
+</p><p></p><h3><strong>3.1.2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;分布式缓存</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 前面提到过，本地缓存的使用很容易让你的应用服务器带上“状态”，这种情况下，数据同步的开销会比较大；尤其是在集群环境中更是如此！</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 分布式缓存这种东西存在的目的就是为了提供比RDB更高的TPS和扩展性，同时有帮你承担了数据同步的痛苦；优秀的分布式缓存系统有大家所熟知的Memcached、Redis（当然也许你把它看成是NoSQL，但是我个人更愿意把分布式缓存也看成是NoSQL），还有国内阿里自主开发的Tair等；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 对比关系型数据库和缓存存储，其在读和写性能上的差距可谓天壤之别；memcached单节点已经可以做到15w以上的tps、Redis、google的levelDB也有不菲的性能，而实现大规模集群后，性能可能会更高！</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 所以，在技术和业务都可以接受的情况下，我们可以尽量把读写压力从数据库转移到缓存上，以保护看似强大，其实却很脆弱的关系型数据库。</span>
+</p><p></p><h3><strong>3.1.3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;客户端缓存</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 这块很容易被人忽略，客户端缓存主要是指基于客户端浏览器的缓存方式；由于浏览器本身的安全限制，web系统能在客户端所做的缓存方式非常有限，主要由以下几种：</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; a、 &nbsp; &nbsp;<strong>浏览器cookie</strong><strong>；</strong>这是使用最多的在客户端保存数据的方法，大家也都比较熟悉；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; b、 &nbsp; &nbsp;<strong>浏览器本地缓存；</strong>很多浏览器都提供了本地缓存的接口，但是由于各个浏览器的实现有差异，所以这种方式很少被使用；此类方案有chrome的Google Gear，IE的userData、火狐的sessionStorage和globalStorage等；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; c、 &nbsp; &nbsp;<strong>flash</strong><strong>本地存储；</strong>这个也是平时比较常用的缓存方式；相较于cookie，flash缓存基本没有数量和体积的限制，而且由于基于flash插件，所以也不存在兼容性问题；不过在没有安装flash插件的浏览器上则无法使用；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; d、 &nbsp; &nbsp;<strong>html5</strong><strong>的本地存储；</strong>鉴于html5越来越普及，再加上其本地存储功能比较强大，所以在将来的使用场景应该会越来越多。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 由于大部分的web应用都会尽量做到无状态，以方便线性扩容，所以我们能使用的除了后端存储（DB、NoSQL、分布式文件系统、CDN等）外，就只剩前端的客户端缓存了。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 对客户端存储的合理使用，原本每天几千万甚至上亿的接口调用，一下就可能降到了每天几百万甚至更少，而且即便是用户更换浏览器，或者缓存丢失需要重新访问服务器，由于随机性比较强，请求分散，给服务器的压力也很小！在此基础上，再加上合理的缓存过期时间，就可以在数据准确和性能上做一个很好的折衷。</span>
+</p><p></p><h3><strong>3.1.4 &nbsp; &nbsp; &nbsp;数据库缓存</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 这里主要是指数据库的查询缓存，大部分数据库都是会提供，每种数据库的具体实现细节也会有所差异，不过基本的原理就是用查询语句的hash值做key，对结果集进行缓存；如果利用的好，可以很大的提高数据库的查询效率！数据库的其他一些缓存将在后边介绍。</span>
+</p><p></p><h2><strong>3.2 &nbsp; &nbsp; &nbsp; &nbsp; 选型指标</strong></h2>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 现在可供我们选择使用的（伪）分布式缓存系统不要太多，比如使用广泛的Memcached、最近炒得火热的Redis等；这里前面加个伪字，意思是想说，有些所谓的分布式缓存其实仍是以单机的思维去做的，不能算是真正的分布式缓存（你觉得只实现个主从复制能算分布式么？）。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 既然有这么多的系统可用，那么我们在选择的时候，就要有一定的标准和方法。只有有了标准，才能衡量一个系统时好时坏，或者适不适合，选择就基本有了方向。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 下边几点是我个人觉的应该考虑的几个点（其实大部分系统选型都是这么考虑的，并非只有缓存系统）：</span>
+</p><p></p><h3><strong>3.2.1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;容量</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 废话，容量当然是越大越好了，这还用说么，有100G我干嘛还要用10G？其实这么说总要考虑一下成本啦，目前一台普通的PC Server内存128G已经算是大的了，再大的话不管是从硬件还是从软件方面，管理的成本都会增加。单机来讲，比如说主板的插槽数量，服务器散热、操作系统的内存分配、回收、碎片管理等等都会限制内存卡的容量；即便使用多机的话，大量内存的采购也是很费money的！</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 有诗云：山不在高，有仙则名；所以内存也不在多，够用就好！每个系统在初期规划的时候，都会大致计算一下所要消耗的缓存空间，这主要取决于你要缓存的对象数量和单个对象的大小。一般来说，你可以采用对象属性在内存中的存储长度简单加和的方法来计算单个对象的体积，再乘以缓存对象的数量和预期增长（当然，这里边有一个热点数据的问题，这里就不细讨论了），大概得出需要使用的缓存空间；之后就可以按照这个指标去申请缓存空间或搭建缓存系统了。</span>
+</p><p></p><h3><strong>3.2.2 &nbsp; &nbsp; &nbsp; &nbsp; 并发量</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 这里说并发量，其实还不如说是QPS更贴切一些，因为我们的缓存不是直接面向用户的，而只面向应用的，所以肯定不会有那个高的并发访问（当然，多个系统共用一套缓存那就另当别论了）；所以我们关心的是一个缓存系统平均每秒能够承受多少的访问量。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 我们之所以需要缓存系统，就是要它在关键时刻能抗住我们的数据访问量的；所以，缓存系统能够支撑的并发量是一个非常重要的指标，如果它的性能还不如关系型数据库，那我们就没有使用的必要了。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 对于淘宝的系统来说，我们不妨按照下边的方案来估算并发量：</span>
+</p><p>
+</p><p><strong>&nbsp; &nbsp; &nbsp; &nbsp; QPS = 日PV × 读写次数/PV ÷ (8 × 60 × 60)</strong>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 这里我们是按照一天8个小时来计算的，这个值基于一个互联网站点的访问规律得出的，当然，如果你不同意这个值，可以自己定义。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 在估算访问量的时候，我们不得不考虑一个峰值的问题，尤其是像淘宝、京东这样大型的电商网站，经常会因为一些大的促销活动而使PV、UV冲到平时的几倍甚至几十倍，这也正是缓存系统发挥作用的关键时刻；倍受瞩目的12306在站点优化过程中也大量的引入了缓存（内存文件系统）来提升性能。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 在计算出平均值之后，再乘以一个峰值系数，基本就可以得出你的缓存系统需要承受的最高QPS，一般情况下，这个系数定在10以内是合理的。</span>
+</p><p></p><h3><strong>3.2.3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;响应时间</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 响应时间当然也是必要的，如果一个缓存系统慢的跟蜗牛一样，甚至直接就超时了，那和我们使用MySQL也没啥区别了。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 一般来说，要求一个缓存系统在1ms或2ms之内返回数据是不过分的，当然前提是你的数据不会太大；如果想更快的话，那你就有点过分了，除非你是用的本地缓存；因为一般而言，在大型IDC内部，一个TCP回环（不携带业务数据）差不多就要消耗掉0.2ms至0.5ms。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 大部分的缓存系统，由于是基于内存，所以响应时间都很短，但是问题一般会出现在数据量和QPS变大之后，由于内存管理策略、数据查找方式、I/O模型、业务场景等方面的差异，响应时间可能会差异很多，所以对于QPS和响应时间这两项指标，还要靠上线前充分的性能测试来进一步确认，不能只单纯的依赖官方的测试结果。</span>
+</p><p></p><h3><strong>3.2.4 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;使用成本</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 一般分布式缓存系统会包括服务端和客户端两部分，所以其使用成本上也要分为两个部分来讲；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 首先服务端，优秀的系统要是能够方便部署和方便运维的，不需要高端硬件、不需要复杂的环境配置、不能有过多的依赖条件，同时还要稳定、易维护；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 而对于客户端的使用成本来说，更关系到程序员的开发效率和代码维护成本，基本有三点：<strong>单一的依赖</strong>、<strong>简洁的配置</strong>和<strong>人性化的</strong><strong>API</strong>。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 另外有一点要提的是，不管是服务端还是客户端，丰富的文档和技术支持也是必不可少的。</span>
+</p><p></p><h3><strong>3.2.5 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;扩展性</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 缓存系统的扩展性是指在空间不足的性情况，能够通过增加机器等方式快速的在线扩容。这也是能够支撑业务系统快速发展的一个重要因素。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 一般来讲，分布式缓存的负载均衡策略有两种，一种是在客户端来做，另外一种就是在服务端来做。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 客户端负载均衡</strong></span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 在客户端来做负载均衡的，诸如前面我们提到的Memcached、Redis等，一般都是通过特定Hash算法将key对应的value映射到固定的缓存服务器上去，这样的做法最大的好处就是简单，不管是自己实现一个映射功能还是使用第三方的扩展，都很容易；但由此而来的一个问题是我们无法做到failover。比如说某一台Memcached服务器挂掉了，但是客户端还会傻不啦叽的继续请求该服务器，从而导致大量的线程超时；当然，因此而造成的数据丢失是另外一回事了。要想解决，简单的可能只改改改代码或者配置文件就ok了，但是像Java这种就蛋疼了，有可能还需要重启所有应用以便让变更能够生效。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 如果线上缓存容量不够了，要增加一些服务器，也有同样的问题；而且由于hash算法的改变，还要迁移对应的数据到正确的服务器上去。</span>
+</p><p>
+</p><p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 服务端负载均衡</strong>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 如果在服务端来做负载均衡，那么我们前面提到的failover的问题就很好解决了；客户端能够访问的所有的缓存服务器的ip和端口都会事先从一个中心配置服务器上获取，同时客户端会和中心配置服务器保持一种有效的通信机制（长连接或者HeartBeat），能够使后端缓存服务器的ip和端口变更即时的通知到客户端，这样，一旦后端服务器发生故障时可以很快的通知到客户端改变hash策略，到新的服务器上去存取数据。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 但这样做会带来另外一个问题，就是中心配置服务器会成为一个单点。解决办法就将中心配置服务器由一台变为多台，采用双机stand by方式或者zookeeper等方式，这样可用性也会大大提高。</span>
+</p><p></p><h3><strong>3.2.6 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;容灾</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 我们使用缓存系统的初衷就是当数据请求量很大，数据库无法承受的情况，能够通过缓存来抵挡住大部分的请求流量，所以一旦缓存服务器发生故障，而缓存系统又没有一个很好的容灾措施的话，所有或部分的请求将会直接压倒数据库上，这可能会直接导致DB崩溃。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 并不是所有的缓存系统都具有容灾特性的，所以我们在选择的时候，一定要根据自己的业务需求，对缓存数据的依赖程度来决定是否需要缓存系统的容灾特性。</span>
+</p><p></p><h2><strong>3.3 &nbsp; &nbsp; &nbsp; &nbsp; 常见分布式缓存系统比较</strong></h2>
+<p></p><p></p><h3><strong>3.3.1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Memcached</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Memcached严格的说还不能算是一个分布式缓存系统，个人更倾向于将其看成一个单机的缓存系统，所以从这方面讲其容量上是有限制的；但由于Memcached的开源，其访问协议也都是公开的，所以目前有很多第三方的客户端或扩展，在一定程度上对Memcached的集群扩展做了支持，但是大部分都只是做了一个简单Hash或者一致性Hash。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 由于Memcached内部通过固定大小的chunk链的方式去管理内存数据，分配和回收效率很高，所以其读写性能也非常高；官方给出的数据，64KB对象的情况下，单机QPS可达到15w以上。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Memcached集群的不同机器之间是相互独立的，没有数据方面的通信，所以也不具备failover的能力，在发生数据倾斜的时候也无法自动调整。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Memcached的多语言支持非常好，目前可支持C/C++、Java、C#、PHP、Python、Perl、Ruby等常用语言，也有大量的文档和示例代码可供参考，而且其稳定性也经过了长期的检验，应该说比较适合于中小型系统和初学者使用的缓存系统。</span>
+</p><p></p><h3><strong>3.3.2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Redis</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Redis也是眼下比较流行的一个缓存系统，在国内外很多互联网公司都在使用（新浪微博就是个典型的例子），很多人把Redis看成是Memcached的替代品。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 下面就简单介绍下Redis的一些特性；</strong></span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Redis除了像Memcached那样支持普通的&lt;k,v&gt;类型的存储外，还支持List、Set、Map等集合类型的存储，这种特性有时候在业务开发中会比较方便；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Redis源生支持持久化存储，但是根据很多人的使用情况和测试结果来看，Redis的持久化是个鸡肋，就连官方也不推荐过度依赖Redis持久化存储功能。就性能来讲，在全部命中缓存时，Redis的性能接近memcached，但是一旦使用了持久化之后，性能会迅速下降，甚至会相差一个数量级。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Redis支持“集群”，这里的集群还是要加上引号的，因为目前Redis能够支持的只是Master-Slave模式；这种模式只在可用性方面有一定的提升，当主机宕机时，可以快速的切换到备机，和MySQL的主备模式差不多，但是还算不上是分布式系统；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 此外，Redis支持订阅模式，即一个缓存对象发生变化时，所有订阅的客户端都会收到通知，这个特性在分布式缓存系统中是很少见的。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 在扩展方面，Redis目前还没有成熟的方案，官方只给出了一个单机多实例部署的替代方案，并通过主备同步的模式进行扩容时的数据迁移，但是还是无法做到持续的线性扩容。</span>
+</p><p></p><h3><strong>3.3.3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;淘宝Tair</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Tair是淘宝自主开发并开源的一款的缓存系统，而且也是一套真正意义上的分布式并且可以跨多机房部署，同时支持内存缓存和持久化存储的解决方案；我们数平这边也有自己的改进版本。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Tair实现了缓存框架和缓存存储引擎的独立，在遵守接口规范的情况下，可以根据需求更换存储引擎，目前支持mdb（基于memcached）、rdb（基于Redis）、kdb（基于kyoto cabinet，持久存储，目前已不推荐使用）和rdb（基于gooogle的levelDB，持久化存储）几种引擎；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 由于基于mdb和rdb，所以Tair能够间距两者的特性，而且在并发量和响应时间上，也接近二者的裸系统。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 在扩展性和容灾方面，Tair自己做了增强；通过使用虚拟节点Hash（一致性Hash的变种实现）的方案，将key通过Hash函数映射到到某个虚拟节点（桶）上，然后通过中心服务器（configserver）来管理虚拟节点到物理节点的映射关系；这样，Tair不但实现了基于Hash的首次负载均衡，同时又可以通过调整虚拟节点和物理节点的映射关系来实现二次负载均衡，这样有效的解决了由于业务热点导致的访问不均衡问题以及线性扩容时数据迁移麻烦；此外，Tair的每台缓存服务器和中心服务器（configserver）也有主备设计，所以其可用性也大大提高。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;"><img src="./大型web系统数据缓存设计_腾讯大数据_files/0(1)" alt="" data-s="300,640" data-type="jpeg" data-ratio="0.5305755395683454" data-w=""></span>
+</p><p></p><h3><strong>3.3.4 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;内存数据库</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 这里的内存数据库只要是指关系型内存数据库。一般来说，内存数据库使用场景可大致分为两种情况：</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 一是对数据计算实时性要求比较高，基于磁盘的数据库很难处理；同时又要依赖关系型数据库的一些特性，比如说排序、加合、复杂条件查询等等；这样的数据一般是临时的数据，生命周期比较短，计算完成或者是进程结束时即可丢弃；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 另一种是数据的访问量比较大，但是数据量却不大，这样即便丢失也可以很快的从持久化存储中把数据加载进内存；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 但不管是在哪种场景中，存在于内存数据库中的数据都必须是相对独立的或者是只服务于读请求的，这样不需要复杂的数据同步处理。</span>
+</p><p></p><h2><strong>3.4 &nbsp; &nbsp; &nbsp; &nbsp; 缓存的设计与策略</strong></h2>
+<p></p><p></p><h3><strong>3.4.1 &nbsp; &nbsp; &nbsp;缓存对象设计</strong></h3>
+<p></p><p></p><h4><strong>3.4.1.1 &nbsp; 缓存对象粒度</strong></h4>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 对于本地磁盘或分布是缓存系统来说，其缓存的数据一般都不是结构化的，而是半结构话或是序列化的；这就导致了我们读取缓存时，很难直接拿到程序最终想要的结果；这就像快递的包裹，如果你不打开外层的包装，你就拿不出来里边的东西；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 如果包裹里的东西有很多，但是其中只有一个是你需要的，其他的还要再包好送给别人；这时候你打开包裹时就会很痛苦——为了拿到自己的东西，必须要拆开包裹，但是拆开后还要很麻烦的将剩下的再包会去；等包裹传递到下一个人的手里，又是如此！</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 所以，这个时候粒度的控制就很重要了；到底是一件东西就一个包裹呢，还是好多东西都包一块呢？前者拆起来方便，后着节约包裹数量。映射到我们的系统上，我们的缓存对象中到底要放哪些数据？一种数据一个对象，简单，读取写入都快，但是种类一多，缓存的管理成本就会很高；多种数据放在一个对象里，方便，一块全出来了，想用哪个都可以，但是如果我只要一种数据，其他的就都浪费了，网络带宽和传输延迟的消耗也很可观。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 这个时候主要的考虑点就应该是业务场景了，不同的场景使用不同的缓存粒度，折衷权衡；不要不在乎这点性能损失，缓存一般都是访问频率非常高的数据，各个点的累积效应可能是非常巨大的！</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 当然，有些缓存系统的设计也要求我们必须考虑缓存对象的粒度问题；比如说Memcached，其chunk设计要求业务要能很好的控制其缓存对象的大小；淘宝的Tair也是，对于尺寸超过1M的对象，处理效率将大为降低；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 像Redis这种提供同时提供了Map、List结构支持的系统来说，虽然增加了缓存结构的灵活性，但最多也只能算是半结构化缓存，还无法做到像本地内存那样的灵活性。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 粒度设计的过粗还会遇到并发问题。一个大对象里包含的多种数据，很多地方多要用，这时如果使用的是缓存修改模式而不是过期模式，那么很可能会因为并发更新而导致数据被覆盖；版本控制是一种解决方法，但是这样会使缓存更新失败的概率大大增加，而且有些缓存系统也不提供版本支持（比如说用的很广泛的Memcached）。</span>
+</p><p></p><h4><strong>3.4.1.2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;缓存对象结构</strong></h4>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 同缓存粒度一样，缓存的结构也是一样的道理。对于一个缓存对象来说，并不是其粒度越小，体积也越小；如果你的一个字符串就有1M大小，那也是很恐怖的；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 数据的结构决定着你读取的方式，举个很简单的例子，集合对象中，List和Map两种数据结构，由于其底层存储方式不同，所以使用的场景也不一样；前者更适合有序遍历，而后者适合随机存取；回想一下，你是不是曾经在程序中遇到过为了merge两个list中的数据，而不得不循环嵌套？</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 所以，根据具体应用场景去为缓存对象设计一个更合适的存储结构，也是一个很值得注意的点。</span>
+</p><p></p><h3><strong>3.4.2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;缓存更新策略</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 缓存的更新策略主要有两种：被动失效和主动更新，下面分别进行介绍；</span>
+</p><p></p><h4><strong>3.4.2.1 &nbsp; &nbsp; &nbsp; &nbsp;被动失效</strong></h4>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 一般来说，缓存数据主要是服务读请求的，并设置一个过期时间；或者当数据库状态改变时，通过一个简单的delete操作，使数据失效掉；当下次再去读取时，如果发现数据过期了或者不存在了，那么就重新去持久层读取，然后更新到缓存中；这即是所谓的被动失效策略。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 但是在被动失效策略中存在一个问题，就是从缓存失效或者丢失开始直到新的数据再次被更新到缓存中的这段时间，所有的读请求都将会直接落到数据库上；而对于一个大访问量的系统来说，这有可能会带来风险。所以我们换一种策略就是，当数据库更新时，主动去同步更新缓存，这样在缓存数据的整个生命期内，就不会有空窗期，前端请求也就没有机会去亲密接触数据库。</span>
+</p><p></p><h4><strong>3.4.2.2 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;主动更新</strong></h4>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 前面我们提到主动更新主要是为了解决空窗期的问题，但是这同样会带来另一个问题，就是并发更新的情况；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 在集群环境下，多台应用服务器同时访问一份数据是很正常的，这样就会存在一台服务器读取并修改了缓存数据，但是还没来得及写入的情况下，另一台服务器也读取并修改旧的数据，这时候，后写入的将会覆盖前面的，从而导致数据丢失；这也是分布式系统开发中，必然会遇到的一个问题。解决的方式主要有三种：</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; a、<strong>锁控制；</strong>这种方式一般在客户端实现（在服务端加锁是另外一种情况），其基本原理就是使用读写锁，即任何进程要调用写方法时，先要获取一个排他锁，阻塞住所有的其他访问，等自己完全修改完后才能释放；如果遇到其他进程也正在修改或读取数据，那么则需要等待；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 锁控制虽然是一种方案，但是很少有真的这样去做的，其缺点显而易见，其并发性只存在于读操作之间，只要有写操作存在，就只能串行。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; b、<strong>版本控制；</strong>这种方式也有两种实现，一种是<strong>单版本机制</strong>，即为每份数据保存一个版本号，当缓存数据写入时，需要传入这个版本号，然后服务端将传入的版本号和数据当前的版本号进行比对，如果大于当前版本，则成功写入，否则返回失败；这样解决方式比较简单；但是增加了高并发下客户端的写失败概率；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 还有一种方式就是<strong>多版本机制</strong>，即存储系统为每个数据保存多份，每份都有自己的版本号，互不冲突，然后通过一定的策略来定期合并，再或者就是交由客户端自己去选择读取哪个版本的数据。很多分布式缓存一般会使用单版本机制，而很多NoSQL则使用后者。</span>
+</p><p></p><h3><strong>3.4.3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;数据对象序列化</strong></h3>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 由于独立于应用系统，分布式缓存的本质就是将所有的业务数据对象序列化为字节数组，然后保存到自己的内存中。所使用的序列化方案也自然会成为影响系统性能的关键点之一。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 一般来说，我们对一个序列化框架的关注主要有以下几点：</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; a <strong>序列化速度；</strong>即对一个普通对象，将其从内存对象转换为字节数组需要多长时间；这个当然是越快越好；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; b<strong>对象压缩比；</strong>即序列化后生成对象的与原内存对象的体积比；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; c<strong>支持的数据类型范围；</strong>序列化框架都支持什么样的数据结构；对于大部分的序列化框架来说，都会支持普通的对象类型，但是对于复杂对象（比如说多继承关系、交叉引用、集合类等）可能不支持或支持的不够好；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; d<strong>易用性；</strong>一个好的序列化框架必须也是使用方便的，不需要用户做太多的依赖或者额外配置；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 对于一个序列化框架来说，以上几个特性很难都做到很出色，这是一个鱼和熊掌不可兼得的东西（具体原因后面会介绍），但是终归有自己的优势和特长，需要使用者根据实际场景仔细考量。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 我们接下来会讨论几种典型的序列化工具；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 首先我们先针对几组框架来做一个简单的对比测试，看看他们在对象压缩比和性能方面到底如何；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 我们先定义一个Java对象，该对象里主要包含了我们常用的int、long、float、double、String和Date类型的属性，每种类型的属性各有两个；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 测试时的样本数据随机生成，并且数据生成时间不计入测试时间；因为每种序列化框架的内部实现策略，所以即便是同一框架在处理不同类型数据时表现也会有差异；同时测试结果也会受到机器配置、运行环境等影响；限于篇幅，此处只是简单做了一个对比测试，感兴趣的同学可以针对自己项目中的实际数据，来做更详细、更有针对性的测试；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 首先我们先来看下几种框架压缩后的体积情况，如下表：</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 单位：字节</span>
+</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><table cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="75" height="52"><strong>工具</strong></td>
+<td width="95" height="52">Java</td>
+<td width="95" height="52">Hessian</td>
+<td width="95" height="52">ProtoBuf</td>
+<td width="95" height="52">Kryo</td>
+</tr>
+<tr>
+<td valign="top" width="75"><strong>仅数字</strong></td>
+<td width="95">392</td>
+<td width="95">252</td>
+<td width="95">59</td>
+<td width="95">56</td>
+</tr>
+<tr>
+<td valign="top" width="75"><strong>数字 + </strong><strong>字符串</strong></td>
+<td width="95">494</td>
+<td width="95">351</td>
+<td width="95">161</td>
+<td width="95">149</td>
+</tr>
+</tbody>
+</table>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 接下来再看一下序列化处理时间数据；如下表所示：</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 单位：纳秒</span>
+</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><table cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="75" height="52"><strong>工具</strong></td>
+<td width="95" height="52">Java</td>
+<td width="95" height="52">Hessian</td>
+<td width="95" height="52">ProtoBuf</td>
+<td width="95" height="52">Kryo</td>
+</tr>
+<tr>
+<td valign="top" width="75"><strong>仅数字</strong></td>
+<td width="95">8733</td>
+<td width="95">6140</td>
+<td width="95">1154</td>
+<td width="95">2010</td>
+</tr>
+<tr>
+<td valign="top" width="75"><strong>数字 + </strong><strong>字符串</strong></td>
+<td width="95">12497</td>
+<td width="95">7863</td>
+<td width="95">2978</td>
+<td width="95">2863</td>
+</tr>
+</tbody>
+</table>
+<p></p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 综合来看，如果只处理数值类型，几种序列化框架的对象压缩比相差惊人，Protobuf和kryo生成的自己数组只有Hessian和Java的五分之一或六分之一，加上字符串的处理后（对于大尺寸文档，有很多压缩算法都可以做到高效的压缩比，但是针对对象属性中的这种小尺寸文本，可用的压缩算法并不多），差距缩小了大概一倍。而在处理时间上，几种框架也有者相应程度的差距，二者的增减性是基本一致的。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; Java</strong><strong>源生序列化</strong></span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Java源生序列化是JDK自带的对象序列化方式，也是我们最常用的一种；其优点是简单、方便，不需要额外的依赖而且大部分三方系统或框架都支持；目前看来，Java源生序列化的兼容性也是最好的，可支持任何实现了Serializable接口的对象（包括多继承、循环引用、集合类等等）。但随之而来不可避免的就是，其序列化的速度和生成的对象体积和其他序列化框架相比，几乎都是最差的。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 我们不妨先来看一下序列化工具要处理那些事情：</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; a、 &nbsp;首先，要记录序列化对象的描述信息，包括类名和路径，反序列化时要用；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; b、 &nbsp;要记录类中所有的属性的描述信息，包括属性名称、类型和属性值；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; c、 &nbsp;如果类有继承关系，则要对所有父类进行前述a和b步骤的处理；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; d、 &nbsp;如果属性中有复杂类型，这还要对这些对象进行a、b、c步骤的处理；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; e、 &nbsp;记录List、Set、Map等集合类的描述信息，同时要对key或value中的复杂对象进行a、b、c、d步骤的操作</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 可见，一个对象的序列化所需要做的工作是递归的，相当繁琐，要记录大量的描述信息，而我们的Java源生序列化不但做了上边所有的事情，而且还做的规规矩矩，甚至还“自作多情”的帮你加上了一些JVM执行时要用到的信息。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 所以现在就是用脚都能够想明白，Java原生序列化帮你做了这么多事情，它能不慢么？而且还做得这么规矩（迂腐？），结果能不大么？</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 下面就基本是各个工具针对Java弱点的改进了。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; Hessian</strong></span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Hessian的序列化实现和Java的原生序列化很相似，只是对于序列化反序列化本身并不需要的一些元数据进行了删减；所以Hessian可以像Java的源生序列化那样，可以支持任意类型的对象；但是在存储上，Hessian并没有做相应的优化，所以其生成的对象体积相较于Java的源生序列化并没有下降太多；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 比如，Hessian对于数值类型仍然使用了定长存储，而在通常情况下，经常使用的数据都是比较小的，大部分的存储空间是被浪费掉的；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 为了标志属性区段的结束，Hessian使用了长度字段来表示，这在一定程度上会增大结果数据的体积；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 由于Hessian相较于Java源生序列化并没有太大的优势，所以一般情况下，如果系统中没有使用Hessian的rpc框架，则很少单独使用Hessian的序列化机制。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; Google Protobuf</strong></span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; GPB最大的特点就是自己定义了一套自己数据类型，并且规定只允许用我的这套；所以在使用GPB的时候，我们不得不为它单独定义一个描述文件，或者叫schema文件，用来完成Java对象中的基本数据类型和GPB自己定义的类型之间的一个映射；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 不过也正是GPB对类型的自定义，也让他可以更好的针对这些类型做出存储和解析上的优化，从而避免了Java源生序列化中的诸多弱点。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 对于对象属性，GPB并没有直接存储属性名称，而是根据schema文件中的映射关系，只保存该属性的顺序id；而对于，GPB针对常用的几种数据类型采用了不同程度的压缩，同时属性区段之间采用特定标记进行分隔，这样可以大大减少存储所占用的空间。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 对于数值类型，常见的压缩方式有变长byte、分组byte、差值存储等，一般都是根据属性的使用特点来做定制化的压缩策略。</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; GPB的另一个优点就是跨语言，支持Java、C、PHP、Python等目前比较大众的语言；其他类似的还有Facebook的Thrift，也需要描述文件的支持，同时也包含了一个rpc框架和更丰富的语言支持；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; Kryo</strong></span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 前面我们提到，诸如Hessian和GPB这些三方的序列化框架或多或少的都对Java原生序列化机制做出了一些改进；而对于Kryo来说，改进无疑是更彻底一些；在很多评测中，Kryo的数据都是遥遥领先的；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; Kryo的处理和Google Protobuf类似。但有一点需要说明的是，Kryo在做序列化时，也没有记录属性的名称，而是给每个属性分配了一个id，但是他却并没有GPB那样通过一个schema文件去做id和属性的一个映射描述，所以一旦我们修改了对象的属性信息，比如说新增了一个字段，那么Kryo进行反序列化时就可能发生属性值错乱甚至是反序列化失败的情况；而且由于Kryo没有序列化属性名称的描述信息，所以序列化/反序列化之前，需要先将要处理的类在Kryo中进行注册，这一操作在首次序列化时也会消耗一定的性能。</span>
+</p><p>
+</p><p>另外需要提一下的就是目前kryo目前还只支持Java语言。
+</p><p>
+</p><p><span style="font-size: 14pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 如何选择？</strong></span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 就Java原生序列化功能而言，虽然它性能和体积表现都非常差，但是从使用上来说却是非常广泛，只要是使用Java的框架，那就可以用Java原生序列化；谁让人家是“亲儿子”呢，即便是看在人家“爹”的份儿上，也得给人家几分面子！</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 尤其是在我们需要序列化的对象类型有限，同时又对速度和体积有很高的要求的时候，我们不妨试一下自己来处理对象的序列化；因为这样我们可以根据要序列化对象的实际内容来决定具体如何去处理，甚至可以使用一些取巧的方法，即使这些方法对其他的对象类型并不适用；</span>
+</p><p>
+</p><p><span style="font-size: 14pt;">&nbsp; &nbsp; &nbsp; &nbsp; 有一点我们可以相信，就是我们总能在特定的场景下设计出一个极致的方案！</span>
+</p><p>
+</p><p>&nbsp;            </p></div>
+            <!-- 文章内容 end -->
+        </div>
+        <!-- 面包屑 end -->
+    </div>
+</div>
+<!-- 主体 end -->
+<!-- 返回顶部 start -->
+<div class="ft-widgets" id="ft-widgets" style="bottom: 20px; display: none;">
+    <a href="http://data.qq.com/article?id=2879#body" class="top"><i class="arrow"></i>TOP</a>
+</div>
+<!-- 返回顶部 end -->
+<script type="text/javascript" src="./大型web系统数据缓存设计_腾讯大数据_files/jquery.min.js.下载"></script>
+<script type="text/javascript" src="./大型web系统数据缓存设计_腾讯大数据_files/jia.js.下载" charset="utf-8"></script><script type="text/javascript" src="./大型web系统数据缓存设计_腾讯大数据_files/plugin.client.js.下载" charset="utf-8"></script>
+<script type="text/javascript">
+    //返回顶部
+    $(function(){
+        var $win = $(window),
+            $ft = $('#footer'),
+            $widget = $('#ft-widgets'),
+            inited = false,
+            initBottom = 20;
+
+        if($widget.length < 1){
+            return;
+        }
+
+        ctrl();
+
+        $win.scroll(function(){
+            ctrl();
+        });
+
+        function ctrl(){
+            var scrollTop = $win.scrollTop(),
+                top = scrollTop + $win.height();
+            if(scrollTop < 450){
+                $widget.hide()
+            }else{
+                $widget.show();
+                //定位
+                if(top < $ft.offset().top){
+                    if(!inited){
+                        $widget.css('bottom',initBottom);
+                        inited = true;
+                    }
+                }else{
+                    inited = false;
+                    $widget.css('bottom', (50 + top - $ft.offset().top));
+                }
+            }
+        }
+    });
+    //分享功能
+    var jiathis_config={
+        title:"",
+        url:"",
+        pic:"",
+        summary:"",
+        shortUrl:false,
+        hideMore:true
+    };
+    $(".bar a").unbind("click").click(function(){
+        jiathis_config.title = "大型web系统数据缓存设计";
+        jiathis_config.url = "http://data.qq.com/article?id=2879";
+        jiathis_config.pic = "";
+        jiathis_config.summary = "在高访问量的web系统中，缓存几乎是离不开的；但是一个适当、高效的缓存方案设计却并不容易；所以接下来将讨论一下应用系统缓存的设计方面应该注意哪些东西，包括缓存的选型等等。";
+    });
+</script><!-- 底部 start -->
+<div class="footer" id="footer">
+    <div class="inner cf">
+        <div class="wrap">
+            <div class="nav">
+                <h3 class="title">合作伙伴：</h3>
+                <a href="http://daxue.qq.com/" target="_blank">腾讯大学</a><span class="line">|</span>
+                <a href="http://im.qq.com/" target="_blank">QQ</a><span class="line">|</span>
+                <a href="http://v.qq.com/" target="_blank">腾讯视频</a><span class="line">|</span>
+                <a href="http://news.qq.com/" target="_blank">腾讯新闻</a><span class="line">|</span>
+                <a href="http://www.csdn.net/" target="_blank">CSDN</a><span class="line">|</span>
+                <a href="http://www.gamelook.com.cn/" target="_blank">GAMELOOK</a>
+            </div>
+            <p class="copyright">Copyright © 1998-2016 Tencent. All Rights Reserved.腾讯公司 版权所有</p>
+        </div>
+        <ul class="contact">
+            <li>
+                <a href="mailto:data@tencent.com" id="contact">
+                    <i class="icon"></i>
+                    <h3>联系我们</h3>
+                </a>
+            </li>
+            <li class="wechat" id="wechat-code">
+                <i class="icon"></i>
+                <h3>关注我们</h3>
+                <div class="code" style="display: none;"><img src="./大型web系统数据缓存设计_腾讯大数据_files/code.png" alt=""></div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 底部 end -->
+<script type="text/javascript" src="./大型web系统数据缓存设计_腾讯大数据_files/jquery.min.js.下载"></script>
+<script type="text/javascript" src="./大型web系统数据缓存设计_腾讯大数据_files/jquery.mousewheel.min.js.下载"></script>
+<script>
+    //底部微信二维码动画
+    (function(){
+        var timeId;
+        $('#wechat-code').hover(function(){
+            if(timeId){
+                clearTimeout(timeId);
+            }
+            $(this).find('.code').removeClass('fadeIn')
+                .show().addClass('fadeOut');
+        },function(){
+            var $code = $(this).find('.code');
+            $code.removeClass('fadeOut').addClass('fadeIn');
+            timeId = setTimeout(function(){
+                $code.hide();
+            },1000); //这个时间与隐藏的动画时间一致
+        });
+    })();
+    pageSlide();
+
+    //滚动翻页
+    function pageSlide(){
+        var curPage = 1,
+            prevPage,
+            top,
+            scrolling = false,
+            $slideObj = $('#pages-container'),
+            $section = $slideObj.children(),
+            $ctrlObj = $('#pages-ctrl'),
+            $ctrlItem = $ctrlObj.children(),
+            $header = $('.header'),
+            len = $section.length;
+
+        $section.eq(curPage-1).addClass('animating');
+        $ctrlItem.eq(curPage-1).addClass('current');
+
+        $ctrlItem.each(function(idx,ele){
+            $(ele).click(function(){
+                if(scrolling){
+                    return;
+                }
+                prevPage = curPage;
+                curPage = idx + 1;
+                scroll();
+            });
+        });
+
+        $slideObj.mousewheel(function(event, delta){
+            if(scrolling){
+                return;
+            }
+            if(delta == 1){ //向上翻页
+                if(curPage == 1){
+                    return;
+                }
+                prevPage = curPage--;
+                scroll();
+            }else{
+                if(curPage == len){
+                    return;
+                }
+                prevPage = curPage++;
+                scroll();
+            }
+        });
+
+        function scroll(){
+            scrolling = true;
+            setTimeout(function(){
+                scrolling = false;
+                $section.eq(prevPage-1).removeClass('animating');
+            },600);
+
+            top = -(curPage - 1) * 100 + '%';
+
+            $slideObj.css('top',top);
+            $section.eq(curPage-1).addClass('animating');
+
+            $ctrlItem.removeClass('current');
+            $ctrlItem.eq(curPage-1).addClass('current');
+
+            if(curPage % 2 == 0){
+                $ctrlObj.addClass('even');
+            }else{
+                $ctrlObj.removeClass('even');
+            }
+        }
+    }
+
+    //打开分享栏
+    (function(){
+        $('.gmd-share-bar .trigger').click(function(e){
+            e.preventDefault();
+            var $bar = $(this).parent();
+            if($bar.hasClass('open')){
+                $bar.removeClass('open');
+            }else{
+                $bar.addClass('open');
+            }
+        });
+        $(document).click(function(e){
+            var $ele = $(e.target || e.srcElement);
+            if($ele.hasClass('gmd-share-bar') || $ele.parents('.gmd-share-bar').length){
+                return;
+            }
+            $('.gmd-share-bar').removeClass('open');
+        });
+    })();
+    //联系我们
+    $(function(){
+        $("#contact").click(function(){
+            $("#contact h3").html("data@tencent.com");
+        });
+    });
+</script>
+<script type="text/javascript" src="./大型web系统数据缓存设计_腾讯大数据_files/stats" charset="UTF-8"></script>
+
+</body></html>

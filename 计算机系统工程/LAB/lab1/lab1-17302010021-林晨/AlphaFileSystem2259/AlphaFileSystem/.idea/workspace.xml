@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c6b7af87-3f04-4bb8-8bd6-80f8b7b12a2e" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/AlphaFileSystem$Main.ic" NAME="Main Coverage Results" MODIFIED="1572154233235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/AlphaFileSystem$FileUtilTest_testWrite.ic" NAME="FileUtilTest.testWrite Coverage Results" MODIFIED="1572008467106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>test.software.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/software/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="491">
+              <caret line="119" column="56" selection-start-line="119" selection-start-column="56" selection-end-line="119" selection-end-column="56" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/exception/ErrorCode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="37" column="72" selection-start-line="37" selection-start-column="72" selection-end-line="37" selection-end-column="72" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fileManagers/fm-1/test3.meta">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/software/FileImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="56">
+              <caret line="186" column="52" lean-forward="true" selection-start-line="186" selection-start-column="52" selection-end-line="186" selection-end-column="53" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#randomCommon#0;class#FileImpl#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>DU</find>
+      <find>print</find>
+      <find>try</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/software/LogicBlock.java" />
+        <option value="$PROJECT_DIR$/src/software/BlockManager.java" />
+        <option value="$PROJECT_DIR$/src/software/File.java" />
+        <option value="$PROJECT_DIR$/src/software/FileManager.java" />
+        <option value="$PROJECT_DIR$/src/software/Block.java" />
+        <option value="$PROJECT_DIR$/src/software/BlockId.java" />
+        <option value="$PROJECT_DIR$/src/software/FileId.java" />
+        <option value="$PROJECT_DIR$/src/software/BlockManagerId.java" />
+        <option value="$PROJECT_DIR$/src/software/Id.java" />
+        <option value="$PROJECT_DIR$/src/software/FileManagerId.java" />
+        <option value="$PROJECT_DIR$/src/itf/Id.java" />
+        <option value="$PROJECT_DIR$/src/id/BlockId.java" />
+        <option value="$PROJECT_DIR$/src/id/BlockManagerId.java" />
+        <option value="$PROJECT_DIR$/src/id/FileId.java" />
+        <option value="$PROJECT_DIR$/src/id/FileManagerId.java" />
+        <option value="$PROJECT_DIR$/src/itf/FileManager.java" />
+        <option value="$PROJECT_DIR$/src/test/software/StringOperationTest.java" />
+        <option value="$PROJECT_DIR$/src/itf/BlockManager.java" />
+        <option value="$PROJECT_DIR$/bm-1/1.data" />
+        <option value="$PROJECT_DIR$/bm-2/1.data" />
+        <option value="$PROJECT_DIR$/bm-3/id.count" />
+        <option value="$PROJECT_DIR$/bm-1/id.count" />
+        <option value="$PROJECT_DIR$/bm-2/id.count" />
+        <option value="$PROJECT_DIR$/src/test/software/FileUtilTest.java" />
+        <option value="$PROJECT_DIR$/fm-1/file1.meta" />
+        <option value="$PROJECT_DIR$/fm-1/id.FileId@33a10788.meta" />
+        <option value="$PROJECT_DIR$/fm-1/test1.meta" />
+        <option value="$PROJECT_DIR$/initialize" />
+        <option value="$PROJECT_DIR$/src/software/FileManagerIml.java" />
+        <option value="$PROJECT_DIR$/blockManagers/bm-5/id.count" />
+        <option value="$PROJECT_DIR$/src/software/BlockIml.java" />
+        <option value="$PROJECT_DIR$/fileManagers/fm-1/test1.meta" />
+        <option value="$PROJECT_DIR$/src/software/StringOperation.java" />
+        <option value="$PROJECT_DIR$/src/software/BlockManagerIml.java" />
+        <option value="$PROJECT_DIR$/src/software/FileImpl.java" />
+        <option value="$PROJECT_DIR$/src/software/FileUtil.java" />
+        <option value="$PROJECT_DIR$/src/software/Main.java" />
+        <option value="$PROJECT_DIR$/src/exception/ErrorCode.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-12" />
+    <option name="width" value="1938" />
+    <option name="height" value="1032" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="blockManagers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="blockManagers" type="462c0819:PsiDirectoryNode" />
+              <item name="bm-1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="blockManagers" type="462c0819:PsiDirectoryNode" />
+              <item name="bm-4" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="fileManagers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="fileManagers" type="462c0819:PsiDirectoryNode" />
+              <item name="fm-1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="id" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="itf" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlphaFileSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AlphaFileSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="software" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572188120736" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\L2595\AlphaFileSystem" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="software.Main" />
+      <module name="AlphaFileSystem" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FileUtilTest.testGetBytes" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AlphaFileSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.software.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.software" />
+      <option name="MAIN_CLASS_NAME" value="test.software.FileUtilTest" />
+      <option name="METHOD_NAME" value="testGetBytes" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FileUtilTest.testWrite" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AlphaFileSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.software.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.software" />
+      <option name="MAIN_CLASS_NAME" value="test.software.FileUtilTest" />
+      <option name="METHOD_NAME" value="testWrite" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StringOperationTest.testChecksum" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AlphaFileSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.software.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.software" />
+      <option name="MAIN_CLASS_NAME" value="test.software.StringOperationTest" />
+      <option name="METHOD_NAME" value="testChecksum" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.FileUtilTest.testWrite" />
+        <item itemvalue="JUnit.FileUtilTest.testGetBytes" />
+        <item itemvalue="JUnit.StringOperationTest.testChecksum" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c6b7af87-3f04-4bb8-8bd6-80f8b7b12a2e" name="Default Changelist" comment="" />
+      <created>1571194263085</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571194263085</updated>
+      <workItem from="1571194268071" duration="8480000" />
+      <workItem from="1571282365999" duration="13862000" />
+      <workItem from="1571455868983" duration="38114000" />
+      <workItem from="1571835130970" duration="76936000" />
+      <workItem from="1572184625801" duration="3425000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="FileUtilTest_testGetBytes - 2019.10.24 at 10h 00m 17s.xml">
+      <configuration name="FileUtilTest.testGetBytes" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 20h 56m 38s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 20h 56m 54s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 20h 57m 44s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 20h 58m 08s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 20h 58m 43s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 20h 59m 30s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 21h 01m 05s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 21h 01m 06s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FileUtilTest_testWrite - 2019.10.25 at 21h 01m 10s.xml">
+      <configuration name="FileUtilTest.testWrite" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="140817000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1233" height="735" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8223443" visible="true" weight="0.25106382" />
+      <window_info id="Structure" order="1" sideWeight="0.17765568" side_tool="true" weight="0.18808511" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="0" sideWeight="0.49957448" weight="0.3294702" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.3294702" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49787235" visible="true" weight="0.25496688" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.49617022" weight="0.397351" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="10" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5038298" side_tool="true" weight="0.3178808" />
+      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.3294702" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info anchor="right" id="Maven" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Database" order="8" />
+      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.3293617" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>144</line>
+          <properties />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/BlockManagerIml.java</url>
+          <line>119</line>
+          <properties />
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="90" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileUtil.java</url>
+          <line>89</line>
+          <properties />
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileUtil.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileUtil.java</url>
+          <line>119</line>
+          <properties />
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileUtil.java</url>
+          <line>75</line>
+          <properties />
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileUtil.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>204</line>
+          <properties />
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>232</line>
+          <properties />
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>188</line>
+          <properties />
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>70</line>
+          <properties />
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>250</line>
+          <properties />
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>67</line>
+          <properties />
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>235</line>
+          <properties />
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>36</line>
+          <properties />
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>133</line>
+          <properties />
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>149</line>
+          <properties />
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>171</line>
+          <properties />
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>152</line>
+          <properties />
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>258</line>
+          <properties />
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>202</line>
+          <properties />
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>201</line>
+          <properties />
+          <option name="timeStamp" value="136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>260</line>
+          <properties />
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>254</line>
+          <properties />
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/software/FileImpl.java</url>
+          <line>253</line>
+          <properties />
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/0.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/1.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/1.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/0.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/11.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/11.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/4.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/4.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/3.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/3.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/2.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-6/2.meta" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_221/src.zip!/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="810" column="19" selection-start-line="810" selection-start-column="19" selection-end-line="810" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-8/11.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-3/11.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/10.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/4.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/4.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/0.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-1/id.count" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/0.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/10.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/11.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/11.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-7/id.count" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-8/id.count" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-5/21.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-5/21.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-5/22.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-5/22.data" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-5/23.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-5/23.data" />
+    <entry file="file://$PROJECT_DIR$/src/test/software/FileUtilTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="36" column="32" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
+          <folding>
+            <element signature="e#647#648#0" expanded="true" />
+            <element signature="e#702#703#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itf/Block.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itf/BlockManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-9/id.count" />
+    <entry file="file://$PROJECT_DIR$/fileManagers/fm-1/test1.meta" />
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-2/id.count">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-1/26.data">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fileManagers/fm-1/test2.meta">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/software/StringOperation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding>
+            <element signature="method#getSegments#0;class#StringOperation#0" />
+            <element signature="method#checksum#0;class#StringOperation#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/software/BlockManagerIml.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="122" column="31" lean-forward="true" selection-start-line="122" selection-start-column="31" selection-end-line="122" selection-end-column="31" />
+          <folding>
+            <element signature="e#1667#1668#0" expanded="true" />
+            <element signature="e#1744#1745#0" expanded="true" />
+            <element signature="e#2046#2047#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/software/FileManagerIml.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blockManagers/bm-4/0.data">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/software/FileUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="21" column="11" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/software/BlockIml.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="44" column="20" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fileManagers/fm-1/test3.meta">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itf/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/software/FileImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="186" column="52" lean-forward="true" selection-start-line="186" selection-start-column="52" selection-end-line="186" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#randomCommon#0;class#FileImpl#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/software/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="119" column="56" selection-start-line="119" selection-start-column="56" selection-end-line="119" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exception/ErrorCode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="37" column="72" selection-start-line="37" selection-start-column="72" selection-end-line="37" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

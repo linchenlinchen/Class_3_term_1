@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0066)http://www.lisha.ufsc.br/~guto/teaching/os/exercise/ulthreads.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="stylesheet" href="./User-level Threads_files/style.css" type="text/css">
+    <title>User-level Threads</title>
+  </head>
+
+  <body>
+                       
+    <h1 align="center">User-level Threads</h1>
+              
+    <p align="justify">The goal of this exercise is to design and
+    implement an <b>user-level thread</b> package. Threads created by
+    this package are not visible to the underlying OS, so the
+    scheduler itself must run within the user process.</p>
+
+    <h3>API</h3>
+
+    <p align="justify">The user-level thread package must implement, at
+    least, the following interface:</p>
+    
+    <ul>
+      <li><code>int init(void)</code><br>
+	Initializes the user-level thread manager, registering the
+	calling process as the first thread. This function must be
+	called before any other in the package and returns "0" in case
+	of success and "-1" in case of failure.
+      </li>
+
+      <li><code>int create(void (* entry)(int), int arg)</code><br>
+	Creates a thread with entry point set to <code>entry</code>,
+	which is a pointer to a plain function taking an integer as
+	argument. The function returns an identifier for the created
+	thread in case of success and "-1" in case of failure.
+      </li>
+
+      <li><code>int join(int tid, int * status)</code><br> 
+	Waits for the thread identified by <code>tid</code> to exit,
+	returning it's return value in <code>status</code>. In case of
+	success, this function returns "0", otherwise, "-1".
+      </li>
+
+      <li><code>void exit(int status)</code><br> 
+	Immediately terminates the execution of the calling thread,
+	allowing for a return value to be eventually handed over to
+	<code>join</code>.
+      </li>
+
+      <li><code>void yield(void)</code><br> 
+	Causes the calling thread to release the CPU, thus activating
+	the scheduler.
+      </li>
+
+      <li><code>int getid(void)</code><br> 
+	Returns the identifier of the calling thread.
+      </li>
+    </ul>
+
+    <a href="http://www.lisha.ufsc.br/~guto/teaching/os/exercise/ulthreads_test.c">API usage example</a>
+
+
+    <h3>Scheduler</h3>
+
+    <p align="justify">The user-level thread package must feature a
+    thread scheduler implementing a police of choice plus a back-end
+    mechanism enforcing a round-robin police with a quantum of 100
+    milliseconds. For example, if static priorities are chosen as the
+    main police, then the thread creation primitive must be extended
+    to feature a priority and threads are scheduled based on that
+    value. Nevertheless, after a quantum, the scheduler must be
+    activated to validate the current selection, thus enforcing
+    round-robin for same-priority threads.</p>
+
+
+    <h3>Implementation based on POSIX</h3>
+    
+    <p align="justify">In theory, any POSIX.1 compliant system should
+    deliver the basic functionality needed to implement the proposed
+    thread package at user-level. The key issues, i.e., context
+    switching and timing can be implemented based on LIBC functions
+    <code>setjmp</code> and <code>longjmp</code> and on the system
+    calls <code>setitimer</code> and <code>signal</code>.
+
+    </p><h4>Context Switch</h4>
+    
+   <code>setjmp</code> saves the stack context/environment. 
+   <code>longjmp</code> can restore the stack context/environment later. In
+	this way, <code>longjmp</code> "returns" to the state of the program
+	when <code>setjmp</code> was called. 
+	The return value from <code>setjmp</code> indicates whether control
+	reached that point normally (returns 0) or from a call to
+	<code>longjmp</code> (returns a value other than 0). <br> <br>
+	
+	Example: <br><br>
+
+	<code>
+	if(setjmp(old_context) == 0) 
+		longjmp(new_context, 1); <br>
+	else 
+		return;
+	</code>
+
+	<br><br>
+        The setjmp and longjmp are very usefull when the context you want to save
+        is already in execution (i.e. all context structures pre-exists), and therefore 
+        implementations of exception and events handling usually rely on such constructs. 
+        However, when a new context must be created, several structures must be initialized
+        and manipulated inside the context buffer (e.g. set stack pointer to the new 
+        stack of the new thread). Setjmp and longjmp functions doesn't provide a good
+	interface for such manipulation, since you have to adjust the bytes in context
+	hand, breaking the portability of your code, since every architeture will organize
+        the data inside context differently.<br><br>
+	For that reason, new functions for context manipulation was defined by POSIX1.2001
+        (e.g. <code>setcontext</code>, <code>getcontext</code>, <code>makecontext</code> 
+        and <code>swapcontext</code>). These functions are available on recent versions of the
+	Standard C library. Remeber, <code>man</code> command is your friend.<br><br>
+
+        More information about those functions could be found in 
+        <a href="http://en.wikipedia.org/wiki/Setcontext">http://en.wikipedia.org/wiki/Setcontext</a>.<br><br>
+	
+        You can also download and look on example of using these functions
+	<a href="http://www.lisha.ufsc.br/~guto/teaching/os/exercise/setctx.c">here</a>.
+	
+	<br>
+
+    <h4>Scheduler Timed Activation</h4>
+
+    It is necessary to activate the scheduler in specific times (QUANTUM). In
+	this case, <code>setitimer</code> sets value of an interval timer (QUANTUM)
+	which the SIGALRM signal will be generated. In addition, it is possible to
+	install a new signal handler ("scheduler") for the signal SIGALRM through of
+	the function <code>signal</code>. <br><br>
+
+	Example: <br><br>
+
+	<code>
+	struct itimerval time; <br><br>
+
+	time.it_interval.tv_sec =  0; <br>
+	time.it_interval.tv_usec = 100000; <br>
+	time.it_value.tv_sec =  0; <br>
+	time.it_value.tv_usec = 100000; <br><br>
+
+	signal(SIGVTALRM, scheduler); <br> <br>
+
+	setitimer(ITIMER_VIRTUAL, &amp;time, NULL); <br> <br>
+
+
+	</code>
+
+	<a href="http://www.lisha.ufsc.br/~guto/teaching/os/exercise/timer.c">Download source code</a>
+
+	<br><br>
+	
+	More informations on UNIX man pages. <br>
+
+  
+
+</body></html>

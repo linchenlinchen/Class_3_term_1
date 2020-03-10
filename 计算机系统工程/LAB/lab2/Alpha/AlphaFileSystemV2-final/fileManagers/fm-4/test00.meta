@@ -1,0 +1,6 @@
+size:4
+block size:256
+pos:4
+logic block:
+b:bm-2,3;bm-3,5;
+b:bm-8,3;bm-3,6;
