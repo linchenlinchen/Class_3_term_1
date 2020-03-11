@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>8. 程式错误与例外(Exceptions)情形</title>
+  
+  <meta name="description" content="8. 程式错误与例外(Exceptions)情形 ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node11.html">
+ 
+  <link rel="previous" href="node9.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node11.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node9.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node11.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node9.html">7.
+输入(Input)与输出(Output)</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node11.html">
+9. 类别(Classes)</a> <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+Subsections </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html339" href="node10.html#SECTION0010100000000000000000">
+8.1 语法错误 </a> </li>
+  <li><a name="tex2html340" href="node10.html#SECTION0010200000000000000000">
+8.2 例外(Exceptions)情形 </a> </li>
+  <li><a name="tex2html341" href="node10.html#SECTION0010300000000000000000">
+8.3 例外(Exceptions)情形的处理 </a> </li>
+  <li><a name="tex2html342" href="node10.html#SECTION0010400000000000000000">
+8.4 如何引发例外(Exceptions) </a> </li>
+  <li><a name="tex2html343" href="node10.html#SECTION0010500000000000000000">
+8.5 自制一个例外情形 </a> </li>
+  <li><a name="tex2html344" href="node10.html#SECTION0010600000000000000000">
+8.6 定义善后的动作 </a> </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 8. 程式错误与例外(Exceptions)情形  </h1>
+  
+<p> 至此为止，我们都只有稍稍的提到错误讯息。但是如果你有试着执行上面的范例的话，你可能注意到，基本上错误的情况可以分成两类：语法错误 (  <i>
+syntax errors</i> ) 以及例外情况 ( <i>exceptions</i> )。   </p>
+<p>  </p>
+<h1> <br>
+ 8.1 语法错误   </h1>
+  
+<p> 语法错误也叫做分析时的错误(parsing errors)，大概是一般在学Python时最常见到的直译器所发出来的抱怨：   </p>
+<p> </p>
+<dl>
+<dd><pre class="verbatim">&gt;&gt;&gt; while 1 print 'Hello world'<br>  File "&lt;stdin&gt;", line 1<br>    while 1 print 'Hello world'<br>                ^<br>SyntaxError: invalid syntax<br></pre>
+  </dd>
+  </dl>
+  
+  <p> Python分析器(parser)会在印出错误的行，并且用一个向上的箭号指出最早发现错误的地方，而这个错误是发生(至少是被发现)在这个箭号所指的单元(token)<i>
+之前</i>。在我们的例子里面：错误发生在 <tt class="keyword">print</tt> 这个关键字，因为前面应该有一个 ( "<tt class="character">
+:</tt>" ) 。错误信息里面也包含档案名称以及行数，所以你可以很快知道要到哪里去找错。   </p>
+  <p>  </p>
+  <h1> <br>
+ 8.2 例外(Exceptions)情形   </h1>
+  
+  <p> 有的时候，甚至当你的语法完全正确时，当你执行程式时仍然会出错。这种在程式执行阶段发生的错误叫做例外情形 ( <i>exceptions</i>
+ ) ，并且会造成程式致命的终止(无法执行下去)。你待会就会知道在Python里面要怎样处理这样的状况，但是我们先来看这样的状况下会造成什么错误信息： 
+ </p>
+  <p> </p>
+  <dl>
+  <dd><pre class="verbatim">&gt;&gt;&gt; 10 * (1/0)<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1<br>ZeroDivisionError: integer division or modulo<br>&gt;&gt;&gt; 4 + spam*3<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1<br>NameError: spam<br>&gt;&gt;&gt; '2' + 2<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1<br>TypeError: illegal argument type for built-in operation<br></pre>
+    </dd>
+    </dl>
+  
+    <p> 在这些错误信息的最后一行都是解释到底发生了什么事。例外情况(Exception)有很多种类型，类型的名称也在错误信息之中，在上面的例子里面，exception的类型分别是：
+ <tt class="exception">ZeroDivisionError</tt>, <tt class="exception">NameError</tt>
+ 以及  <tt class="exception">TypeError</tt>. 。对于内建的exception来说，这些印出来的字串都是这些内建的exception类型的真正类型名称，但是对于使用者自己自定的exception类型就不一定了(虽然这是一个有用的约定俗成的习惯)。这些标准的exception名称也正是他们内建的指称(identifiers)
+(不是正式的关键字)。  </p>
+    <p> 这一行其他部分则是有关这个exception类型的详细解释，其意义则是依照exception的类型而有不同。   </p>
+    <p> 在错误信息最后一行之前的部分则是显示了这个exception发生时的状况，也就是记忆体堆积(stack)的内容追朔(backtrace)。一般来说这个这个部分包含了stack
+backtrace的来源行数，但是这并不代表是在从标准输入读入时候的行数。   </p>
+    <p> 在Python程式库参考手册中( <i>Python Library Reference</i> )详细列出了所有的内建exception及其说明。
+  </p>
+    <p>  </p>
+    <h1> <br>
+ 8.3 例外(Exceptions)情形的处理  </h1>
+  
+    <p> 我们可以写一个程式来处理某些的exception。请看下面程式范例，我们要求使用者输入一个有效的数字，直到所输入的数字真正有效为止。但是使用者也可以中止这个程式(用
+    <kbd>Control-C</kbd> 或者是任何作业系统支援的方式)。值得注意的是，使用者主动中止程式事实上是使用者引发一个 <tt class="exception">
+KeyboardInterrupt</tt> 的exception。   </p>
+    <p> </p>
+    <dl>
+    <dd><pre class="verbatim">&gt;&gt;&gt; while 1:<br>...     try:<br>...         x = int(raw_input("Please enter a number: "))<br>...         break<br>...     except ValueError:<br>...         print "Oops! That was no valid number.  Try again..."<br>...<br></pre>
+      </dd>
+      </dl>
+  
+      <p> 这个  <tt class="keyword">try</tt> 叙述的作用如下： </p>
+      <p>  </p>
+      <ul>
+ 
+        <li>首先，try之后的叙述( <i>try clause</i> ，在  <tt class="keyword">try</tt>
+ 及 <tt class="keyword">except</tt> 这两个字之中所有的叙述)都会被执行。   
+          <p>  </p>
+        </li>
+        <li>如果没有发生任何exception， except之后的叙述( <i>except clause</i> )会自动被忽略，整个
+ <tt class="keyword">try</tt> 叙述就算是执行完毕。  
+          <p>  </p>
+        </li>
+        <li>如果当执行try之后的叙述时发生了exception，错误地方之后的叙述就不会被执行。然后如果这个exception的类型有某一个适合的
+ <tt class="keyword">except</tt> 关键字之后的类型的话，就会执行这一个except之后的叙述，然后程式从整个 <tt class="keyword">
+try</tt> 叙述之后的地方开始执行。   
+          <p>  </p>
+        </li>
+        <li>如果所发生的exception在except关键字之后找不到相对应的类型时，系统会将这个类型传给外面一层的 <tt class="keyword">
+try</tt> 叙述。如果外层的exception处理机制不存在的话，这就是一个没有被处理的exception( <i>unhandled exception</i>
+ )，然后整个程式会中断，并出现上面出现的错误程式。   
+          <p>  </p>
+        </li>
+      </ul>
+  
+      <p> 一个  <tt class="keyword">try</tt> 叙述可以包含许多的except 部分来处理各种不同的exception，但是最多只有一个handler(译：exception之后的叙述)会真正被执行。Handlers
+只处理在所对应的  <tt class="keyword">try</tt> 部分发生的exception，其他的 try 部分发生的exception则不在处理范围。一个except子句可以处理一个以上的exception，只要用list括弧把它们括起来。例如：
+  </p>
+      <p> </p>
+      <dl>
+      <dd><pre class="verbatim">... except (RuntimeError, TypeError, NameError):<br>...     pass<br></pre>
+        </dd>
+        </dl>
+  
+        <p> 最后的一个 except 可以不写出exception 类型的名称，这就当作是一个外卡(wildcard，译：处理所有的exception)来使用。当使用时要特别的小心，因为如果你很有可能就把一个应该被注意的程式错误给隐藏起来了。你也可以在这个except子句里面印出一个错误信息，然后把这个exception再丢(raise)出去(让呼叫你程式的人来处理这个exception)。 
+ </p>
+        <p> </p>
+        <dl>
+        <dd><pre class="verbatim">import string, sys<br><br>try:<br>    f = open('myfile.txt')<br>    s = f.readline()<br>    i = int(string.strip(s))<br>except IOError, (errno, strerror):<br>    print "I/O error(%s): %s" % (errno, strerror)<br>except ValueError:<br>    print "Could not convert data to an integer."<br>except:<br>    print "Unexpected error:", sys.exc_info()[0]<br>    raise<br></pre>
+          </dd>
+          </dl>
+  
+          <p> 这个  <tt class="keyword">try</tt> ... <tt class="keyword">except</tt>
+ 的叙述有一个可有可无的else子句(  <i>else clause</i> )可以使用，当这个子句存在时，必须是放在所有的except clauses的后面。这个子句里的叙述是当try子句没有发生任何exception时，一定要执行的叙述。请看例子：
+  </p>
+          <p> </p>
+          <dl>
+          <dd><pre class="verbatim">for arg in sys.argv[1:]:<br>    try:<br>        f = open(arg, 'r')<br>    except IOError:<br>        print 'cannot open', arg<br>    else:<br>        print arg, 'has', len(f.readlines()), 'lines'<br>        f.close()<br></pre>
+            </dd>
+            </dl>
+  
+            <p> 使用 <tt class="keyword">else</tt> 要比在 <tt class="keyword">
+try</tt> 子句里面加入多余的程式码来的好，因为这样减少意外的处理到那些不是由 <tt class="keyword">try</tt> ...
+            <tt class="keyword">except</tt> 叙述中保护的程式码所引发的exception。  </p>
+            <p> 当一个exception 发生时，exception本身有一个 连带的值，也叫做这个exception的参数( <i>
+argument</i> )。至于这个参数是否存在以及其型态，则是由exception的类型所决定。对于有这个参数存在的exception类型来说，你可以在except
+clause的后面加入一个名称(或是list)来接收这个参数的值。请看下例：  </p>
+            <p> </p>
+            <dl>
+            <dd><pre class="verbatim">&gt;&gt;&gt; try:<br>...     spam()<br>... except NameError, x:<br>...     print 'name', x, 'undefined'<br>... <br>name spam undefined<br></pre>
+              </dd>
+              </dl>
+  
+              <p> 如果一个exception 有一个参数的话，当它在没有被处理，当作错误信息印出来的时候，就会成为最后(详细解释(`detail'))的一部份。 
+ </p>
+              <p> Exception的处理者(handlers，exception clause)并不只处理在try clause当中所发生的exception，也会处理所有在try
+clause当中所(直接或间接)呼叫的函式所引发的exception。请看下例：   </p>
+              <p> </p>
+              <dl>
+              <dd><pre class="verbatim">&gt;&gt;&gt; def this_fails():<br>...     x = 1/0<br>... <br>&gt;&gt;&gt; try:<br>...     this_fails()<br>... except ZeroDivisionError, detail:<br>...     print 'Handling run-time error:', detail<br>... <br>Handling run-time error: integer division or modulo<br></pre>
+                </dd>
+                </dl>
+  
+                <p>  </p>
+                <h1> <br>
+ 8.4 如何引发例外(Exceptions)  </h1>
+  
+                <p> 使用  <tt class="keyword">raise</tt> 叙述可以引发一个特定的 exception，例如：
+  </p>
+                <p> </p>
+                <dl>
+                <dd><pre class="verbatim">&gt;&gt;&gt; raise NameError, 'HiThere'<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1<br>NameError: HiThere<br></pre>
+                  </dd>
+                  </dl>
+  
+                  <p> <tt class="keyword">raise</tt> 的第一个参数是想要引发的exception的类型，第二个参数(可有可无)则是指定这个exception的参数值。
+  </p>
+                  <p>  </p>
+                  <h1> <br>
+ 8.5 使用者自订的例外(Exceptions)   </h1>
+  
+                  <p> 程式设计师可以自己命名自己想要的excetion，其方法是指定一个字串给一个变数，或者是自己创造一个新的exception类别来。举例说明：
+  </p>
+                  <p> </p>
+                  <dl>
+                  <dd><pre class="verbatim">&gt;&gt;&gt; class MyError:<br>...     def __init__(self, value):<br>...         self.value = value<br>...     def __str__(self):<br>...         return `self.value`<br>... <br>&gt;&gt;&gt; try:<br>...     raise MyError(2*2)<br>... except MyError, e:<br>...     print 'My exception occurred, value:', e.value<br>... <br>My exception occurred, value: 4<br>&gt;&gt;&gt; raise MyError, 1<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1<br>__main__.MyError: 1<br></pre>
+                    </dd>
+                    </dl>
+  
+                    <p> 许多标准的module都自己自订其exception来报回(report)在他们自己所定义的函式里面所发生的错误。
+  </p>
+                    <p> 有关于classes 更多的讨论请看<a href="node11.html#classes">第九章</a>
+``类别''。  </p>
+                    <p>  </p>
+                    <h1> <br>
+ 8.6 定义善后的动作  </h1>
+  
+                    <p> 在  <tt class="keyword">try</tt> 叙述的机制里面有一个可有可无的子句(optional
+clause)，其功用是在定义不管什么情况发生下，你都得要做的清除善后的工作。 举例来说：  </p>
+                    <p> </p>
+                    <dl>
+                    <dd><pre class="verbatim">&gt;&gt;&gt; try:<br>...     raise KeyboardInterrupt<br>... finally:<br>...     print 'Goodbye, world!'<br>... <br>Goodbye, world!<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 2<br>KeyboardInterrupt<br></pre>
+                      </dd>
+                      </dl>
+  
+                      <p> 这个  <i>finally clause</i> 不管你的程式在try里面是否有任何的exception发生都会被执行。当exception发生时，程式会执行finally
+clause之后再引发这个exception。当程式的 <tt class="keyword">try</tt> try部分因为 <tt class="keyword">
+break</tt> 或 <tt class="keyword">return</tt> 而离开时，finally clause也一样会在离开的时候(``on
+the way out'')被执行。   </p>
+                      <p> 一个 <tt class="keyword">try</tt> 叙述机制应该要有一个或多个except
+clauses，或者是有一个 finally clause，但是不能两个都有。   </p>
+                      <p>  </p>
+                      <div class="navigation">
+                      <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                          <tr>
+ <td><a href="node9.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node11.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                        </tbody>
+                      </table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node9.html">7.
+输入(Input)与输出(Output)</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node11.html">
+9. 类别(Classes)</a> <br>
+                      <hr></div>
+ <!--End of Navigation Panel--> 
+                      <address> </address>
+                      <hr>请看<i><a href="about.html">关于此文件&hellip;</a></i>
+ 里面有关如何给我们建议的说明。  
+                      </body>
+                      </html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>A. 互动式输入编辑及代换过去的内容</title>
+  
+  <meta name="description" content="A. 互动式输入编辑及代换过去的内容 ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node14.html">
+ 
+  <link rel="previous" href="node12.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node14.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<p></p>
+<hr>
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node12.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node14.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node12.html">
+10. 现在呢? </a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node14.html">
+关于此文件&hellip;</a> </div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落 </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html391" href="node13.html#SECTION0013100000000000000000">
+A.1 整行编辑 </a> </li>
+  <li><a name="tex2html392" href="node13.html#SECTION0013200000000000000000">
+A.2 代换过去的内容 </a> </li>
+  <li><a name="tex2html393" href="node13.html#SECTION0013300000000000000000">
+A.3 键盘连结 </a> </li>
+  <li><a name="tex2html394" href="node13.html#SECTION0013400000000000000000">
+A.4 评注 </a> </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ A. 互动式输入编辑及代换过去的内容           </h1>
+  
+<p> 有些的Python的直译器版本有支援目前所在行的编辑，以及过去输入内容的代换，这跟在Korn Shell以及GNU Bash shell里面的一些功能有点像。这个功能是用
+ <i>GNU Readline</i> 的程式库做出来的，提供了类似Emacs以及类似vi的编辑功能。这个程式库本身有自己的参考文件，所以我在此不再重复，我只是简单的介绍基本的功能。这里所介绍的互动模式输入编辑及代换过去内容的功能通常在Unix以及CygWin的直译器版本都可以见得到。
+  </p>
+<p> 本章 <i>没有</i> 包含在Mark Hammond的PythonWin package里的编辑功能，也没有包含在标准Python distribution里面的Tk之类的环境，或是IDLE的编辑功能。在DOS以及NT及其他类似的环境下，也有命令列过去内容记忆的功能，但是也不在本文的内容之中。 
+ </p>
+<p>  </p>
+<h1> <br>
+ A.1 整行编辑  </h1>
+  
+<p> 如果有支援整行编辑的话，当直译器印出primary prompt或是secondary prompt的时候，整行编辑的功能就会被启动起来。你可以用一般的Emacs控制字元来编辑目前所在的行。其中常见的有这些：
+<kbd>C-A</kbd> (Control-A)会移动cursor到目前行的最开头的地方， <kbd>C-E</kbd> 会移动到最尾端， 
+<kbd>C-B</kbd> 会往左移动一个位置， <kbd>C-F</kbd> 会往右边一个位置。Backspace键会消去目前cursor所在处左边的一个字元，
+<kbd>C-D</kbd> 会消去右边的一个字元，  <kbd>C-K</kbd> 会杀掉 (消去)本行在游标之后的所有字元， <kbd>C-Y</kbd>
+ 会把刚刚所杀掉的字串再次贴回来，  <kbd>C-underscore</kbd> 会取消刚才所做的最后一个动作，这个功能也可以重复多次的使用。
+  </p>
+<p>  </p>
+<h1> <br>
+ A.2 代换过去的内容  </h1>
+  
+<p> 要取代过去的内容其方法如下：所有的非空白行都会被储存在一个储存过去内容的缓冲区(history buffer)里面，当prompt出现的时候，你所在的位置就是在这个buffer的最底下，使用
+<kbd>C-P</kbd> 会使得在buffer里面往上移动一行，  <kbd>C-N</kbd> 会往下移动一行。任何在buffer里面的行都可以被编辑，若是在prompt之前出现星号的话就代表这个行已经被修改过了。当你按下
+<kbd>Return</kbd> 键的时候就是把目前这一行送给直译器了。 <kbd>C-R</kbd> 会开始一个逐渐往上的搜寻，按下  <kbd>
+C-S</kbd> 会开始往前的搜寻。   </p>
+<p>  </p>
+<h1> <br>
+ A.3 键盘连结  </h1>
+  
+<p> 键盘的连结以及一些其他有关Readline library的参数都可以被修改，其方法是在一个叫做  <span class="file">
+~/.inputrc</span> 的初始化档案中打入一些指令。键盘的连结有以下的几种形式：   </p>
+<p> </p>
+<dl>
+<dd><pre class="verbatim">key-name: function-name<br></pre>
+  </dd>
+  </dl>
+  
+  <p> 或是   </p>
+  <p> </p>
+  <dl>
+  <dd><pre class="verbatim">"string": function-name<br></pre>
+    </dd>
+    </dl>
+  
+    <p> 你也可以设定一些选项：   </p>
+    <p> </p>
+    <dl>
+    <dd><pre class="verbatim">set option-name value<br></pre>
+      </dd>
+      </dl>
+  
+      <p> 请看下面的例子：   </p>
+      <p> </p>
+      <dl>
+      <dd><pre class="verbatim"># I prefer vi-style editing:<br>set editing-mode vi<br><br># Edit using a single line:<br>set horizontal-scroll-mode On<br><br># Rebind some keys:<br>Meta-h: backward-kill-word<br>"\C-u": universal-argument<br>"\C-x\C-r": re-read-init-file<br></pre>
+        </dd>
+        </dl>
+  
+        <p> 注意的是在Python里面预设的 <kbd>Tab</kbd> 键所连结的是输入一个  <kbd>Tab</kbd> 字元，而非Readline
+程式库里面预设的档名自动完成的功能。如果你坚持的话，你也可以这样子设定来盖过Python的预设：   </p>
+        <p> </p>
+        <dl>
+        <dd><pre class="verbatim">Tab: complete<br></pre>
+          </dd>
+          </dl>
+  
+          <p> 这应该在你的 <span class="file">~/.inputrc</span> 里面。(当然如果你这样做的话，你在缩排连续行的时候就费力一些了。)
+  </p>
+          <p> 自动完成变数及module的名称的功能是可以自由选择要或不要的。如果你要在互动模式下启动这一个功能的话，可以在启动档里面加入底下的指令：
+          <a name="tex2html6" href="#foot1328"><sup>A.1</sup></a>  </p>
+          <p> </p>
+          <dl>
+          <dd><pre class="verbatim">import rlcompleter, readline<br>readline.parse_and_bind('tab: complete')<br></pre>
+            </dd>
+            </dl>
+  
+            <p> 这样做的话会使TAB 键连结到完成的功能，所以按下TAB键两次就会建议一些完整的名称。其所搜寻的是Python的叙述名称，目前的local变数，以及可用的module名称。对于像
+            <code>string.a</code> 这样带有点的expression，这项功能会先是着先evaluate到最后一个点的意思，然后再从所得的物件中建议可用的变数名称。注意的是，如果这个物件含有的
+ <tt class="method">__getattr__()</tt> 这个method是这个expression的一部份的话，就会执行一些特定的程式码。
+  </p>
+            <p>  </p>
+            <h1> <br>
+ A.4 评注   </h1>
+  
+            <p> 这个功能跟其他之前的直译器版本比起来是很大的一个进步，但是我们还有很多希望有的功能。如果在连续行的时候可以建议适当的缩排距离(分析器(parser)应该知道何时需要缩排)。自动完成的功能应该也能够使用直译器的symbol
+table。应该也要有一个指令可以检查(甚至是建议)何时应该要有结束的括弧，括号等等。  </p>
+            <p> <br>
+            </p>
+            <hr>
+            <h4>注脚</h4>
+ 
+            <dl>
+            <dt><a name="foot1328">... 底下的指令：</a><a name="foot1328" href="node13.html#tex2html6"><sup>
+A.1</sup></a> </dt>
+              <dd>   当你启动一个Python的互动式直译器时，Python会自动执行在     <a class="envvar" name="l2h-24">
+$PYTHONSTARTUP</a> 这个系统环境变数所代表的档案里面的指令。  </dd>
+                </dl>
+ 
+                <div class="navigation">
+                <p></p>
+                <hr>
+                <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                    <tr>
+ <td><a href="node12.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node14.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                  </tbody>
+                </table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node12.html">
+10. 现在呢? </a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node14.html">
+关于此文件&hellip;</a> </div>
+ <!--End of Navigation Panel--> 
+                <address> </address>
+                <hr>请看<i><a href="about.html">关于此文件&hellip;</a></i> 里面有关如何给我们建议的说明。 
+ 
+                </body>
+                </html>

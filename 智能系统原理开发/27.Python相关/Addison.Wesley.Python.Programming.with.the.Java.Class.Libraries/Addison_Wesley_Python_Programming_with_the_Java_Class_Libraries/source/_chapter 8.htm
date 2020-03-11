@@ -1,0 +1,1514 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 8</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 8.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 8.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 8.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%207.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%209.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 8. Working with Files</h2><ul><li>&nbsp;<a class="docLink" href="#ch08lev1sec1">Simple File Operations</a></li>
+<li>&nbsp;<a class="docLink" href="#ch08lev1sec2">Common File Methods</a></li>
+<li>&nbsp;<a class="docLink" href="#ch08lev1sec3">Putting It All Together: The Address Book Example</a></li>
+<li>&nbsp;<a class="docLink" href="#ch08lev1sec4">The Full address3.py Code</a></li>
+<li>&nbsp;<a class="docLink" href="#ch08lev1sec5">Persisting Objects with pickle</a></li>
+<li>&nbsp;<a class="docLink" href="#ch08lev1sec6">pickle and the Address Book Application</a></li>
+<li>&nbsp;<a class="docLink" href="#ch08lev1sec7">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class instance</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Comment</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Data persistence</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Data structure</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Document string</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Dump</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">File</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">File object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">File pointer</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">for, if, and while statements</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">for loop</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Java Virtual Machine</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Mode</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">newline</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Object instance</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">pickle module</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Scaffolding</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">try … except</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">try … finally</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">while loop</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">I've written programs that read and write data from files in 
+Java, Delphi, Visual Basic, C++, and C. None have such a straightforward and 
+easy approach to dealing with files as Python's. In this chapter we'll be 
+covering file input and output, which is important for saving data. First we'll 
+cover simple I/O; later we'll deal with persisting class instances.</p>
+<p class="docText">Writing a program that resides only in memory is good for 
+illustration, but eventually you'll need to write that program to a file. Do you 
+remember our address book example in
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a>? What 
+happened to the addresses when the program ended? Gone, and that isn't good. We 
+need a way to save addresses so that we can use them again. Files fit the bill.</p>
+<h3 class="docSection1Title" id="ch08lev1sec1">Simple File Operations</h3>
+<p class="docText">Before we begin our tour of files, we'll create a directory,
+<span class="docEmphasis">c:\dat,</span> where we'll put the data file we'll be 
+working with throughout the chapter.</p>
+<p class="docText">In Python, file I/O is built into the language, so working 
+with files doesn't require an API or library. You just make a call to the 
+intrinsic (built-in) <tt>open()</tt> function, which returns a file object. The 
+typical form of <tt>open()</tt> is <tt>open(filename, mode)</tt>.</p>
+<p class="docText">Say, for example, that you want to open a file in
+<span class="docEmphasis">c:\dat</span> and write <tt>&quot;Hello World&quot;</tt> to it. 
+Here's how to do that. (Start up the interactive interpreter and follow along.)</p>
+<pre>&gt;&gt;&gt; file = open(&quot;c:\\dat\\hello.txt&quot;, &quot;w&quot;)
+&gt;&gt;&gt; file.write(&quot;Hello World &quot;)
+&gt;&gt;&gt; file.write(&quot;Hello Mars &quot;)
+&gt;&gt;&gt; file.write(&quot;Hello Jupiter &quot;)
+&gt;&gt;&gt; file.close()</pre>
+<p class="docText">Now, using your favorite editor, open up
+<span class="docEmphasis">c:\dat\hello.txt.</span> You should see this:</p>
+<pre>Hello World Hello Mars Hello Jupiter</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Determining the File Object Type</h2>
+      <p class="docText">To see the type of a file object, enter</p>
+      <pre>&gt;&gt;&gt; file = open(&quot;\\dat\\test.dat&quot;,&quot;w&quot;)
+&gt;&gt;&gt; type(file)</pre>
+      <p class="docText">Under Jython and Jython you get</p>
+      <pre>&lt;jclass org.python.core.PyFile at 2054104961&gt;</pre>
+      <p class="docText">Under Python (a.k.a CPython) you get</p>
+      <pre>&lt;type 'file'&gt;</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch08lev2sec1">File Modes</h4>
+<p class="docText">The Python file object supports the following modes:</p>
+<ul>
+  <li>
+  <p class="docList">Write—&quot;<tt>w</tt>&quot;, &quot;<tt>wb</tt>&quot;</li>
+  <li>
+  <p class="docList">Read—&quot;<tt>r</tt>&quot;, &quot;<tt>rb</tt>&quot;</li>
+  <li>
+  <p class="docList">Read and write—&quot;<tt>r+</tt>&quot;, &quot;<tt>r+b</tt>&quot;</li>
+  <li>
+  <p class="docList">Append—&quot;<tt>a</tt>&quot;, &quot;<tt>ab</tt>&quot;</li>
+</ul>
+<p class="docText">The <tt>&quot;b&quot;</tt> appended to the mode signifies binary, which 
+is necessary under Windows and Macintosh operating systems to work with binary 
+files. You don't need binary mode with Jython because its code executes in the 
+context of the Java Virtual Machine (JVM), which in this case is like a virtual 
+operating system sitting atop the base operating systems, making them behave 
+alike. You don't need binary mode, either, if you're running CPython under UNIX</p>
+<h4 class="docSection2Title" id="ch08lev2sec2">Persisted Data</h4>
+<p class="docText">Writing to files without reading them doesn't do you much 
+good unless you're creating a report of some kind. If you want to persist data 
+so you can use it later, you have to be able to read it back into the program. 
+Here's how we read the data that we wrote in the first example (please follow 
+along):</p>
+<pre>&gt;&gt;&gt; file = open(&quot;\\dat\\hello.txt&quot;, &quot;r&quot;)
+&gt;&gt;&gt; file.read()
+'Hello Mars Hello Jupiter'
+&gt;&gt;&gt; file.close()</pre>
+<p class="docText">The <tt>read()</tt> method returns a string representing the 
+contents of the file.</p>
+<h3 class="docSection1Title" id="ch08lev1sec2">Common File Methods</h3>
+<p class="docText">The Python file object supports the methods shown in the 
+following list:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>read()</tt>— read in data from the file</li>
+  <li>
+  <p class="docText"><tt>readline()</tt>— read a line of data from a file</li>
+  <li>
+  <p class="docText"><tt>readlines()</tt>— read all the lines in the file and 
+  return them as a tuple of strings</li>
+  <li>
+  <p class="docText"><tt>write()</tt>— write data to a file</li>
+  <li>
+  <p class="docText"><tt>writelines()</tt>— write a tuple of lines to a file</li>
+  <li>
+  <p class="docText"><tt>seek()</tt>— move to a certain point in a file</li>
+  <li>
+  <p class="docText"><tt>tell()</tt>— determine the current location in the file</li>
+</ul>
+<p class="docText">This is only a partial list. You can read about other file 
+object methods in the Python documentation.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">A Little Review</h2>
+      <p class="docText">You can get a list of methods that a file object 
+      supports by using the <tt>dir()</tt> command like this:</p>
+      <pre>&gt;&gt;&gt; file = open(&quot;\\dat\\hello.txt&quot;)
+&gt;&gt;&gt; dir (file)
+['close', 'closed', 'fileno', 'flush', 'isatty', 'mode', 'name', 'read',
+'readinto', 'readline', 'readlines', 'seek', 'softspace', 'tell',
+'truncate', 'write', 'writelines']
+dir() lists all public members of a class.</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch08lev2sec3">write() and readline()</h4>
+<p class="docText">In our <span class="docEmphasis">c:\dat\hello.txt</span> 
+example, we wrote three strings. Then we used a text editor to read that file 
+and saw that all three strings were on the same line. Of course, this is a very 
+short file, but if all of the items we wrote to a standard-size file were 
+written on the same line, the file would be hard to read and parse. To avoid 
+this, we can write a newline character (\<tt>n</tt>) at the end of each line to 
+denote that the text that follows begins a new line.</p>
+<p class="docText">Let's continue with some examples that demonstrate writing 
+data on separate lines. Follow along in the interactive interpreter.</p>
+<p class="docText">First we write three lines to a file like this:</p>
+<pre>&gt;&gt;&gt; fname = &quot;c:\\dat\\data.txt&quot;
+&gt;&gt;&gt; f = open (fname, &quot;w&quot;)  #open the file in write mode
+&gt;&gt;&gt; f.write(&quot;line1 \n&quot;)         #write out a line of text.
+&gt;&gt;&gt;                              # the \n signifies newline
+&gt;&gt;&gt; f.write(&quot;line2 &quot;)            #write out some text.
+&gt;&gt;&gt; f.write(&quot; still line2&quot;)      #write out some more text
+&gt;&gt;&gt; f.write(&quot; \n&quot;)        #write out a newline character
+&gt;&gt;&gt; f.write(&quot;line3 \n&quot;)          #write out a line of text
+&gt;&gt;&gt; f.close()             #close the file
+&gt;&gt;&gt; f = None              #set the ref to none
+</pre>
+<p class="docText">Without the newline character, all of the text is on the same 
+line, which you can see by opening the file (<span class="docEmphasis">c:\dat\data.txt</span>) 
+and comparing each line of text with the code that created it.</p>
+<pre>f.write(&quot;line2 &quot;)        #write out some text.
+f.write(&quot; still line2&quot;)  #write out some more text
+f.write(&quot; \n&quot;)                  #write out a newline character
+</pre>
+<p class="docText">Now let's reopen our file in read mode and read each line 
+individually with the <tt>readline()</tt> method.</p>
+<pre>&gt;&gt;&gt; f = open (fname, &quot;r&quot;)  # open the file in read mode
+&gt;&gt;&gt; line = f.readline()           # read one line in and store it in line
+&gt;&gt;&gt; line                          # line one contains the first line we
+&gt;&gt;&gt;                               # wrote. Note &quot;\n&quot; = &quot;\12&quot;
+'line1 \ 12'
+&gt;&gt;&gt; print line                    # print the line. note that the newline
+&gt;&gt;&gt;                               # is still attatched to the line
+line1
+
+&gt;&gt;&gt; f.readline()           #read the second line.
+'line2    still line2 \ 12'
+&gt;&gt;&gt; f.readline()           #read the third line
+'line3 \ 12'
+&gt;&gt;&gt; f.close()        #close the file
+&gt;&gt;&gt;
+</pre>
+<p class="docText">Notice that we have a lot fewer <tt>readline()</tt> calls 
+than we had <tt>write()</tt> calls. This is because <tt>readline()</tt> reads a 
+line of text until it hits the newline character, which it interprets as the 
+last character in the input string.</p>
+<h4 class="docSection2Title" id="ch08lev2sec4">readlines()</h4>
+<p class="docText">The <tt>readlines()</tt> method (note plural) reads all of 
+the lines in the file and puts them in a list of strings. To illustrate, we'll 
+read all of the lines in the file at once with the following interactive 
+session:</p>
+<pre>&gt;&gt;&gt; f = open(fname, &quot;r&quot;)   #reopen the file in read mode
+&gt;&gt;&gt; list = f.readlines()   #read in all the lines at once
+&gt;&gt;&gt; list                          #display the list
+['line1 \ 12', 'line2   still line2 \ 12', 'line3 \ 12']
+&gt;&gt;&gt; for line in list:             #print out each line
+...        print line
+...
+line1
+line2 still line2
+line3
+&gt;&gt;&gt;</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">Getting Rid of \n</h2>
+    <p class="docText">You may want to dispose of the newline character when you 
+    read in a line. Here's the not very Python way of doing this:</p>
+    <pre>&gt;&gt;&gt; f = open(&quot;\\dat\\data.txt&quot;)  #reopen the file again
+&gt;&gt;&gt; line = f.readline()    #read in the line
+&gt;&gt;&gt; line                   #before removing the newline character
+'line1 \ 12'
+
+&gt;&gt;&gt; line = line[0:len(line)-1] #chop of the newline character
+&gt;&gt;&gt; line                   #After the newline character is gone.
+'line1 '
+&gt;&gt;&gt; f.close()       #close the file</pre>
+    <p class="docText">Here's the more Python way:</p>
+    <pre>&gt;&gt;&gt; f = open(&quot;\\dat\\data.txt&quot;)   # reopen the file
+&gt;&gt;&gt; line = (f.readline())[:-1]    # read the line and chop
+&gt;&gt;&gt;                                     # the newline character off.
+&gt;&gt;&gt; line
+'line1 '</pre>
+    <p class="docText">We're doing two things at once with this call. We're 
+    putting <tt>readline()</tt> in parentheses and then using the <tt>[]</tt> 
+    operator with slice notation on the list it returns.</p>
+    <pre>line = (f.readline())[:-1]             # read the line and chop
+                     # the newline character off.</pre>
+    <p class="docText">In case you didn't catch what we just did, here's the 
+    same thing in slow motion, reading the second line, with a few more code 
+    steps for clarity.</p>
+    <pre>&gt;&gt;&gt; line2 = f.readline()    # Read in line2.
+&gt;&gt;&gt; line2 = line2[:-1]             # Using slice notation assign
+&gt;&gt;&gt;                                # line2 to line2 from the first
+&gt;&gt;&gt;                                # character up to but not including
+&gt;&gt;&gt;                         # the last character.
+&gt;&gt;&gt; line2                          # Display line2
+'line2 still line2 '</pre>
+    <p class="docText">For a review of slice notation, go back to
+    <a class="docLink" href="_chapter%201.htm">Chapters 1</a>,
+    <a class="docLink" href="_chapter%202.htm">2</a> and
+    <a class="docLink" href="_chapter%203.htm">3</a>.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch08lev2sec5">read()</h4>
+<p class="docText">Let's start a new example to show how to use <tt>read()</tt>. 
+First we'll create a file and write the hex digits <tt>1</tt> through <tt>F</tt> 
+to it. Then we'll open the file (<span class="docEmphasis">c:\\dat\\read.txt</span>) 
+in write mode. (Don't worry about hex for now; just follow along.)</p>
+<pre>&gt;&gt;&gt; f = open(&quot;\\dat\\read.txt&quot;, &quot;w&quot;)
+&gt;&gt;&gt; f.write(&quot;0123456789ABCDEF&quot;)
+&gt;&gt;&gt; f.close()</pre>
+<p class="docText">That's the setup. Now we'll demonstrate the different ways to 
+use <tt>read()</tt>.</p>
+<pre>&gt;&gt;&gt; f = open(&quot;\\dat\\read.txt&quot;, &quot;r&quot;)
+&gt;&gt;&gt; f.read(3)       # Read the first three characters.
+'012'
+
+&gt;&gt;&gt; f.read(3)       # Read the next three characters in the file.
+'345'
+
+&gt;&gt;&gt; f.read(4)       # Read the next four characters in the file.
+'6789'
+
+&gt;&gt;&gt; f.read()        # Read the rest of the file.
+'ABCDEF'</pre>
+<p class="docText">We can see that <tt>read(size)</tt> reads a specified number 
+of characters from the file. Note that calling <tt>read()</tt> with no arguments 
+reads the rest of the file and that the second <tt>read()</tt> starts reading 
+where the first one left off.</p>
+<h4 class="docSection2Title" id="ch08lev2sec6">tell() and seek()</h4>
+<p class="docText">We just saw that the file object keeps track of where we left 
+off reading in a file. What if we want to move to a previous location? For that 
+we need the <tt>tell()</tt> and <tt>seek()</tt> methods. Here's an example that 
+continues our <tt>read()</tt> example:</p>
+<pre>&gt;&gt;&gt; f.seek(0)        #reset the file pointer to 0
+&gt;&gt;&gt; f.read()  #read in the whole file
+'0123456789ABCDEF'
+
+&gt;&gt;&gt; f.tell()  #see where the file pointer is
+16
+
+&gt;&gt;&gt; f.seek(8) #move to the middle of the file
+&gt;&gt;&gt; f.tell()    #see where the file pointer is
+8
+
+&gt;&gt;&gt; f.read()   #read from the middle of the file to the end
+'89ABCDEF'</pre>
+<p class="docText">The second line reads in the whole file, which means that the 
+file pointer was at the end. The third line uses <tt>tell()</tt> to report where 
+the file pointer was, and then <tt>seek()</tt> positions the pointer to the 
+middle of the file. Again, <tt>tell()</tt> reports that location. To demonstrate 
+that <tt>read()</tt> picks up from the file pointer's location, we'll read the 
+rest of the file and display it.</p>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">For Beginners: Try It Out</h2>
+    <p class="docText">If you're sitting there staring at the book and wondering 
+    what I'm talking about, you need to do three things:</p>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList">
+      <li><span style="FONT-WEIGHT: normal" value="1">
+      <p class="docList">Enter in the last example in the interactive 
+      interpreter, and experiment with <tt>tell()</tt>, <tt>seek()</tt>, and <tt>
+      read()</tt>.</span></li>
+      <li><span style="FONT-WEIGHT: normal" value="2">
+      <p class="docList">Open the file with your favorite text editor, and count 
+      the characters in it.</span></li>
+      <li><span style="FONT-WEIGHT: normal" value="3">
+      <p class="docList">Move around the file, and read various characters. To 
+      read a single character, call the <tt>read()</tt> method with <tt>1</tt> 
+      as its argument.</span></li>
+    </ol>
+    </span>
+    <p class="docText">If you still don't get it, don't worry; we'll cover this 
+    more in the next section.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch08lev1sec3">Putting It All Together: The Address Book Example</h3>
+<p class="docText">In <a class="docLink" href="_chapter%204.htm">
+Chapter 4</a>, we used an address book application to demonstrate the <tt>if</tt>,
+<tt>for</tt>, and <tt>while</tt> statements. We're bringing it back to review 
+the concepts we've learned so far.</p>
+<pre>name = &quot;   &quot;
+while (name != &quot;&quot;):
+       name = raw_input(&quot;Enter in the name: &quot;)
+       if (name == &quot;&quot;):
+             continue
+       elif (name == &quot;quit&quot;):
+             break
+       phone_number = raw_input(&quot;Enter in the phone number: &quot;)
+       address_line1 = raw_input(&quot;Enter address line one: &quot;)
+       if (address_line1 == &quot;&quot;):
+             continue
+       address_line2 = raw_input(&quot;Enter address line two: &quot;)
+       address_line3 = raw_input(&quot;Enter address line three: &quot;)
+       #do something useful with the addresses
+else:
+       print(&quot;send the email to Rick&quot;)
+       #emailAddresses(&quot;rick_m_hightower@emailcompany.com&quot;)</pre>
+<h4 class="docSection2Title" id="ch08lev2sec7">Organization</h4>
+<p class="docText">The first thing we want to do is organize our program to 
+store the data structures, so we'll create a class (the code is from
+<span class="docEmphasis">address1.py</span>).</p>
+<pre>class Address:
+       def __init__(self, name=&quot;&quot;, phone_number=&quot;&quot;, address_lines=[]):
+             self.__name=name
+             self.__phone_number=phone_number
+             self.__lines=address_lines</pre>
+<p class="docText">The <tt>Address</tt> class represents an entry in our address 
+book. Later we'll add a __<tt>save</tt>__ method so we can write <tt>Address</tt>'s 
+contents out to a file. Before we do that, though, we need to change the address 
+program to store the addresses in instances of <tt>Address</tt>, and we need to 
+store the instances in some collection object—I picked a dictionary. (I also 
+added comments to make the flow of the program clear for those of you who forgot
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a>.) Here's 
+the amended code (from <span class="docEmphasis">address1.py</span>):</p>
+<pre>dict = {}      # to hold the addresses, i.e., to hold
+       # instances of the Address class
+name = &quot;   &quot;
+while (name != &quot;&quot;):
+       # Get the name of the person
+name = raw_input(&quot;Enter in the name: &quot;)
+
+       # if the name is empty then continue at the top of the loop
+       # else if the name equal quit then break out of the loop
+if (name == &quot;&quot;):
+       continue
+elif (name == &quot;quit&quot;):
+       break
+
+       # Get the phone number for the person
+phone_number = raw_input(&quot;Enter in the phone number: &quot;)
+       # Get the address of the person
+       # If the first address line is blank then continue
+# with entering in the next address
+       # Otherwise gather the other two address lines
+address_line1 = raw_input(&quot;Enter address line one: &quot;)
+if (address_line1 == &quot;&quot;):
+             #Create an address object and store
+       # it in the dictionary
+       address = Address(name, phone_number, [])
+       dict[name]=address
+       continue
+address_line2 = raw_input(&quot;Enter address line two: &quot;)
+address_line3 = raw_input(&quot;Enter address line three: &quot;)
+       #Create an address object and store it in the dictionary
+address = Address(name, phone_number, [address_line1, address_line2, address_line3])
+       dict[name]=address
+
+       #do something useful with the addresses
+else:
+       print(&quot;send the email to Rick&quot;)</pre>
+<p class="docText">The code consists of a <tt>while</tt> loop that gathers 
+addresses from the user. If the user enters a blank string for the name, the 
+loop starts at the top. If the user returns a blank for the first address line, 
+that line is left off. Once all fields have been gathered, we construct an 
+instance of the <tt>Address</tt> class and store it in the dictionary. As an 
+exercise, try running the program from <span class="docEmphasis">address1.py.</span></p>
+<h4 class="docSection2Title" id="ch08lev2sec8">File Support</h4>
+<p class="docText">The next thing we do is provide file support for our program 
+by adding the __<tt>save</tt>__ method in the <tt>Address</tt> class. Taking a 
+file object as an argument, __<tt>save</tt>__ saves members of the class 
+instance to a file. The following, from <span class="docEmphasis">address2.py,</span> 
+shows <tt>Address.save</tt>:</p>
+<pre>class Address:
+       ...
+       ...
+       def save(self, file):
+              file.write(self.__name + &quot;\n&quot;)
+              file.write(self.__phone_number + &quot;\n&quot;)
+                     # if there are address lines then write them out
+              # to the file
+              if(len(self.__lines)&gt;0):
+                     file.write(&quot;true&quot; + &quot;\n&quot;)
+                     file.write(`self.__lines` + &quot;\n&quot;)</pre>
+<p class="docText">As you can see, <tt>save</tt> writes all of the members of 
+the class. The code checks for any address lines; if there aren't any, it just 
+skips writing them. If there are, it writes out <tt>&quot;true&quot;</tt> to the file and 
+then writes out the address lines using the string representation <tt>`self.__lines`</tt>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Beginners: repr()</h2>
+      <p class="docText">Remember the <tt>repr()</tt> built-in function from
+      <a class="docLink" href="_chapter%206.htm">Chapter 6</a>? It 
+      prints the string representation of an object so that it can be rebuilt 
+      with a call to the <tt>eval</tt> statement. Thus, when we do this:</p>
+      <pre>file.write(`self.__lines` + &quot;\n&quot;)</pre>
+      <p class="docText">we get a string representation of the built-in list 
+      object. Note that <tt>repr()</tt> is called when you use back quotes, so
+      <tt>`self__lines`</tt> is equivalent to <tt>repr(self.__lines)</tt>.</p>
+      <p class="docText"><tt>repr()</tt> is essential for reading the list back 
+      in from the file. We'll review it with this interactive session:</p>
+      <pre>&gt;&gt;&gt; list = [&quot;item1&quot;, &quot;item2&quot;, &quot;item3&quot;] # create list
+&gt;&gt;&gt; list                    # show the contents of the list
+['item1', 'item2', 'item3']
+
+&gt;&gt;&gt; string = `list`         # return string representation of the list
+&gt;&gt;&gt; type(string)            # show that this is a string
+&lt;type 'string'&gt;
+
+&gt;&gt;&gt; string           #print the string to the console
+&quot;['item1', 'item2', 'item3']&quot;
+
+&gt;&gt;&gt; list2=eval(string)      # use the eval statement to create
+&gt;&gt;&gt;                                # the object from the string
+
+&gt;&gt;&gt; list2                   # show that the newly created object
+&gt;&gt;&gt;                         # is a list like the other list
+['item1', 'item2', 'item3']
+
+&gt;&gt;&gt; list ==list2
+1
+
+&gt;&gt;&gt; type(list2)
+&lt;jclass org.python.core.PyList at 161274&gt;</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch08lev2sec9">Writing to the File</h4>
+<p class="docText">The next thing we add is the ability to write each address 
+out to the file (this example is from <span class="docEmphasis">address2.py</span>).</p>
+<pre>dict = {}  #to hold the addresses
+name = &quot;   &quot;
+while (name != &quot;&quot;):
+       ...
+       ...
+else:
+              #Open up the file for writing
+       file = open (&quot;\\dat\\address2.txt&quot;, &quot;w&quot;)
+              #write each address in the dictionary to the file
+       for address in dict.values():
+           address.save(file)</pre>
+<p class="docText">In the <tt>else</tt> clause of the <tt>while</tt> loop, we 
+write out the addresses that we collected in the dictionary. First we open up
+<span class="docEmphasis">c:\dat\address2.txt</span> for reading. Then we create 
+a <tt>for</tt> loop to iterate through the address objects in <tt>dict</tt> (the 
+dictionary object). We write out each address instance by calling __<tt>save</tt>__ 
+and pass it the file object we opened.</p>
+<p class="docText">Let's run our program (<span class="docEmphasis">address2.py</span>), 
+enter a few addresses, and look at the output from the file; we can compare it 
+to the source code that generated it.</p>
+<p class="docText">Wait a minute. There's no use writing items to a file unless 
+we're going to read them back, so let's first add another method, <tt>read()</tt>, 
+to our class. Here's the code (<span class="docEmphasis">address3.py 
+Address.read</span>) for showing how to read an address instance:</p>
+<pre>def read(self, file):
+       &quot;&quot;&quot;
+       The read method reads fields of the instance from a file.
+       The read method has one argument. The file argument holds
+the reference to the output file object.
+       &quot;&quot;&quot;
+
+              # Read in the name field.
+       self.__name = (file.readline())[:-1]
+
+              # Read in the phone number field.
+       self.__phone_number = (file.readline())[:-1]
+
+              # Check to see if the address lines are present.
+              # If the lines are present, read in the address
+       # lines string. Use the eval statement to recreate
+       # the address lines.
+       if(file.readline()[:-1]) == &quot;true&quot;:
+              string = (file.readline()[:-1])
+              self.__lines=eval(string)</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Scaffolding Code</h2>
+      <p class="docText">It's often useful to develop what's known as 
+      scaffolding code to test the code we're writing. One good reason to do so 
+      is that testing code in an interactive session can be cumbersome. The <tt>
+      while</tt> loop we used above to gather address information isn't a good 
+      place for code testing, so we'll add methods that do nothing but test if a 
+      piece of functionality is working. Any method that starts with the word
+      <tt>test</tt> is a scaffolding method.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Here we're reading back the fields one by one. We read in the 
+list that contains the three lines in one call to <tt>readline()</tt>. Then we 
+use <tt>eval</tt> to recreate the object. (If this idea seems weird, take 
+another look at the <tt>repr()</tt> notebox.)</p>
+<p class="docText">Now that we have both the <tt>read()</tt> and <tt>write()</tt> 
+methods for <tt>Address</tt>, let's create some functions to test them. The 
+following code writes addresses and then reads them back and prints them for 
+display:</p>
+<pre>def test():
+       test_write()
+       test_read()
+def test_write():
+       file = open(&quot;\\dat\\testaddr.txt&quot;, &quot;w&quot;)
+       address = Address(&quot;Rick Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Antioch Ca, 95432&quot;, &quot;Line 3&quot;])
+       address.save(file)
+       address = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       address.save(file)
+       address = Address(&quot;Martha Hightower&quot;, &quot;602-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       address.save(file)
+       address = Address(&quot;Mary Hightower&quot;, &quot;520-555-1212&quot;, [])
+       address.save(file)
+
+def test_read():
+       file = open(&quot;\\dat\\testaddr&quot;, &quot;r&quot;)
+       for index in range(0,3):
+              address = Address()
+              address.read(file)
+              print address</pre>
+<p class="docText">If you try to run this code without adding a <tt>__str__</tt> 
+method to the <tt>Address</tt> class, you'll get some very uninteresting and 
+somewhat useless output. Therefore, we'll add __<tt>str</tt>__ to <tt>Address</tt> 
+to display a pretty print string representation of the address object.</p>
+<pre>class Address:
+       ...
+       ...
+       def __str__(self):
+             str = self.__name + &quot;\n&quot;
+             str = str + self.__phone_number + &quot;\n&quot;
+             for line in self.__lines:
+                    str = str + line + &quot;\n&quot;
+             return str</pre>
+<p class="docText">Having a meaningful string representation of a class instance 
+can make debugging very easy.</p>
+<p class="docText">When we run our test, we get the following output. Eyeball it 
+for correctness.</p>
+<pre>&gt;&gt;&gt; from address3 import *
+&gt;&gt;&gt; test()
+Rick Hightower
+920-555-1212
+123 Main St
+Antioch Ca, 95432
+
+Line 3
+Missy Hightower
+920-555-1212
+123 Main St
+Denver Co, 80202
+Line 3
+
+Martha Hightower
+602-555-1212
+123 Main St
+Denver Co, 80202
+Line 3</pre>
+<p class="docText">This is what the <tt>testaddr.txt</tt> file looks like:</p>
+<pre>Rick Hightower
+920-555-1212
+true
+['123 Main St', 'Antioch Ca, 95432', 'Line 3']
+Missy Hightower
+920-555-1212
+true
+['123 Main St', 'Denver Co, 80202', 'Line 3']
+Martha Hightower
+602-555-1212
+true
+['123 Main St', 'Denver Co, 80202', 'Line 3']
+Mary Hightower
+520-555-1212
+false</pre>
+<h4 class="docSection2Title" id="ch08lev2sec10">Writing Out and Reading the File</h4>
+<p class="docText">Of course, now that we've added and tested our reading and 
+writing, we need to put this functionality in <tt>getAddresses</tt>. Actually, 
+we've already added writing, but we need to be able to write out a dictionary of 
+addresses; our writing code does not do any error checking; and the file is 
+getting pretty long. For these reasons, we have to add reading to <tt>
+getAddresses</tt>. What we'll do is create two functions that read and write out 
+a dictionary of address instances, and we'll add the necessary <tt>try...except</tt> 
+and <tt>try...finally</tt> blocks to the code.</p>
+<pre>def readAddresses(filename, dict):
+      &quot;&quot;&quot;
+
+      Read in a dictionary of addresses.
+      This method takes two arguments as follows:
+        filename   holds the filename of the file to read in address
+                       instances from
+        dict       holds reference to the dictionary object that
+                       this function adds addresses to
+      &quot;&quot;&quot;
+      file = None  #to hold reference to the input file object
+             # Use try..finally block to work with the file
+             # If you can't work with the file for any reason close it
+      try:
+                 #     try to read in the addresses from the file
+                 #     if you can't read the addresses then print an
+#     error message
+             try:
+                 file = open(filename,&quot;r&quot;)         #open the file in read mode
+                 strLength=(file.readline())[:-1] # read in the length
+                 length = int(strLength)          # convert length to an int
+                       #read in the addresses from 0 to length
+                 for index in range(0, length):
+                       address=Address()
+                       address.read(file)
+                       dict[address.name()]=address
+
+             except Exception, error:
+                 print error.__class__.__name__
+                 print error
+      finally:
+             if not (file is None): file.close()
+def writeAddresses(filename, dict):
+      &quot;&quot;&quot;
+             Write the addresses instances in a dictionary to a file.
+             writeAddresses has two arguments as follows:
+                 filename        holds the name of the output file
+                 dict            holds the dictionary of address instances
+      &quot;&quot;&quot;
+      file=None  #to hold the output file object
+             #try..finally: try to write the instances to a file.
+             #if all else fails then close the file object
+      try:
+                 #        Write the address instances in dict to a file
+                 #     specified by filename.
+                 #        If there are any errors then print an error message
+             try:
+                 file = open (filename, &quot;w&quot;)
+                 length = str(len(dict))       # determine the number of
+                                               # address instances in dict
+                 file.write(length + &quot;\n&quot;)     # write the length of dict to a # file.
+                          # for each address in dict.values write out the
+                          # address instance to the file object
+                 for address in dict.values():
+                          address.save(file)
+
+             except Exception,error:
+                 print error.__class__.__name__
+                 print error
+      finally:
+             if(file):file.close()</pre>
+<p class="docText">To make the <tt>read()</tt> and <tt>write()</tt> functions 
+workable, we'll add the following method to the <tt>Address</tt> class:</p>
+<pre>def name(self):
+       return self.__name</pre>
+<p class="docText"><tt>name</tt> is used as the key into the dictionary.</p>
+<p class="docText">I added many comments to the previous methods. Make it a 
+habit to read them and any document strings in the code listings. Consider 
+document strings and comments as part of the text of this book. Also, be sure to 
+amply comment your own code.</p>
+<h4 class="docSection2Title" id="ch08lev2sec11">Testing</h4>
+<p class="docText">So far we've added read and write functionality to the <tt>
+Address</tt> class and added functionality for reading in an entire dictionary 
+of addresses and for writing an entire dictionary of address instances. Now we 
+need to update <tt>getAddresses()</tt> to use all of these functions. Before we 
+do that, though, we need to test <tt>read Addresses()</tt> and <tt>
+writeAddresses()</tt>, which means more scaffolding code.</p>
+<pre>def test_read_write():
+      &quot;&quot;&quot;
+             Scaffolding code to test reading and writing dictionaries
+      of addresses.
+      &quot;&quot;&quot;
+             # populate a dictionary object with some sample data
+      dict={}
+      address = Address(&quot;Rick Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Antioch Ca, 95432&quot;, &quot;Line 3&quot;])
+      dict[&quot;Rick Hightower&quot;] = address
+      address = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+      dict[&quot;Missy Hightower&quot;]=address
+      address = Address(&quot;Martha Hightower&quot;, &quot;602-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Phoenix, AZ, 85226&quot;, &quot;Line 3&quot;])
+      dict[&quot;Martha Hightower&quot;]=address
+      address = Address(&quot;Mary Hightower&quot;, &quot;520-555-1212&quot;, [])
+      dict[&quot;Mary Hightower&quot;]=address
+
+      fname=&quot;\\dat\\testaddr.txt&quot; #to hold output filename
+
+             # write the dictionary full of addresses out to the file
+      print &quot;calling writeAddresses&quot;
+      writeAddresses(fname, dict)
+
+             # read in the dictionary full of addresses back from
+      # the file we just wrote it to
+      dict_in = {}                      #to hold input addresses
+      print &quot;calling readAddresses&quot;
+      readAddresses(fname, dict_in)
+
+             #show that the input matches the output
+      print &quot;Input&quot;
+      print dict_in
+      print &quot;Output&quot;
+      print dict
+
+             #return whether these equal each other
+      return dict==dict_in</pre>
+<p class="docText">Essentially, our scaffolding code populates a Python 
+dictionary with address instances. Then it writes the dictionary to a file and 
+reads it back. Next it displays the input and output dictionaries so that you 
+can test them visually. Finally it tells us whether the input dictionary is 
+equal to the output dictionary. With the way the code is written, it should work 
+until we hit the last line.</p>
+<p class="docText">For the last line to work, we need to add a __<tt>cmp</tt>__ 
+method to our <tt>Address</tt> class that iterates through all items in the 
+dictionary and compares them. If all of the items are equal, __<tt>cmp</tt>__ 
+returns that the dictionaries themselves are equal. Here's how we add __<tt>cmp</tt>__ 
+to the <tt>Address</tt> class:</p>
+<pre>def __cmp__(self,other):
+      &quot;&quot;&quot;
+      Compares one address instance to another.
+      If the address instances are equal the __cmp__ returns 0.
+      If the address instances are not equal then we return a
+          non-zero value.
+      &quot;&quot;&quot;
+            # To implement this all we do is compare the
+      # dictionaries of the class
+            # The __dict__ member of the instance holds all
+      # of the instance fields in a dictionary
+      return cmp(self.__dict__ ,other.__dict__)</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">__cmp__ and Equality versus Default Object 
+      Identity</h2>
+      <p class="docText">If we don't define __<tt>cmp</tt>__, the comparison of 
+      objects won't work. To prove this, let's do a small interactive session.</p>
+      <p class="docText">First we define a simple class.</p>
+      <pre>&gt;&gt;&gt; class class1:
+...   var=&quot;hi&quot;
+...</pre>
+      <p class="docText">Then we create two instances.</p>
+      <pre>&gt;&gt;&gt; instance = class1()
+&gt;&gt;&gt; instance2 = class1()</pre>
+      <p class="docText">The instances have the same values, yet when we compare 
+      them they aren't equal (a <tt>0</tt> value equals false).</p>
+      <pre>&gt;&gt;&gt; instance == instance2
+0</pre>
+      <p class="docText">The default operation for __<tt>cmp</tt>__ is to check 
+      for object identity. Thus, if we set another instance to equal the first 
+      and then test for equality, we get a true (<tt>1</tt> value).</p>
+      <pre>&gt;&gt;&gt; instance3 = instance
+&gt;&gt;&gt; instance3 == instance
+1</pre>
+      <p class="docText">However, if we don't define __<tt>cmp</tt>__, testing 
+      for equality is the same as testing for identity. That means that the 
+      following is equivalent to the above code:</p>
+      <pre>&gt;&gt;&gt; instance3 is instance
+1</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">We can use scaffolding to retest the code whenever we add 
+fields to the <tt>Address</tt> class or whenever we change our reading and 
+writing. The following interactive session demonstrates the use of scaffolding 
+code to test the reading and writing of dictionaries of addresses:</p>
+<pre>&gt;&gt;&gt; from address3 import *
+&gt;&gt;&gt; test_read_write()
+calling writeAddresses
+calling readAddresses
+Input
+{'Rick Hightower': &lt;address3.Address instance at 60188&gt;, 'Martha Hightower': &lt;address3.Address instance at 5fe4c&gt;, 'Missy Hightower': &lt;address3.Address instance at 5ffec&gt;, 'Mary Hightower': &lt;address3.Address instance at 5fc7c&gt;}
+Output
+{'Mary Hightower': &lt;address3.Address instance at 5ea58&gt;, 'Martha Hightower': &lt;address3.Address instance at 5e9dc&gt;, 'Missy Hightower': &lt;address3.Address instance at 5e950&gt;, 'Rick Hightower': &lt;address3.Address instance at 5e890&gt;}
+1</pre>
+<p class="docText">As you can see, our code passed because the function returned 
+true. This means that every address in the output dictionary is equal to every 
+address in the input dictionary.</p>
+<h3 class="docSection1Title" id="ch08lev1sec4">The Full address3.py Code</h3>
+<p class="docText">Now it seems that we have everything we need to run our 
+program, but first let's see all of <span class="docEmphasis">address3.py,</span> 
+including the scaffolding code.</p>
+<pre>class Address:
+       &quot;&quot;&quot;This class represents an entry in an address book&quot;&quot;&quot;
+
+             #Constructor
+       def __init__(self, name=&quot;&quot;, phone_number=&quot;&quot;, address_lines=[]):
+             &quot;&quot;&quot;
+The constructor takes three arguments:
+                    name to hold the persons name                  (string)
+                    phone_number to hold the persons phone number  (string)
+                    address_lines to hold the address of the person (list)
+             &quot;&quot;&quot;
+                    # assign the name, phone_number and address_lines to the
+                    # instance variables
+                    # __name, __phone_number, and __lines
+
+             self.__name=name
+             self.__phone_number=phone_number
+             self.__lines=address_lines
+
+             #Methods
+       def save(self, file):
+             &quot;&quot;&quot;
+             The save method saves the instance out to a file.
+             The save method has one argument.
+                    file        holds the reference to a file object.
+             &quot;&quot;&quot;
+                    # write the __name and __phone_number instance variables
+                    # to the file. each variable is on its own line.
+             file.write(self.__name + &quot;\n&quot;)
+             file.write(self.__phone_number + &quot;\n&quot;)
+                    # if there are address lines then write them out to the file
+                    # Since these lines are optional, write &quot;true&quot; if they are
+                    # present and &quot;false&quot; if they are not present.
+             if(len(self.__lines)&gt;0):
+                    file.write(&quot;true&quot; + &quot;\n&quot;)
+                    file.write(`self.__lines` + &quot;\n&quot;)
+             else :
+                    file.write(&quot;false\n&quot;)
+       def read(self, file):
+             &quot;&quot;&quot;
+             The read method reads fields of the instance from a file.
+             The read method has one argument.
+                    file        holds the reference to the output file object.
+             &quot;&quot;&quot;
+                    # Read in the name field.
+             self.__name = (file.readline())[:-1]
+                    # Read in the phone number field.
+             self.__phone_number = (file.readline())[:-1]
+                    # Check to see if the address lines are present.
+                    # If lines are present, read in the address lines string.
+                    # Use the eval statement to recreate the address lines.
+             if(file.readline()[:-1]) == &quot;true&quot;:
+                    string = (file.readline()[:-1])
+                    self.__lines=eval(string)
+
+       def name(self): return self.__name
+
+       def __cmp__(self, other):
+             &quot;&quot;&quot;
+             Compares one address instance to another.
+             If the address instances are equal the __cmp__ returns 0.
+             If the address instances are not equal then we return a non-zero value.
+             &quot;&quot;&quot;
+# to implement this, __cmp__ compares the dictionaries of
+# two instances. The __dict__ holds all of the members.
+             return cmp(self.__dict__ ,other.__dict__)
+
+       def __hash__(self): return hash(self.__name)
+
+       def __str__(self):
+             str = self.__name + &quot;\n&quot;
+             str = str + self.__phone_number + &quot;\n&quot;
+             for line in self.__lines:
+                    str = str + line + &quot;\n&quot;
+             return str
+
+def getAddresses():
+       dict = {}  #to hold the addresses
+
+             # Call read addresses to get the dictionary of addresses
+# from the file
+       readAddresses(&quot;c:\\dat\\addressbook.txt&quot;, dict)
+
+       name = &quot; &quot;
+       while (name != &quot;&quot;):
+                    # Get the name of the person
+             name = raw_input(&quot;Enter in the name: &quot;)
+                    # if the name is empty then continue at the top of the loop
+                    # if the name equals quit then break out of the loop
+             if (name == &quot;&quot;):
+                    continue
+             elif (name == &quot;quit&quot;):
+                    break
+
+                    #Get the phone number for the person
+             phone_number = raw_input(&quot;Enter in the phone number: &quot;)
+
+                    # Get the address of the person
+             address_line1 = raw_input(&quot;Enter address line one: &quot;)
+
+                    # If the first address line is blank then continue with
+                    # entering in the next address
+                    # Otherwise gather the other two address lines
+             if (address_line1 == &quot;&quot;):
+
+                           # Create an address object and store it in the
+                           # dictionary
+                    address = Address(name, phone_number, [])
+                    dict[name]=address
+                    continue
+
+             address_line2 = raw_input(&quot;Enter address line two: &quot;)
+             address_line3 = raw_input(&quot;Enter address line three: &quot;)
+
+                    # Create an address object and store it in the dictionary
+                        lines = [address_line1, address_line2, address_line3]
+             address = Address(name, phone_number, lines)
+             dict[name]=address
+             # Write the addresses we created and the ones that
+             # we read back to the file
+       writeAddresses(&quot;c:\\dat\\addressbook.txt&quot;,dict)
+
+       test_read()
+
+def test_write():
+       file = open(&quot;\\dat\\testaddr.txt&quot;, &quot;w&quot;)
+       address = Address(&quot;Rick Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Antioch Ca, 95432&quot;, &quot;Line 3&quot;])
+       address.save(file)
+       address = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       address.save(file)
+       address = Address(&quot;Martha Hightower&quot;, &quot;602-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       address.save(file)
+       address = Address(&quot;Mary Hightower&quot;, &quot;520-555-1212&quot;, [])
+       address.save(file)
+
+def test_read():
+       file = open(&quot;\\dat\\testaddr.txt&quot;, &quot;r&quot;)
+       for index in range(0,3):
+              address = Address()
+              address.read(file)
+              print address
+def test_equal():
+       address1 = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       address2 = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       return address1==address2</pre>
+<h4 class="docSection2Title" id="ch08lev2sec12">Using getAddresses()</h4>
+<p class="docText">We'll fire up an interactive session as an exercise, and 
+enter three addresses using the <tt>getAddresses()</tt> function.</p>
+<pre>&gt;&gt;&gt; from address3 import getAddresses
+&gt;&gt;&gt; getAddresses()
+Enter in the name: Rick Hightower
+Enter in the phone number: 925-555-1212
+Enter address line one:
+Enter in the name: Kiley Hightower
+Enter in the phone number: 925-555-1212
+Enter address line one:
+Enter in the name: Whitney Hightower
+Enter in the phone number: 925-555-1212
+Enter address line one: 123 Main St.
+Enter address line two: Antioch, CA
+Enter address line three: line 3
+Enter in the name:
+&gt;&gt;&gt; getAddresses()
+Enter in the name: Jenna Paul
+Enter in the phone number: 925-555-1255
+Enter address line one: 125 Main St.
+Enter address line two: Antioch, CA
+Enter address line three: line 3
+Enter in the name: quit</pre>
+<p class="docText">Here's the listing for our session:</p>
+<pre>4
+Whitney Hightower
+925-555-1212
+true
+['123 Main St.', 'Antioch, CA', 'line 3']
+Jenna Paul
+925-555-1255
+true
+['125 Main St.', 'Antioch, CA', 'line 3']
+Rick Hightower
+925-555-1212
+false
+Kiley Hightower
+925-555-1212
+false</pre>
+<h3 class="docSection1Title" id="ch08lev1sec5">Persisting Objects with pickle</h3>
+<p class="docText">I've got good news for you. There's a way to write Python 
+programs that persist Python objects that's much easier than the way we've just 
+done it. It's called the <tt>pickle</tt> module.</p>
+<p class="docText">Let's redefine our <tt>Address</tt> class and take away its 
+ability to write itself to a file. Then we'll use it to demonstrate
+<span class="docEmphasis">pickle.</span> This example is from
+<span class="docEmphasis">address4.Address.</span></p>
+<pre>class Address:
+      &quot;&quot;&quot;This class represents an entry in an address book&quot;&quot;&quot;
+
+
+            #Constructor
+      def __init__(self, name=&quot;&quot;, phone_number=&quot;&quot;, address_lines=[]):
+            &quot;&quot;&quot;The constructor takes three arguments:
+                   name to hold the persons name                 (string)
+                   phone_number to hold the persons phone number (string)
+                   address_lines to hold the address of the person     (list)
+                    &quot;&quot;&quot;
+                   # Assign the name, phone_number and address_lines to
+
+                   # the instance variables
+                   # __name, __phone_number, and __lines.
+            self.__name=name
+            self.__phone_number=phone_number
+            self.__lines=address_lines
+
+            #Methods
+      def name(self): return self.__name
+
+      def __cmp__(self,other):
+            &quot;&quot;&quot;
+            Compares one address instance to another.
+            If the address instances are equal the __cmp__ returns 0.
+            If the address instances are not equal then we return
+            a non-zero value.
+
+            &quot;&quot;&quot;
+                   # To implement this, all we do is compare the
+                   # dictionaries of the class
+                   # the __dict__ member of the instance holds
+                   # all of the instance fields in a dictionary
+            return cmp(self.__dict__ ,other.__dict__)
+
+      def __hash__(self): return hash(self.__name)
+      def __str__(self):
+            str = self.__name + &quot;\n&quot;
+            str = str + self.__phone_number + &quot;\n&quot;
+            for line in self.__lines:
+                   str = str + line + &quot;\n&quot;
+            return str</pre>
+<p class="docText">We haven't added anything new to the class. Essentially we've 
+just removed the <tt>read()</tt> and <tt>write()</tt> methods, and we've taken 
+out the <tt>read()</tt> and <tt>save()</tt> methods of the <tt>Address</tt> 
+class. Now let's show reading and writing this class to a file with the
+<span class="docEmphasis">pickle</span> module.</p>
+<p class="docText">Import the <span class="docEmphasis">address4</span> and
+<span class="docEmphasis">pickle</span> modules.</p>
+<pre>&gt;&gt;&gt; import address4
+&gt;&gt;&gt; import pickle</pre>
+<p class="docText">Create an instance of <tt>Address</tt>, and print it to the 
+screen.</p>
+<pre>&gt;&gt;&gt; address = address4.Address(&quot;Tony Scalise&quot;, &quot;555-555-3699&quot;)
+&gt;&gt;&gt; print address
+Tony Scalise
+555-555-3699</pre>
+<p class="docText">Open a file for outputting the address.</p>
+<pre>&gt;&gt;&gt; dump_file = open(&quot;c:\\dat\\pickle.txt&quot;,&quot;w&quot;)</pre>
+<p class="docText">Call the <tt>pickle.dump()</tt> method, and close the file 
+object.</p>
+<pre>&gt;&gt;&gt; pickle.dump(address,dump_file)
+&gt;&gt;&gt; dump_file.close()</pre>
+<p class="docText">Read the file back in and print it out to the screen to show 
+that it's the same.</p>
+<pre>&gt;&gt;&gt;          #open the file for reading
+&gt;&gt;&gt; address_file = open (&quot;c:\\dat\pickle.txt&quot;, &quot;r&quot;)
+
+&gt;&gt;&gt;          #load the address instance from the file
+&gt;&gt;&gt; address2 = pickle.load(address_file)
+
+&gt;&gt;&gt;    #print the address instance to the screen
+&gt;&gt;&gt; print address2
+Tony Scalise
+555-555-3699</pre>
+<p class="docText">Test to make sure that the values are equal but that this 
+isn't the same object.</p>
+<pre>&gt;&gt;&gt; address == address2   # the objects are equal
+1
+
+&gt;&gt;&gt; address is address2        # the objects are not the same object
+0</pre>
+<h4 class="docSection2Title" id="ch08lev2sec13">Editing a <span class="docEmphasis">pickle</span> 
+File</h4>
+<p class="docText">At this point you may be wondering what the file created with 
+the <span class="docEmphasis">pickle</span> module looks like. It's just a text 
+file. In fact, we can edit it to change its values. Here's the original file:</p>
+<pre>(iaddress4
+Address
+p0
+(dp1
+S'_Address__name'
+p2
+S'Tony Scalise'
+p3
+sS'_Address__lines'
+p4
+(lp5
+sS'_Address__phone_number'
+p6
+S'555-555-3699'
+p7
+sb.</pre>
+<p class="docText">With your favorite text editor, change <tt>'Tony Scalise'</tt> 
+to <tt>'Kelly Pagleochini'</tt> (or any name you like), and change the phone 
+number from <tt>'555-555-3699'</tt> to <tt>'555-555-2577'</tt>.</p>
+<pre>(iaddress4
+Address
+p0
+(dp1
+S'_Address__name'
+p2
+S'Kelly Pagleochini'
+p3
+sS'_Address__lines'
+p4
+(lp5
+sS'_Address__phone_number'
+p6
+S'555-555-2577'
+p7
+sb.</pre>
+<p class="docText">Now, in an interactive session, we'll show how this changes 
+the object instance.</p>
+<p class="docText">First close the file and reopen it.</p>
+<pre>&gt;&gt;&gt; address_file.close()          # close the file
+&gt;&gt;&gt; address_file = open(&quot;c:\\dat\\pickle.txt&quot;, &quot;r&quot;)   # reopen it</pre>
+<p class="docText">Then read in the instance using the <tt>pickle.load()</tt> 
+function.</p>
+<pre>&gt;&gt;&gt;    #load the new instance from the file
+&gt;&gt;&gt; address3 = pickle.load(address_file)
+&gt;&gt;&gt; print address3  # print the new instance out.
+Kelly Pagleochini
+555-555-2577
+      &gt;&gt;&gt; address_file.close()</pre>
+<p class="docText">I don't recommend that you edit the file that
+<span class="docEmphasis">pickle</span> dumps, but it's nice to know that you 
+can. It comes in handy when you're debugging an application, and it's especially 
+useful for viewing dumped files. Are you wondering what <tt>S</tt>, <tt>sS</tt>,
+<tt>p0</tt>, <tt>p1</tt>, and the like, mean? They denote the type and placement 
+of the attributes of an object in a file. To learn more about their exact 
+meanings, refer to the <span class="docEmphasis">pickle</span> Python Library 
+reference.</p>
+<h4 class="docSection2Title" id="ch08lev2sec14">Writing Out Objects with <span class="docEmphasis">
+pickle</span></h4>
+<p class="docText">With the <span class="docEmphasis">pickle</span> module you 
+can do more than just write out class instances to a file; you can write out any 
+Python object as well.</p>
+<p class="docText">Open a new file for writing.</p>
+<pre>&gt;&gt;&gt; file = open(&quot;c:\\dat\\pickle2.txt&quot;, &quot;w&quot;)</pre>
+<p class="docText">Create a dictionary, populating it with a string, an integer, 
+a float, a list, and another dictionary, and write it to a file.</p>
+<pre>&gt;&gt;&gt; dict = {}
+&gt;&gt;&gt; dict[&quot;string&quot;] = &quot;string&quot;            #add a string to the dictionary
+&gt;&gt;&gt; dict[&quot;int&quot;]= 1                #add an int to the dictionary
+&gt;&gt;&gt; dict[&quot;float&quot;]=1.11                   #add a float to the dictionary
+&gt;&gt;&gt; dict[&quot;list&quot;]=[1,2,3]          #add a list to the dictionary
+&gt;&gt;&gt; dict[&quot;dict&quot;]={&quot;martha&quot;:&quot;miguel&quot;}  #add a dictionary to the dictionary
+&gt;&gt;&gt; pickle.dump(dict,file)        #write the dictionary to the file
+&gt;&gt;&gt; file.close()</pre>
+<p class="docText">The output looks like this:</p>
+<pre>(dp0
+S'int'  &lt;————- here is the int item's key
+p1
+I1            &lt;————- here is the int item's value
+sS'string'    &lt;————- here is the string item's key
+p2
+g2
+sS'dict'      &lt;———- here is the dictionary item's key
+p3
+(dp4
+S'martha'
+p5
+S'miguel'
+p6
+ssS'float'    &lt;——— here is the float item's key
+p7
+F1.11         &lt;——— here is the float item's value
+sS'list'      &lt;——— here is the list item's key
+p8
+(lp9
+I1
+aI2
+aI3
+as.</pre>
+<p class="docText">Of course, we can read back the dictionary object.</p>
+<p class="docText">Open the file for reading, and read in the pickled 
+dictionary.</p>
+<pre>&gt;&gt;&gt;          #open the file for reading
+&gt;&gt;&gt; file = open(&quot;c:\\dat\\pickle2.txt&quot;,&quot;r&quot;)
+&gt;&gt;&gt;          #load the dictionary object from the file
+&gt;&gt;&gt; dict2 = pickle.load(file)</pre>
+<p class="docText">We can see that the dictionary read in from the file is equal 
+to the dictionary written to it, but the two are not the same object.</p>
+<pre>&gt;&gt;&gt; dict2 == dict          # test for equality
+1
+
+&gt;&gt;&gt; dict2 is dict    # test: see if the dictionaries are the same object.
+0
+&gt;&gt;&gt; file.close()</pre>
+<p class="docText">For efficiency, you can write a pickled object as a binary 
+instead of a text image:</p>
+<pre>&gt;&gt;&gt; file = open(&quot;c:\\dat\\pickle3.bin&quot;,&quot;w&quot;)
+&gt;&gt;&gt; pickle.dump(dict,file,1)
+&gt;&gt;&gt; file.close()
+&gt;&gt;&gt; file = open(&quot;c:\\dat\\pickle3.bin&quot;,&quot;r&quot;)
+&gt;&gt;&gt; dict3 = pickle.load(file)
+&gt;&gt;&gt; file.close()
+&gt;&gt;&gt; dict==dict3, dict is dict3
+(1, 0)</pre>
+<p class="docText">The above session is a lot like the one before it. The main 
+difference is the third argument to the <tt>pickle.dump()</tt> function. We 
+passed it a true (nonzero) value to denote that we wanted this written in binary 
+mode. Of course, looking at this file with a text editor won't do you any good 
+because you need a utility to view binary files. Here's what it would look like. 
+(You may not know how to read it, but at the least you can see that it's much 
+harder to read and edit than the text mode.)</p>
+<pre>0FBD:0100 7D 71 00 28 55 03 69 6E-74 71 01 4B 01 55 06 73 } q.(U.intq.K.U.s
+0FBD:0110 74 72 69 6E 67 71 02 68-02 55 04 64 69 63 74 71 tringq.h.U.dictq
+0FBD:0120 03 7D 71 04 55 06 6D 61-72 74 68 61 71 05 55 06 .} q.U.marthaq.U.
+0FBD:0130 6D 69 67 75 65 6C 71 06-73 55 05 66 6C 6F 61 74 miguelq.sU.float
+0FBD:0140 71 07 46 31 2E 31 31 0D-0A 55 04 6C 69 73 74 71 q.F1.11..U.listq
+0FBD:0150 08 5D 71 09 28 4B 01 4B-02 4B 03 65 75 2E 00 02 .]q.(K.K.K.eu...
+0FBD:0160 75 08 F7 06 23 D3 00 04-74 04 81 CD 00 40 C6 06 u...#...t....@..</pre>
+<h4 class="docSection2Title" id="ch08lev2sec15">pickling an Object to a String</h4>
+<p class="docText">In addition to reading and writing to files, you can read and 
+write to strings. Instead of the <tt>dump()</tt> function, you use the <tt>
+dumps()</tt> function (note plural), as follows.</p>
+<p class="docText">Dump the dictionary into a text string.</p>
+<pre>&gt;&gt;&gt; string = pickle.dumps(dict)</pre>
+<p class="docText">Dump the dictionary into a binary string.</p>
+<pre>&gt;&gt;&gt; bin_string = pickle.dumps(dict,1)</pre>
+<p class="docText">Load the dictionary from the text string.</p>
+<pre>&gt;&gt;&gt; dict4 = pickle.loads(string)</pre>
+<p class="docText">Load the dictionary from the binary string.</p>
+<pre>&gt;&gt;&gt; dict5 = pickle.loads(bin_string)</pre>
+<p class="docText">Check to see if the loaded dictionaries are equal to the 
+dumped dictionary.</p>
+<pre>&gt;&gt;&gt; dict == dict4, dict == dict5
+(1, 1)</pre>
+<p class="docText">Check to see if the loaded dictionaries have the same 
+identity as the dumped dictionary.</p>
+<pre>&gt;&gt;&gt; dict is dict4, dict is dict5
+(0, 0)</pre>
+<p class="docText">Earlier we said that binary mode is more efficient than text 
+mode. The question is how much. We can find out by comparing the size of the 
+binary string to the size of the text string from the last example.</p>
+<pre>&gt;&gt;&gt; len(string), len(bin_string)
+(129, 93)</pre>
+<p class="docText">In this example, binary mode is 40 percent more efficient 
+than text mode. But of course more than just size efficiency is involved. When 
+you use text mode, the <span class="docEmphasis">pickle</span> module has to 
+convert text strings into their binary equivalents; if you use binary mode, less 
+conversion is necessary.</p>
+<h3 class="docSection1Title" id="ch08lev1sec6">pickle and the Address Book Application</h3>
+<p class="docText">Now that we have a handle on the <span class="docEmphasis">
+pickle</span> module, we can change our address book program to use it. Here's 
+the listing for <span class="docEmphasis">address4</span> (areas of interest are 
+highlighted in bold):</p>
+<pre>class Address:
+       &quot;&quot;&quot;This class represents an entry in an address book&quot;&quot;&quot;
+             #Constructor
+       def __init__(self, name=&quot;&quot;, phone_number=&quot;&quot;, address_lines=[]):
+             &quot;&quot;&quot;
+The constructor takes three arguments:
+                    name to hold the persons' name                   (string)
+                    phone_number to hold the persons' phone number (string)
+                    address_lines to hold the address of the person  (list)
+             &quot;&quot;&quot;
+                    # assign the name, phone_number and address_lines to the
+                    # instance variables
+                    # __name, __phone_number, and __lines
+             self.__name=name
+             self.__phone_number=phone_number
+             self.__lines=address_lines
+
+             #Methods
+
+       def name(self): return self.__name
+       def __cmp__(self,other):
+             &quot;&quot;&quot;
+             Compares one address instance to another.
+             If the address instances are equal the __cmp__ returns 0.
+             If the address instances are not equal then we return a non-zero
+                 value.
+             &quot;&quot;&quot;
+                    # to implement this all we do is compare the dictionaries of
+                    # the class. the __dict__ member of the instance holds all
+                    # of the instance fields in a dictionary.
+             return cmp(self.__dict__ ,other.__dict__)
+       def __hash__(self): return hash(self.__name)
+       def __str__(self):
+             str = self.__name + &quot;\n&quot;
+             str = str + self.__phone_number + &quot;\n&quot;
+             for line in self.__lines:
+                    str = str + line + &quot;\n&quot;
+             return str
+
+def readAddresses(filename):
+       import pickle
+       &quot;&quot;&quot;
+       Read in a dictionary of addresses.
+       This method takes two arguments as follows:
+             filename           holds the filename of the file to read in
+                                    address instances from
+       &quot;&quot;&quot;
+       file = None    #to hold reference to the input file object
+
+             # try..finally to work with the file
+             # if you can't work with the file for any reason close it
+       try:
+                    # try to read in the addresses from the file
+                    # if you can't read addresses then print an error message
+             try:
+                    <span class="docEmphStrong">file = open(filename,&quot;r&quot;) #open the file in read mode</span>
+                    <span class="docEmphStrong">dict = pickle.load(file)</span>
+                    <span class="docEmphStrong">return dict</span>
+             except Exception, error:
+                    print error.__class__.__name__
+                    print error
+                    return {}
+       finally:
+             if not (file is None): file.close()
+
+<span class="docEmphStrong">def writeAddresses(filename, dict, bin=0):</span>
+       <span class="docEmphStrong">import pickle</span>
+       &quot;&quot;&quot;
+             Write the addresses instances in a dictionary to a file.
+             writeAddresses has two arguments as follows:
+                    filename     holds the name of the output file
+                    dict         holds the dictionary of address instances
+                    bin          whether to use binary mode or not for the pickler
+       &quot;&quot;&quot;
+       file=None    #to hold the output file object
+             # try..finally: try to write the instances to a file.
+             # if all else fails then close the file object
+       try:
+                    # Write the address instances in dict to a file
+                    # specified by filename.
+                    # If there are any errors then print an error message
+             try:
+                    <span class="docEmphStrong">file = open (filename, &quot;w&quot;)</span>
+                    <span class="docEmphStrong">pickle.dump(dict, file, bin)</span>
+             except Exception,error:
+                    print error.__class__.__name__
+                    print error
+       finally:
+             if(file):file.close()
+def test_read_write():
+       &quot;&quot;&quot;
+             Scaffolding code to test reading and writing dictionaries of
+                 addresses.
+       &quot;&quot;&quot;
+             # populate a dictionary object with some sample data
+       dict={}
+       address = Address(&quot;Rick Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Antioch Ca, 95432&quot;, &quot;Line 3&quot;])
+       dict[&quot;Rick Hightower&quot;] = address
+       address = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       dict[&quot;Missy Hightower&quot;]=address
+       address = Address(&quot;Martha Hightower&quot;, &quot;602-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Phoenix, AZ, 85226&quot;, &quot;Line 3&quot;])
+       dict[&quot;Martha Hightower&quot;]=address
+       address = Address(&quot;Mary Hightower&quot;, &quot;520-555-1212&quot;, [])
+       dict[&quot;Mary Hightower&quot;]=address
+
+       fname=&quot;c:\\dat\\testaddr.dat&quot; #to hold output filename
+
+             #write the dictionary full of addresses out to the file
+       print &quot;calling writeAddresses&quot;
+       writeAddresses(fname, dict)
+
+             #read in the dictionary full of addresses back from the
+             # file we just wrote it to
+       print &quot;calling readAddresses&quot;
+       <span class="docEmphStrong">dict_in = readAddresses(fname) #to hold input addresses</span>
+
+             #show that the input matches the output
+       print &quot;Input&quot;
+       print dict_in
+       print &quot;Output&quot;
+       print dict
+             #return whether these equal each other
+       return dict==dict_in
+
+def test_equal():
+       address1 = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       address2 = Address(&quot;Missy Hightower&quot;, &quot;920-555-1212&quot;, [&quot;123 Main St&quot;, &quot;Denver Co, 80202&quot;, &quot;Line 3&quot;])
+       return address1==address2</pre>
+<p class="docText">You have to notice that the <span class="docEmphasis">pickle</span> 
+version is much shorter than the original (<span class="docEmphasis">address3.py</span>). 
+Shorter is better because less code to write means less code to maintain.</p>
+<h3 class="docSection1Title" id="ch08lev1sec7">Summary</h3>
+<p class="docText">Python allows you to read and write to files. The Python file 
+object, which is built into the language, supports the following methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>read()</tt>— read in data from a file</li>
+  <li>
+  <p class="docText"><tt>readline()</tt>— read a line of data from a file</li>
+  <li>
+  <p class="docText"><tt>readlines()</tt>— read all the lines in the file and 
+  return the lines as a list of strings</li>
+  <li>
+  <p class="docText"><tt>write()</tt>— write data to a file</li>
+  <li>
+  <p class="docText"><tt>writelines()</tt>— write a sequence of lines to a file</li>
+  <li>
+  <p class="docText"><tt>seek(</tt>)— move to a certain point in a file</li>
+  <li>
+  <p class="docText"><tt>tell()</tt>— determine the current location in the file</li>
+</ul>
+<p class="docText">Python makes working with files straightforward. In addition, 
+its <span class="docEmphasis">pickle</span> and <span class="docEmphasis">
+cPickle</span> modules allow the persisting of objects to a file or string and 
+make for speedy development of persisted class data.</p>
+<p class="docText">In this chapter, we expanded on the address book example from
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a>. We also 
+covered such issues as using __<tt>str</tt>__ and __<tt>repr</tt>__ with class 
+instances. If you followed along with our expansion of the address book program 
+to read and write files, you reviewed a lot of the first seven chapters of the 
+book.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%207.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%209.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

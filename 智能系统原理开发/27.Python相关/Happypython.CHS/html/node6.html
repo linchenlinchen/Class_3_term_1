@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>4. 更多流程控制的工具</title>
+  
+  <meta name="description" content="4. 更多流程控制的工具 ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node7.html">
+ 
+  <link rel="previous" href="node5.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node7.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node5.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node7.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node5.html">3.
+非正式的Python介绍</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node7.html">
+5. 资料结构</a> <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落 </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html261" href="node6.html#SECTION006100000000000000000">
+4.1 <tt class="keyword">if</tt> 叙述 </a> </li>
+  <li><a name="tex2html262" href="node6.html#SECTION006200000000000000000">
+4.2 <tt class="keyword">for</tt> 叙述 </a> </li>
+  <li><a name="tex2html263" href="node6.html#SECTION006300000000000000000">
+4.3 <tt class="function">range()</tt> 函式 </a> </li>
+  <li><a name="tex2html264" href="node6.html#SECTION006400000000000000000">
+4.4 <tt class="keyword">break</tt> 及 <tt class="keyword">continue</tt> 叙述，以及在回圈中的 
+         <tt class="keyword">else</tt> 子句          </a> </li>
+  <li><a name="tex2html265" href="node6.html#SECTION006500000000000000000">
+4.5 <tt class="keyword">pass</tt> 叙述 </a> </li>
+  <li><a name="tex2html266" href="node6.html#SECTION006600000000000000000">
+4.6 定义函式 </a> </li>
+  <li><a name="tex2html267" href="node6.html#SECTION006700000000000000000">
+4.7 定义函式(续) </a> 
+    <ul>
+ 
+      <li><a name="tex2html268" href="node6.html#SECTION006710000000000000000">
+4.7.1 预设参数值</a> </li>
+      <li><a name="tex2html269" href="node6.html#SECTION006720000000000000000">
+4.7.2 关键字参数 </a> </li>
+      <li><a name="tex2html270" href="node6.html#SECTION006730000000000000000">
+4.7.3 随意的参数串 </a> </li>
+      <li><a name="tex2html271" href="node6.html#SECTION006740000000000000000">
+4.7.4 Lambda形式 </a> </li>
+      <li><a name="tex2html272" href="node6.html#SECTION006750000000000000000">
+4.7.5 注解字串 </a> </li>
+    </ul>
+  </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 4. 更多流程控制的工具   </h1>
+  
+<p> 除了我们刚刚介绍的 <tt class="keyword">while</tt> 叙述之外，Python也能够使用大部分其他程式语言使用的流程控制形式
+─ 除了有一些不同之外。   </p>
+<p>  </p>
+<h1> <br>
+ 4.1 <tt class="keyword">if</tt> 叙述   </h1>
+  
+<p> 大概最为人所知的 statement 就是 <tt class="keyword">if</tt> 叙述了，举例如下：   </p>
+<p> </p>
+<dl>
+<dd><pre class="verbatim">&gt;&gt;&gt; x = int(raw_input("Please enter a number: "))<br>&gt;&gt;&gt; if x &lt; 0:<br>...      x = 0<br>...      print 'Negative changed to zero'<br>... elif x == 0:<br>...      print 'Zero'<br>... elif x == 1:<br>...      print 'Single'<br>... else:<br>...      print 'More'<br>...<br></pre>
+  </dd>
+  </dl>
+  
+  <p> <tt class="keyword">elif</tt> 的部份可以没有也可以有很多个， <tt class="keyword">else</tt>
+ 部分可以有一个也可以没有。  `<tt class="keyword">elif</tt>' 这个关键字是`else if'的简化，而且有减少过分缩排的效果。
+ 用  <tt class="keyword">if</tt> ... <tt class="keyword">elif</tt> ... <tt class="keyword">
+elif</tt> ... 这样的写法可以来取代在其他一些程式语言中常见的  <i>switch</i> 或是 <i>case</i> 的写法。
+  </p>
+  <p>  </p>
+  <h1> <br>
+ 4.2 <tt class="keyword">for</tt> 叙述   </h1>
+  
+  <p> 在Python里的  <tt class="keyword">for</tt> 叙述的用法与在C或是Pascal里的用法有所不同。不像是在Pascal中一定要执行某个数目的回圈，也不像是在C中让使用者决定执行的进度(step)及结束执行的条件，Python的
+ <tt class="keyword">for</tt> 叙述会将一个系列(sequence，像是list或是string)里所有的成员走遍一次，执行的顺序是依照成员在squence里的顺序。以下是一个例子：
+  </p>
+  <p> </p>
+  <dl>
+  <dd><pre class="verbatim">&gt;&gt;&gt; # Measure some strings:<br>... a = ['cat', 'window', 'defenestrate']<br>&gt;&gt;&gt; for x in a:<br>...     print x, len(x)<br>... <br>cat 3<br>window 6<br>defenestrate 12<br></pre>
+    </dd>
+    </dl>
+  
+    <p> 在回圈的执行之中改变sequence的内容是危险的一件事(当然，只有可变的sequence像list才能作更动)，如果你真的需要在回圈的执行中改变list的成员值，最好先复制一份这个list的拷贝，然后针对这个拷贝来做回圈。list的切割(slice)提供了一个简便的制作拷贝的方法： 
+ </p>
+    <p> </p>
+    <dl>
+    <dd><pre class="verbatim">&gt;&gt;&gt; for x in a[:]: # make a slice copy of the entire list<br>...    if len(x) &gt; 6: a.insert(0, x)<br>... <br>&gt;&gt;&gt; a<br>['defenestrate', 'cat', 'window', 'defenestrate']<br></pre>
+      </dd>
+      </dl>
+  
+      <p>  </p>
+      <h1> <br>
+ 4.3 <tt class="function">range()</tt> 函式   </h1>
+  
+      <p> 如果你真的需要一个回圈执行一定数目的次数的话，你可以使用内建的 <tt class="function">range()</tt>
+ 函式。这个函式会产生一个含有逐步增加数字的list。如下：   </p>
+      <p> </p>
+      <dl>
+      <dd><pre class="verbatim">&gt;&gt;&gt; range(10)<br>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]<br></pre>
+        </dd>
+        </dl>
+  
+        <p> 在这个函式中的所传入的参数是代表端点，而且这个端点不在产生的list之中。  <code>range(10)</code>
+正好产生10个数值，正好是这个list的index是由0到10。我们也可以让这个产生的list从某个数值开始，或者规定其每次增加的数值为多少 (增加值也可以是负数，这个增加值也叫做
+`step')。  </p>
+        <p> </p>
+        <dl>
+        <dd><pre class="verbatim">&gt;&gt;&gt; range(5, 10)<br>[5, 6, 7, 8, 9]<br>&gt;&gt;&gt; range(0, 10, 3)<br>[0, 3, 6, 9]<br>&gt;&gt;&gt; range(-10, -100, -30)<br>[-10, -40, -70]<br></pre>
+          </dd>
+          </dl>
+  
+          <p> 所以如果我们要循环一次一个sequence的index的话，我们可以用  <tt class="function">range()</tt>
+ 配合上  <tt class="function">len()</tt> 一起使用：   </p>
+          <p> </p>
+          <dl>
+          <dd><pre class="verbatim">&gt;&gt;&gt; a = ['Mary', 'had', 'a', 'little', 'lamb']<br>&gt;&gt;&gt; for i in range(len(a)):<br>...     print i, a[i]<br>... <br>0 Mary<br>1 had<br>2 a<br>3 little<br>4 lamb<br></pre>
+            </dd>
+            </dl>
+  
+            <p>  </p>
+            <h1> <br>
+ 4.4 <tt class="keyword">break</tt> 及  <tt class="keyword">continue</tt>
+叙述，以及在回圈中的           <tt class="keyword">else</tt> 子句           </h1>
+  
+            <p> 如同在C语言里一样， <tt class="keyword">break</tt> 叙述中断最靠近的一个 <tt class="keyword">
+for</tt> 或 <tt class="keyword">while</tt> 回圈。  </p>
+            <p> 同样的，从C语言借过来的 <tt class="keyword">continue</tt> 叙述会中断目前执行的回圈，并且执行下一个循环。 
+ </p>
+            <p> 特别的是，Python的回圈有一个 <code>else</code> 子句，这个子句之后的程式码会在整个回圈正常结束的时候执行，(对
+ <tt class="keyword">for</tt>) 回圈而言指的是list已经到底，对  <tt class="keyword">while</tt>
+  回圈而言指的是条件式变成false)。但是，若是在非正常结束(因为  <tt class="keyword">break</tt> 叙述)的情况下
+  <code>else</code> 子句的程式码就不会执行。底下的例子是一个回圈，用来找出所有的质数：  </p>
+            <p> </p>
+            <dl>
+            <dd><pre class="verbatim">&gt;&gt;&gt; for n in range(2, 10):<br>...     for x in range(2, n):<br>...         if n % x == 0:<br>...            print n, 'equals', x, '*', n/x<br>...            break<br>...     else:<br>...          print n, 'is a prime number'<br>... <br>2 is a prime number<br>3 is a prime number<br>4 equals 2 * 2<br>5 is a prime number<br>6 equals 2 * 3<br>7 is a prime number<br>8 equals 2 * 4<br>9 equals 3 * 3<br></pre>
+              </dd>
+              </dl>
+  
+              <p>  </p>
+              <h1> <br>
+ 4.5 <tt class="keyword">pass</tt> 叙述   </h1>
+  
+              <p> <tt class="keyword">pass</tt> 叙述什么也不做，通常是用在当你的程式的语法上需要有一个叙述，但是却不需要做任何事的时候。例子如下：
+  </p>
+              <p> </p>
+              <dl>
+              <dd><pre class="verbatim">&gt;&gt;&gt; while 1:<br>...       pass # Busy-wait for keyboard interrupt<br>...<br></pre>
+                </dd>
+                </dl>
+  
+                <p>  </p>
+                <h1> <br>
+ 4.6 定义函式   </h1>
+  
+                <p> 我们可以定义一个函式，在底下这个函式定义的例子，当我们给定想要印出的范围，这个函式会印出一个费氏数列来：
+  </p>
+                <p> </p>
+                <dl>
+                <dd><pre class="verbatim">&gt;&gt;&gt; def fib(n):    # write Fibonacci series up to n<br>...     "Print a Fibonacci series up to n"<br>...     a, b = 0, 1<br>...     while b &lt; n:<br>...         print b,<br>...         a, b = b, a+b<br>... <br>&gt;&gt;&gt; # Now call the function we just defined:<br>... fib(2000)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597<br></pre>
+                  </dd>
+                  </dl>
+  
+                  <p> 在上例中这个 <tt class="keyword">def</tt> 关键字代表了一个函式的定义(function
+ <i>definition</i>)，在 <tt class="keyword">def</tt> 之后必须接着函式的名称以及一个用括号括起来的一连串的参数。接下来一行之后的程式码就是函式的主体部分，而且必须是缩排的。函式的程式码部分的第一个statement可以是一个字串常数(string
+literal)，这个字串常数会被当作是函式的注解部分而叫做注解字串(documentation string或是 <i class="dfn">
+docstring</i> )。   </p>
+                  <p> 有工具可以使用这个注解字串来自动的制作出线上的或是印出来的文件，或者是让使用者可以互动式的浏览程式码。写注解是一个好习惯，所以最好养成这个好习惯，把所有的程式码都写上注解字串。 
+ </p>
+                  <p> <i>执行</i>函式的时候会产生一个目前(local)的符号表(system table)，这个表是用来记录函式中的所有local的变数的。更精确的来说，所有在函式中变数的设定值都会纪录在这个system
+table中，所以当你要使用(reference)一个变数时，会先检查local的system table，然后是整个程式(global)的system
+talbe，然后是内建的变数名称。虽然 <tt class="keyword">global</tt> 变数可以在函式使用(reference)，但是不能在函式之内直接的设定其值(除非是在一个global的statement中建立的)。
+  </p>
+                  <p> 当函式被呼叫时，实际传入的函式参数是会被纪录在被呼叫函式的local system table里的。因此，参数被传入时是
+                  <i>以其值传入的(call by value)</i> 。在此的值指的是物件的参考( <i>reference</i>
+ )，而非物件本身的 <i>值</i>。 <a name="tex2html2" href="#foot1251"><sup>4.1</sup></a>
+ 当一个函式呼叫另一个函式时，就会因此呼叫而建立一个新的local system table。  </p>
+                  <p> 当定义函式的时候，也就在目前所在的system table里定义了这个函式的名称。对直译器来说，这个函式名称的资料型态是一个使用者自订的函式。这个函式的值名称可以被设定给另一个名称，然后这个新的名称就可以被当作是一个函式名称来使用。这个过程就是一个一般的重新命名的机制。 
+ </p>
+                  <p> </p>
+                  <dl>
+                  <dd><pre class="verbatim">&gt;&gt;&gt; fib<br>&lt;function object at 10042ed0&gt;<br>&gt;&gt;&gt; f = fib<br>&gt;&gt;&gt; f(100)<br>1 1 2 3 5 8 13 21 34 55 89<br></pre>
+                    </dd>
+                    </dl>
+  
+                    <p> 你也许认为 <code>fib</code> 不是一个函式(function)而是一个程序(procedure)。如同在C中一样，在Python的procedure指的是没有传回值的函式(function)。事实上，就技术上而言，procedure也是有传回值的，只是所传回的是一个Python系统内键的值，叫做
+                    <code>None</code> 。通常来说，如果只传回 <code>None</code> 的话，直译器不会印出这一个传回值。但是，如果你真想看一看它的话，你可以这样做：
+  </p>
+                    <p> </p>
+                    <dl>
+                    <dd><pre class="verbatim">&gt;&gt;&gt; print fib(0)<br>None<br></pre>
+                      </dd>
+                      </dl>
+  
+                      <p> 如果想让你的函式传回一个包含费氏数列的list，而不是只印出来的话，其实是很简单的：   </p>
+                      <p> </p>
+                      <dl>
+                      <dd><pre class="verbatim">&gt;&gt;&gt; def fib2(n): # return Fibonacci series up to n<br>...     "Return a list containing the Fibonacci series up to n"<br>...     result = []<br>...     a, b = 0, 1<br>...     while b &lt; n:<br>...         result.append(b)    # see below<br>...         a, b = b, a+b<br>...     return result<br>... <br>&gt;&gt;&gt; f100 = fib2(100)    # call it<br>&gt;&gt;&gt; f100                # write the result<br>[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]<br></pre>
+                        </dd>
+                        </dl>
+  
+                        <p> 如同往例，这个例子事实上示范了一些新的Python的特点：   </p>
+                        <p>  </p>
+                        <ul>
+ 
+                          <li><tt class="keyword">return</tt> 叙述使得函式传回了一个值。如果单单
+ <tt class="keyword">return</tt> 没有其他的expression来表示传回的值时，就表示这是一个从procedure传回来的写法(procedure到结束都没有传回值也是表示从procedure传回来)。这种写法表示传回值是
+                            <code>None</code> 。  
+                            <p>  </p>
+                          </li>
+                          <li><code>result.append(b)</code> 这个叙述表示呼叫了 <code>
+result</code> 这个list物件的一个方法( <i>method</i> ) 。Method是一个特别&rdquo;属于&rdquo;某个物件的函式，而且其名称的形式是
+                            <code>obj.methodname</code> 。在这里 <code>obj</code>
+ 指的是某一个物件(我们也可以用expression来代替)，而 <code>methodname</code> 指得是由这个物件的资料型态所定义的这个方法的名称。不同的资料型态会定义不同的方法，不同的资料型态也许所定义的方法名称会相同，但是并不会造成冲突(你可以定义你自己的资料型态及其方法，我们称之为类别(
+                            <i>classes</i> )，后面会再谈到的)。在这个例子里的 <tt class="method">
+append()</tt> 方法是在list这个资料型态中定义的。这个方法会在list的最后面加入一个新的成员，在这个例子里也可以写作 "<tt class="samp">
+result = result + [b]</tt>" ，效果一样，但是用方法来写有效率多了。   
+                            <p>  </p>
+                          </li>
+                        </ul>
+  
+                        <p>  </p>
+                        <h1> <br>
+ 4.7 定义函式(续)   </h1>
+  
+                        <p> 在定义函式的时候我们可以加入不定数目的参数，加入参数的写法有三种，是可以混和使用的。   </p>
+                        <p>  </p>
+                        <h2> <br>
+ 4.7.1 预设内定参数值   </h2>
+  
+                        <p> 最好用的一种写法是，对其中的一个或多个参数给它一个特定的预设值。这样子的话，当你在呼叫函式时，就可以不用传入参数，或是传入较少的参数了。请看下例： 
+ </p>
+                        <p> </p>
+                        <dl>
+                        <dd><pre class="verbatim">def ask_ok(prompt, retries=4, complaint='Yes or no, please!'):<br>    while 1:<br>        ok = raw_input(prompt)<br>        if ok in ('y', 'ye', 'yes'): return 1<br>        if ok in ('n', 'no', 'nop', 'nope'): return 0<br>        retries = retries - 1<br>        if retries &lt; 0: raise IOError, 'refusenik user'<br>        print complaint<br></pre>
+                          </dd>
+                          </dl>
+  
+                          <p> 当你呼叫这个函式的时候你可以用 <code>ask_ok('Do you really
+want to quit?')</code> ，或者是 <code>ask_ok('OK to overwrite the file?', 2)</code>
+ 。   </p>
+                          <p> 设定的预设值可以是一个变数，但是这个变数在函式定义的时候就以定义时的情况( <i>defining</i>
+ scope )决定(evaluate)了其值，所以以下的例子：   </p>
+                          <p> </p>
+                          <dl>
+                          <dd><pre class="verbatim">i = 5<br>def f(arg = i): print arg<br>i = 6<br>f()<br></pre>
+                            </dd>
+                            </dl>
+  
+                            <p> 印出的结果会是  <code>5</code> 。  </p>
+                            <p> <b>重要的警告：</b> 这个参数预设值只有被evaluate一次，这在当预设值是可变的物件像是list或是dictionary时会造成重要的差别。举例来说，底下的函式会记录曾经被呼叫过每次所传入的参数。
+  </p>
+                            <p> </p>
+                            <dl>
+                            <dd><pre class="verbatim">def f(a, l = []):<br>    l.append(a)<br>    return l<br>print f(1)<br>print f(2)<br>print f(3)<br></pre>
+                              </dd>
+                              </dl>
+  
+                              <p> 印出来的结果会是：  </p>
+                              <p> </p>
+                              <dl>
+                              <dd><pre class="verbatim">[1]<br>[1, 2]<br>[1, 2, 3]<br></pre>
+                                </dd>
+                                </dl>
+  
+                                <p> 所以如果你的预设值是一个可变的物件，但是你又不想让每次呼叫都共用的时候，你就必须如此写你的函式：
+  </p>
+                                <p> </p>
+                                <dl>
+                                <dd><pre class="verbatim">def f(a, l = None):<br>    if l is None:<br>        l = []<br>    l.append(a)<br>    return l<br></pre>
+                                  </dd>
+                                  </dl>
+  
+                                  <p>  </p>
+                                  <h2> <br>
+ 4.7.2 关键字参数  </h2>
+  
+                                  <p> 呼叫函式时也可以使用关键字参数，其形式是 "<tt class="samp"><var>
+keyword</var> = <var>value</var></tt>" ，底下的这个函式：   </p>
+                                  <p> </p>
+                                  <dl>
+                                  <dd><pre class="verbatim">def parrot(voltage, state='a stiff', action='voom', type='Norwegian Blue'):<br>    print "-- This parrot wouldn't", action,<br>    print "if you put", voltage, "Volts through it."<br>    print "-- Lovely plumage, the", type<br>    print "-- It's", state, "!"<br></pre>
+                                    </dd>
+                                    </dl>
+  
+                                    <p> 用这些方式呼叫都是正确的：   </p>
+                                    <p> </p>
+                                    <dl>
+                                    <dd><pre class="verbatim">parrot(1000)<br>parrot(action = 'VOOOOOM', voltage = 1000000)<br>parrot('a thousand', state = 'pushing up the daisies')<br>parrot('a million', 'bereft of life', 'jump')<br></pre>
+                                      </dd>
+                                      </dl>
+  
+                                      <p> 但是用这些方式都是不正确的：  </p>
+                                      <p> </p>
+                                      <dl>
+                                      <dd><pre class="verbatim">parrot()                     # required argument missing<br>parrot(voltage=5.0, 'dead')  # non-keyword argument following keyword<br>parrot(110, voltage=220)     # duplicate value for argument<br>parrot(actor='John Cleese')  # unknown keyword<br></pre>
+                                        </dd>
+                                        </dl>
+  
+                                        <p> 一般来说，一连串的参数的次序是先有非关键字参数(也可以没有)然后才是关键字参数，关键字必须是函式定义时所用的参数名称。这个定义时用的参数名称有没有预设值并不重要，但是一个传入的参数只能有一个值(预设值不算)，如果你已经先用非关键字参数给了某个参数一个值，接下来你就不能再用关键字参数给它另外的值。底下的例子就违反了这个规则： 
+ </p>
+                                        <p> </p>
+                                        <dl>
+                                        <dd><pre class="verbatim">&gt;&gt;&gt; def function(a):<br>...     pass<br>... <br>&gt;&gt;&gt; function(0, a=0)<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1, in ?<br>TypeError: keyword parameter redefined<br></pre>
+                                          </dd>
+                                          </dl>
+  
+                                          <p> 当一个函式定义时参数名称是以 <code>**<var>
+name</var></code> 这种形式定义时，表示这个参数要接受的是一个 dictionary(译：字典，包含许多关键字以及值的对应)，这个
+dictionary 包含许多的关键字参数，但是这些关键字不能跟其他的参数名称相同。另外参数也可以用 <code>*<var>name</var></code>
+ 这种形式定义(下一小节会解释)，这种方式定义的参数要接受的是一个 tuple(译：不可更动的list)，这个 tuple 可以接受不限数目的非关键字参数(
+                                          <code>*<var>name</var></code> 必须要出现在
+ <code>**<var>name</var></code> 之前)。下面的例子就是一个函式定义的范例：   </p>
+                                          <p> </p>
+                                          <dl>
+                                          <dd><pre class="verbatim">def cheeseshop(kind, *arguments, **keywords):<br>    print "-- Do you have any", kind, '?'<br>    print "-- I'm sorry, we're all out of", kind<br>    for arg in arguments: print arg<br>    print '-'*40<br>    for kw in keywords.keys(): print kw, ':', keywords[kw]<br></pre>
+                                            </dd>
+                                            </dl>
+  
+                                            <p> 要呼叫这个函式，你可以这样呼叫：   </p>
+                                            <p> </p>
+                                            <dl>
+                                            <dd><pre class="verbatim">cheeseshop('Limburger', "It's very runny, sir.",<br>           "It's really very, VERY runny, sir.",<br>           client='John Cleese',<br>           shopkeeper='Michael Palin',<br>           sketch='Cheese Shop Sketch')<br></pre>
+                                              </dd>
+                                              </dl>
+  
+                                              <p> 函式执行的结果如下：   </p>
+                                              <p> </p>
+                                              <dl>
+                                              <dd><pre class="verbatim">-- Do you have any Limburger ?<br>-- I'm sorry, we're all out of Limburger<br>It's very runny, sir.<br>It's really very, VERY runny, sir.<br>----------------------------------------<br>client : John Cleese<br>shopkeeper : Michael Palin<br>sketch : Cheese Shop Sketch<br></pre>
+                                                </dd>
+                                                </dl>
+  
+                                                <p>  </p>
+                                                <h2> <br>
+ 4.7.3 随意的参数串  </h2>
+  
+                                                <p> 最后，我们要介绍最不常见的形式，也就是定义一个函式可以接受任意数目的参数，这些传入的参数会被放进一个tuple里面去。在这一个任意数目的参数之前，可以定义没有或是一个或是多个普通的参数：
+  </p>
+                                                <p> </p>
+                                                <dl>
+                                                <dd><pre class="verbatim">def fprintf(file, format, *args):<br>    file.write(format % args)<br></pre>
+                                                  </dd>
+                                                  </dl>
+  
+                                                  <p>  </p>
+                                                  <h2> <br>
+ 4.7.4 Lambda 形式   </h2>
+  
+                                                  <p> 由于众多的需求，Python里面也加入了这一个在其他功能性程式语言及Lisp里面常见的特性。你可以使用
+                                                  <tt class="keyword">lambda</tt>
+ 这个关键字来定义一些小的没有名字的函式。底下是一个传回两个参数值相加结果的例子：  "<tt class="samp">lambda a, b:
+a+b</tt>" 。Lambda形式可以使用在任何需要函式物件(function objects)的地方。语法上限制lambda形式只能有一个expression，其功能只是方便的取代一个正常的函式定义。就像是函式里面包含函式定义一样，lambda形式不能使用(reference)外面一层函式的的变数，但是你可以使用传入预设值参数的方式来克服这个问题，像是下面的例子： 
+ </p>
+                                                  <p> </p>
+                                                  <dl>
+                                                  <dd><pre class="verbatim">def make_incrementor(n):<br>    return lambda x, incr=n: x+incr<br></pre>
+                                                    </dd>
+                                                    </dl>
+  
+                                                    <p>  </p>
+                                                    <h2> <br>
+ 4.7.5 注解字串  </h2>
+  
+                                                    <p> 注解字串的内容及形式是有一个新的约定俗成的规范的。 
+ </p>
+                                                    <p> 第一行应该是一个有关这个物件的目的的短的、简洁的摘要。因为简洁的缘故，这一行不应该包括物件的名称及型态(除非物件的的名称正好是解释物件目的的一个动词)，因为物件名称及型态是可以从其他地方得知的。这一行第一个字的第一个字母应该大写，最后应该有一个句点。 
+ </p>
+                                                    <p> 如果注解字串还包含其他行的话，第二行应该是空白的，这样可以让摘要及细部的解释有所区分。底下的各行应该是一个或多个段落，其目的应该是诸如解释物件的呼叫方法及其副效果(side
+effects)的解释说明。   </p>
+                                                    <p> 一般时候，Python的分析器(parser)并不会把多行字串的缩排拿掉，但是在注解字串中，注解字串的处理工具需要特别拿掉那些缩排。底下的一般通用准则可以用来帮助决定注解字串如何缩排：在第一行之后所遇到的第一个非空白行决定了整个注解字串的缩排大小，(我们不能用第一行，因为第一行一定要跟着引号在一起，所以其缩排是不明显的)。在这之后的与这个缩排相等的空白，都会被整个拿掉。如果某行的前面有空白但缩排的空白不足(这是不应该发生的)，这些缩排也会被整个拿掉。空白的解释是把tab展开后(一般为八个空白)的方式来解释的。 
+ </p>
+                                                    <p> 这里示范了如何使用多行的注解字串：
+  </p>
+                                                    <p> </p>
+                                                    <dl>
+                                                    <dd><pre class="verbatim">&gt;&gt;&gt; def my_function():<br>...     """Do nothing, but document it.<br>... <br>...     No, really, it doesn't do anything.<br>...     """<br>...     pass<br>... <br>&gt;&gt;&gt; print my_function.__doc__<br>Do nothing, but document it.<br><br>    No, really, it doesn't do anything.<br></pre>
+                                                      </dd>
+                                                      </dl>
+  
+                                                      <p> <br>
+                                                      </p>
+                                                      <hr>
+                                                      <h4>注脚</h4>
+ 
+                                                      <dl>
+                                                      <dt><a name="foot1251">
+... 物件本身的值。</a><a name="foot1251" href="node6.html#tex2html2"><sup>4.1</sup></a>
+ </dt>
+                                                        <dd>          事实上是，较洽当的说法是以其物件参考传入的(
+                                                          <i>call by object
+reference</i> )，因为如果一个不可改变的物件传入之后，呼叫这个函式的地方仍然可以看到这个函式对这个物件的改变(例如在list之中插入一个物件)。
+    </dd>
+                                                          </dl>
+ 
+                                                          <div class="navigation">
+                                                          <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                                                              <tr>
+ <td><a href="node5.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node7.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                                                            </tbody>
+                                                          </table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node5.html">3.
+非正式的Python介绍</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node7.html">
+5. 资料结构</a> <br>
+                                                          <hr></div>
+ <!--End of Navigation Panel--> 
+                                                          <address> </address>
+                                                          <hr>请看<i><a href="about.html">
+关于此文件&hellip;</a></i> 里面有关如何给我们建议的说明。  
+                                                          </body>
+                                                          </html>

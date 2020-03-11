@@ -1,0 +1,2084 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 12</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 12.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 12.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 12.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2011.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2013.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 12. Working with Java Streams</h2><ul><li>&nbsp;<a class="docLink" href="#ch12lev1sec1">The Java Way of File Operations</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec2">Text Streams</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec3">Binary Streams: InputStream and OutputStream</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec4">DataInput and DataOutput</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec5">The File Class</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec6">The RandomAccessFile Class</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec7">The StreamTokenizer Class</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec8">Persisting Objects with Java Streams</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec9">Using Java Streams to Work with Memory</a></li>
+<li>&nbsp;<a class="docLink" href="#ch12lev1sec10">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Abstract class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">ASCII</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">autoexec.bat file</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Buffering</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Caching</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Callable object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Canonical path</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Chaining</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Character/byte stream</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class hierarchy</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Concrete class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Current directory</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Debug utility</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Design pattern</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">File descriptor</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">File path (relative/absolute)</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Flag</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Helper class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Interface</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Java networking APIs</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Parameter</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Parent directory</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Polymorphism</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Path separator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Prefetching</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Separator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Single inheritance</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Slice</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Stream (binary/text)</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Source code</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Source file</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Token</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Unicode</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Streams are the Java programming language's way to support 
+I/O. A stream can represent a file, a network connection, or the access of a Web 
+site. Learning to deal with Java streams is essential for understanding Java's 
+networking APIs.</p>
+<p class="docText">Most of the time conversion to and from the Java type system 
+is transparent. When it isn't, this chapter will demonstrate how to do low-level 
+type conversion straightforwardly.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">As If One Way Weren't Bad Enough</h2>
+      <p class="docText">The joke is that there are always two ways of doing 
+      things in Jython: the Python way and the Java way. For example, if you use 
+      Python to prototype for Java applications, you need to know how Java does 
+      it. You also need Java streams to do various forms of Java I/O, such as 
+      networking APIs.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch12lev1sec1">The Java Way of File Operations</h3>
+<p class="docText">Interfaces and classes for dealing with files and other I/O 
+types are in the <span class="docEmphasis">java.io</span> package. An interface 
+is a class that contains abstract methods. Classes in <span class="docEmphasis">
+java.io</span> form a class hierarchy.</p>
+<p class="docText">The two main class types in <span class="docEmphasis">java.io</span> 
+are text oriented (character streams) and binary oriented (byte streams). 
+Subclasses of the <tt>Reader</tt> and <tt>Writer</tt> classes are text oriented; 
+those of the <tt>InputStream</tt> and <tt>OutputStream</tt> classes are binary 
+oriented.</p>
+<p class="docText"><tt>InputStream</tt> and <tt>OutputStream</tt> are abstract; 
+that is, they can't be instantiated directly. To use an abstract class you must 
+subclass it and instantiate the subclass. The subclasses of <tt>InputStream</tt> 
+and <tt>OutputStream</tt> allow the reading of binary data to and from various 
+types of input and output such as byte arrays (memory), files, and even network 
+sockets.</p>
+<p class="docText">Streams can be chained to provide extra functionality. For 
+example, you can buffer a <tt>FileInputStream</tt> by chaining it to a <tt>
+BufferedInputStream</tt> Then you can chain the <tt>BufferedInputStream</tt> to 
+an <tt>ObjectInputStream</tt> to read in whole objects at one time. (This is 
+similar to the <span class="docEmphasis">pickle</span> functionality in Python.)</p>
+<p class="docText">Java 1.1's binary data input streams are complemented by 
+somewhat equivalent text input streams. The parents of these classes are the 
+abstract classes <tt>Reader</tt> and <tt>Writer</tt>. Having an equivalent set 
+of text-oriented character stream classes allows the conversion of Unicode text.
+<tt>Reader</tt>s and <tt>Writer</tt>s, like streams, can be chained together. 
+For example, you can buffer a <tt>FileReader</tt> by chaining it to a <tt>
+BufferedReader</tt>. (Buffering will be explained shortly.)</p>
+<h4 class="docSection2Title" id="ch12lev2sec1">I/O Classes to Be Covered</h4>
+<p class="docText">There are more than thirty I/O classes, not including 
+interfaces and abstract classes. This seems like a lot, but if you understand 
+how <tt>Reader</tt>, <tt>Writer</tt>, <tt>InputStream</tt>, and <tt>OutputStream</tt> 
+work, you can easily understand the rest.</p>
+<p class="docText"><tt>Reader</tt> and <tt>Writer</tt> subclasses deal with 
+character streams, that is, text. <tt>InputStream</tt> and <tt>OutputStream</tt> 
+subclasses deal with binary streams. An easy way to remember this is, if you can 
+read it, use <tt>Reader</tt> and <tt>Writer</tt>; if you can't, use <tt>
+InputStream</tt> and <tt>OutputStream</tt>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Beginners: Understanding Streams</h2>
+      <p class="docText">Think of a stream as an abstract file. Just as you can 
+      read and write to a file, you can read and write to a stream. You might 
+      use a stream for reading and writing with an RS-232 serial connection, a 
+      TCP/IP connection, or a memory location (like a sequence). A stream is 
+      abstract, so if you know how to read and write to a file, you basically 
+      already know how to read and write to a memory location or an RS-232 
+      serial connection or, for that matter, a Web site. This is the art and 
+      magic of polymorphism.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch12lev1sec2">Text Streams</h3>
+<p class="docText">All of the text-oriented classes are derived from <tt>Reader</tt> 
+and <tt>Writer</tt>. By understanding them, you'll have a handle on dealing with 
+their descendents.</p>
+<h4 class="docSection2Title" id="ch12lev2sec2">Writer</h4>
+<p class="docText">The <tt>Writer</tt> class writes character data to a stream. 
+It has the following methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>write(c)</tt>— writes a single character to the text 
+  stream</li>
+  <li>
+  <p class="docText"><tt>write(cbuf)</tt>— writes a sequence of characters to 
+  the text stream</li>
+  <li>
+  <p class="docText"><tt>write(cbuf, off, len)</tt>— writes a sequence of 
+  characters to the text stream starting at the offset into the stream and 
+  copying to <tt>len</tt> in the buffer</li>
+  <li>
+  <p class="docText"><tt>write(str)</tt>— writes out a string to the text stream</li>
+  <li>
+  <p class="docText"><tt>write(str, off, len)</tt>— writes out a string from the 
+  given offset to the given length</li>
+  <li>
+  <p class="docText"><tt>close()</tt>— closes the text stream</li>
+  <li>
+  <p class="docText"><tt>flush()</tt>— flushes the content of the text stream; 
+  used if the stream supports <tt>BufferedOutput</tt></li>
+</ul>
+<p class="docText"><tt>Writer</tt> is the superclass of all character output 
+streams, for example, <tt>FileWriter</tt>, <tt>BufferedWriter</tt>, <tt>
+CharArrayWriter</tt>, <tt>OutputStreamWriter</tt>, and <tt>PrintWriter</tt>.</p>
+<h4 class="docSection2Title" id="ch12lev2sec3">Reader</h4>
+<p class="docText">The <tt>Reader</tt> class reads data from a stream. <tt>
+Reader</tt> is the superclass of all character input streams. It has the 
+following methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>read()</tt>— reads in a single character</li>
+  <li>
+  <p class="docText"><tt>read(cbuf)</tt>— reads in a sequence of characters</li>
+  <li>
+  <p class="docText"><tt>read(cbuf, iOff, iLen)</tt>— reads from the current 
+  position in the file into the sequence at the given offset</li>
+  <li>
+  <p class="docText"><tt>ready()</tt>— determines if the buffer has input data 
+  ready</li>
+  <li>
+  <p class="docText"><tt>mark(int readAheadLimit)</tt>— sets the read-ahead 
+  buffer size</li>
+  <li>
+  <p class="docText"><tt>markSupported()</tt>— returns true if the <tt>mark()</tt> 
+  method is supported</li>
+  <li>
+  <p class="docText"><tt>skip()</tt>— skips a certain number of characters ahead 
+  in the text input stream</li>
+  <li>
+  <p class="docText"><tt>reset()</tt>— moves the file pointer to the marked 
+  position</li>
+  <li>
+  <p class="docText"><tt>close()</tt>— closes the file</li>
+</ul>
+<p class="docText">I can't show you any examples of using <tt>Reader</tt> or <tt>
+Writer</tt> because they're abstract and can't be instantiated on their own. 
+However, I can show examples of their subclasses,
+<a class="docLink" href="#ch12lev2sec4">FileReader and FileWriter</a>, which are 
+concrete.</p>
+<p class="docText">As an exercise, look up <tt>Reader</tt> and <tt>Writer</tt> 
+in the Java API documentation, and compare their Python-friendly method 
+definitions to the official Java versions. Notice the conversion from one type 
+to another.</p>
+<h4 class="docSection2Title" id="ch12lev2sec4">FileReader and FileWriter</h4>
+<p class="docText"><tt>FileReader</tt> and <tt>FileWriter</tt> read and write 
+text files. They have the same methods their base classes have as well as the 
+following constructor methods.</p>
+<p class="docText"><span class="docEmphasis">FileReader:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__(strFilename)</tt>— opens the file specified by 
+  the string (<tt>strFilename</tt>)</li>
+  <li>
+  <p class="docText"><tt>__init__(File)</tt>— opens the file specified by the 
+  file object</li>
+  <li>
+  <p class="docText"><tt>__init__(fd)</tt>— opens the file specified by the file 
+  descriptor</li>
+</ul>
+<p class="docText"><span class="docEmphasis">FileWriter:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__(strFilename)</tt>— opens the file specified by 
+  the string (<tt>strFilename</tt>)</li>
+  <li>
+  <p class="docText"><tt>__init__(strFilename, bAppend)</tt>— same as above, but 
+  optionally opens the file in append mode</li>
+  <li>
+  <p class="docText"><tt>__init__(File)</tt>— opens the file specified by the 
+  file object</li>
+  <li>
+  <p class="docText"><tt>__init__(fd)</tt>— opens the file specified by the file 
+  descriptor</li>
+</ul>
+<p class="docText">As an exercise, look up <tt>FileReader</tt> and <tt>
+FileWriter</tt> in the Java API documentation. Then modify the address book 
+application from <a class="docLink" href="_chapter%208.htm">
+Chapter 8</a> to use these classes.</p>
+<h5 class="docSection3Title" id="ch12lev3sec1">Creating a File with FileWriter</h5>
+<p class="docText">The following interactive session creates a file with <tt>
+FileWriter</tt> and writes some text to it. (Follow along.)</p>
+<p class="docText">Import the <tt>FileWriter</tt> class from the
+<span class="docEmphasis">java.io</span> package.</p>
+<pre>&gt;&gt;&gt; from java.io import FileWriter</pre>
+<p class="docText">Create an instance of it.</p>
+<pre>&gt;&gt;&gt; fw = FileWriter(&quot;c:\\dat\\File.txt&quot;)</pre>
+<p class="docText">Write a single character to the output character stream.</p>
+<pre>&gt;&gt;&gt; fw.write('w')</pre>
+<p class="docText">Write out a string.</p>
+<pre>&gt;&gt;&gt; fw.write(&quot;\r\nthis is a string&quot;)</pre>
+<p class="docText">Write out a sequence of characters.</p>
+<pre>&gt;&gt;&gt; characters = ('\r','\n','a','b','c')
+&gt;&gt;&gt; fw.write(characters)</pre>
+<p class="docText">Close the file.</p>
+<pre>&gt;&gt;&gt; fw.close()</pre>
+<p class="docText">Here's what the file we just created, called
+<span class="docEmphasis">c:\dat\file.txt,</span> looks like. You can open it 
+with Notepad or any other text editor.</p>
+<pre>w
+this is a string
+abc</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Finding the File Length</h2>
+      <p class="docText">You can use a <span class="docEmphasis">java.io</span> 
+      file to see the length of <span class="docEmphasis">c:\dat\file.txt.</span> 
+      It should be 22 bytes.</p>
+      <pre>&gt;&gt;&gt; from java.io import File
+    &gt;&gt;&gt; f = File(&quot;c:\\dat\\File.txt&quot;)
+    &gt;&gt;&gt; file.length()
+    22L f</pre>
+      <p class="docText">Don't worry too much about what the <tt>File</tt> class 
+      does; we'll cover it later. For now, just think of it as a way to specify 
+      a file and get its properties.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Reopen <span class="docEmphasis">c:\dat\file.txt</span> in 
+append mode.</p>
+<pre>&gt;&gt;&gt; fw = FileWriter('c:\\dat\\File.txt', 1)</pre>
+<p class="docText">Append some text.</p>
+<pre>&gt;&gt;&gt; fw.write(&quot;\r\nAnother String appended to the File&quot;)
+&gt;&gt;&gt; fw.close()</pre>
+<p class="docText">We open the file in append mode by passing a <tt>true</tt> (<tt>1</tt>) 
+to the second parameter of the <tt>FileWriter</tt> constructor. This means that 
+we want to append text. You can see from the following example (<span class="docEmphasis">c:\dat\file.txt</span>) 
+that the text has been added.</p>
+<pre>w
+this is a string
+abc
+Another String appended to the File</pre>
+<p class="docText">If we now write to the file and don't open it in append mode, 
+all of the old text will be deleted.</p>
+<pre>&gt;&gt;&gt; fw = FileWriter(File)
+&gt;&gt;&gt; fw.write(&quot;Oops where is all the other text&quot;)
+&gt;&gt;&gt; fw.close()
+&gt;&gt;&gt; f.length()
+32L</pre>
+<p class="docText">Look at the file with a text editor. It should have text only 
+in the last <tt>write</tt> statement.</p>
+<p class="docText">By the way, the concepts just covered for working with <tt>
+FileWriter</tt> aren't much different from those for working with the Python 
+file object.</p>
+<h5 class="docSection3Title" id="ch12lev3sec2">Reading a File with FileReader</h5>
+<p class="docText">Now it's <tt>FileReader</tt>'s turn with an interactive 
+session. We'll open <span class="docEmphasis">c:\dat\file\txt</span> and read 
+the text we wrote to it with <tt>FileWriter</tt>.</p>
+<p class="docText">Import the <tt>FileReader</tt> class from the
+<span class="docEmphasis">java.io</span> package.</p>
+<pre>&gt;&gt;&gt; from java.io import FileReader
+&gt;&gt;&gt; File_Reader = FileReader(&quot;C:\\dat\\File.txt&quot;)</pre>
+<p class="docText">The tricky part is that the <tt>read()</tt> method expects 
+you to pass it a <tt>chars</tt> array that it can fill in, but the closest thing 
+in Python to a Java array is a sequence or list, and neither is close enough. So 
+Jython has added a helper class, called <tt>PyArray</tt>, that passes primitive 
+arrays to Java methods (see
+<a class="docLink" href="_chapter%2011.htm">Chapter 11</a>).</p>
+<p class="docText">Import the <tt>zeros()</tt> function from the
+<span class="docEmphasis">jarray</span> module.</p>
+<pre>&gt;&gt;&gt; from jarray import zeros</pre>
+<p class="docText">Use <tt>zeros()</tt> to create a <tt>PyArray</tt>.</p>
+<pre>&gt;&gt;&gt; chars = zeros(4, 'c')</pre>
+<p class="docText">Print the <tt>chars</tt> array to the screen.</p>
+<pre>&gt;&gt;&gt; chars
+array(['\x0', '\x0', '\x0', '\x0'], char)</pre>
+<p class="docText">The first argument to <tt>zeros()</tt> tells it how big we 
+want our array. The second argument tells <tt>zeros()</tt> that we want our 
+array to be of type <tt>char</tt>. Now <tt>zeros()</tt> creates an array in 
+which all of the values are zeros. When we call <tt>File</tt>_<tt>Reader</tt>.<tt>read</tt>, 
+the <tt>read()</tt> method fills in the empty slots with characters from the 
+file.</p>
+<p class="docText">Here's our call to the <tt>read()</tt> method, which should 
+read the first four letters of the file.</p>
+<pre>&gt;&gt;&gt; File_Reader.read(chars)
+4</pre>
+<p class="docText">As you can see, <tt>chars</tt> contains the first four 
+letters in our file, <tt>'O'</tt>, <tt>'o'</tt>, <tt>'p'</tt>, and <tt>'s'</tt>.</p>
+<pre>&gt;&gt;&gt; chars
+array(['O', 'o', 'p', 's'], char)</pre>
+<p class="docText">This is nice but what we really want is a string object, <tt>
+'Oops'</tt>. For this we need <tt>PyArray</tt>, which we can use anywhere a 
+sequence is suitable, such as the Python class library.</p>
+<p class="docText">The Python <span class="docEmphasis">string</span> module has 
+methods for doing special things with strings. One method, <tt>joinfields()</tt>, 
+combines strings in a sequence to form a string object. Let's use <tt>joinfields()</tt> 
+to convert <tt>chars</tt> to a string.</p>
+<p class="docText">Import the <span class="docEmphasis">string</span> module.</p>
+<pre>&gt;&gt;&gt; import string</pre>
+<p class="docText">Use <tt>joinfields()</tt> to turn the <tt>chars</tt> array 
+into a Python string.</p>
+<pre>&gt;&gt;&gt; first_word = string.joinfields(chars, &quot;&quot;)</pre>
+<p class="docText">Print the value of <tt>first_word</tt> to the screen.</p>
+<pre>&gt;&gt;&gt; first_word
+'Oops'</pre>
+<p class="docText">Notice that the second argument to <tt>joinfields()</tt> 
+specifies the separator we want for the fields. Since we don't want any 
+separator, we pass an empty string.</p>
+<p class="docText">Let's recap what we've learned to read in the whole
+<span class="docEmphasis">c:\dat</span>\<span class="docEmphasis">file.txt</span> 
+file at once.</p>
+<pre>&gt;&gt;&gt; from jarray import zeros        # import the zeros to create an array of
+    primitives
+&gt;&gt;&gt; from java.io import FileReader, File # import the File to get the length
+    of the file
+&gt;&gt;&gt; from string import joinfields   # import the joinfields to convert arrays
+    to strings
+&gt;&gt;&gt; file = File(&quot;c:\\dat\\file.txt&quot;)   # create a java.io.File instance
+&gt;&gt;&gt; chars = zeros(file.length(), 'c')      # create an array to hold the
+    contents of file.txt
+&gt;&gt;&gt; file_Reader = FileReader(file) # create a FileReader instance to read the
+    file &gt;&gt;&gt; &gt;&gt;&gt; file_Reader.read(chars)   # Read in the whole file
+    32</pre>
+<p class="docText">That took only eight steps. Let's see the same thing with the 
+Python file object.</p>
+<pre>&gt;&gt;&gt; python_file = open(&quot;c:\\dat\\file.txt&quot;,&quot;r&quot;)   # open the file
+&gt;&gt;&gt; str = python_file.read()                 # read the contents of the file
+&gt;&gt;&gt; print str
+Oops where is all the other text</pre>
+<p class="docText">What took eight steps with the <tt>java.io</tt>.<tt>FileWriter</tt> 
+instance now takes two steps. Which one would you rather work with?</p>
+<h4 class="docSection2Title" id="ch12lev2sec5">BufferedReader and BufferedWriter</h4>
+<p class="docText">The <tt>BufferedReader</tt> class provides input buffering to 
+the <tt>Reader</tt> stream. The <tt>BufferedWriter</tt> class provides output 
+buffering to the <tt>Writer</tt> stream. Input buffering consists of prefetching 
+data and caching it in a memory queue so that, for example, not every call to 
+the <tt>read()</tt> method equates to a read operation on the physical I/O. 
+Output buffering applies writes to a memory image that is periodically written 
+out to a character stream. You want buffering support for input and output 
+streams, especially large ones, to gain speed and efficiency.</p>
+<p class="docText"><tt>BufferedReader</tt> and <tt>BufferedWriter</tt> have all 
+of the methods that <tt>Reader</tt> and <tt>Writer</tt> have, as well as the 
+following:</p>
+<p class="docText"><span class="docEmphasis">BufferedWriter:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__ (Writer_in)</tt>— creates a <tt>BufferedWriter</tt> 
+  instance with the specified output stream</li>
+  <li>
+  <p class="docText"><tt>__init__(Writer_in, iBufSize)</tt>— same as above but 
+  specifies the size of the buffer</li>
+  <li>
+  <p class="docText"><tt>newLine()</tt>— writes a newline character to the 
+  output stream</li>
+</ul>
+<p class="docText"><span class="docEmphasis">BufferedReader:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__ (Reader_in)</tt>— creates a <tt>BufferedReader</tt> 
+  instance with the specified input stream</li>
+  <li>
+  <p class="docText"><tt>__init__(Reader_in, iBufSize)</tt>— same as above but 
+  specifies the size of the buffer</li>
+  <li>
+  <p class="docText"><tt>readLine()</tt>— reads in a line of text from the input 
+  stream</li>
+</ul>
+<h5 class="docSection3Title" id="ch12lev3sec3">Using the Buffering Classes</h5>
+<p class="docText">Let's have a short interactive session showing how to use our 
+buffering classes. We'll also cover the <tt>newLine()</tt> and <tt>readLine()</tt> 
+methods.</p>
+<p class="docText">Import the <tt>BufferedReader</tt> and <tt>BufferedWriter</tt> 
+classes and the <tt>FileReader</tt> and <tt>FileWriter</tt> classes.</p>
+<pre>&gt;&gt;&gt; from java.io import BufferedReader, BufferedWriter, FileReader, FileWriter</pre>
+<p class="docText">Create a <tt>FileWriter</tt> instance that creates a file 
+called <span class="docEmphasis">c:\dat\buf_file.txt.</span></p>
+<pre>&gt;&gt;&gt; file_out = FileWriter(&quot;c:\\dat\\buf_file.txt&quot;)</pre>
+<p class="docText">Create a <tt>BufferedWriter</tt> instance, <tt>buffer_out</tt>, 
+passing it as an argument to the <tt>BufferedWriter</tt> constructor.</p>
+<pre>&gt;&gt;&gt; buffer_out = BufferedWriter(File_out)</pre>
+<p class="docText">Write three lines of text to the file using <tt>write()</tt> 
+to write the characters and then <tt>newLine()</tt> to write the 
+platform-specific newline characters.</p>
+<pre>&gt;&gt;&gt; buffer_out.write(&quot;Line 1&quot;); buffer_out.newLine()
+&gt;&gt;&gt; buffer_out.write(&quot;Line 2&quot;); buffer_out.newLine()
+&gt;&gt;&gt; buffer_out.write(&quot;Line 3&quot;); buffer_out.newLine()</pre>
+<p class="docText">Close the stream.</p>
+<pre>&gt;&gt;&gt; buffer_out.close()</pre>
+<p class="docText">This code demonstrates chaining a <tt>BufferedWriter</tt> to 
+a <tt>FileWriter</tt>, which adds buffering to file output.</p>
+<p class="docText">The next session uses <tt>FileReader</tt> to open the file we 
+created in the last example.</p>
+<p class="docText">Create a <tt>FileReader</tt> instance, and pass it to the <tt>
+BufferedReader</tt> constructor to create a <tt>BufferedReader</tt> instance.</p>
+<pre>&gt;&gt;&gt; file_in = BufferedReader(FileReader(&quot;c:\\dat\\buf_File.txt&quot;))</pre>
+<p class="docText">Read in all three lines at once with three method calls to
+<tt>readLine()</tt>.</p>
+<pre>&gt;&gt;&gt; line1, line2, line3 = file_in.readLine(), file_in.readLine(),
+    file_in.readLine()</pre>
+<p class="docText">Print all three lines at once.</p>
+<pre>&gt;&gt;&gt; print line1; print line2; print line3
+Line 1
+Line 2
+Line 3</pre>
+<p class="docText">You may be wondering why there's a <tt>newLine()</tt> 
+function in <tt>BufferedWriter</tt>. It's there because it knows how to 
+represent a newline character on whatever operating system you happen to be 
+writing your code for. (We used <tt>&quot;\r\n&quot;</tt> in our <tt>FileWriter</tt> 
+example, which won't work on UNIX or Mac.)</p>
+<h4 class="docSection2Title" id="ch12lev2sec6">PrintWriter</h4>
+<p class="docText"><tt>PrintWriter</tt> provides a <tt>print()</tt> and a <tt>
+println()</tt> function for all primitive types. These functions convert 
+primitive types to characters and then write them to the output stream. <tt>
+PrintWriter</tt> has all of <tt>write()</tt> methods, as well as these:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>print()</tt>— writes out primitive data types to an 
+  output stream (as readable text)</li>
+  <li>
+  <p class="docText"><tt>println()</tt>— same as above, but adds a newline 
+  character to the ouput</li>
+</ul>
+<p class="docText">In the next example, you'll see how to use
+<a class="docLink" href="#ch12lev2sec6">PrintWriter</a>, how to chain output 
+streams together, and how to work with Java primitive types.</p>
+<p class="docText">Import the classes needed.</p>
+<pre>&gt;&gt;&gt; from java.io import PrintWriter, FileWriter, BufferedWriter</pre>
+<p class="docText">Create a <tt>PrintWriter</tt> by passing it a new instance of
+<tt>BufferedWriter</tt>, which is created from a new instance of <tt>FileWriter</tt>.</p>
+<pre>&gt;&gt;&gt; out = PrintWriter(BufferedWriter(FileWriter(&quot;pr.txt&quot;)))</pre>
+<p class="docText">Write three strings to a file using <tt>println()</tt>.</p>
+<pre>&gt;&gt;&gt; out.println(&quot;Line1&quot;)
+&gt;&gt;&gt; out.println(&quot;Line2&quot;)
+&gt;&gt;&gt; out.println(&quot;Line3&quot;)</pre>
+<p class="docText">Use <tt>println()</tt> to write a Python <tt>Double</tt> 
+object and a Python <tt>Integer</tt> object to a file.</p>
+<pre>&gt;&gt;&gt; out.println(4.4)
+&gt;&gt;&gt; out.println(5)</pre>
+<p class="docText">Write a Java <tt>Boolean</tt> to the file.</p>
+<pre>&gt;&gt;&gt; from java.lang import Boolean
+&gt;&gt;&gt; out.println(Boolean(1))
+&gt;&gt;&gt; out.println(Boolean(&quot;true&quot;))</pre>
+<p class="docText">Write a Java <tt>Byte</tt> to the file.</p>
+<pre>&gt;&gt;&gt; from java.lang import Byte
+&gt;&gt;&gt; out.println(Byte(1))</pre>
+<p class="docText">Show how <tt>print()</tt> works.</p>
+<pre>&gt;&gt;&gt; out.print(&quot;Line 9&quot;)
+&gt;&gt;&gt; out.print(&quot;still line 9&quot;)
+&gt;&gt;&gt; out.close()</pre>
+<p class="docText">(It also works with primitive types.)</p>
+<p class="docText">Now you know how to chain stream classes to add the 
+functionality you want. The <tt>out</tt> instance, for example, can write to 
+files from <tt>FileWriter</tt>, work with output buffering from <tt>
+BufferedWriter</tt>, and work with primitive types from <tt>PrintWriter</tt>. By 
+the way, the technique of chaining <tt>Writer</tt> stream classes is known as 
+the Decorator design pattern. To learn more about if read
+<span class="docEmphasis">Design Patterns</span> (Gamma et al., [1995]).</p>
+<h3 class="docSection1Title" id="ch12lev1sec3">Binary Streams: InputStream and OutputStream</h3>
+<p class="docText"><tt>InputStream</tt> is the analog of <tt>Reader</tt>; <tt>
+OutputStream</tt> is the analog of <tt>Writer</tt>. Their methods are listed 
+here.</p>
+<p class="docText"><span class="docEmphasis">InputStream:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>read(byte_sequence)</tt>— reads a sequence of bytes and 
+  returns the actual bytes read</li>
+  <li>
+  <p class="docText"><tt>read(byte_sequence, off, len)</tt>— same as above but 
+  allows you to set the slice for the sequence; returns the number of actual 
+  bytes read</li>
+  <li>
+  <p class="docText"><tt>read()</tt>— reads one byte of data from the input 
+  stream</li>
+  <li>
+  <p class="docText"><tt>skip(n)</tt>— skips to a given offset in the file</li>
+  <li>
+  <p class="docText"><tt>close()</tt>— closes the stream</li>
+  <li>
+  <p class="docText"><tt>reset()</tt>— moves the file pointer to the marked 
+  position</li>
+  <li>
+  <p class="docText"><tt>mark(iReadlimit)</tt>— marks the file pointer</li>
+  <li>
+  <p class="docText"><tt>available()</tt>— returns the number of bytes available 
+  that can be read without blocking (similar to the <tt>Reader class</tt>'s <tt>
+  ready()</tt> method)</li>
+</ul>
+<p class="docText"><span class="docEmphasis">OutputStream:</span></p>
+<ul>
+  <li>
+  <p class="docList"><tt>close()</tt></li>
+  <li>
+  <p class="docText"><tt>flush()</tt>— flushes the buffer, that is, forces the 
+  output buffer to be written to the output stream</li>
+  <li>
+  <p class="docText"><tt>write(b)</tt>— writes a single byte to the output 
+  stream</li>
+  <li>
+  <p class="docText"><tt>write(byte_sequence)</tt>— writes a sequence of bytes 
+  to the output stream</li>
+  <li>
+  <p class="docText"><tt>write(byte_sequence, off, len)</tt>— same as above, but 
+  specifies the slice</li>
+</ul>
+<h4 class="docSection2Title" id="ch12lev2sec7">FileInputStream and FileOutputStream</h4>
+<p class="docText"><tt>FileInputStream</tt> and <tt>FileOutputStream</tt> extend
+<tt>InputStream</tt> and <tt>OutputStream</tt>, respectively. They are the 
+analogs to <tt>File</tt> <tt>Reader</tt> and <tt>FileWriter</tt>. Here are their 
+methods.</p>
+<p class="docText"><span class="docEmphasis">FileInputStream:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__(strFilename)</tt>— opens the file specified by 
+  the string (<tt>strFilename</tt>)</li>
+  <li>
+  <p class="docText"><tt>__init__(File)</tt>— opens the file specified by the 
+  file object</li>
+  <li>
+  <p class="docText"><tt>__init__(fd)</tt>— opens the file specified by the file 
+  descriptor</li>
+</ul>
+<p class="docText"><span class="docEmphasis">FileOutputStream:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__(strFilename)</tt>— opens the file specified by 
+  the string (<tt>strFilename</tt>)</li>
+  <li>
+  <p class="docText"><tt>__init__(strFilename, bAppend)</tt>— same as above, but 
+  optionally opens the file in append mode</li>
+  <li>
+  <p class="docText"><tt>__init__(File)</tt>— opens the file specified by the 
+  file object</li>
+  <li>
+  <p class="docText"><tt>__init__(fd)</tt>— opens the file specified by the file 
+  descriptor</li>
+</ul>
+<p class="docText">Reading and writing to a file with <tt>FileInputStream</tt> 
+and <tt>FileOutputStream</tt> are a lot like reading and writing to a file with
+<tt>FileReader</tt> and <tt>FileWriter</tt>. That being the case, I'm omitting 
+much of the detail in the following example (<span class="docEmphasis">OutputStream1.py</span>) 
+to avoid repetition.</p>
+<pre>   # First we import the FileOutputStream class from the java.io package
+from java.io import FileOutputStream
+from jarray import array
+
+   # Next create an instance of the FileOutputStream
+out = FileOutputStream(&quot;c:\\dat\\file.bin&quot;)
+
+   # Now write a byte to the output binary stream
+out.write(1)
+
+   # Now write some more bytes to the binary stream
+out.write([2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
+
+   # Next write out a string
+#out.write(&quot;\r\nthis is a string&quot;) #Jython converts this automatically
+
+   # Here is the hard way
+str = &quot;\r\nthis is a string&quot;
+
+   # First convert every character in the string into its ASCII equivalent
+seq = map(ord, str)
+
+   # Now convert the sequence into a Java array of the primitive type byte
+bytes = array(seq, 'b')
+
+   # Now write out this string to the file as follows
+out.write(bytes)
+
+out.close()</pre>
+<p class="docText">The code above may seem familiar at first, but as you examine 
+it you'll notice a couple of strange things. First, since <tt>write()</tt> works 
+only with bytes and byte arrays, we have to use the <span class="docEmphasis">
+jarray</span> module again. Second, Jython converts a string into a byte array 
+automatically, but if the class has two <tt>write()</tt> methods—one that takes 
+a string and one that takes a byte array—we have to do some extra work to make 
+sure that the correct method is called. Thus, we have to convert the string to a 
+byte array if we want the byte array method.</p>
+<p class="docText">Using the intrinsic functions
+<a class="docLink" href="#ch12lev3sec4">ord()</a> and
+<a class="docLink" href="#ch12lev3sec5">map()</a>, we'll see how to manually 
+convert the string into a byte array before passing it to the <tt>write()</tt> 
+method.</p>
+<h5 class="docSection3Title" id="ch12lev3sec4">ord()</h5>
+<p class="docText">Remember from
+<a class="docLink" href="_chapter%209.htm">Chapter 9</a> that the
+<tt>ord()</tt> function takes a single character from a string and converts it 
+to its ASCII equivalent (i.e., the number representation of the character stored 
+in the file). Let's work with an interactive example.</p>
+<p class="docText">Convert <tt>&quot;A&quot;</tt>, <tt>&quot;B&quot;</tt>, and <tt>&quot;C&quot;</tt> to 
+ASCII.</p>
+<pre>&gt;&gt;&gt; ord(&quot;A&quot;), ord(&quot;B&quot;), ord(&quot;C&quot;)
+(65, 66, 67)</pre>
+<p class="docText">Convert <tt>&quot;a&quot;</tt>, <tt>&quot;b&quot;</tt>, and <tt>&quot;c&quot;</tt> to 
+ASCII.</p>
+<pre>&gt;&gt;&gt; ord(&quot;a&quot;), ord(&quot;b&quot;), ord(&quot;c&quot;)
+(97, 98, 99)</pre>
+<p class="docText">Figure the distance from <tt>&quot;a&quot;</tt> to <tt>&quot;z&quot;</tt> and 
+from <tt>&quot;A&quot;</tt> to <tt>&quot;Z&quot;</tt>.</p>
+<pre>&gt;&gt;&gt; ord(&quot;z&quot;) - ord(&quot;a&quot;)
+25
+&gt;&gt;&gt; ord(&quot;Z&quot;) - ord(&quot;A&quot;)
+25</pre>
+<h5 class="docSection3Title" id="ch12lev3sec5">map()</h5>
+<p class="docText">The built-in <tt>map()</tt> function deals with sequences, as 
+we also learned in <a class="docLink" href="_chapter%209.htm">
+Chapter 9</a>. It takes two arguments: first, a callable object such as a 
+function or a method; second, a type of sequence like a string, list, or tuple.
+<tt>map()</tt> executes the callable object against every item in the sequence 
+and then returns a list of the results. Thus,</p>
+<pre>&gt;&gt;&gt; [ord(&quot;a&quot;), ord(&quot;b&quot;), ord(&quot;c&quot;), ord(&quot;d&quot;)]
+[97, 98, 99, 100]</pre>
+<p class="docText">is the same as</p>
+<pre>&gt;&gt;&gt; map(ord,&quot;abcd&quot;)
+[97, 98, 99, 100]</pre>
+<p class="docText">Once we have a sequence, we can convert it into a byte array 
+using the <tt>array()</tt> function from <span class="docEmphasis">jarray</span> 
+(see the section on <tt>FileReader</tt>). <tt>array()</tt> takes two arguments: 
+the first is a sequence and the second is a character representing the Java 
+primitive type you want the array to be. (This is an extra step; Jython 
+automatically converts an integer sequence into a byte array.)</p>
+<p class="docText">This code creates an array full of bytes:</p>
+<pre>&gt;&gt;&gt; from jarray import array
+&gt;&gt;&gt; seq = map(ord, &quot;abcd&quot;)
+&gt;&gt;&gt; array(seq, 'b')
+array([97, 98, 99, 100], byte)</pre>
+<h5 class="docSection3Title" id="ch12lev3sec6">The Debug Utility</h5>
+<p class="docText">Of course, having both binary data and text data makes the 
+file difficult to read. We can at least read the text part with a text editor, 
+but besides the text there's only a lot of black boxes where our binary data 
+should be. To see the binary contents of the file, we need another program.</p>
+<p class="docText">If you're running some variation of Windows or DOS, you can 
+use the debug utility, <span class="docEmphasis">C:\dat.debug\file.bin.</span> 
+As shown below, the <tt>-d</tt> command dumps some of the file to the screen, 
+and the <tt>-q</tt> command quits the program. You have to enter the commands 
+the way you enter statements in Jython.</p>
+<pre>C:\dat&gt;debug File.bin
+-d
+0E7F:0100 01 02 03 04 05 06 07 08-09 0A 0B 0C 0D 0E 0F 10 ................
+0E7F:0110 0D 0A 74 68 69 73 20 69-73 20 61 20 73 74 72 69 ..this is a stri
+0E7F:0120 6E 67 2B DE 59 03 CB 8B-D6 C6 06 BB DB 00 E3 31 ng+.Y..........1
+0E7F:0130 49 AC E8 D9 F6 74 08 49-46 FE 06 BB DB EB EF E8 I....t.IF.......
+0E7F:0140 DB F9 75 04 FE 06 17 D9-3C 3F 75 05 80 0E 1B D9 ..u.....&lt;?u.....
+0E7F:0150 02 3C 2A 75 05 80 0E 1B-D9 02 3A 06 02 D3 75 C9 .&lt;*u......:...u.
+0E7F:0160 4E 32 C0 86 04 46 3C 0D-75 02 88 04 89 36 D9 D7 N2...F&lt;.u....6..
+0E7F:0170 89 0E D7 D7 C3 BE BC DB-8B 4C 05 8B 74 09 E8 08 .........L..t...
+-q</pre>
+<p class="docText">What you have is three main columns of data. To the far left 
+is the position of the file in hexadecimal notation. In the middle is the value 
+of the binary data, also in hexadecimal notation, and to the far right is the 
+data's ASCII equivalent.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Hexadecimal</h2>
+      <p class="docText">Hexadecimal is a base 16 number system. This list shows 
+      some decimal numbers and their hexadecimal equivalents:</p>
+      <div align="center">
+        <center>
+        <table cellSpacing="0" cellPadding="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111">
+          <colgroup span="2" align="left">
+          </colgroup>
+          <tr>
+            <th class="docTableHeader" vAlign="top" align="left">
+            <span class="docEmphasis">Decimal</span> </th>
+            <th class="docTableHeader" vAlign="top" align="left">
+            <span class="docEmphasis">Hexadecimal</span> </th>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">1 </td>
+            <td class="docTableCell" vAlign="top" align="left">1 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">2 </td>
+            <td class="docTableCell" vAlign="top" align="left">2 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">3 </td>
+            <td class="docTableCell" vAlign="top" align="left">3 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">4 </td>
+            <td class="docTableCell" vAlign="top" align="left">4 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">5 </td>
+            <td class="docTableCell" vAlign="top" align="left">5 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">6 </td>
+            <td class="docTableCell" vAlign="top" align="left">6 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">7 </td>
+            <td class="docTableCell" vAlign="top" align="left">7 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">8 </td>
+            <td class="docTableCell" vAlign="top" align="left">8 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">9 </td>
+            <td class="docTableCell" vAlign="top" align="left">9 </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">10 </td>
+            <td class="docTableCell" vAlign="top" align="left">A </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">11 </td>
+            <td class="docTableCell" vAlign="top" align="left">B </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">12 </td>
+            <td class="docTableCell" vAlign="top" align="left">C </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">13 </td>
+            <td class="docTableCell" vAlign="top" align="left">D </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">14 </td>
+            <td class="docTableCell" vAlign="top" align="left">E </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left">15 </td>
+            <td class="docTableCell" vAlign="top" align="left">F </td>
+          </tr>
+        </table>
+        </center>
+      </div>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Here's the first line of binary data. Every two digits 
+represent a single byte.</p>
+<pre>01 02 03 04 05 06 07 08-09 0A 0B 0C 0D 0E 0F 10</pre>
+<p class="docText">We wrote it the following calls:</p>
+<pre>out.write(1)
+
+out.write([2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])</pre>
+<p class="docText">You can see that the bytes in the file increase from 1 to 16 
+in hexadecimal.</p>
+<p class="docText">Let's see how to read the file back in by reading in the 
+string.</p>
+<p class="docText">Import <tt>FileInputStream</tt>, and then create an instance 
+that refers to <span class="docEmphasis">c:\dat\file.bin.</span></p>
+<pre>&gt;&gt;&gt; from java.io import FileInputStream
+&gt;&gt;&gt; file = FileInputStream(&quot;c:\\dat\\file.bin&quot;)</pre>
+<p class="docText">Import the <tt>jarray</tt> buffer to create binary input 
+buffers. The <tt>'b'</tt> flag, the second argument to the <tt>zeros()</tt> 
+function call, signifies a byte array. We'll use <tt>input_buffer</tt> to read 
+in the first 16 bytes of data.</p>
+<p class="docText">Import the <tt>zeros()</tt> function from the
+<span class="docEmphasis">jarray</span> module.</p>
+<pre>&gt;&gt;&gt; from jarray import zeros</pre>
+<p class="docText">Create a byte input buffer with <tt>zeros()</tt>.</p>
+<pre>&gt;&gt;&gt; input_buffer = zeros(16, 'b')</pre>
+<p class="docText">Read in the first 16 bytes to the buffer with the <tt>read()</tt> 
+method, which returns the number of bytes read in.</p>
+<pre>&gt;&gt;&gt; file.read(input_buffer)
+16</pre>
+<p class="docText">Print the array of bytes buffered.</p>
+<pre>&gt;&gt;&gt; input_buffer
+array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], byte)</pre>
+<p class="docText">Create a small buffer to read <tt>&quot;\r\n&quot;</tt>.</p>
+<pre>&gt;&gt;&gt; input_buffer = zeros (2,'b')
+&gt;&gt;&gt; file.read(input_buffer)
+2</pre>
+<p class="docText">Read in <tt>&quot;this is a string&quot;</tt> from the file.</p>
+<pre>&gt;&gt;&gt; input_buffer = zeros(16,'b')      #read in the bytes for the string
+&gt;&gt;&gt; file.read(input_buffer)
+    16</pre>
+<p class="docText">Since we read this in as bytes, the code shows the ASCII 
+equivalents for the characters we want instead of the actual characters of the 
+string. We need to convert this byte array into a string sequence.</p>
+<pre>&gt;&gt;&gt; input_buffer
+array([116, 104, 105, 115, 32, 105, 115, 32, 97, 32, 115, 116, 114,
+    105, 110, 103], byte)</pre>
+<p class="docText">To do the conversion we create a sequence and iterate through 
+the byte array. At the same time we append the results of executing the <tt>chr()</tt> 
+built-in function against each byte array item. <tt>chr()</tt> is the reverse of
+<tt>ord()</tt>; it converts a number (ASCII code) into a character (i.e., a 
+string with one item).</p>
+<p class="docText">Lastly, we convert the sequence into a string with a call to
+<tt>string.joinfields()</tt>.</p>
+<pre>&gt;&gt;&gt; seq = []                       # create an empty sequence
+&gt;&gt;&gt; for num in input_buffer:       # for every number in the input_buffer
+...     seq.append(chr(num))       # append the results of chr(num) to the
+                                   # sequence
+...
+&gt;&gt;&gt; seq                            # show what the sequence contains
+    ['t', 'h', 'i', 's', ' ', 'i', 's', ' ', 'a', ' ', 's', 't', 'r', 'i',
+    'n', 'g']
+
+&gt;&gt;&gt; import string                    # import the string module
+&gt;&gt;&gt; str = string.joinfields(seq, &quot;&quot;) # create the string from the sequence
+&gt;&gt;&gt; print str                        # print out the string</pre>
+<p class="docText">Of course, a more Pythonesque way to convert the byte array 
+into a string is with the built-in <tt>map()</tt> function.</p>
+<pre>&gt;&gt;&gt; str = string.joinfields(map(chr,input_buffer),&quot;&quot;)
+&gt;&gt;&gt; print str
+this is a string</pre>
+<p class="docText"><tt>map()</tt>can be very useful; it takes one line of code 
+to accomplish what previously took four.</p>
+<h4 class="docSection2Title" id="ch12lev2sec8">BufferedInputStream and BufferedOutputStream</h4>
+<p class="docText"><tt>BufferedInputStream</tt> and <tt>BufferedOutputStream</tt> 
+provide the same kind of support to <tt>InputStream</tt> and <tt>OutputStream</tt> 
+that <tt>BufferedReader</tt> and <tt>BufferedWriter</tt> provide to <tt>Reader</tt> 
+and <tt>Writer</tt>: input and output buffering to their respective derivations. 
+As I said before, input buffering entails prefetching data and caching it in 
+memory so that read operations don't have to fetch the data off a slow device. 
+Output buffering applies write operations to a memory image that's periodically 
+written out to a stream.</p>
+<p class="docText"><tt>BufferedInputStream</tt> and <tt>BufferedOutputStream</tt> 
+have all of the methods that <tt>InputStream</tt> and <tt>OutputStream</tt> have 
+plus the following:</p>
+<p class="docText"><span class="docEmphasis">BufferedInputStream:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__(InputStream)</tt>— creates an input buffer for 
+  the specified input stream</li>
+  <li>
+  <p class="docText"><tt>__init__(InputStream, iBufSize)</tt>— same as above, 
+  but specifies the size of the input buffer</li>
+</ul>
+<p class="docText"><span class="docEmphasis">BufferedOutputStream:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__(OutputStream)</tt>— creates an output buffer 
+  for the specified output stream</li>
+  <li>
+  <p class="docText"><tt>__init__(OutputStream, iBufSize)</tt>— same as above, 
+  but specifies the size of the output buffer</li>
+</ul>
+<p class="docText">The <tt>mark()</tt>, <tt>markSupported()</tt>, <tt>reset()</tt>,
+<tt>skip()</tt>, and <tt>flush()</tt> methods provide the buffering support.</p>
+<p class="docText"><tt>BufferedOutput</tt> can be chained to an existing stream, 
+as the following example shows. Import <tt>BufferedOutputStream</tt> and <tt>
+FileOutputStream</tt>.</p>
+<pre>&gt;&gt;&gt; from java.io import BufferedOutputStream, FileOutputStream</pre>
+<p class="docText">Create a <tt>BufferedOutputStream</tt> instance chained to a 
+new <tt>FileOutputStream</tt> instance.</p>
+<pre>&gt;&gt;&gt; out = BufferedOutputStream(FileOutputStream(&quot;bufout.bin&quot;))</pre>
+<p class="docText">Write a sequence of bytes from 0 to 16 (0x0 to 0xF in 
+hexadecimal).</p>
+<pre>&gt;&gt;&gt; out.write([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])</pre>
+<p class="docText">Write a sequence of bytes from 17 to 31 (0x10 to 0x1F in 
+hexadecimal).</p>
+<pre>&gt;&gt;&gt; out.write([17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])</pre>
+<p class="docText">Write 255 (0xFF hexadecimal) a few times.</p>
+<pre>&gt;&gt;&gt; for index in xrange(0,16):
+...     out.write(255)
+...</pre>
+<p class="docText">Here's another way of writing out a string:</p>
+<pre>&gt;&gt;&gt; str = &quot;Hello&quot;
+&gt;&gt;&gt; for char in str:
+...     out.write(ord(char))
+&gt;&gt;&gt; out.close()</pre>
+<p class="docText">The output for the file created looks like this (from
+<span class="docEmphasis">C:\dat&gt;debug bufout.bin</span>):</p>
+<pre>-d
+0E7F:0100 00 01 02 03 04 05 06 07-08 09 0A 0B 0C 0D 0E 0F ................
+0E7F:0110 10 11 12 13 14 15 16 17-18 19 1A 1B 1C 1D 1E 1F ................
+0E7F:0120 FF FF FF FF FF FF FF FF-FF FF FF FF FF FF FF FF ................
+0E7F:0130 48 65 6C 6C 6F 00 00-00 00 00 00 00 00 00 00 00 .Hello..........</pre>
+<p class="docText">The first line has the hexadecimal numbers 0x0 to 0xF. The 
+second line lists the numbers 0x10 to 0xlF. The third line contains the 255 
+(0xFF) we wrote out, and the fourth line contains the <tt>&quot;Hello&quot;</tt> string we 
+wrote out.</p>
+<h5 class="docSection3Title" id="ch12lev3sec7">Using BufferedInputStream</h5>
+<p class="docText">Now it's time for a small example of <tt>BufferedInputStream</tt>. 
+This one demonstrates the <tt>mark()</tt>, <tt>skip()</tt>, and <tt>reset()</tt> 
+methods.</p>
+<p class="docText">Import the classes needed, and create the <tt>
+BufferedInputStream</tt> instance, chaining it to a <tt>FileInputStream</tt> 
+instance.</p>
+<pre>&gt;&gt;&gt; from java.io import BufferedInputStream, FileInputStream
+&gt;&gt;&gt; input = BufferedInputStream(FileInputStream(&quot;bufout.bin&quot;))</pre>
+<p class="docText">Mark the position in the file we want to return to.</p>
+<pre>&gt;&gt;&gt; input.mark(100)</pre>
+<p class="docText">Read in first three bytes. (Remember, we set the first three 
+bytes to 0x0, 0x1, and 0x2—1, 2, and 3 in decimal—in the last example.)</p>
+<pre>&gt;&gt;&gt; input.read(), input.read(), input.read()
+(0, 1, 2, 3)</pre>
+<p class="docText">Use the <tt>skip()</tt> method to skip ahead twenty bytes in 
+the file.</p>
+<pre>&gt;&gt;&gt; input.skip(20)
+20L</pre>
+<p class="docText">The <tt>reset()</tt> method sets the file back to the 
+position marked with the <tt>mark()</tt> method, which happens to be at the 
+beginning. A reading of the first three bytes proves this.</p>
+<pre>&gt;&gt;&gt; input.reset()
+&gt;&gt;&gt; input.read(), input.read(), input.read()
+(0, 1, 2)</pre>
+<p class="docText">Reset the file at the beginning. Use the <tt>zeros()</tt> 
+function to create byte arrays to read in the first three lines. (The lines 
+aren't real, like lines of text, but refer to the way the hexdump program—that 
+is, the debug program—displays the data.) Then read in the first three lines and 
+display them.</p>
+<pre>&gt;&gt;&gt; input.reset()             # reset to the beginning of the file.
+&gt;&gt;&gt; from jarray import zeros  # import the zeros function
+&gt;&gt;&gt; line1 = zeros(16, 'b')    # buffer to read in first 16 bytes
+&gt;&gt;&gt; line2 = zeros(16, 'b')    # buffer to read in next 16 bytes
+&gt;&gt;&gt; line3 = zeros(16, 'b')    # buffer to read in the third 16
+&gt;&gt;&gt; input.read(line1)         # read in line 1
+16
+
+&gt;&gt;&gt; input.read(line2), input.read(line3)   #read in line 2 and 3
+(16, 16)
+
+&gt;&gt;&gt; line1 #display line1
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], byte)
+
+&gt;&gt;&gt; line2       #display line2
+array([16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], byte)
+
+&gt;&gt;&gt; line3 #display line3
+array([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1], byte)</pre>
+<p class="docText">Compare the output to the hexdump we did with the debug 
+program.</p>
+<p class="docText">Now let's read in the <tt>&quot;Hello&quot;</tt> string. This repeats 
+the <tt>FileInputStream</tt> exercise, so we won't cover it in the same detail 
+as before.</p>
+<p class="docText">Read in the bytes from the <tt>&quot;Hello&quot;</tt> string. (A better 
+way would have been to create a Java array of bytes with <tt>jarray</tt>, but I 
+wanted to show this way.)</p>
+<pre>&gt;&gt;&gt; binstr=input.read(),input.read(),input.read(),input.read(),input.read()
+&gt;&gt;&gt; binstr      #display it
+(72, 101, 108, 108, 111)</pre>
+<p class="docText">Convert the byte array to a sequence of characters.</p>
+<pre>&gt;&gt;&gt; char_seq = []
+&gt;&gt;&gt; for num in binstr:
+...     char_seq.append(chr(num))
+...</pre>
+<p class="docText">Convert the sequence of characters to a string.</p>
+<pre>&gt;&gt;&gt; char_seq
+['H', 'e', 'l', 'l', 'o']
+
+&gt;&gt;&gt; import string
+&gt;&gt;&gt; str = string.joinfields(char_seq, &quot;&quot;)
+&gt;&gt;&gt; print str
+Hello</pre>
+<h3 class="docSection1Title" id="ch12lev1sec4">DataInput and DataOutput</h3>
+<p class="docText"><tt>DataInput</tt> and <tt>DataOutput</tt> read and write 
+primitive Java types from a stream. Since they're interfaces, all of their 
+methods, which follow, are abstract and so do nothing until they're 
+instantiated.</p>
+<p class="docText"><span class="docEmphasis">DataInput:</span></p>
+<ul>
+  <li>
+  <p class="docList"><tt>readBoolean()</tt></li>
+  <li>
+  <p class="docList"><tt>readByte()</tt></li>
+  <li>
+  <p class="docList"><tt>readFloat()</tt></li>
+  <li>
+  <p class="docList"><tt>readChar()</tt></li>
+  <li>
+  <p class="docList"><tt>readDouble()</tt></li>
+  <li>
+  <p class="docList"><tt>readInt()</tt></li>
+  <li>
+  <p class="docList"><tt>readShort()</tt></li>
+  <li>
+  <p class="docList"><tt>readLong()</tt></li>
+  <li>
+  <p class="docList"><tt>readLine()</tt></li>
+  <li>
+  <p class="docList"><tt>readUTF()</tt></li>
+  <li>
+  <p class="docList"><tt>readUnsignedByte()</tt></li>
+  <li>
+  <p class="docList"><tt>readUnsignedShort()</tt></li>
+  <li>
+  <p class="docList"><tt>readFully(byte_sequence)</tt></li>
+  <li>
+  <p class="docList"><tt>readFully(byte_sequence, off, len)</tt></li>
+  <li>
+  <p class="docList"><tt>skipBytes(n)</tt></li>
+</ul>
+<p class="docText"><span class="docEmphasis">DataOutput:</span></p>
+<ul>
+  <li>
+  <p class="docList"><tt>write (b)</tt></li>
+  <li>
+  <p class="docList"><tt>write(byte_sequence)</tt></li>
+  <li>
+  <p class="docList"><tt>writeBoolean(boolean)</tt></li>
+  <li>
+  <p class="docList"><tt>writeByte(byte)</tt></li>
+  <li>
+  <p class="docList"><tt>writeBytes(string)</tt></li>
+  <li>
+  <p class="docList"><tt>writeChar(char)</tt></li>
+  <li>
+  <p class="docList"><tt>writeChars(string)</tt></li>
+  <li>
+  <p class="docList"><tt>writeDouble(double)</tt></li>
+  <li>
+  <p class="docList"><tt>writeFloat(float)</tt></li>
+  <li>
+  <p class="docList"><tt>writeInt(int)</tt></li>
+  <li>
+  <p class="docList"><tt>writeLong(long)</tt></li>
+  <li>
+  <p class="docList"><tt>writeShort(short)</tt></li>
+  <li>
+  <p class="docList"><tt>writeUTF()</tt></li>
+</ul>
+<h4 class="docSection2Title" id="ch12lev2sec9">DataInputStream and DataOutput Stream</h4>
+<p class="docText">The data stream classes, <tt>DataInputStream</tt> and <tt>
+DataOutputStream</tt>, implement the <tt>DataInput</tt> and <tt>DataOutput</tt> 
+interfaces, respectively, reading and writing Java primitive types to a stream. 
+Here are their methods.</p>
+<p class="docText"><span class="docEmphasis">DataInputStream:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__ (InputStream)</tt>— creates a buffered writer 
+  with the specified writer output stream</li>
+</ul>
+<p class="docText"><span class="docEmphasis">DataOutputStream:</span></p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__ (InputStream)</tt>— creates a buffered reader 
+  with the specified reader input stream</li>
+</ul>
+<h5 class="docSection3Title" id="ch12lev3sec8">Using DataInputStream</h5>
+<p class="docText">To demonstrate <tt>DataInputStream</tt>, we'll read in the 
+file we wrote with <tt>DataOutputStream</tt> in the last interactive session.</p>
+<p class="docText">Import the classes needed.</p>
+<pre>&gt;&gt;&gt; from java.io import DataInputStream, FileInputStream</pre>
+<p class="docText">Create a <tt>DataInputStream</tt> instance that's chained to 
+a new instance of <tt>FileInputStream</tt>.</p>
+<pre>&gt;&gt;&gt; data_in = DataInputStream(FileInputStream(&quot;data_out.bin&quot;))</pre>
+<p class="docText">Read in a <tt>Boolean</tt> from the stream.</p>
+<pre>&gt;&gt;&gt; data_in.readBoolean()
+1</pre>
+<p class="docText">Read in a <tt>Byte</tt> from the stream.</p>
+<pre>&gt;&gt;&gt; data_in.readByte()
+1</pre>
+<p class="docText">Read in a <tt>Char</tt> from the stream.</p>
+<pre>&gt;&gt;&gt; data_in.readChar()
+'\x1'</pre>
+<p class="docText">Read in an <tt>Int</tt> from the stream.</p>
+<pre>&gt;&gt;&gt; data_in.readInt()
+1</pre>
+<p class="docText">Read in a <tt>Long</tt> and a <tt>Short</tt> from the stream.</p>
+<pre>&gt;&gt;&gt; data_in.readLong(), data_in.readShort()
+(1L, 1)</pre>
+<p class="docText">Close the stream.</p>
+<pre>&gt;&gt;&gt;data_in.close()</pre>
+<h5 class="docSection3Title" id="ch12lev3sec9">Using DataOutputStream</h5>
+<p class="docText">Though not very creative, the following example shows how to 
+write the Java primitive types using <tt>DataOutputStream</tt>:</p>
+<pre>&gt;&gt;&gt; from java.io import DataOutputStream, FileOutputStream
+&gt;&gt;&gt; data_out = DataOutputStream(FileOutputStream(&quot;data_out.bin&quot;))
+&gt;&gt;&gt; data_out.writeBoolean(1)
+&gt;&gt;&gt; data_out.writeByte(1)
+&gt;&gt;&gt; data_out.writeChar(1)
+&gt;&gt;&gt; data_out.writeInt(1)
+&gt;&gt;&gt; data_out.writeLong(1)
+&gt;&gt;&gt; data_out.writeShort(1)
+&gt;&gt;&gt; data_out.close()</pre>
+<p class="docText">Here's a hexdump listing of <tt>data_out.bin</tt>:</p>
+<pre>0E7F:0100 01 01 00 01 00 00 00 01-00 00 00 00 00 00 00 01 ................
+0E7F:0110 00 01 FF FF FF FF FF FF-FF FF FF FF FF FF FF FF ................</pre>
+<h4 class="docSection2Title" id="ch12lev2sec10">readUTF() and writeUTF()</h4>
+<p class="docText">Two methods that make life easier are <tt>readUTF()</tt> and
+<tt>writeUTF()</tt>, which read and write strings in Unicode (UTF-8 
+transformation format).</p>
+<p class="docText">Here's an example of writing two strings:</p>
+<pre>&gt;&gt;&gt; from java.io import *
+&gt;&gt;&gt; out = DataOutputStream(FileOutputStream(&quot;strs.bin&quot;))
+&gt;&gt;&gt; out.writeUTF(&quot;Hello world&quot;)
+&gt;&gt;&gt; out.writeUTF(&quot; Hello earth&quot;)
+&gt;&gt;&gt; out.close()</pre>
+<p class="docText">Here's an example of reading two strings:</p>
+<pre>&gt;&gt;&gt; input = DataInputStream(FileInputStream(&quot;strs.bin&quot;))
+&gt;&gt;&gt; input.readUTF()
+'Hello world'
+&gt;&gt;&gt; input.readUTF()
+' Hello earth'
+&gt;&gt;&gt; input.close()</pre>
+<p class="docText">As you can see, it is a lot easier to write strings with this 
+technique than with the others we had to use without <tt>DataInputStream</tt> 
+and <tt>DataOutputStream</tt>.</p>
+<h3 class="docSection1Title" id="ch12lev1sec5">The File Class</h3>
+<p class="docText">The Java <tt>File</tt> class is nothing like the Python file 
+object, in spite of the name. It allows you to check the following attributes of 
+a file:</p>
+<ul>
+  <li>
+  <p class="docList">Read</li>
+  <li>
+  <p class="docList">Write</li>
+  <li>
+  <p class="docList">Size</li>
+  <li>
+  <p class="docList">Last modification date</li>
+  <li>
+  <p class="docList">Directory or not a directory</li>
+</ul>
+<p class="docText">It also provides the methods listed below to view a 
+directory's contents, to create and delete directories, and to delete directory 
+files:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>canRead()</tt>— determines permission and access to 
+  read the file</li>
+  <li>
+  <p class="docText"><tt>canWrite()</tt>— determines read-only or read/write 
+  access</li>
+  <li>
+  <p class="docText"><tt>delete()</tt>— deletes the current file referenced by 
+  this file object</li>
+  <li>
+  <p class="docText"><tt>equals(File)</tt>— determines if the file referenced by 
+  this object is the same as the argument</li>
+  <li>
+  <p class="docText"><tt>exists()</tt>— determines if the file exists</li>
+  <li>
+  <p class="docText"><tt>getPath()</tt>— gets the file path (can be relative)</li>
+  <li>
+  <p class="docText"><tt>getAbsolutePath()</tt>— same as above, but resolves 
+  relative to absolute paths</li>
+  <li>
+  <p class="docList"><tt>getCanonicalPath()</tt></li>
+  <li>
+  <p class="docText"><tt>getName()</tt>— gets the file name</li>
+  <li>
+  <p class="docText"><tt>getParent()</tt>— gets the parent directory</li>
+  <li>
+  <p class="docList"><tt>isAbsolute()</tt></li>
+  <li>
+  <p class="docText"><tt>isDirectory()</tt>— determines if the file is a 
+  directory</li>
+  <li>
+  <p class="docText"><tt>isFile()</tt>— determines if the file is a regular file</li>
+  <li>
+  <p class="docText"><tt>lastModified()</tt>— gets the date the file was last 
+  modified</li>
+  <li>
+  <p class="docText"><tt>length()</tt>— gets the length of the file</li>
+  <li>
+  <p class="docText"><tt>list()</tt>— lists the files in the directory</li>
+  <li>
+  <p class="docText"><tt>list(filter)</tt>— lists the files in the directory 
+  with a filter</li>
+  <li>
+  <p class="docText"><tt>mkdir(dir)</tt>— creates a directory</li>
+  <li>
+  <p class="docText"><tt>mkdirs()</tt>— creates several directories</li>
+  <li>
+  <p class="docText"><tt>renameTo()</tt>— renames the file</li>
+  <li>
+  <p class="docText"><tt>toString()</tt>— returns the string equivalent of the 
+  file (<tt>toString</tt> is inherited from <tt>Object</tt>)</li>
+</ul>
+<h4 class="docSection2Title" id="ch12lev2sec11">File Interactive Session</h4>
+<p class="docText">Let's look at an example of <tt>File</tt>. Import the <tt>
+File</tt> class from the <span class="docEmphasis">java.io</span> package.</p>
+<pre>&gt;&gt;&gt; from java.io import File</pre>
+<p class="docText">Create an instance of the file object that refers to the 
+properties of the file (<span class="docEmphasis">c:\\dat\\File.txt</span>).</p>
+<pre>&gt;&gt;&gt; file = File(&quot;c:\\dat\\File.txt&quot;)</pre>
+<p class="docText">Determine if the file is read-only by calling <tt>canWrite()</tt>. 
+If <tt>canWrite()</tt> returns <tt>1</tt> (true), the file is read/write. (If 
+you change the properties of the file to read-only, <tt>canWrite()</tt> returns
+<tt>0</tt>, that is, false.)</p>
+<pre>&gt;&gt;&gt; file.canWrite()
+1</pre>
+<p class="docText">Determine if the file exists. If not, the <tt>exists()</tt> 
+function returns <tt>0</tt>.</p>
+<pre>&gt;&gt;&gt; file.exists()
+1</pre>
+<p class="docText">Get just the file name without the path.</p>
+<pre>&gt;&gt;&gt; file.getName()
+'File.txt'</pre>
+<p class="docText">Get the file path.</p>
+<pre>&gt;&gt;&gt; file.getPath()
+'c:\\dat\\File.txt'</pre>
+<p class="docText">Get the path of the parent directory.</p>
+<pre>&gt;&gt;&gt; file.getParent()
+'c:\\dat'</pre>
+<p class="docText">In the following code, we'll see if the file is a directory. 
+Then we'll create a <tt>File</tt> instance that refers to the file's parent 
+directory and test if the directory is actually a directory.</p>
+<p class="docText">Is the file a directory? (<tt>1</tt> means yes; <tt>0</tt> 
+means no)</p>
+<pre>&gt;&gt;&gt; file.isDirectory()
+0</pre>
+<p class="docText">Create a <tt>File</tt> instance that refers to the file's 
+parent directory, and then see if the directory is a directory.</p>
+<pre>&gt;&gt;&gt; directory = file(File.getParent())
+&gt;&gt;&gt; directory.isDirectory()
+1</pre>
+<p class="docText">Is the file a file?</p>
+<pre>&gt;&gt;&gt; file.isFile()
+1</pre>
+<p class="docText">Is the directory a file?</p>
+<pre>&gt;&gt;&gt; directory.isFile()
+0</pre>
+<p class="docText">The <tt>lastModified()</tt> method returns the time, as a <tt>
+Long</tt>, which refers to the milli-seconds elapsed since Jan. 1, 1970.</p>
+<pre>&gt;&gt;&gt; file.lastModified()
+934294386000L</pre>
+<p class="docText">You can convert the <tt>Long</tt> to a date using the 
+following technique. Import the <tt>Date</tt> class, passing its last modified 
+value to its constructor.</p>
+<pre>&gt;&gt;&gt; from java.util import Date
+&gt;&gt;&gt; date = Date(File.lastModified())
+&gt;&gt;&gt; print date
+Tue Aug 10 07:13:06 PDT 1999</pre>
+<p class="docText">Get the length of the file.</p>
+<pre>&gt;&gt;&gt; file.length()
+63L</pre>
+<p class="docText">Is the class an absolute path (<span class="docEmphasis">c:\dat\text.tx</span>) 
+or a relative path (<span class="docEmphasis">..\..\text.txt</span>)?</p>
+<pre>&gt;&gt;&gt; file.isAbsolute()
+1</pre>
+<p class="docText">Delete the file and check to see if it exists; get its 
+length.</p>
+<pre>&gt;&gt;&gt; file.delete()
+1
+
+&gt;&gt;&gt; file.exists()         # File no longer exist
+0
+
+&gt;&gt;&gt; file.length()         # Thus its length is zero
+0L</pre>
+<p class="docText">Create a new <tt>File</tt> instance that refers to the 
+relative location of autoexec.bat.</p>
+<pre>&gt;&gt;&gt; file = File (&quot;..\\..\\..\\autoexec.bat&quot;)</pre>
+<p class="docText">Check to see if the file exists.</p>
+<pre>&gt;&gt;&gt; file.exists()
+1</pre>
+<p class="docText">Get the path (note that it's relative).</p>
+<pre>&gt;&gt;&gt; file.getPath()
+'..\\..\\..\\autoexec.bat'</pre>
+<p class="docText">Get the absolute path (this looks weird).</p>
+<pre>&gt;&gt;&gt; file.getAbsolutePath()
+'C:\\book\\..\\..\\..\\autoexec.bat'</pre>
+<p class="docText">Get the canonical path (this looks better).</p>
+<pre>&gt;&gt;&gt; file.getCanonicalPath()
+'C:\\AUTOEXEC.BAT'</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Path Separators: Sometimes \\, Sometimes/</h2>
+      <p class="docText">The path separator can vary depending on what operating 
+      system you're using, so it's not a good idea to hardcode it. On Windows 
+      machines, the path separator is <tt>\</tt>, but on Unix it's <tt>/</tt>.</p>
+      <p class="docText">Given this situation, the proper way to create the 
+      directory string is</p>
+      <pre>&gt;&gt;&gt; new_directory = directory.getCanonicalPath() + File.separator \
+...                 + &quot;MyNewDir&quot;</pre>
+      <p class="docText">not</p>
+      <pre>&gt;&gt;&gt; new_directory = directory.getCanonicalPath() \
+                    + &quot;\\MyNewDir&quot;</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText"><tt>File</tt> class instances can work with directories as 
+well. Create a relative directory that points to the current directory.</p>
+<pre>&gt;&gt;&gt; directory = File(&quot;.&quot;)
+&gt;&gt;&gt; directory.isAbsolute()
+0</pre>
+<p class="docText">List the files in the current directory (an array of Java 
+strings is returned).</p>
+<pre>&gt;&gt;&gt; directory.list()
+array(['TOC2.txt', 'readme.txt', 'Silver', 'status.xls', 'TOC.txt', 'chap9',
+'chap5', 'chap3', 'chap2', 'chap10', 'chap1', '~WRL1019.tmp', '~WRL0244.tmp',
+'~WRL2798.tmp', '~WRL2319.tmp', 'Code Samples', 'chap6', 'scripts', 'Gold'],
+java.lang.String)</pre>
+<p class="docText">Let's create a new directory called <span class="docEmphasis">
+MyNewDir.</span> First create the directory string.</p>
+<pre>&gt;&gt;&gt; new_directory = directory.getCanonicalPath() + &quot;\\MyNewDir&quot;</pre>
+<p class="docText">Show it.</p>
+<pre>&gt;&gt;&gt; print new_directory
+C:\book\MyNewDir</pre>
+<p class="docText">Create an instance of the directory that will be created.</p>
+<pre>&gt;&gt;&gt; newDir = File(new_directory)</pre>
+<p class="docText">See if the directory to which the instance refers already 
+exists.</p>
+<pre>&gt;&gt;&gt; newDir.exists()
+0</pre>
+<p class="docText">Create the directory with the <tt>mkdir()</tt> method.</p>
+<pre>&gt;&gt;&gt; newDir.mkdir()
+1</pre>
+<p class="docText">See if it exists (it should).</p>
+<pre>&gt;&gt;&gt; newDir.exists()
+1</pre>
+<h3 class="docSection1Title" id="ch12lev1sec6">The RandomAccessFile Class</h3>
+<p class="docText"><tt>RandomAccessFile</tt> both reads and writes to binary 
+output streams. It's most similar to the Python file object and has the 
+following methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>__init__(strName, strMode)</tt>— opens the file in the 
+  specified mode</li>
+  <li>
+  <p class="docText"><tt>__init__(File, strMode)</tt>— same as above, but passes 
+  a Java file object</li>
+  <li>
+  <p class="docText"><tt>getFD()</tt>— gets the file descriptor</li>
+  <li>
+  <p class="docText"><tt>getFilePointer()</tt>— similar to the <tt>tell()</tt> 
+  method for the Python file object</li>
+  <li>
+  <p class="docText"><tt>length()</tt>— gets the length of the file</li>
+  <li>
+  <p class="docText"><tt>seek()</tt>— similar to the <tt>seek()</tt> method for 
+  the Python file object</li>
+  <li>
+  <p class="docText"><tt>read(byte_sequence)</tt>— similar to the <tt>read()</tt> 
+  method in <tt>InputStream</tt></li>
+  <li>
+  <p class="docText"><tt>read(byte_sequence, off, len)</tt>— similar to the <tt>
+  read()</tt> method in <tt>InputStream</tt></li>
+</ul>
+<p class="docText">The following abstract methods are from <tt>DataInput</tt>:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>readBoolean()</tt></li>
+  <li>
+  <p class="docList"><tt>readByte()</tt></li>
+  <li>
+  <p class="docList"><tt>readFloat()</tt></li>
+  <li>
+  <p class="docList"><tt>readChar()</tt></li>
+  <li>
+  <p class="docList"><tt>readDouble()</tt></li>
+  <li>
+  <p class="docList"><tt>readInt()</tt></li>
+  <li>
+  <p class="docList"><tt>readShort()</tt></li>
+  <li>
+  <p class="docList"><tt>readLong()</tt></li>
+  <li>
+  <p class="docList"><tt>readLine()</tt></li>
+  <li>
+  <p class="docList"><tt>readUTF()</tt></li>
+  <li>
+  <p class="docList"><tt>readUnsignedByte()</tt></li>
+  <li>
+  <p class="docList"><tt>readUnsignedShort()</tt></li>
+  <li>
+  <p class="docList"><tt>readFully(byte_sequence)</tt></li>
+  <li>
+  <p class="docList"><tt>readFully(byte_sequence, off, len)</tt></li>
+  <li>
+  <p class="docList"><tt>skipBytes(n)</tt></li>
+  <li>
+  <p class="docList"><tt>write (b)</tt></li>
+</ul>
+<p class="docText">These abstract methods are from <tt>DataOutput</tt>:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>write(byte_sequence)</tt></li>
+  <li>
+  <p class="docList"><tt>writeBoolean(boolean)</tt></li>
+  <li>
+  <p class="docList"><tt>writeByte(byte)</tt></li>
+  <li>
+  <p class="docList"><tt>writeBytes(string)</tt></li>
+  <li>
+  <p class="docList"><tt>writeChar(char)</tt></li>
+  <li>
+  <p class="docList"><tt>writeChars(string)</tt></li>
+  <li>
+  <p class="docList"><tt>writeDouble(double)</tt></li>
+  <li>
+  <p class="docList"><tt>writeFloat(float)</tt></li>
+  <li>
+  <p class="docList"><tt>writeInt(int)</tt></li>
+  <li>
+  <p class="docList"><tt>writeLong(long)</tt></li>
+  <li>
+  <p class="docList"><tt>writeShort(short)</tt></li>
+  <li>
+  <p class="docList"><tt>writeUTF(string)</tt></li>
+</ul>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Advanced Note: The Shortcoming of Single 
+      Inheritance</h2>
+      <p class="docText">Instead of <tt>RandomAccessFile</tt> inheriting from 
+      both <tt>InputStream</tt> and <tt>OutputStream</tt>, it inherits from <tt>
+      DataInput</tt> and <tt>DataOuput</tt> (which are interfaces). Of course, 
+      it could have inherited from these stream classes if they were interfaces, 
+      but because <tt>RandomAccessFile</tt> doesn't support them, it can't chain 
+      to them.</p>
+      <p class="docText">A while back I wanted a random access file that worked 
+      with <tt>ObjectOutputStream</tt> and <tt>ObjectInputStream</tt>. To get it 
+      I had to write my own class that extended from <tt>ObjectOutput</tt> and
+      <tt>ObjectInput</tt>, and re-implement object streaming. This is a 
+      situation where the single inheritance model of Java falls short.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch12lev2sec12">RandomAccessFile Modes</h4>
+<p class="docText">The <tt>RandomAccessFile</tt> modes are <tt>r</tt> for read 
+only, which is similar to Python's <tt>r</tt>, and <tt>rw</tt> for read/write, 
+which is similar to Python's <tt>r+</tt>. Working with <tt>RandomAccessFile</tt> 
+isn't much different from working with <tt>DataInputStream</tt> and <tt>
+DataOutputStream</tt>. It's also not much different from working with the Python 
+file object, as I said before. Since there are no truly new concepts here, this 
+next interactive session is a short one. (You still have to follow along, 
+though.)</p>
+<p class="docText">Import <tt>RandomAccessFile</tt> from
+<span class="docEmphasis">java.io.</span></p>
+<pre>&gt;&gt;&gt; from java.io import RandomAccessFile</pre>
+<p class="docText">Create an instance of it in read/write mode.</p>
+<pre>&gt;&gt;&gt; file = RandomAccessFile(&quot;c:\\dat\\rFile.bin&quot;, &quot;rw&quot;)</pre>
+<p class="docText">Create an array that can be written to the file; write it to 
+the file.</p>
+<pre>&gt;&gt;&gt; import jarray
+&gt;&gt;&gt; byte_array = jarray.array((0,1,2,3,4,5,6,7,8,9,10), 'b')
+&gt;&gt;&gt; print byte_array
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], byte)
+
+&gt;&gt;&gt; file.write(byte_array)</pre>
+<p class="docText">Write some strings to the file.</p>
+<pre>&gt;&gt;&gt; file.writeUTF(&quot;Hello&quot;)
+&gt;&gt;&gt; file.writeChars(&quot; how are you&quot;)
+&gt;&gt;&gt; file.writeBytes(&quot; fine thanks&quot;)</pre>
+<p class="docText">Get the location in the file.</p>
+<pre>&gt;&gt;&gt; file.getFilePointer()
+54L
+&gt;&gt;&gt; location = file.getFilePointer()    # Save it for later</pre>
+<p class="docText">Move to the start of the file using the <tt>seek()</tt> 
+method.</p>
+<pre>&gt;&gt;&gt; file.seek(0)</pre>
+<p class="docText">Create an empty array ( <tt>buffer</tt>), and read in the 
+values from <tt>byte_array</tt> (written a few steps back). Notice that <tt>
+buffer</tt>'s values are the same as <tt>byte_array</tt>'s values after the <tt>
+file</tt>.<tt>read()</tt> function call.</p>
+<pre>&gt;&gt;&gt; buffer = jarray.zeros(11, 'b')
+&gt;&gt;&gt; file.read(buffer)
+11
+&gt;&gt;&gt; print buffer
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], byte)</pre>
+<p class="docText">Move to the saved location; show that it's the same place in 
+the file.</p>
+<pre>&gt;&gt;&gt; file.seek(location)
+&gt;&gt;&gt; file.getFilePointer()
+54L</pre>
+<p class="docText">Write the buffer to the file and show its current location.</p>
+<pre>&gt;&gt;&gt; buffer[10] = 0xa
+&gt;&gt;&gt; file.write(buffer)
+&gt;&gt;&gt; file.getFilePointer()
+65L
+
+&gt;&gt;&gt; file.close()</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Unicode</h2>
+      <p class="docText">Unicode is a standard for working with character sets 
+      from all common languages. It's essential for internationalizing software.</p>
+      <p class="docText">Are you the least bit curious about the differences 
+      between <tt>writeUTF()</tt>, <tt>writeChars()</tt>, and <tt>writeBytes()</tt>? 
+      Here they are:</p>
+      <pre>&gt;&gt;&gt; file.writeUTF(&quot;Hello&quot;)
+&gt;&gt;&gt; file.writeChars(&quot; how are you&quot;)
+&gt;&gt;&gt; file.writeBytes(&quot; fine thanks&quot;)</pre>
+      <p class="docText">In essence, <tt>writeChars()</tt> writes the Unicode 
+      representation of the characters to the file; <tt>writeUTF()</tt> and <tt>
+      writeBytes()</tt> write out the ASCII equivalents. (More precisely, <tt>
+      writeUTF()</tt> writes in a Java-modified UTF-8 format, which you can read 
+      about in the Java API documentation under the <tt>DataInput</tt> 
+      interface. In the previous interactive example, UTF-8 equated to ASCII.)</p>
+      <p class="docText">The Unicode data in this example is represented by two 
+      bytes, whereas the <tt>writeBytes()</tt> and <tt>writeUTF()</tt> data is 
+      represented by one byte. Fire up a hexdump utility, and see for yourself 
+      (this is a hexdump of the <span class="docEmphasis">rfile.bin</span> 
+      file):</p>
+      <pre>C:\dat&gt;debug rFile.bin
+-d
+1876:0100 00 01 02 03 04 05 06 07-08 09 0A 00 05 48 65 6C .............Hel
+1876:0110 6C 6F 00 20 00 68 00 6F-00 77 00 20 00 61 00 72 lo. .h.o.w. .a.r
+1876:0120 00 65 00 20 00 79 00 6F-00 75 20 66 69 6E 65 20 .e. .y.o.u fine
+1876:0130 74 68 61 6E 6B 73 00 01-02 03 04 05 06 07 08 09 thanks..........
+1876:0140 0A 02 D3 74 0A 41 3C 22-75 E6 80 F7 20 EB E1 5E ...t.A&lt;&quot;u... ..^
+1876:0150 58 C3 A1 D7 D7 8B 36 D9-D7 C6 06 1B D9 00 C6 06 X.....6.........
+1876:0160 17 D9 00 8B 36 D9 D7 8B-0E D7 D7 8B D6 E3 42 51 ....6.........BQ
+1876:0170 56 5B 2B DE 59 03 CB 8B-D6 C6 06 BB DB 00 E3 31
+V[+.Y..........1</pre>
+      <p class="docText">Notice that the <tt>how are you</tt> in the right 
+      column, which was written with <tt>writeChars()</tt>, has a period (<tt>&quot;.&quot;</tt>) 
+      between each character, while the <tt>Hello</tt> and the <tt>fine thanks</tt> 
+      don't. This shows that <tt>how are you</tt> is using 2-byte Unicode.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch12lev1sec7">The StreamTokenizer Class</h3>
+<p class="docText"><tt>StreamTokenizer</tt> breaks up an input stream into 
+tokens and can be used to parse a simple file (excuse me, &quot;input stream&quot;). Read 
+the Java API documentation on <tt>StreamTokenizer</tt>, and then compare what 
+you read to the following methods</p>
+<ul>
+  <li>
+  <p class="docList"><tt>__init__(Reader)</tt></li>
+  <li>
+  <p class="docList"><tt>__init__(InputStream)</tt></li>
+  <li>
+  <p class="docText"><tt>nextToken()</tt>— returns the next token in the stream</li>
+  <li>
+  <p class="docText"><tt>lineno()</tt>— returns the current line number</li>
+  <li>
+  <p class="docText"><tt>lowerCaseMode(flag)</tt>— returns all words to 
+  lowercase if passed a true value</li>
+  <li>
+  <p class="docText"><tt>parseNumbers()</tt>— sets the parsing of floating-point 
+  numbers</li>
+  <li>
+  <p class="docText"><tt>pushBack()</tt>— pushes the token back onto the stream, 
+  returning it to the next <tt>nextToken()</tt> method call</li>
+  <li>
+  <p class="docText"><tt>quoteChar(char)</tt>— specifies the character string 
+  delimiter; the whole string is returned as a token in <tt>sval</tt></li>
+  <li>
+  <p class="docText"><tt>resetSyntax()</tt>— sets all characters to ordinary so 
+  that they aren't ignored as tokens</li>
+  <li>
+  <p class="docText"><tt>commentChar(char)</tt>— specifies a character that 
+  begins a comment that lasts until the end of the line; characters in a comment 
+  are not returned</li>
+  <li>
+  <p class="docText"><tt>slashSlashComments(flag)</tt>— allows recognition of
+  <tt>//</tt> to denote a comment (this is a Java comment)</li>
+  <li>
+  <p class="docText"><tt>slashStarComments(flag)</tt>— allows recognition of <tt>
+  /* */</tt> to denote a comment</li>
+  <li>
+  <p class="docList"><tt>toString()</tt></li>
+  <li>
+  <p class="docText"><tt>whitespaceChars(low,hi)</tt>— specifies the range of 
+  characters that denote delimiters</li>
+  <li>
+  <p class="docText"><tt>wordChars(low, hi)</tt>— specifies the range of 
+  characters that make up words</li>
+  <li>
+  <p class="docText"><tt>ordinaryChar(char)</tt>— specifies a character that is 
+  never part of a token (the character should be returned as is)</li>
+  <li>
+  <p class="docText"><tt>ordinaryChars(low, hi)</tt>— specifies a range of 
+  characters that are never part of a token (the character should be returned as 
+  is)</li>
+  <li>
+  <p class="docText"><tt>eolSignificant(flag)</tt>— specifies if end-of-line (EOL) 
+  characters are significant (they're ignored if not, i.e., treated like 
+  whitespace)</li>
+</ul>
+<p class="docText"><tt>StreamTokenizer</tt>'s variables are <tt>ttype</tt> (one 
+of the constant values <tt>TT_EOF</tt>, <tt>TT_EOL</tt>, <tt>TT_NUMBER</tt>, and
+<tt>TT_WORD)</tt>; <tt>sval</tt> (contains the token of the last string read); 
+and <tt>nval</tt> (contains the token of the last number read).</p>
+<h4 class="docSection2Title" id="ch12lev2sec13">Using StreamTokenizer</h4>
+<p class="docText">Reading the documentation probably isn't enough to get you 
+started with <tt>StreamTokenizer</tt>, so we're going to work with a simple 
+application that produces a report on the number of classes and functions in a 
+Python source file. Here's the source code:</p>
+<pre>class MyClass:      #This is my class
+       def method1(self):
+             pass
+       def method2(self):
+             pass
+
+#Comment should be ignored
+def AFunction():
+      pass
+
+class SecondClass:
+       def m1(self):
+             print &quot;Hi Mom&quot;       #Say hi to mom
+       def m2(self):
+             print &quot;Hi Son&quot;       #Say hi to Son
+
+#Comment should be ignored
+def BFunction():
+       pass</pre>
+<p class="docText">Follow along with the next interactive session. Afterward 
+we'll look at the code to count the classes and functions.</p>
+<p class="docText">Import the <tt>FileInputStream</tt> class from
+<span class="docEmphasis">java.io,</span> and create an instance of it.</p>
+<pre>&gt;&gt;&gt; from java.io import FileInputStream
+&gt;&gt;&gt; file = FileInputStream(&quot;C:\\dat\\ParseMe.py&quot;)</pre>
+<p class="docText">Import the <tt>StreamTokenizer</tt> class, and create an 
+instance of it. Pass its constructor the <tt>FileInputStream</tt> instance.</p>
+<pre>&gt;&gt;&gt; from java.io import StreamTokenizer
+&gt;&gt;&gt; token = StreamTokenizer(File)</pre>
+<p class="docText">Call <tt>nextToken()</tt> to get the first token in the file 
+(that is, class).</p>
+<pre>&gt;&gt;&gt; token.nextToken()
+-3</pre>
+<p class="docText">As you can see, <tt>nextToken()</tt> returns a numeric value, 
+although you may have been expecting a string value containing <tt>&quot;class&quot;</tt>. 
+In fact, <tt>nextToken()</tt> returns the type of token, that is, a word, a 
+number, or an EOL or EOF (end-of-file) character, so <tt>-3</tt> refers to <tt>
+TT-WORD</tt>.</p>
+<p class="docText">The <tt>ttype</tt> variable holds the last type of token 
+read.</p>
+<pre>&gt;&gt;&gt; token.ttype
+-3</pre>
+<p class="docText">The <tt>sval</tt> variable holds the actual last token read. 
+If we want to check if the last token type was a word, we can write this, and, 
+if it was a word, we can print it out.</p>
+<pre>&gt;&gt;&gt; if token.ttype == token.TT_WORD:
+...     print token.sval
+...
+class
+&gt;&gt;&gt;</pre>
+<p class="docText">Call <tt>nextToken()</tt> again to get the next token, which 
+is <tt>MyClass</tt>.</p>
+<pre>&gt;&gt;&gt; token.nextToken()
+-3
+
+&gt;&gt;&gt; print token.sval
+MyClass</pre>
+<p class="docText">Call <tt>nextToken()</tt> again; this time it should return 
+the <tt>'#'</tt> token.</p>
+<pre>&gt;&gt;&gt; token.nextToken()
+58
+
+&gt;&gt;&gt; print token.sval
+None</pre>
+<p class="docText">Since the token is a <tt>':'</tt> <tt>StreamTokenizer</tt> 
+doesn't recognize it as valid. The only valid types are <tt>NUMBER</tt>, <tt>EOL</tt>,
+<tt>EOF</tt>, and <tt>WORD</tt>. So for <tt>':'</tt> to be recognized, it has to 
+be registered with the <tt>wordChars()</tt> method.</p>
+<pre>&gt;&gt;&gt; token.TT_NUMBER
+-2
+
+&gt;&gt;&gt; token.TT_EOL
+10
+
+&gt;&gt;&gt; token.TT_EOF
+-1
+
+&gt;&gt;&gt; token.TT_WORD
+-3</pre>
+<p class="docText">If the type isn't one of these, the number corresponding to 
+the character encoding is returned. Let's see what <tt>nextToken()</tt> returns 
+for the next character.</p>
+<pre>&gt;&gt;&gt; token.nextToken()
+35</pre>
+<p class="docText">The <tt>35</tt> refers to <tt>'#'</tt>, which you can prove 
+with the built-in <tt>ord()</tt> function.</p>
+<pre>&gt;&gt;&gt; ord('#')
+35</pre>
+<p class="docText">Get the next token.</p>
+<pre>&gt;&gt;&gt; token.nextToken()
+-3</pre>
+<p class="docText">The token is a word <tt>(-3</tt> equates to <tt>TT_WORD</tt>). 
+Print <tt>sval</tt> to find out what the word is.</p>
+<pre>&gt;&gt;&gt; print token.sval
+This</pre>
+<p class="docText">As you can see, the <tt>StreamTokenizer</tt> instance is 
+reading text out of the comment from the first line. We want to ignore comments, 
+so we need to return the tokens we took out back into the stream.</p>
+<p class="docText">Push the token back into the stream.</p>
+<pre>&gt;&gt;&gt; token.pushBack()</pre>
+<p class="docText">Attempt to push the token before the last one back into the 
+stream.</p>
+<pre>&gt;&gt;&gt; token.pushBack()</pre>
+<p class="docText">Set <tt>commentChar()</tt> to ignore <tt>'#'</tt>. (<tt>commentChar()</tt> 
+takes an integer argument corresponding to the encoding of the character.)</p>
+<pre>&gt;&gt;&gt; token.commentChar(ord('#'))</pre>
+<p class="docText">Get the next token, and print it out.</p>
+<pre>&gt;&gt;&gt; token.nextToken()
+-3
+
+&gt;&gt;&gt; print token.sval
+This</pre>
+<p class="docText">Are you wondering why we still have the comment text? The <tt>
+pushback()</tt> method can only push back the last token, so calling it more 
+than once won't do any good. Let's start from the beginning, creating a new <tt>
+FileInputStream</tt> instance and a new <tt>StreamTokenizer</tt> instance.</p>
+<p class="docText">Create the <tt>StreamTokenizer</tt> instance by passing its 
+constructor a new instance of <tt>FileInputStream</tt>.</p>
+<pre>&gt;&gt;&gt; file = fileInputStream(&quot;c:\\dat\\parseMe.py&quot;)
+&gt;&gt;&gt; token = StreamTokenizer(File)</pre>
+<p class="docText">Iterate through the source code, printing out the words in 
+the file. Quit the <tt>while</tt> loop when the token type is <tt>EOF</tt>.</p>
+<pre>&gt;&gt;&gt; while token.ttype != token.TT_EOF:
+...     token.nextToken()
+...     if(token.ttype == token.TT_WORD):
+...             print token.sval</pre>
+<p class="docText">Notice that the comment text isn't in the words printed out.</p>
+<pre>class
+MyClass
+def
+method1
+self
+pass
+def
+method2
+self
+pass
+def
+AFunction
+pass
+...
+...</pre>
+<h4 class="docSection2Title" id="ch12lev2sec14">Parsing Python with StreamTokenizer</h4>
+<p class="docText">Okay, we've done our experimentation. Now it's time for the 
+actual code for counting the classes and functions in our Python source code.</p>
+<pre>from java.io import FileInputStream, StreamTokenizer
+
+         # Create a stream tokenizer by passing a new
+         # instance of the FileInputStream
+token = StreamTokenizer(FileInputStream(&quot;c:\\dat\\parseMe.py&quot;))
+
+         # Set the comment character.
+token.commentChar(ord('#'))
+
+classList = []
+functionList = []
+
+         # Add an element to a list
+def addToList(theList, token):
+  token.nextToken()
+  if (token.ttype == token.TT_WORD):
+        theList.append (token.sval)
+
+         # Adds a class to the class list
+def parseClass(token):
+  global classList
+  addToList (classList, token)
+
+         # Adds a function to the function list
+def parseFunction(token):
+  global functionList
+  addToList (functionList, token)
+
+         # Iterate through the list until the
+         # token is of type TT_EOF, end of File
+while token.ttype != token.TT_EOF:
+  token.nextToken()
+  if(token.ttype == token.TT_WORD):
+         if (token.sval == &quot;class&quot;):
+               parseClass(token)
+         elif(token.sval == &quot;def&quot;):
+               parseFunction(token)
+
+         # Print out detail about a function or class list
+def printList(theList, type):
+  print &quot;There are &quot; + `len(theList)` + &quot; &quot; + type
+  print theList
+
+         # Print the results.
+printList (classList, &quot;classes&quot;)
+printList (functionList, &quot;functions and methods&quot;)</pre>
+<p class="docText">Here's the output:</p>
+<pre>There are 2 classes
+['MyClass', 'SecondClass']
+There are 6 functions and methods
+['method1', 'method2', 'AFunction', 'm1', 'm2', 'BFunction']</pre>
+<p class="docText">The main part of the code (where all the action is happening) 
+is</p>
+<pre>          # Iterate through the list until the
+          # token is of type TT_EOF, end of File
+while token.ttype != token.TT_EOF:
+  token.nextToken()
+  if(token.ttype == token.TT_WORD):
+          if (token.sval == &quot;class&quot;):
+                parseClass(token)
+          elif(token.sval == &quot;def&quot;):
+                parseFunction(token)</pre>
+<p class="docText">Let's look at it step by step.</p>
+<p class="docText">If the token type isn't equal to <tt>EOF</tt>, get the next 
+token.</p>
+<pre>while token.ttype != token.TT_EOF:
+      token.nextToken()</pre>
+<p class="docText">If the token type is <tt>WORD</tt>,</p>
+<pre>if(token.ttype == token.TT_WORD):</pre>
+<p class="docText">check to see if the token is a class modifier. If it is, call 
+the <tt>parseClass()</tt> function, which uses the <tt>StreamTokenizer</tt> 
+instance to extract the class name and put it on a list.</p>
+<pre>if (token.sval == &quot;class&quot;):
+      parseClass(token)</pre>
+<p class="docText">If the token isn't a class modifier, check to see if it's a 
+function modifier. If so, call <tt>parseFunction()</tt>, which uses <tt>
+StreamTokenizer</tt> to extract the function name and put it on a list.</p>
+<pre>elif(token.sval == &quot;def&quot;):
+       parseFunction(token)</pre>
+<p class="docText"><tt>StreamTokenizer</tt> is a good way to parse an input 
+stream. If you understand its runtime behavior (which you should from the 
+preceding interactive session), you'll be more likely to use it.</p>
+<p class="docText">The more astute among you probably noticed that functions and 
+methods were counted together in the last example. As an exercise, change the 
+code so that each class has an associated list of methods and so that these 
+methods are counted separately.</p>
+<p class="docText"><span class="docEmphasis">Hint</span>: You'll need to use the
+<tt>resetSyntax()</tt> method of <tt>StreamTokenizer</tt> to set all characters 
+to ordinary. Then you'll need to count the spaces (<tt>ord(&quot;)</tt>) and tabs (<tt>ord(&quot;\t&quot;)</tt>) 
+that occur before the first word on a line. For this you also need to track 
+whether you hit an <tt>EOL</tt> token type. (If you can do this exercise, I do 
+believe that you can do any exercise in the book.)</p>
+<p class="docText">As another exercise, create a stream that can parse a file 
+whose contents look like this:</p>
+<pre>[SectionType:SectionName]
+value1=1
+value2 = 3       #This is a comment that should be ignored
+value4 = &quot;Hello&quot;</pre>
+<p class="docText"><tt>SectionType</tt> defines a class of <tt>section</tt>, and
+<tt>SectionName</tt> is like defining a class instance. <tt>value</tt> equates 
+to a class attribute.</p>
+<p class="docText">Here's an example.</p>
+<pre>[Communication:Host]
+type = &quot;TCP/IP&quot; #Possible values are TCP/IP or RS-232
+port = 978          #Sets the port of the TCP/IP
+
+[Communication:Client]
+type = &quot;RS-232&quot;
+baudrate = 9600
+baudrate = 2800
+baudrate = 19200
+
+[Greeting:Client]
+sayHello = &quot;Good morning Mr. Bond&quot;
+
+[Greeting:Host]
+sayHello = &quot;Good morning sir&quot;</pre>
+<p class="docText">Create a dictionary of dictionaries of dictionaries. The name 
+of the top-level dictionary should correspond to the section type (<tt>Communication</tt>,
+<tt>Greeting</tt>); its value should be a dictionary whose name corresponds to 
+the section names (<tt>Client</tt>, <tt>Host</tt>) and whose values correspond 
+to another dictionary. The names and values of the third-level dictionaries 
+should correspond to the name values in the file (<tt>sayHello =</tt> <tt>&quot;Good</tt>
+<tt>morning Mr. Bond&quot;, type = &quot;RS-232&quot;</tt>). If, like <tt>baudrate</tt>, the 
+name repeats itself, you should create a list corresponding to the name <tt>
+baudrate</tt> and, instead of a single value inserted in the bottom-tier 
+dictionaries, put the list as the value.</p>
+<p class="docText">The structure will look like this:</p>
+<pre>{}—Communication———{}—— Client {}– type = &quot;rs-232&quot;
+  |                |            |
+  |                |            - baudrate = [9600, 2800, 19200]
+  |                |
+  |                |— Host {} – type = &quot;TCP/IP&quot;
+  |                         |
+  |                         - port = 978
+  |
+Greeting —————-----{} - Client{} - sayHello = &quot;Good morning Mr. Bond&quot;
+                   |
+                   |— Host – sayHello = &quot;Good morning sir&quot;</pre>
+<h3 class="docSection1Title" id="ch12lev1sec8">Persisting Objects with Java Streams</h3>
+<p class="docText"><tt>ObjectOutputStream</tt> writes out Java class instances 
+(objects) to an output stream. It accomplishes for Java what the
+<span class="docEmphasis">pickle</span> module does for Python. Only Java 
+instances that have the <tt>Serializable</tt> class (interface) as a base class 
+(interface) can be serialized with <tt>ObjectOutputStream</tt>. All Jython 
+objects (class instances, functions, dictionaries, lists) implement <tt>
+Serializable</tt>.</p>
+<p class="docText">Here's a short example. Import <tt>ObjectOutputStream</tt> 
+and <tt>FileOutputStream</tt> from the <span class="docEmphasis">java.io</span> 
+package.</p>
+<pre>&gt;&gt;&gt; from java.io import ObjectOutputStream, FileOutputStream</pre>
+<p class="docText">Create an instance of <tt>ObjectOutputStream</tt>, passing 
+the constructor a new instance of <tt>FileOutputStream</tt>.</p>
+<pre>&gt;&gt;&gt; oos = ObjectOutputStream(FileOutputStream(&quot;c:\\dat\\out.bin&quot;))</pre>
+<p class="docText">Define a simple class.</p>
+<pre>&gt;&gt;&gt; class MyClass:
+...     def __init__(self):
+...             self.a = &quot;a&quot;
+...</pre>
+<p class="docText">Create an instance of the class.</p>
+<pre>&gt;&gt;&gt; object = MyClass()</pre>
+<p class="docText">Write the instance to the output stream with the <tt>
+writeObject()</tt> method.</p>
+<pre>&gt;&gt;&gt; oos.writeObject(object)
+&gt;&gt;&gt; oos.close()     #From here</pre>
+<p class="docText">Now we can use <tt>ObjectInputStream</tt> to read the object 
+back. Import <tt>ObjectInputStream</tt> and <tt>FileInputStream</tt> from 
+package <span class="docEmphasis">java.io.</span></p>
+<pre>&gt;&gt;&gt; from java.io import ObjectInputStream, FileInputStream</pre>
+<p class="docText">Create an instance of <tt>ObjectInputStream</tt>.</p>
+<pre>&gt;&gt;&gt; ois = ObjectInputStream(FileInputStream(&quot;c:\\dat\\out.bin&quot;))</pre>
+<p class="docText">Read the object from the stream.</p>
+<pre>&gt;&gt;&gt; object2 = ois.readObject()</pre>
+<p class="docText">Show that the attribute of <tt>object2</tt> is the same as 
+the attribute of <tt>object</tt> but that <tt>object</tt> and <tt>object2</tt> 
+aren't the same.</p>
+<pre>&gt;&gt;&gt; print &quot;The a attribute of object 2 is &quot; + object2.a
+&gt;&gt;&gt; print &quot;Are object and object2 the same? &quot; + `(object is object2)`</pre>
+<p class="docText">As I said, object streams function a lot like the
+<span class="docEmphasis">pickle</span> module.</p>
+<p class="docText">As an exercise, modify the address book application from
+<a class="docLink" href="_chapter%208.htm">Chapter 8</a> to use 
+object streams instead of <span class="docEmphasis">pickle.</span></p>
+<h3 class="docSection1Title" id="ch12lev1sec9">Using Java Streams to Work with Memory</h3>
+<p class="docText">We spoke earlier about streams being abstract metaphors for 
+files or, more precisely, any type of input/output mechanism. With streams, for 
+example, you can write data to a byte array, which is essentially a location in 
+the computer's memory. <tt>ByteArrayInputStream</tt> and <tt>
+ByteArrayOutputStream</tt> allow reading and writing to and from memory. You 
+might want to look them up in the Java API documentation.</p>
+<p class="docText">Instead of passing a file stream to a stream derivation, you 
+can pass a byte array stream. Here's the earlier example showing this (the 
+differences are in bold).</p>
+<pre>from java.io import ObjectOutputStream, <span class="docEmphStrong">ByteArray</span>OutputStream
+<span class="docEmphStrong">bytes = ByteArray</span>OutputStream<span class="docEmphStrong">()</span>
+oos = ObjectOutputStream(<span class="docEmphStrong">bytes</span>)
+
+class MyClass:
+   def __init__(self):
+          self.a = &quot;a&quot;
+
+object = MyClass()
+oos.writeObject(object)
+oos.close()
+<span class="docEmphStrong">print &quot;Here is the binary image on a Jython class instance&quot;</span>
+<span class="docEmphStrong">print bytes.toByteArray()</span>
+
+from java.io import ObjectInputStream, <span class="docEmphStrong">ByteArray</span>InputStream
+ois = ObjectInputStream(<span class="docEmphStrong">ByteArray</span>InputStream<span class="docEmphStrong">(bytes.toByteArray())</span>)
+object2 = ois.readObject()
+
+print &quot;The a attribute of object 2 is &quot; + object2.a
+print &quot;Are object and object2 the same? &quot; + `(object is object2)`</pre>
+<p class="docText">Note that, to create the <tt>ByteArrayInputStream</tt> 
+instance, I passed the byte array returned by the <tt>toByteArray()</tt> method 
+of the <tt>ByteArrayOutputStream</tt> instance. In a later chapter, I'll show 
+you how to work with network streams.</p>
+<p class="docText">As an exercise, read the Java API documentation on <tt>
+CharArrayReader</tt> and <tt>CharArrayWriter</tt>, and write a simple program 
+that reads and writes text strings to and from a memory location.</p>
+<h3 class="docSection1Title" id="ch12lev1sec10">Summary</h3>
+<p class="docText">Streams are Java's way to support I/O. They can represent a 
+file, a network connection, or access to a Web site. In this chapter, we dealt 
+mostly with file streams because they're easy to work with and demonstrate 
+stream fundamentals. Learning to deal with Java streams is essential for 
+learning to use the Java APIs.</p>
+<p class="docText">We covered some nonstream classes—<tt>RandomAccessFile</tt>,
+<tt>File</tt>, and <tt>StreamTokenizer</tt>. As we saw in the examples, <tt>
+RandomAccessFile</tt> works most like the Python file object. The Java <tt>File</tt> 
+class allows access to a file's attributes: Is the file read-only? Is it a 
+directory? and so forth. It also allows the creation of directories. The <tt>
+StreamTokenizer</tt> class works with any text stream (a class derived from <tt>
+Reader</tt>) or binary stream (a class derived from <tt>InputStream</tt>).</p>
+<p class="docText">Streams work with more than just files. We demonstrated the
+<tt>ByteArrayInputStream</tt> and the <tt>ByteArrayOutputStream</tt> classes, 
+which allow reading and writing to memory buffers.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2011.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2013.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>1. 开胃菜</title>
+  
+  <meta name="description" content="1. 开胃菜 ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node4.html">
+ 
+  <link rel="previous" href="node2.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node4.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node2.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node4.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node2.html">内容大纲</a>
+ <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">Python 教学文件</a>
+ <b class="navlabel">Next:</b> <a class="sectref" href="node4.html">2. 使用Python的直译器</a>
+ <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落 </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html214" href="node3.html#SECTION003100000000000000000">
+1.1 然后呢 </a> </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 1. 开胃菜   </h1>
+  
+<p> 如果你曾经写过大型的shell script，你大概能了解那种感觉：你想要新增加一个功能，但是这个script已经实在有够大够慢够复杂的了，或者说，你想要加入的新功能需要呼叫系统功能或是其他函数，但是这些功能/函数只有C才能呼叫。你要解决的问题好像并没有严重到要重新用C来写整个程式，或者有些问题因为要用到可变长度的字串或是特别的资料结构(像是用排序过的档案名称组成序列(list))，用C来写实在比shell麻烦的太多，又或者是你根本不是对C很熟。
+  </p>
+<p> 另外一个情境是这样的：也许你要使用好几个C的程式库，但是标准开发C程式的过程(写/编译/测试/重新编译)实在太花时间，你需要能快速的开发好软体。又或者你已经些好一个应用程式，这个程式可以使用一个延伸的语言来控制。你不想创造一种语言，然后还得写好这个语言的编译器，还得把这个编译器跟你的程式放在一起。 
+ </p>
+<p> 在这些情况之下，Python也许正是你所需要的语言。Python虽然简单，却是不折不扣的程式语言。对大型的程式来说，它比起shell能提供更多的结构性及支援。另外一方面，它也提供了比C语言更多的错误检查。由于Python是一个非常高阶的语言，所以它有许多内建的资料型态像是有弹性的阵列及字典(dictionary)等等，如果用C来做的话得花上你大半天的时间。正是因为Python有较为一般性的资料型态，Python可以应用的范围比起awk甚或是Perl要广的很多，最起码，Python跟这些语言一样容易开发。 
+ </p>
+<p> Python的另外一个特点就是可以将程式切成小模组，然后这些模组还可以应用在其他的程式之中。Python本身也有一个相当大的标准模组库可以让你来使用，或者当作学习Python程式设计的范例。在Python中也有内建的模组可以提供许多功能，诸如：档案I/O、系统呼叫、sockets，甚至是与Tk之类的GUI工具互动的介面。 
+ </p>
+<p> Python是一个直译式的语言，可以省掉你在开发程式时不少编译及连结程式的时间。这个Python的直译器甚至可以互动式的使用，让你在写一些小程式来试验Python语言的特性，或是测试程式时可以写节省不少时间。你还可以用Python直译器来当作计算机呢。 
+</p>
+<p> Python让你可以写出非常精练及可读性高的程式。用Python写出的程式通常比用C或C++写的程式要短得多，其理由如下：   </p>
+<ul>
+ 
+  <li>因为其高阶的资料型态，使得你可以用很简单的叙述(statement)就能够表达复杂的运作过程  </li>
+ 
+  <li>Python使用缩排来代替C/C++中常见的前后括号{} </li>
+ 
+  <li>Python不需要变数或是参数的宣告 </li>
+ 
+</ul>
+  
+<p> Python 是<i>延伸性</i>高的语言。如果你知道如何写C语言的程式的话，你很容易就可以在Python的直译器中加入新的内建函数(function)或是模组，这样做的好处是你可以让程式中关键的部分速度调到最快，或者是连结Python到binary的程式库(例如是厂商做好的图形程式库)去。一但你真的需要，你也可以把Python直译器加入到你用C写的应用程式里面去，然后Python就变成你的应用程式的延伸或是商业化的语言了。
+  </p>
+<p> 另外一提的是，这个程式的命名由来是源自于BBC着名的节目``Monty Python's Flying Circus''，跟其他恶心的爬虫类没有任何关系。如果你的文件中要提到Monty
+Python的话，不但照准，而且还相当鼓励。   </p>
+<p>  </p>
+<h1> <br>
+ 1.1 然后呢   </h1>
+  
+<p> 现在你应该对Python感到有一些兴趣了吧，接下来你将看到比较多的的细节讨论。学习语言的最好途径是使用之，赶快动手吧。   </p>
+<p> 在下一章我们将讨论到如何使用Python的直译器，虽然相当的普通，但是如果你要尝试一下之后的范例的话，这是重要的基础。   </p>
+<p> 本教学文件的其余部分将用许多的例子介绍Python语言的各种不同的特性，先从简单的表示式(expressions)开始，将会谈到叙述(statements)及资料型态，然后是函式(functions)及模组(module)，最后会谈到较高深的观念像是例外情形(exceptions)及使用者自订的类别(user-defined
+classes)等等。   </p>
+<p>  </p>
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node2.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node4.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node2.html">内容大纲</a>
+ <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">Python 教学文件</a>
+ <b class="navlabel">Next:</b> <a class="sectref" href="node4.html">2. 使用Python的直译器</a>
+ <br>
+<hr></div>
+ <!--End of Navigation Panel--> 
+<address> </address>
+<hr>请看<i><a href="about.html">关于此文件&hellip;</a></i> 里面有关如何给我们建议的说明。  
+</body>
+</html>

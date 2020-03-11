@@ -1,0 +1,309 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Appendix B</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "appendix b.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/appendix b.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/appendix b.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20a.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20c.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+<h2 class="docAppendixTitle">Appendix B. Installing Jython on Linux</h2><ul><li>&nbsp;<a class="docLink" href="#ch20lev1sec1">Unpacking the Blackdown Package</a></li>
+<li>&nbsp;<a class="docLink" href="#ch20lev1sec2">Unpacking the Sun Package</a></li>
+<li>&nbsp;<a class="docLink" href="#ch20lev1sec3">Installing the Sun and Blackdown Distributions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch20lev1sec4">Installing Older Distributions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch20lev1sec5">Running Jython</a></li>
+</ul>
+<p class="docText">Jaysen Lorenzen</p>
+<p class="docText">To illustrate the installation of Jython on Linux, we're 
+using the most recent version of the SDK—1.3 glibc. Versions 1.2 and 1.3 are 
+available only for newer distributions using the libc6 libraries (such as Red 
+Hat v.5.x and Debian v.2.x). The libc5 versions of J2SE v.1.1x are available on 
+the Blackdown site for those of you running older distributions.</p>
+<p class="docText">If you're the root user of your Linux system, log in as <tt>
+root</tt>, or use the <tt>su</tt> command to gain &quot;superuser&quot; (that is, root) 
+privileges before trying each install. If you're not the root user, you can 
+install software only to your own user directory—<span class="docEmphasis">/home/&lt;your 
+name&gt;</span>—or to directories for which you have read, write, and execute 
+access. (If you want to install on a machine other than your own, you may have 
+to ask your system administrator for help.)</p>
+<p class="docText">The first step in your Linux Jython install is downloading 
+the J2SE (v.1.3) from Blackdown (<a class="docLink" href="http://www.blackdown.org" target="_blank">http://www.blackdown.org</a>), 
+from which you'll get a compressed tar ball, or Sun Microsystems (<a class="docLink" href="http://java.sun.com" target="_blank">http://java.sun.com</a>), 
+from which you'll get a self-extracting package. The next step is unpacking the 
+J2SE and installing it.</p>
+<h3 class="docSection1Title" id="ch20lev1sec1">Unpacking the Blackdown Package</h3>
+<p class="docText">Many, many versions of the J2SE are available from Blackdown. 
+I chose the latest, <span class="docEmphasis">j2sdk1.3</span> (<span class="docEmphasis">j2sdk-1.3.0-RC1-linux-i386.tarbz2</span>). 
+Only a <span class="docEmphasis">bziped</span> package is offered for this 
+release, but earlier releases come with standard <span class="docEmphasis">
+gziped</span> packages.</p>
+<p class="docText">In a shell, as the root, or using the <tt>su</tt> command, 
+copy or move the downloaded file to a directory. This directory can be any one 
+you want, but <span class="docEmphasis">/usr/local/lib</span> is the best choice 
+because it makes it easier for other users to find examples and documentation. 
+(Thus, the J2SE subdirectory is <span class="docEmphasis">/usr/local/lib/j2sdk1.x</span>). 
+Then unzip and untar the file by changing the directory to its location with the 
+command</p>
+<pre>bzip2 -dc j2sdk-1.3.0-RC1-linux-i386.tar.bz2 | tar -xvf-</pre>
+<p class="docText">If you downloaded a <span class="docEmphasis">gziped</span> 
+package, replace <tt>bzip2</tt> with <tt>gzip</tt> in the command.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">HotSpotClient</h2>
+      <p class="docText">The default virtual machine for J2SDK v.1.3 is 
+      HotSpotClient. If it doesn't work well with Jython, change it by editing 
+      the file.</p>
+      <pre>/&lt;jdk1.x&gt;/jre/lib/jvm.cfg</pre>
+      <p class="docText">(where &lt;jdk1.x&gt; is the jdk install directory)</p>
+      <p class="docText">Moving <tt>&quot;-classic&quot;</tt> to the first line of the 
+      file will change the default to Linux Native Threads.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch20lev1sec2">Unpacking the Sun Package</h3>
+<p class="docText">Here we're using J2SDK v.1.3 and the self-extracting binary 
+package (<span class="docEmphasis">j2sdk-1_3_0-linux.bin).</span> In a shell, as 
+the root, or using the <tt>su</tt> command, copy or move the downloaded file to 
+the directory of your choice—again we're using <span class="docEmphasis">
+user/local/lib,</span> so the J2SE subdirectory is <span class="docEmphasis">
+/user/local/lib/jdk.1.x.</span></p>
+<p class="docText">Make the file executable with the command</p>
+<pre>chmod a+x j2sdk-1_3_0-linux.bin</pre>
+<p class="docText">Execute it with the command</p>
+<pre>./j2sdk-1_3_0-linux.bin</pre>
+<p class="docText">This launches a script and displays the license agreement 
+from Sun (which you must read and accept). The script unpacks and installs the 
+SDK.</p>
+<h3 class="docSection1Title" id="ch20lev1sec3">Installing the Sun and Blackdown Distributions</h3>
+<p class="docText">The installation procedures that follow are common to both 
+Sun and Blackdown.</p>
+<p class="docText">First we have to set some environment variables. There are 
+several ways to do this, all of which depend on user rights and preferences.</p>
+<h4 class="docSection2Title" id="ch20lev2sec1">Setting the Environment Variables</h4>
+<p class="docText">To set <tt>PATH</tt> and <tt>CLASSPATH</tt>, edit the
+<span class="docEmphasis">rc</span> file in your home directory for the shell 
+you're using. I've chosen the bash shell, so the file to edit is
+<span class="docEmphasis">~/.bashrc.</span> If a <tt>PATH</tt> statement exists, 
+add the following line just below <tt>PATH=etc/etc</tt>.</p>
+<pre>PATH=$PATH:/&lt;jdk1.x&gt;/bin</pre>
+<p class="docText">where <tt>&lt;jdk1.x&gt;</tt> is the J2SE directory, including the 
+complete path created in the previous steps. If there are any references to 
+older J2SE versions here, remove them. You should see</p>
+<pre>PATH=$PATH:/usr/local/lib/j2sdk1.3/bin</pre>
+<p class="docText">If there's no <tt>CLASSPATH</tt> statement, add it. If there 
+is one, add the following line after it:</p>
+<pre>CLASSPATH=/&lt;jdk1.x&gt;/lib/tools.jar:./</pre>
+<p class="docText">where <tt>&lt;jdk1.x&gt;</tt> is the J2SE directory, including the 
+complete path created during the previous steps.</p>
+<p class="docText">Remove any references to older J2SE versions in the path. You 
+should see</p>
+<pre>CLASSPATH=/usr/local/lib/j2sdk1.3/lib/tools.jar:./</pre>
+<p class="docText">If you don't see a <tt>CLASSPATH</tt> statement, add either 
+the <tt>PATH</tt>=<tt>$PATH</tt> or the <tt>CLASSPATH</tt> line shown above. If 
+you see an <tt>export</tt> statement, append a space, the word <tt>PATH</tt>, 
+another space, and the word <tt>CLASSPATH</tt> to it. If you don't see an <tt>
+export</tt> statement, create one containing <tt>PATH</tt> and <tt>CLASSPATH</tt> 
+at the bottom of the file.</p>
+<pre>export PATH CLASSPATH</pre>
+<p class="docText">Now you should have these <tt>PATH</tt>, <tt>CLASSPATH</tt>, 
+and <tt>export</tt> lines:</p>
+<pre>PATH=$PATH:/usr/local/lib/j2sdk1.3/bin
+CLASSPATH=/usr/local/lib/j2sdk1.3/lib/tools.jar:./
+export TERM PATH CLASSPATH</pre>
+<p class="docText">Save and close the file. Then re-execute the shell you're 
+working in so that the environment changes will take effect.</p>
+<p class="docText">If the computer you're on is yours or if your system 
+administrator is by your side, you can set the <tt>PATH</tt> and <tt>CLASSPATH</tt> 
+variables globally as <tt>root</tt> (regardless of the shell used) by editing 
+the <span class="docEmphasis">/etc/profile</span> file and making the same 
+changes as for the bash shell.</p>
+<h3 class="docSection1Title" id="ch20lev1sec4">Installing Older Distributions</h3>
+<p class="docText">If you're downloading a J2SE version older than 1.2, you'll 
+have to get the JFC/Swing classes from the JavaSoft site (<a class="docLink" href="http://java.sun.com/products/jfc/#download-swing" target="_blank">http://java.sun.com/products/jfc/#download-swing</a>). 
+Make sure your J2SE and JFC versions match—for example, if you have J2SE 
+v.1.1.7, you need Swing v.1.1.1 (<span class="docEmphasis">swing1_1_1.tar.Z</span>).</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Tar/Zip</h2>
+      <p class="docText">The download page doesn't mention Linux, so choose the 
+      standard tar or zip file, not the installer.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In a shell, as root, or with the <tt>su</tt> command, copy or 
+move the downloaded file to the directory you choose. As before, we're using
+<span class="docEmphasis">/usr/local/lib</span> and we want the
+<span class="docEmphasis">swing-1.1.x</span> directory (<span class="docEmphasis">/usr/local/lib/jdk1.1.7/swing-1.1.x</span>), 
+so we move the file to <span class="docEmphasis">/usr/local/lib/jdk1.1.7/.</span> 
+Installing the Swing classes in the J2SE directory makes it easy for all users 
+to find the examples and the documentation.</p>
+<p class="docText">Unzip and untar the downloaded file by changing the directory 
+to its location (<span class="docEmphasis">/usr/local/lib/jdk117_vla</span>) 
+with the command</p>
+<pre>gzip -dc swing1_1_1.tar.Z | tar -xvf-</pre>
+<p class="docText">which creates the Swing subdirectory.</p>
+<p class="docText">Add the <span class="docEmphasis">swing.jar</span> file to 
+the <tt>CLASSPATH</tt> variable by modifying the <tt>CLASSPATH</tt> line in the 
+personal <span class="docEmphasis">~/.bashrc</span> file or the global
+<span class="docEmphasis">/etc/profile</span> file.</p>
+<pre>CLASSPATH=$CLASSPATH:/&lt;base path&gt;/&lt;swing path &gt;/swing.jar</pre>
+<p class="docText"><tt>/&lt;base path&gt;/&lt;swing path&gt;/</tt> is the complete path to
+<span class="docEmphasis">swing.jar.</span> If you installed J2SE v.1.1.7, the 
+path should look like</p>
+<pre>CLASSPATH=$CLASSPATH:/jdk117_v1a/swing-1.1.1fcs/swing.jar</pre>
+<p class="docText">Save and close the file. You'll have to restart the shell for 
+the environment changes just made to take effect.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Installation Alternatives</h2>
+      <p class="docText">There are countless ways to install the J2SE on Linux. 
+      For distributions using RPM package managers (like those here), RPM and 
+      DEB packages are available, which you can find on the Linux distribution 
+      FTP site.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch20lev2sec2">Testing the Installation</h4>
+<p class="docText">Test your install by starting a shell and entering <tt>java 
+–version</tt>. You should get a message like this:</p>
+<pre>[jaysonl@r_monkey lib]$ java -version
+java version &quot;1.3.0&quot;
+Java(TM) 2 Runtime Environment, Standard Edition (build Blackdown-1.3.0-RC1)
+Classic VM (build Blackdown-1.3.0-RC1, native threads, sunwjit)</pre>
+<p class="docText">If you don't, there may be something wrong. Try entering the 
+complete path to the Java executable, which in our case is</p>
+<pre>[jaysonl@r_monkey /]$ /usr/local/lib/j2sdk1.3/bin/java -version</pre>
+<p class="docText">The appropriate response means that you have a problem with 
+your environment variables. Check the <span class="docEmphasis">rc</span> file 
+for your shell or the <span class="docEmphasis">/etc/profile</span> file to make 
+sure the paths are correct. (Remember, you have to re-execute the shell for the 
+changes to take effect.)</p>
+<p class="docText">If you get a &quot;Segmentation Fault&quot; message, chances are you 
+installed the wrong binary release of the J2SE. If you're using an older Linux 
+distribution (older than Red Hat v.5.x or Debian v.2.x) and chose the glibc 
+binary, you may find you need libc5 instead. Check your Linux distribution 
+references for the correct library type.</p>
+<p class="docText">If the virtual machine displays &quot;Font specified in 
+font.properties not found,&quot; edit the file:</p>
+<pre>/&lt;jdk1.x&gt;/jre/lib/font.properties</pre>
+<p class="docText">where <tt>&lt;jdk1.x.&gt;</tt> is the J2SE install directory. 
+Comment out the fonts that weren't found to stop these warning messages. 
+Installing the fonts is an alternative solution.</p>
+<p class="docText">If none of these quick fixes does the trick, you have a 
+problem. Refer to the Blackdown installation FAQ page (<a class="docLink" href="http://www.blackdown.org/java-linux/docs/faq/FAQ-java-linux.html#toc4" target="_blank">http://www.blackdown.org/java-linux/docs/faq/FAQ-java-linux.html#toc4</a>) 
+for advice.</p>
+<h4 class="docSection2Title" id="ch20lev2sec3">Downloading the Jython and CPython Libraries</h4>
+<p class="docText">If all went well with the installation, you can download the 
+Jython and the CPython libraries from
+<a class="docLink" href="http://www.jython.org" target="_blank">
+http://www.jython.org</a> or
+<a class="docLink" href="http://www.python.org" target="_blank">
+http://www.python.org</a><span class="docEmphasis">.</span> Then, in a shell, as 
+root, or using the <tt>su</tt> command, change the directory to which you 
+downloaded the class file by entering</p>
+<pre>java Jython1x</pre>
+<p class="docText">where <tt>1x</tt> is the number of the downloaded Jython 
+version.</p>
+<p class="docText">In our case, the command looks like</p>
+<pre>java Jython11</pre>
+<p class="docText">This launches the java GUI version of the install shield and 
+walks you through a series of questions. One question is which directory you 
+want to install Python in. The default is your home directory if you've logged 
+in as root. (Once again, although you can choose any directory I recommend
+<span class="docEmphasis">/usr/local/lib.</span>). The result is the creation of 
+a directory called <span class="docEmphasis">Jython-1.x</span> in the directory 
+specified. To install Jython, replace the <tt>Jython11</tt> install class with 
+its Jython counterpart.</p>
+<p class="docText">The next step is to edit your environment variables (here, in 
+the <span class="docEmphasis">~/.bashrc</span> file) by adding the following 
+just below the existing <tt>PATH</tt> statement:</p>
+<pre>PATH=$PATH:/&lt;Jython-1x&gt;</pre>
+<p class="docText">where <tt>&lt;Jython-1x&gt;</tt> is your chosen directory and the 
+number of the Jython version you've downloaded. Here's the actual line:</p>
+<pre>PATH=$PATH:/usr/local/lib/Jython-1.1</pre>
+<p class="docText">Now add the following <tt>CLASSPATH</tt> line just below the 
+existing one:</p>
+<pre>CLASSPATH=$CLASSPATH:/&lt;Jython-1.x&gt;/Jython.jar</pre>
+<p class="docText">where <tt>&lt;Jython</tt> is the installation directory and <tt>
+-1.x&gt;</tt> is the Jython version installed—in our case,</p>
+<pre>CLASSPATH=$CLASSPATH:/usr/local/lib/Jython-1.1/Jython.jar</pre>
+<p class="docText">Save and close the file, and then restart your shell so the 
+changes take effect.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">If It's Your First Time</h2>
+      <p class="docText">To start Jython for the first time, you need to be the 
+      root user or use the su command (to gain superuser privileges). The first 
+      run creates some new directories and searches your path to find the 
+      J2SE-installed Java classes.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch20lev1sec5">Running Jython</h3>
+<p class="docText">To run Jython for the first time, type <tt>Jython</tt> at the 
+prompt, and press Enter. You should see something like this:</p>
+<pre>packageManager: processing new jar,&quot;/usr/local/lib/Jython-1.1/jython.jar&quot;
+packageManager: processing new jar,&quot;/usr/local/lib/j2sdk1.3/lib/tools.jar&quot;
+packageManager: processing new jar,&quot;/usr/local/lib/j2sdk1.3/jre/lib/rt.jar&quot;
+packageManager: processing new jar,&quot;/usr/local/lib/j2sdk1.3/jre/lib/i18n.jar&quot;
+packageManager: processing new jar,
+&quot;/usr/local/lib/j2sdk1.3/jre/lib/sunrsasign.jar&quot;
+Jython 1.1 on java1.3.0 (JIT: sunwjit)
+Copyright (C) 1997-1999 Corporation for National Research Initiatives</pre>
+<p class="docText">Then press Ctrl-D to exit interactive mode.</p>
+<p class="docText">If you want to use parts of the standard Python library that 
+aren't included with Jython, you have two choices. You can download and install 
+them from the Jython download page (recommended by the folks at the Jython site 
+because the Python v.1.5.2 libs version has been modified to work better with 
+Jython):</p>
+<p class="docText">
+<a class="docLink" href="http://www.jython.org/download.html#pylib" target="_blank">
+http://www.jython.org/download.html#pylib</a></p>
+<p class="docText">or you can add a pointer in <tt>python.path</tt> to the
+<span class="docEmphasis">lib</span> directory of a CPython distribution (try 
+this with your system administrator by your side).</p>
+<p class="docText">In a shell, as root, or using <tt>su</tt>, change the 
+directory to the one you downloaded the <tt>CPython</tt> class file to, and 
+enter</p>
+<pre>jython -jar pylib152e.jar</pre>
+<p class="docText">There will be a flurry of activity on the screen as the 
+CPython libraries are extracted, copied, and compiled to your directories. Your 
+installation is now complete.</p>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20a.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20c.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+</body>
+
+</html>

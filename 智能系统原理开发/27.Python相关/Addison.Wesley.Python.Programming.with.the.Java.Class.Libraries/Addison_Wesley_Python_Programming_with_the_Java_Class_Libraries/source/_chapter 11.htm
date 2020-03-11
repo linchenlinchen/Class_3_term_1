@@ -1,0 +1,1609 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 11</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 11.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 11.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 11.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2010.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2012.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 11. Interfacing with Java</h2><ul><li>&nbsp;<a class="docLink" href="#ch11lev1sec1">Using the Java APIs</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec2">Java Types</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec3">Java Constructors</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec4">Java Arrays and jarray</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec5">Java Arrays and Methods</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec6">Bean Properties</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec7">Properties</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec8">Java Event Handling</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec9">Subclassing Java Classes</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec10">Advanced Topics</a></li>
+<li>&nbsp;<a class="docLink" href="#ch11lev1sec11">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Applet</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">AWT</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Base class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Bean</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Built-in object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Buffer</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Content pane</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Constructor</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Coupling</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Design pattern</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Event</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Event handler</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Event listener</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">First class object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Frame</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">get() and set() methods</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">-h option</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Interface</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Java API</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">JFC</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Object wrapper</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Packing</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Primitive type</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Property</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Public function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">self</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Superclass</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Subclass</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Typecode</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Type signature</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Unicode</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Java's vast array of application programming interfaces 
+(APIs) help you build GUIs, optimize network communications, create distributed 
+objects, build components, work with databases, and design Web applications. 
+This chapter is about how to use them with Jython.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Downloading the Java Documentation</h2>
+      <p class="docText">To get the most out of this chapter, go to the JavaSoft 
+      site (<a class="docLink" href="http://www.java.sun.com" target="_blank">http://www.java.sun.com</a>) 
+      and download the Java API documentation.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch11lev1sec1">Using the Java APIs</h3>
+<p class="docText">To see how easy it is to use the Java APIs, follow along with 
+this interactive session. Import two classes from the Java package
+<span class="docEmphasis">javax.swing:</span> <tt>JFrame</tt> and <tt>JButton</tt>. 
+(We'll cover these classes in depth in
+<a class="docLink" href="_chapter%2013.htm">Chapter 13</a>.)</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame, JButton</pre>
+<p class="docText">Create an instance of each.</p>
+<pre>&gt;&gt;&gt; frame = JFrame()
+&gt;&gt;&gt; button = JButton(&quot;Hello Java APIs&quot;)</pre>
+<p class="docText">(Note that you create Java instances and Python instances in 
+the same way.)</p>
+<p class="docText">Add the <tt>button</tt> instance to the content pane.</p>
+<pre>&gt;&gt;&gt; pane = frame.getContentPane() # get access to the content pane
+&gt;&gt;&gt; pane.add(button)              # add the button to the content pane
+javax.swing.JButton ...</pre>
+<p class="docText">Pack the components in the frame.</p>
+<pre>&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Make the frame visible.</p>
+<pre>&gt;&gt;&gt; frame.visible = 1             # make the frame visible
+&gt;&gt;&gt;    # define the function that does the event handling
+&gt;&gt;&gt; def button_clicked(event):
+... print &quot;Hello from Java APIs!!!!&quot;
+...
+&gt;&gt;&gt; button.actionPerformed = button_clicked   #set up the event handler</pre>
+<p class="docText"><a class="docLink" href="#ch11fig01">Figure 11-1</a> shows 
+the output you get after clicking the button several times.
+<a class="docLink" href="#ch11fig02">Figure 11-2</a> shows the form we just 
+created.</p>
+<center>
+<h5 id="ch11fig01" class="docFigureTitle">Figure 11-1. Output from the Button Event</h5>
+<p class="docText"><img alt="graphics/11fig01.gif" src="11fig01.gif" border="0" width="350" height="218"></p>
+</center><center>
+<h5 id="ch11fig02" class="docFigureTitle">Figure 11-2. <tt>JFrame</tt> Form</h5>
+<p class="docText"><img alt="graphics/11fig02.gif" src="11fig02.gif" border="0" width="150" height="63"></p>
+</center>
+<p class="docText">Java classes are pretty much like Python classes. Importing 
+classes are the same in the two languages, except that Java classes come from 
+packages whereas Python classes come from modules. There are a few other slight 
+differences, which we'll cover later, that don't change the basic similarities.</p>
+<h3 class="docSection1Title" id="ch11lev1sec2">Java Types</h3>
+<p class="docText">In this section we're going to cover how Python handles the 
+conversion from Java types when you pass arguments to Java methods and when 
+those methods return values. First, though, let's briefly cover the Java basic 
+types:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>boolean</tt>— contains true or false</li>
+  <li>
+  <p class="docText"><tt>char</tt>— contains Unicode characters</li>
+  <li>
+  <p class="docText"><tt>byte</tt>— contains 8-bit signed integers</li>
+  <li>
+  <p class="docText"><tt>short</tt>— contains 16-bit signed integers</li>
+  <li>
+  <p class="docText"><tt>int</tt>— contains 32-bit signed integers</li>
+  <li>
+  <p class="docText"><tt>long</tt>— contains 64-bit signed integers</li>
+  <li>
+  <p class="docText"><tt>float</tt>— contains 32-bit floating-point numbers</li>
+  <li>
+  <p class="docText"><tt>double</tt>— contains 64-bit floating-point numbers</li>
+  <li>
+  <p class="docText"><tt>String</tt>— contains a string of Unicode characters</li>
+  <li>
+  <p class="docText"><tt>array</tt>— contains arrays of objects or primitive 
+  types</li>
+</ul>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Primitive versus Basic Types</h2>
+      <p class="docText">I define as Java basic types all of the primitive types 
+      plus any classes that have special operators or literal notation. Thus, 
+      for example, you can add <tt>String</tt> instances together using the <tt>
+      +</tt> operator, and you can create them using literals, so, by 
+      definition, strings are a basic Java type. I hope this terminology catches 
+      on.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch11lev2sec1">Passing Arguments to Java Methods</h4>
+<p class="docText">One of the key differences between calling methods in Java 
+and calling them in Python is that Java expects Java types. At first, this may 
+seem complex, but Jython takes care of all of the conversion transparently. All 
+you need to know is how a Java type maps to the corresponding Python type so 
+that, for example, when you read the Java API documentation you know which 
+Python type to pass to a particular method.</p>
+<p class="docText">Java has many more basic types than Python has. For example, 
+the Python <tt>Float</tt> is like the Java <tt>double</tt>. Python has no <tt>
+Double</tt>, so you can use <tt>Float</tt> whenever you need a Java <tt>double</tt> 
+or <tt>float</tt>.</p>
+<p class="docText">Again, Java has three ways to describe an integer—<tt>byte</tt>,
+<tt>short</tt>, and <tt>int</tt>—which take up varying levels of space. Python 
+has just one integer type, <tt>Integer</tt>, that can take the place of any Java 
+integer type. Fewer types mean less to worry about and remember.</p>
+<p class="docText"><a class="docLink" href="#ch11table01">Table 11-1</a> shows 
+the mapping from Java types to Python types for calling Java methods. Notice 
+that eleven Java types map to only five Python types. The Python <tt>Integer</tt> 
+alone corresponds to four Java types (<tt>boolean</tt>, <tt>byte</tt>, <tt>short</tt>, 
+and <tt>int</tt>). The Python <tt>String</tt> type corresponds to three Java 
+types.</p>
+<h4 class="docSection2Title" id="ch11lev2sec2">Getting Return Values from Java Methods</h4>
+<p class="docText">Jython converts the values returned from Java methods to 
+Python types. <a class="docLink" href="#ch11table02">Table 11-2</a> lists these 
+mappings. The conversion also works with Java primitive-type object wrappers, as 
+illustrated in <a class="docLink" href="#ch11table03">Table 11-3</a>.</p>
+<h4 class="docSection2Title" id="ch11lev2sec3">Putting Things Together</h4>
+<p class="docText">Let's use the Java class <tt>Float</tt> to demonstrate the 
+Python conversion of basic Java data types. <tt>Float</tt>, from the
+<span class="docEmphasis">java.lang</span> package, converts various Java basic 
+types to a Java <tt>float</tt>.</p>
+<p class="docText">In particular, we'll look at the following <tt>Float</tt> 
+methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>static Float valueOf(String str)</tt>— converts a <tt>
+  string</tt> to a <tt>float</tt></li>
+  <li>
+  <p class="docText"><tt>float floatValue()</tt>— gets the primitive <tt>float</tt> 
+  wrapped in a <tt>Float</tt> instance</li>
+  <li>
+  <p class="docText"><tt>static boolean isInfinite(float v) Boolean</tt>— checks 
+  to see if the <tt>float</tt> is infinite and returns a primitive</li>
+</ul>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch11table01" class="docTableTitle">Table 11-1. Java/Python Type Mapping</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Java</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Python</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>char</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> (must 
+    have length 1) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>boolean</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> (false = 
+    zero, true = nonzero) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte</tt>, <tt>short</tt>,
+    <tt>int</tt>, </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>long</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Long</tt> (in the 
+    range of Java <tt>long</tt> or <tt>integer</tt>) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>float</tt>, <tt>
+    double</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.String</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte[]</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>array[]</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Jarray</tt> </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch11table02" class="docTableTitle">Table 11-2. Java/Python Type Mappings for Return 
+  Values</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Java Basic Type</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Returned Python Type</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>char</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">One-character <tt>String</tt>—<tt>&quot;a&quot;</tt> 
+    or <tt>'a'</tt> but not <tt>&quot;ab&quot;</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>boolean</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> (true = 
+    1, false = 0) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>short</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>int</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>long</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Long</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>float</tt>, <tt>
+    double</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.String</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Class</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JavaClass</tt> (<tt>org.python.core.PyJavaClass</tt>)
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Instance</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>PyInstance</tt> (<tt>org.python.core.PyInstance</tt>)
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ClassInstance[]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Array</tt> (contains 
+    objects of class or subclass of <tt>ClassInstance</tt>) </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch11table03" class="docTableTitle">Table 11-3. Java/Python Mappings for Object Wrappers</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Java Object Wrapper</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Python Type</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Char</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> (with one 
+    character) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Integer</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Boolean</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Byte</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Short</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Long</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Long</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Double</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.lang.Float</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+  </tr>
+</table>
+<p class="docText">The <tt>static</tt> keyword specifies that a method isn't 
+bound to a class instance; that is, it can be called without a class instance 
+being created. Static methods in Java are thus like functions defined in Python 
+modules. If you're confused, follow along with this quick example.</p>
+<p class="docText">Import the Java class <tt>Float</tt>.</p>
+<pre>&gt;&gt;&gt; from java.lang import Float</pre>
+<p class="docText">Demonstrate a function that returns a <tt>Float</tt> wrapper 
+object.</p>
+<pre>&gt;&gt;&gt;    #valueOf returns a java.lang.Float
+&gt;&gt;&gt; myFloatObject = Float.valueOf(&quot;1.1&quot;)
+&gt;&gt;&gt; type(myFloatObject)
+&lt;jclass org.python.core.PyFloat at -1329353172&gt;</pre>
+<p class="docText">Notice that the value returned from <tt>valueOf()</tt> 
+(stored in <tt>myFloatObject</tt>) is converted to a Python <tt>Float</tt>.</p>
+<p class="docText">Now let's use the <tt>isInfinite()</tt> method to demonstrate 
+the return of a primitive. In this case, <tt>isInfinite()</tt> returns a 
+primitive <tt>Boolean</tt>.</p>
+<pre>&gt;&gt;&gt; myBoolean = Float.isInfinite(myFloatObject)
+&gt;&gt;&gt; type(myBoolean)
+&lt;jclass org.python.core.PyInteger at -820007380&gt;</pre>
+<p class="docText">Before I can show you an example of <tt>floatValue()</tt>, I 
+need to explain Java constructors.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">A Reminder about Returning Types in CPython 
+      and Jython</h2>
+      <p class="docText">In CPython, types are returned as follows.</p>
+      <p class="docText">Return an <tt>Int</tt>.</p>
+      <pre>&gt;&gt;&gt; myint = 1
+&gt;&gt;&gt; type(myint)
+&lt;type 'int'&gt;</pre>
+      <p class="docText">Return a <tt>Float</tt>.</p>
+      <pre>&gt;&gt;&gt; myfloat = 1.1
+&gt;&gt;&gt; type(myfloat)
+&lt;type 'float'&gt;</pre>
+      <p class="docText">Here's how types are returned in Jython.</p>
+      <p class="docText">Return an <tt>Int</tt>.</p>
+      <pre>&gt;&gt;&gt; myint = 1
+&gt;&gt;&gt; type(myint)
+&lt;jclass org.python.core.PyInteger at -820007380&gt;</pre>
+      <p class="docText">Return a <tt>Float</tt>.</p>
+      <pre>&gt;&gt;&gt; myfloat=1.1
+&gt;&gt;&gt; type(myfloat)
+&lt;jclass org.python.core.PyFloat at -1329353172&gt;</pre>
+      <p class="docText">The following will work the same in both Python and 
+      Jython. Import <tt>IntType</tt> and <tt>FloatType</tt> from the
+      <span class="docEmphasis">types</span> module.</p>
+      <pre>&gt;&gt;&gt; from types import IntType, FloatType</pre>
+      <p class="docText">Test to see if <tt>myint</tt> is <tt>IntType</tt>. If 
+      so, print <tt>&quot;Integer type&quot;</tt>.</p>
+      <pre>&gt;&gt;&gt; if(type(myint)==IntType):print &quot;Integer type&quot;
+Integer type</pre>
+      <p class="docText">Test to see if <tt>myfloat</tt> is <tt>FloatType</tt>; 
+      if so, print <tt>&quot;Float type&quot;</tt>.</p>
+      <pre>&gt;&gt;&gt; if(type(myfloat==FloatType)):print &quot;Float type&quot;
+Float type</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch11lev1sec3">Java Constructors</h3>
+<p class="docText">All instances of Java classes are of type <tt>Instance</tt> (<tt>org.python.core.PyInstance</tt>). 
+Here I use a constructor to create a date. In Java, as in Python, a constructor 
+is a method in a class, so this example demonstrates a method returning an 
+instance of class <tt>Date</tt>.</p>
+<pre>&gt;&gt;&gt; from java.util import Date
+&gt;&gt;&gt; date = Date()
+&gt;&gt;&gt; type(date)
+&lt;jclass org.python.core.PyInstance at -1204237921&gt;</pre>
+<p class="docText">Constructors don't behave like regular Java methods in 
+Jython, however. Instead, they convert <tt>PyInstance</tt>s of the class even if 
+the class is a Java primitive wrapper. (Remember, methods that return primitive 
+wrappers are converted to the corresponding Python types.) In this context, the
+<tt>Integer</tt> and <tt>Float</tt> constructors return <tt>PyInstance</tt>s.</p>
+<p class="docText">Import the Java primitive wrappers <tt>Integer</tt> and <tt>
+Float</tt>.</p>
+<pre>&gt;&gt;&gt; from java.lang import Integer, Float</pre>
+<p class="docText">Create the Java primitive wrapper <tt>Integer</tt> with the 
+constructor, and view its type.</p>
+<pre>&gt;&gt;&gt; i = Integer(1)
+&gt;&gt;&gt; type(i)
+&lt;jclass org.python.core.PyInstance at -1292653012&gt;</pre>
+<p class="docText">Create the Java primitive wrapper <tt>Float</tt> with the 
+constructor, and view its type.</p>
+<pre>&gt;&gt;&gt; f = Float(1.1)
+&gt;&gt;&gt; type (f)
+&lt;jclass org.python.core.PyInstance at -1292653012&gt;</pre>
+<p class="docText">As you can see, the primitive types don't come back as 
+corresponding Python types but as <tt>PyInstance</tt>s. Conversely, the <tt>
+valueOf()</tt> method of class <tt>Integer</tt> and class <tt>Float</tt> returns 
+the Java primitive object wrappers <tt>Integer</tt> and <tt>Float</tt>, 
+respectively, which are converted to corresponding Python types. In short, the 
+rules that apply to Java methods don't apply to Java constructors.</p>
+<p class="docText">Now back to <tt>floatValue()</tt>. Here's an example of 
+Python converting the Java return values of <tt>int</tt> and <tt>float</tt> to 
+Python <tt>Integer</tt> and <tt>Float</tt>:</p>
+<pre>&gt;&gt;&gt; type(i.intValue())
+&lt;jclass org.python.core.PyInteger at -820007380&gt;
+
+&gt;&gt;&gt; type(f.floatValue())
+&lt;jclass org.python.core.PyFloat at -1329353172&gt;</pre>
+<p class="docText">Convert the object wrapper instance <tt>java.lang.Float</tt> 
+to <tt>PyFloat</tt>.</p>
+<pre>&gt;&gt;&gt; type(Float.valueOf(&quot;1.1&quot;))
+&lt;jclass org.python.core.PyFloat at -1329353172&gt;</pre>
+<p class="docText">Convert the object wrapper instance <tt>java.lang.Float</tt> 
+to <tt>PyInteger</tt>.</p>
+<pre>&gt;&gt;&gt; type(Integer.valueOf(&quot;1&quot;))
+&lt;jclass org.python.core.PyInteger at -820007380&gt;</pre>
+<p class="docText">By the way, instances of Java classes used to be of type <tt>
+JavaInstance</tt> (<tt>org.python.core.PyJavaInstance</tt>), but that changed 
+with the release of Jython 1.1.</p>
+<pre>&gt;&gt;&gt; from org.python.core import PyJavaInstance
+&gt;&gt;&gt; type(b)==PyJavaInstance
+0</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Beginners: Why the Minutiae</h2>
+      <p class="docText">You can program in Python without understanding how 
+      Python takes care of Java types. However, when you deal with the more 
+      advanced Java APIs, the minutiae we're dealing with here may become 
+      important. The good news is that Jython takes care of all Java type 
+      conversion transparently, so 95 percent of the time you don't need to 
+      worry. It's that other 5 percent that may get you.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch11lev1sec4">Java Arrays and jarray</h3>
+<p class="docText">The closest thing to a Java array in Python is a tuple. 
+Remember that a tuple is immutable and a list is mutable. Like a list, a Java 
+array is mutable but, like a tuple, it's of fixed length. You may think that a 
+tuple or a list is a likely candidate for an array, but that's not exactly the 
+case. You see, an array is like a homogeneous tuple or list—every item in it is 
+of the same type; but a tuple is heterogeneous—items in it can be of different 
+types. A lot of Java methods have Java arrays as arguments, so when you pass an 
+array to a Java method, Python has to guarantee that it will be homogeneously 
+typed.</p>
+<p class="docText">Just a note: Because they're strongly typed, Java arrays can 
+hold Java objects or primitive types.</p>
+<p class="docText">Jython adds <tt>PyArray</tt> class support for Java arrays—<tt>org.python.core.PyArray</tt> 
+to be exact. Instances of <tt>PyArray</tt> are returned from Java methods that 
+return Java arrays. You need to create instances of <tt>PyArray</tt> to pass to 
+Java methods that require arrays. Python makes creating a <tt>PyArray</tt> 
+painless with the <span class="docEmphasis">jarray</span> module, which defines 
+two public functions, described in <a class="docLink" href="#ch11table04">Table 
+11-4</a>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">No Built-In Java Objects</h2>
+      <p class="docText">A Java object is only an instance of a class. There are 
+      no other object types, so there are no built-in Java objects as there are 
+      in Python. The closest things Java has to Python's built-in objects are 
+      strings and arrays, which require special syntax.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch11table04" class="docTableTitle">Table 11-4. jarray Public Functions</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Function</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>array(sequence, type)</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Creates an array of a 
+    specific type with values from the sequence; the array is the same size as 
+    the sequence </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>zeros(length, type)</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Creates an empty array 
+    the length of the <tt>length</tt> parameter </td>
+  </tr>
+</table>
+<p class="docText">The <tt>type</tt> argument for both <tt>zeros()</tt> and <tt>
+array()</tt> can be either a string or a Java class object. You can use a 
+single-character string typecode to specify that the array will hold primitive 
+values. <a class="docLink" href="#ch11table05">Table 11-5</a> shows the 
+typecodes and their primitive types.</p>
+<p class="docText">Here's an example of creating arrays with the <tt>array()</tt> 
+and <tt>zeros()</tt> methods from the <span class="docEmphasis">jarray</span> 
+module.</p>
+<p class="docText">Create a Boolean array using the <tt>array()</tt> method.</p>
+<pre>&gt;&gt;&gt; from jarray import array, zeros
+&gt;&gt;&gt; seq = (1,0,1,0,1,0)
+&gt;&gt;&gt; booleanArray = array(seq, 'z')</pre>
+<p class="docText">Inspect its contents.</p>
+<pre>&gt;&gt;&gt; booleanArray
+array([1, 0, 1, 0, 1, 0], boolean)
+
+&gt;&gt;&gt; print `booleanArray`
+array([1, 1, 1, 1, 1, 0], boolean)</pre>
+<p class="docText">See what type it is.</p>
+<pre>&gt;&gt;&gt; booleanArray
+array([1, 0, 1, 0, 1, 0], boolean)
+
+&gt;&gt;&gt; print `booleanArray`
+array([1, 1, 1, 1, 1, 0], boolean)</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch11table05" class="docTableTitle">Table 11-5. Typecodes and Primitive types</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Typecode</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Primitive Type</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'z'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>boolean</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'c'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>char</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'b'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'h'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>short</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'i'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>int</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'l'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>long</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'f'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>float</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>'d'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>double</tt> </td>
+  </tr>
+</table>
+<p class="docText">Change its values.</p>
+<pre>&gt;&gt;&gt; booleanArray[1]=1
+&gt;&gt;&gt; booleanArray[3]=1
+&gt;&gt;&gt; booleanArray
+array([1, 1, 1, 1, 1, 0], boolean)</pre>
+<p class="docText">You can use the same operations on an array that you use on a 
+sequence (a tuple or a list). Here's an example:</p>
+<pre>&gt;&gt;&gt; for boolean in booleanArray:
+...   print `boolean`
+...
+1
+1
+1
+1
+1
+0
+&gt;&gt;&gt; len(booleanArray)
+6</pre>
+<p class="docText">Even though an array is mutable, it's still of fixed length; 
+that means that you can't append to it as you can a Python list. If you try, 
+you'll get an attribute error.</p>
+<pre>&gt;&gt;&gt; booleanArray.append(1)
+Traceback (innermost last):
+  File &quot;&lt;console&gt;&quot;, line 1, in ?
+AttributeError: instance of 'org.python.core.PyArray' has no attribute 'append'</pre>
+<p class="docText">Let's create an array with the <tt>zeros()</tt> method.</p>
+<pre>&gt;&gt;&gt; IntArray = zeros(10,'i')
+&gt;&gt;&gt; print IntArray
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], int)</pre>
+<p class="docText">As the above example shows, you can think of <tt>PyArray</tt> 
+essentially as a Python built-in type that's specific to Jython. Like other 
+features Jython has for integrating with Java, <tt>PyArray</tt>s are transparent 
+to the programmer (when returned from a Java method). Creating one is easy with 
+Jython's <span class="docEmphasis">jarray</span> module.</p>
+<h3 class="docSection1Title" id="ch11lev1sec5">Java Arrays and Methods</h3>
+<p class="docText">Let's see some examples of using arrays to get values from 
+and pass values to Java methods. We'll use three methods of the Java <tt>String</tt> 
+class (from the <span class="docEmphasis">java.lang</span> package): <tt>valueOf()</tt>,
+<tt>getBytes()</tt>, and <tt>getChar()</tt>, which are described in
+<a class="docLink" href="#ch11table06">Table 11-6</a>.</p>
+<p class="docText">Since the <tt>valueOf()</tt> method takes <tt>char[]</tt> as 
+an argument, we need to create an array of primitive type <tt>char</tt>. In Java 
+the <tt>[]</tt> notation denotes an array.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch11table06" class="docTableTitle">Table 11-6. Example Java <tt>String</tt> Class 
+  Methods</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Method</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>static String 
+    valueOf(char[] data)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Converts an array of 
+    primitive type <tt>char</tt> into a <tt>string</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte[] getBytes()</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Returns the <tt>byte</tt> 
+    data associated with a <tt>string</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>void getChars(int 
+    srcBegin, int</tt> <tt>srcEnd, char [] dst, int dstBegin)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Copies characters from 
+    the <tt>string</tt> into a <tt>char</tt> array </td>
+  </tr>
+</table>
+<p class="docText">Import <tt>java.lang.String</tt> and <tt>jarray.array</tt>.</p>
+<pre>&gt;&gt;&gt; from java.lang import String
+&gt;&gt;&gt; from jarray import array</pre>
+<p class="docText">Create a sequence whose items can be converted into primitive 
+Java type <tt>char</tt>.</p>
+<pre>&gt;&gt;&gt; seq = ('H','e','l','l', 'o', ' ', 'W', 'o', 'r', 'l' , 'd')
+&gt;&gt;&gt; seq
+('H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd')</pre>
+<p class="docText">Use the <tt>array()</tt> method to create a <tt>PyArray</tt> 
+of primitive Java type <tt>char</tt>.</p>
+<pre>&gt;&gt;&gt; data = array(seq, 'c')
+&gt;&gt;&gt; data  #Display just to show you what is in it.
+array(['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd'], char)</pre>
+<p class="docText">The <tt>valueOf()</tt> method, which takes a <tt>char[]</tt>argument 
+(a <tt>char</tt> array), takes the array of Java primitive <tt>char</tt>s and 
+turns it into a Java <tt>string</tt>.</p>
+<pre>&gt;&gt;&gt; str = String.valueOf(data)
+&gt;&gt;&gt; print str
+Hello World</pre>
+<p class="docText">Use <tt>getBytes()</tt> to demonstrate returning an array.</p>
+<pre>&gt;&gt;&gt; hi = String(&quot;Hello Cruel World&quot;)
+&gt;&gt;&gt; bytes = hi.getBytes()
+&gt;&gt;&gt; bytes     #display what is in bytes
+array([72, 101, 108, 108, 111, 32, 67, 114, 117, 101, 108, 32, 87, 111, 114,
+    108, 100], byte)
+&gt;&gt;&gt; chr(bytes[0]) #The chr function converts an integer to a character
+'H'</pre>
+<p class="docText">In Java, you often supply the buffer (Java array), which the 
+method fills with the output results. The <tt>getChars()</tt> method expects a 
+character buffer (<tt>char</tt> array), but it doesn't matter what's in it 
+because it's only for output. Thus, we can use the <tt>jarray.zeros()</tt> 
+method to create an empty, or zero-initialized, buffer.</p>
+<p class="docText">Import <tt>zeros()</tt> and <tt>String()</tt>.</p>
+<pre>&gt;&gt;&gt; from jarray import zeros
+&gt;&gt;&gt; from java.lang import String</pre>
+<p class="docText">Create an instance of <tt>java.lang.String</tt>.</p>
+<pre>&gt;&gt;&gt; hi = String(&quot;Here we are now&quot;)</pre>
+<p class="docText">Use the <tt>zeros()</tt> method to create the <tt>char</tt> 
+array, <tt>dst</tt>.</p>
+<pre>&gt;&gt;&gt; dst = zeros(10, 'c')</pre>
+<p class="docText">Use the <tt>getChars()</tt> method to fill <tt>dst</tt>.</p>
+<pre>&gt;&gt;&gt; hi.getChars(0,10, dst, 0)
+&gt;&gt;&gt; print dst
+array(['H', 'e', 'r', 'e', ' ', 'w', 'e', ' ', 'a', 'r'...], char)</pre>
+<p class="docText">Dealing with Java arrays in Python demonstrates how the 
+Python language keeps things simple.</p>
+
+<h3 class="docSection1Title" id="ch11lev1sec6">Bean Properties</h3>
+<p class="docText">With Jython, you can use JavaBeans properties like instance 
+attributes, which makes it easy to interact with Java classes. You can also use 
+them as keyword arguments to Java class constructors (like Tcl/Tk).</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">About JavaBeans</h2>
+      <p class="docText">JavaBeans have properties and events, much like ActiveX 
+      controls, which are a lot like OLE controls (OCXs), which are like Visual 
+      Basic controls (VBX). To make a short story long, JavaBeans allow IDE 
+      (Integrated Development Environments) to do mundane things that you used 
+      to have to write code for.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In Java, you need the <tt>set()</tt> and <tt>get()</tt> 
+methods to define a property. Let's say that you create a property called <tt>
+name</tt> that you want to be both read and write. You can define two methods 
+for it.</p>
+<pre>public void setName(String name)
+public String getName()</pre>
+<p class="docText">(By the way, <tt>void</tt> in Java means that the method 
+doesn't return anything.) If you want <tt>name</tt> to be read-only, define only 
+the <tt>getName()</tt> method.</p>
+<p class="docText">In Python, you can access the <tt>name</tt> property as 
+follows (assuming you defined the methods in a class called <tt>myJavaClass</tt>).</p>
+<pre>&gt;&gt;&gt; instance = myJavaClass()
+&gt;&gt;&gt; instance.name = &quot;Rick&quot;
+&gt;&gt;&gt; print instance.name
+Rick</pre>
+<p class="docText">You can also set <tt>name</tt> when you call the constructor.</p>
+<pre>&gt;&gt;&gt; instance = myJavaClass(name= &quot;Rick&quot;)
+&gt;&gt;&gt; print instance.name
+Rick</pre>
+<p class="docText">We'll show some real examples of this later in the chapter.</p>
+<h3 class="docSection1Title" id="ch11lev1sec7">Properties</h3>
+<p class="docText">Sometimes properties are more complex than basic Java 
+types—for example, a property can be a type of class. You can set properties 
+that expect class instances with tuples that correspond to the constructor of 
+the property type. (This only works for things like <tt>java.awt.Dimension</tt>.)</p>
+<p class="docText">An example of this is the <tt>setSize()</tt> method of <tt>
+javax.swing.JFrame</tt>. The <tt>size</tt> property expects an instance of class
+<tt>Size</tt>, whose constructor expects width and height integer arguments.</p>
+<p class="docText">The following code recaps what we've learned so far about 
+using properties. We'll show how to create a frame and set its <tt>size</tt> 
+property with a tuple, and we'll show the frame's <tt>visible</tt> property. 
+Don't worry that you don't know JFC/Swing. I'll walk you through it.</p>
+<p class="docText">Import the <tt>JFrame</tt> class.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame</pre>
+<p class="docText">Create a <tt>JFrame</tt> instance.</p>
+<pre>&gt;&gt;&gt; f = JFrame()</pre>
+<p class="docText">What happens? Nothing. That's because the default for 
+creating a <tt>JFrame</tt> instance is that it be invisible. If we want it to be 
+visible, we can pass it the <tt>visible</tt> property keyword argument as 
+follows, or we can just set the property like any other instance attribute.</p>
+<p class="docText">Set the <tt>visible</tt> property in the constructor.</p>
+<pre>&gt;&gt;&gt; f = JFrame (visible=1)</pre>
+<p class="docText">Set the <tt>visible</tt> property as a property.</p>
+<pre>&gt;&gt;&gt; f.visible = 0
+&gt;&gt;&gt; f.visible = 1</pre>
+<p class="docText">As you can see, even though visible, the frame isn't very 
+big. We can set the frame size by passing it a <tt>size</tt> parameter.</p>
+<pre>&gt;&gt;&gt; f = JFrame(size=(250,250), visible=1)</pre>
+<p class="docText">Now we have a big, blank frame, which we can make even 
+bigger.</p>
+<pre>&gt;&gt;&gt; f.size = 500,500
+&gt;&gt;&gt; f.background = 0,255,255
+&gt;&gt;&gt; f.background = 255,0,255
+&gt;&gt;&gt; f.background = 0,255,255
+&gt;&gt;&gt; f.background = 255,255,0
+&gt;&gt;&gt; f.background = 0,255,0
+&gt;&gt;&gt; f.background = 255,0,0
+&gt;&gt;&gt; f.background = 0,0,255</pre>
+<p class="docText">No, I didn't forget to tell you what the above code does. I 
+didn't want to tell you. I want to shame those of you who aren't doing the 
+examples into putting down the book and starting to program.</p>
+<h4 class="docSection2Title" id="ch11lev2sec4">Event Properties</h4>
+<p class="docText">You can think of event properties as properties that take 
+methods as arguments. As a Java programmer, you can think of them as a way to 
+implement Java events. In Python, you set an event property so you can be 
+notified when an event happens. Notification comes when the class instance calls 
+the method you passed to the property when the event occurred.</p>
+<p class="docText">For example, <tt>JButton</tt> has an event property called
+<tt>actionPerformed</tt>, which represents the button being pressed. Whenever 
+this happens, the method passed to <tt>actionPerformed</tt> is called. This is 
+much easier to explain with code.</p>
+<p class="docText">Import the <tt>JButton</tt> and <tt>JFrame</tt> classes from 
+the <span class="docEmphasis">javax.swing</span> package, and create an instance 
+of <tt>JFrame</tt>. Set its size at 200,200 pixels, and make it visible.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JButton, JFrame
+&gt;&gt;&gt; f = JFrame(visible=1, size=(200,200))</pre>
+<p class="docText">Define an event handler for <tt>JButton</tt>.</p>
+<pre>&gt;&gt;&gt; def Hello(event):
+...     print &quot;Hello World&quot;
+...</pre>
+<p class="docText">Create an instance of <tt>JButton</tt> called <tt>button</tt>, 
+and pass the event handler as the <tt>actionPerformed</tt> property.</p>
+<pre>&gt;&gt;&gt; button = JButton(&quot;Hello World&quot;, actionPerformed=Hello)</pre>
+<p class="docText">Add the button to the frame, and pack the frame with the 
+components.</p>
+<pre>&gt;&gt;&gt; f.getContentPane().add(button)
+javax.swing.JButton[,0,0,0x0,invalid,layout=javax.swing.OverlayLayout,
+    alignmentX
+...
+&gt;&gt;&gt; f.pack()</pre>
+<p class="docText">If you hit the &quot;Hello World&quot; button, you'll see <tt>&quot;Hello 
+World&quot;</tt> print to the console. Note that the argument the event handler needs 
+is the event object passed to it.</p>
+<p class="docText">If you program in Java 1.1 or later, you know that AWT (and 
+JFC) components are handled by passing an instance of a class that implements a 
+specific event handler interface. In Jython, things are much easier because 
+functions and methods are considered first class objects.</p>
+<h3 class="docSection1Title" id="ch11lev1sec8">Java Event Handling</h3>
+<p class="docText">Here's an example of Java event handling in Jython. It does 
+the same thing the example in the previous section did but in the Java (Jython) 
+way.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame, JButton
+&gt;&gt;&gt; from java.awt.event import ActionListener
+&gt;&gt;&gt; class hello(ActionListener):
+...   def actionPerformed(self, event):
+...           print &quot;Hello&quot;
+...
+&gt;&gt;&gt; f = JFrame()
+&gt;&gt;&gt; b = JButton(&quot;Hello from Java Events&quot;)
+&gt;&gt;&gt; hi = hello()
+&gt;&gt;&gt; b.addActionListener(hi)
+&gt;&gt;&gt; f.getContentPane().add(b)
+&gt;&gt;&gt; f.pack()
+&gt;&gt;&gt; f.visible = 1</pre>
+<p class="docText">I think you'll prefer the more Pythonesque way of doing 
+things because it's brief and easy. Unfortunately, however, you need to know the 
+Java way to understand the Jython way. For example, the only way to know that
+<tt>JButton</tt> supports an event property is to know that it supports the 
+method <tt>addActionListener()</tt>, and that <tt>addActionListener()</tt> takes 
+an instance of the <tt>ActionListener</tt> interface (an interface is a totally 
+abstract class), and that <tt>ActionListener</tt> has a method called <tt>
+actionPerformed()</tt>. In other words, the inventors of Jython expect you to 
+know the Java event model.</p>
+<p class="docText">So then, Jython isn't really for beginners. To help in this 
+regard, I've created a module to let you inspect the Java event model, and I've 
+added a section explaining it in detail so that when you read the Java APIs 
+you'll know how the events map.</p>
+<h4 class="docSection2Title" id="ch11lev2sec5">The <span class="docEmphasis">jinfo</span> Module</h4>
+<p class="docText">I've created a module called <span class="docEmphasis">jinfo</span> 
+that allows you to inspect Java class event properties. Let's look at <tt>
+JButton</tt> (<tt>javax.swing.JButton</tt>).</p>
+<p class="docText">Import the <span class="docEmphasis">jinfo</span> module and 
+the <tt>JButton</tt> class.</p>
+<pre>&gt;&gt;&gt; from jinfo import *
+&gt;&gt;&gt; from javax.swing import JButton</pre>
+<p class="docText">Use the <tt>getEventsInfo()</tt> method to view the events 
+associated with <tt>JButton</tt>.</p>
+<pre>&gt;&gt;&gt; getEventsInfo(JButton, 1)
+&gt;&gt;&gt;</pre>
+<p class="docText">Nothing happened here because the events associated with <tt>
+JButton</tt> are defined in <tt>JButton</tt>'s superclass. Thus, we need to find 
+out what that superclass is.</p>
+<pre>&gt;&gt;&gt; JButton.superclass
+&lt;jclass javax.swing.AbstractButton at 1250890579&gt;</pre>
+<p class="docText">Now we can query its events.</p>
+<pre>&gt;&gt;&gt; from javax.swing import AbstractButton
+&gt;&gt;&gt; getEventsInfo(AbstractButton)
+[&lt;beanEventProperty itemStateChanged for event interface
+java.awt.event.ItemListener at -1327819950&gt;,
+ &lt;beanEventProperty actionPerformed for event interface jav
+a.awt.event.ActionListener at -1284828334&gt;,
+&lt;beanEventProperty stateChanged for event interface
+javax.swing.event.ChangeListener at -1331489966&gt;]</pre>
+<p class="docText">The code above is a little hard to read, so I'll show you 
+another way to use the <tt>getEventsInfo()</tt> information.</p>
+<pre>&gt;&gt;&gt; events = getEventsInfo(AbstractButton)
+&gt;&gt;&gt; len (events)
+3
+&gt;&gt;&gt; printEventProperty(events[0])
+
+Event Property:           itemListener
+Defined in:               java.awt.event.ItemListener
+Event:                    java.awt.event.ItemEvent
+
+Event properties for java.awt.event.ItemEvent:
+     itemSelectable       Type: org.python.core.PyBeanProperty
+     stateChange          Type: org.python.core.PyBeanProperty
+     item                 Type: org.python.core.PyBeanProperty
+
+Public Event fields for java.awt.event.ItemEvent:
+     static final ITEM_FIRST                   Type: int
+     static final ITEM_LAST             Type: int
+     static final ITEM_STATE_CHANGED    Type: int
+     static final SELECTED              Type: int
+     static final DESELECTED            Type: int</pre>
+<p class="docText">Now you can look up the event information in the class's <tt>
+java.awt.event.ItemListener</tt> interface and <tt>java.awt.event.ItemEvent</tt> 
+class in the Java API documentation. The properties that the event passes to <tt>
+itemListener</tt> are also shown.</p>
+<p class="docText">Let's do another example. We're familiar with this event 
+because we've used it in many of the previous examples.</p>
+<pre>&gt;&gt;&gt; printEventProperty(events[1])
+
+Event Property:           actionListener
+Defined in:               java.awt.event.ActionListener
+Event:                    java.awt.event.ActionEvent
+
+Event properties for java.awt.event.ActionEvent:
+    modifiers             Type: org.python.core.PyBeanProperty
+    actionCommand        Type: org.python.core.PyBeanProperty
+
+Public Event fields for java.awt.event.ActionEvent:
+    static final SHIFT_MASK             Type: int
+    static final CTRL_MASK              Type: int
+    static final META_MASK              Type: int
+    static final ALT_MASK               Type: int
+    static final ACTION_FIRST           Type: int
+    static final ACTION_LAST            Type: int
+    static final ACTION_PERFORMED       Type: int</pre>
+<p class="docText">We can use this information to determine which classes to 
+look up in the documentation: <tt>ActionListener</tt> and <tt>ActionEvent</tt>. 
+We can use the fields from <tt>ActionEvent</tt> in our event handler. The 
+following code uses this information to display the <tt>Modifiers</tt> and <tt>
+ActionCommand</tt> of <tt>ActionEvent</tt>:</p>
+<pre>&gt;&gt;&gt; from javax.swing import JButton, JFrame
+&gt;&gt;&gt; f = JFrame(visible=1)
+&gt;&gt;&gt; b = JButton(&quot;Hello&quot;)
+&gt;&gt;&gt; def hello(event):
+...     print &quot;Modifiers: &quot; + `<span class="docEmphStrong">event.modifiers</span>`
+...     print &quot;ActionCommand: &quot; + `<span class="docEmphStrong">event.actionCommand</span>`
+...
+&gt;&gt;&gt; b.actionPerformed = hello
+&gt;&gt;&gt; f.contentPane.add(b)
+javax.swing.JButton[,0,0,0x0,invalid,layout=javax.swing.OverlayLayout,`
+    alignmentX
+...
+...
+&gt;&gt;&gt; f.pack()</pre>
+<p class="docText">Try hitting the button a few times. You'll see that you can 
+print out the attributes of the event based on the information obtained using
+<tt>getEventsInfo()</tt> and <tt>printEventProperty()</tt>. If you want to know 
+what the properties for the event were used for, look them up under <tt>
+java.awt.event.ActionEvent</tt> in the Java documentation.</p>
+<h4 class="docSection2Title" id="ch11lev2sec6">Advanced Topic: The JavaBeans Event Model in Detail</h4>
+<p class="docText">The Java 1.1 event model was introduced so that you would no 
+longer have to subclass a GUI component in order to handle events, as you did 
+with the Java 1.0 version. JFC, AWT, and JavaBeans use the version 1.1 event 
+model, which defines the following:</p>
+<ul>
+  <li>
+  <p class="docText"><span class="docEmphasis">Source</span>— the origin of the 
+  event</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Listener</span>— a class that 
+  listens for an event, that is, the event handler</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Event</span>— information about 
+  the event</li>
+</ul>
+<p class="docText">In this model, to define an event you have to subclass a 
+class from <tt>EventObject</tt>, which contains event information. One piece of 
+information is the <tt>source</tt> property, which provides the event's origin. 
+In our last example, we had a <tt>JButton</tt> instance called <tt>b</tt>, which 
+was the source of the <tt>ActionEvent</tt> instance passed to the event method 
+handler (in the last example this method was called <tt>hello()</tt>).</p>
+<p class="docText">An event listener registers itself with the event source, 
+which notifies the listener when the event happens by calling a method on it. 
+All listeners must implement the method the event source needs to call. To do so 
+they have to implement a listener interface.</p>
+<p class="docText">An interface is like an abstract Java class, so it can't be 
+instantiated. It defines a contract between the event source and the event 
+listener. Classes that want to listen for <tt>ActionEvent</tt>s, for example, 
+must implement the <tt>ActionListener</tt> interface. All listener interfaces 
+must extend the <tt>java.util.EventListener</tt> interface.</p>
+<p class="docText">Classes that act as event sources must define methods that 
+allow event listeners to register themselves. These methods typically take the 
+form <tt>addXXListener</tt> <tt>(XXListener listener)</tt> and <tt>
+removeXXListener(XXListener listener</tt>), where <tt>XX</tt> is the event name. 
+The class maintains a list of listeners registered for that event. When the 
+event occurs, the event source class has the code to notify them.</p>
+<p class="docText">The individual methods in the listener interface need only 
+one argument, of type <tt>Event</tt>. For example, <tt>XXListener</tt>'s methods 
+take one argument of <tt>XXEvent</tt>. Let's say you've written a class that 
+monitors stock prices (we'll call it <tt>StockPriceChecker</tt>), which acts as 
+an event source for an event called <tt>StockPrice</tt>. As the stock price 
+rises and falls above or below certain levels, the class sends out <tt>
+StockPrice</tt> events to all classes that are registered to receive them.</p>
+<p class="docText">The <tt>StockPriceChecker</tt> class has the following 
+methods for registering <tt>StockPriceEvent</tt> listener objects:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>addStockPriceListener(StockPriceListener listener)</tt></li>
+  <li>
+  <p class="docList"><tt>removeStockPriceListener(StockPriceListener listener)</tt></li>
+</ul>
+<p class="docText">The <tt>StockPriceEvent</tt> class might have the following 
+methods that provide data on the <tt>StockPrice</tt> event:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>getPrice()</tt>— returns a <tt>float</tt></li>
+  <li>
+  <p class="docText"><tt>getName()</tt>— returns the name of the stock</li>
+</ul>
+<p class="docText">Contained in <tt>StockPriceEvent</tt> is the data that <tt>
+StockPriceChecker</tt> sends out to the <tt>StockPrice</tt> event listeners.</p>
+<p class="docText">The <tt>StockPriceListener</tt> interface can have the 
+following methods, which define specific occurrences of events:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>priceDropped(StockPriceEvent event)</tt></li>
+  <li>
+  <p class="docList"><tt>priceIncreased(StockPriceEvent event)</tt></li>
+</ul>
+<p class="docText">Any class implementing the interface can register with the 
+event source, <tt>StockPriceChecker</tt>, to receive <tt>StockPrice</tt> events.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Design Patterns</h2>
+      <p class="docText">Java is chockful of design patterns. These are ways to 
+      organize classes and objects to solve recurring software engineering 
+      problems. The Java event model is an example of the Observer/Observable 
+      design pattern, also known as Publish and Subscribe. Its purpose is to 
+      reduce coupling of the source and the sink (the listener).</p>
+      <p class="docText">Once you've mastered Python programming and read
+      <span class="docEmphasis">Object-Oriented</span> <span class="docEmphasis">
+      Analysis and Design with Applications</span> (Booch, 1994), make sure to 
+      read <span class="docEmphasis">Design Patterns</span> (Gamma et al., 
+      1995).</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Now, if you use the <tt>StockPriceChecker</tt> class in 
+Python, you don't have to implement the <tt>StockPriceListener</tt> interface 
+and register an instance with <tt>StockPriceChecker</tt>. <tt>StockPriceChecker</tt> 
+has two event properties corresponding to the methods in the interface of <tt>
+StockPriceListener</tt>—<tt>priceDropped</tt> and <tt>priceIncreased</tt>—so you 
+can pass an event handler function that has one argument, which is passed as <tt>
+StockEvent</tt>.</p>
+<p class="docText">If you're confused at this point, fear not. We'll do lots of 
+examples using both Python and Java event handling when we cover GUI programming 
+in <a class="docLink" href="_chapter%2013.htm">Chapter 13</a>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Technical Tip: Bean Introspection</h2>
+      <p class="docText">Jython uses the bean introspection features of Java, 
+      which provide the ability to inspect a bean's properties, events, and 
+      methods. Any Java class can be a bean if it follows certain design 
+      patterns in method, interface, and class-naming conventions. Also, instead 
+      of naming conventions, developers can define <tt>BeanInfo</tt> classes 
+      that describe the methods corresponding to actions such as event 
+      registration.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch11lev1sec9">Subclassing Java Classes</h3>
+<p class="docText">You can subclass Java classes like Python classes. Here's an 
+example of subclassing the Java class <tt>java.util.Date</tt> (from
+<span class="docEmphasis">MyDate.py</span>):</p>
+<pre>from java.util import Date
+
+class MyDate(Date):
+       def __init__(self, num=None):
+             if num is None:
+                    Date.__init__(self)
+             else:
+                    Date.__init__(self, num)
+       def __str__(self):
+             str = Date.toString(self)
+             str = &quot;MyDate: &quot; + str
+             return str</pre>
+<h4 class="docSection2Title" id="ch11lev2sec7">Working with Java Constructors</h4>
+<p class="docText">When you subclass a Java class, you call its superclass's 
+constructor, just as you do in regular Python. As we saw, the
+<span class="docEmphasis">MyDate.py</span> example subclassed the <tt>Date</tt> 
+class from <tt>java.lang</tt> and defined two constructors that called <tt>Date</tt>'s 
+base class constructors.</p>
+<p class="docText">As an exercise, look up the constructors of <tt>
+java.lang.Date</tt> in the Java API documentation. You'll find them in a section 
+called Constructor Summary.</p>
+<p class="docText">The constructor of <tt>Date</tt> is defined in Java as</p>
+<pre>Date ()</pre>
+<p class="docText">You call it from Python like this:</p>
+<pre>Date.__init__(self)</pre>
+<p class="docText">The second constructor of <tt>Date</tt> is defined in Java as</p>
+<pre>Date (long date)</pre>
+<p class="docText">You call it from Python like this:</p>
+<pre>Date.__init__(self, num)</pre>
+<p class="docText">Here's how to call both <tt>Date</tt> constructors:</p>
+<pre>class MyDate(Date):
+       def __init__(self, num=None):
+             if num is None:
+                    Date.__init__(self)
+             else:
+                    Date.__init__(self, num)</pre>
+<p class="docText">In Java, constructors are special language constructs that 
+always have the same name as that of their class. In Python, the constructor is 
+always a method called <tt>__init__</tt>. You call Java constructors in Python 
+just as you do Python constructors; however, you can only do so in your 
+subclass's constructor.</p>
+<h4 class="docSection2Title" id="ch11lev2sec8">Working with Java Methods</h4>
+<p class="docText">When subclassing a Java class, you can call all methods from 
+a Java base class that you can from a Python base class. In our
+<span class="docEmphasis">MyDate.py</span> example, we subclass <tt>Date</tt> 
+and add a <tt>__str__</tt> method.</p>
+<pre>def __str__(self):
+      <span class="docEmphStrong">str = Date.toString(self)</span>
+      str = &quot;MyDate: &quot; + str
+      return str</pre>
+<p class="docText">Unlike Python methods, Java methods can be overloaded, which 
+essentially means that a Java class can have several methods with the same name. 
+An example of this is <tt>java.io.OutputStream</tt>, which defines three <tt>
+write()</tt> methods:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>abstract void write(int b)</tt></li>
+  <li>
+  <p class="docList"><tt>void write(byte[] b)</tt></li>
+  <li>
+  <p class="docList"><tt>void write (byte[] b, int off, int len)</tt></li>
+</ul>
+<p class="docText">As you can see, these methods can be called with different 
+argument types.</p>
+<p class="docText">To subclass <tt>OutputStream</tt>, we need a way to override 
+any or all of the <tt>write()</tt> methods. The following example shows how to 
+do this. (Before we get started, however, read up on the <tt>OutputStream</tt> 
+class in the Java API documentation.)</p>
+<pre>from java.io import OutputStream
+import types
+
+class OutputScreen (OutputStream):
+      def write (self, b=None, off=None, len=None):
+             if (type(b) is types.IntType):
+                    print b
+             elif (off is None):
+                    print b
+             else:
+                    print b[off:off+len]</pre>
+<p class="docText">This code imports <tt>OutputStream</tt>, a Java class from 
+the <span class="docEmphasis">java.io</span> package. <tt>OutputScreen</tt> 
+subclasses <tt>OutputStream</tt> and overrides its <tt>write()</tt> methods (all 
+three versions). Thus, each clause of the <tt>if</tt> statement in <tt>write()</tt> 
+mimics a different overloaded signature of <tt>OutputStream</tt>'s <tt>write()</tt>s.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Overloading</h2>
+      <p class="docText">Strongly typed languages like Java, C++, and Delphi 
+      allow method overloading. In other words, they allow more than one method 
+      with the same name but different signatures. The type of the method's 
+      arguments defines the signature. With overloaded methods, the signature 
+      determines which method is actually being invoked.</p>
+      <p class="docText">Python doesn't allow method overloading based on type 
+      signatures because it isn't a strongly typed language. (Some may say it's 
+      loosely typed; Pythonians prefer the term &quot;dynamically typed.&quot;). To 
+      override a method from a subclass in Python, the class must define a 
+      method with the same name.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">To illustrate, the following code mimics the functionality of
+<tt>void write(int b)</tt> by determining that the first argument, <tt>b</tt>, 
+is of type <tt>Integer</tt>.</p>
+<pre>if (type(b) is types.IntType):
+      print b</pre>
+<p class="docText">This code mimics the functionality of <tt>void write(byte[]b)</tt> 
+by determining that <tt>off</tt> wasn't passed (and that the first type was not
+<tt>Integer</tt>).</p>
+<pre>elif (off is None):
+       print b</pre>
+<p class="docText">This mimics the functionality of <tt>void write (byte[]b, int 
+off, int len)</tt> by a process of elimination.</p>
+<pre>else:
+       print b[off:off+len]</pre>
+<p class="docText">Let's test each of these scenarios. Start the
+<span class="docEmphasis">overload.py</span> module from Jython with the <tt>–i</tt> 
+option and try the following statements in an interactive session.</p>
+<pre>from jarray import array
+
+screenOut = OutputScreen()
+
+screenOut.write(33)
+
+seq = [0,1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE,0xF]
+bytearray = array(seq, 'b')
+
+screenOut.write(bytearray)
+screenOut.write(bytearray, 5, 14)</pre>
+<p class="docText">Essentially, we're calling all three <tt>write()</tt> 
+methods. Here's the code step by step.</p>
+<p class="docText">Import the <tt>array()</tt> function from
+<span class="docEmphasis">jarray</span> to create Java byte arrays (<tt>byte[]</tt>).</p>
+<pre>from jarray import array</pre>
+<p class="docText">Create an <tt>OutputScreen</tt> instance called <tt>ScreenOut</tt>.</p>
+<pre>screenOut = OutputScreen()</pre>
+<p class="docText">Invoke the first form of the <tt>write()</tt> method, <tt>
+void write(int b)</tt>.</p>
+<pre>screenOut.write(33)</pre>
+<p class="docText">Create a byte array for an argument for the second and third 
+forms of <tt>write()</tt>.</p>
+<pre>seq = [0,1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE,0xF]
+bytearray = array(seq, 'b')</pre>
+<p class="docText">Invoke the second form of <tt>write()</tt>, <tt>void</tt> <tt>
+write(byte[] b)</tt>.</p>
+<pre>screenOut.write(bytearray)</pre>
+<p class="docText">Invoke the last form of <tt>write()</tt>, <tt>void write (byte[]b, 
+int off, int len)</tt>.</p>
+<pre>screenOut.write(bytearray, 5, 14)</pre>
+<p class="docText">The output should be</p>
+<pre>33
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], byte)
+array([5, 6, 7, 8, 9, 10], byte)</pre>
+<h3 class="docSection1Title" id="ch11lev1sec10">Advanced Topics</h3>
+<p class="docText">To understand what I'm going to talk about here, you should 
+have some Java background and have read the API documentation for <tt>
+OutputStream</tt>.</p>
+<h4 class="docSection2Title" id="ch11lev2sec9">Overriding write()</h4>
+<p class="docText">Another way to override all of <tt>write()</tt>'s forms is to 
+override only the abstract version and then just call the others. You can also 
+use a variable number of arguments for <tt>write()</tt> and then just use the
+<tt>apply()</tt> method to execute the nonabstract forms. Let me show you what I 
+mean. (The following code is from <span class="docEmphasis">Overload.py.</span>)</p>
+<pre>class OutputScreen2 (OutputStream):
+     def write(self, *args):
+                   # If the args length is greater than one or the first
+                   # argument is not type IntType, use the apply method.
+            if len(args) &gt; 1 or not type(args[0]) is types.IntType:
+
+                   # Use the apply method to call other forms:
+                   #       void write(byte[] b)
+                   #       void write(byte[] b, int off, int len)
+                   apply(OutputStream.write, (self,)+args)
+                   # Otherwise just print the first argument
+                   # , i.e., write(int b).
+            else:
+                   print args[0]</pre>
+<p class="docText">To determine which form of <tt>write()</tt> is being invoked,
+<tt>OutputScreen2</tt>'s <tt>write()</tt> method checks if the length of the <tt>
+args</tt> tuple is greater than 1 or if the first argument isn't an integer. If 
+either is the case, <tt>void write(byte[] b)</tt> or <tt>void write(byte []</tt>
+<tt>b int off, int len)</tt> is being called. Otherwise, <tt>write(int b)</tt> 
+is being called.</p>
+<p class="docText">The code to test this (<span class="docEmphasis">Overload.py</span>) 
+looks like the code to test <tt>OutputScreen2</tt>, although the output is much 
+different.</p>
+<pre>print &quot;OutScreen2&quot;
+screenOut = OutputScreen2()
+
+screenOut.write(33)
+
+seq = [0,1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE,0xF]
+bytearray = array(seq, 'b')
+
+print &quot;void write(byte[])&quot;
+screenOut.write(bytearray)
+
+print &quot;void write(byte[], int off, int len)&quot;
+screenOut.write(bytearray, 5, 5)</pre>
+<p class="docText">The Java API documentation states, &quot;Applications that need to 
+define a subclass of <tt>OutputStream</tt> must always provide at least a method 
+that writes one byte of output.&quot; Basically this means that, if you define <tt>
+void write (int b)</tt>, the default implementation of the other two <tt>write()</tt> 
+forms calls <tt>void write (int b)</tt>, which is why the output is different. 
+Essentially, <tt>write()</tt> is called for each item in the byte array passed 
+to <tt>void write(byte[])</tt>, and for each byte in the range within the byte 
+array for <tt>void write(byte[], int off, int len)</tt>.</p>
+<h4 class="docSection2Title" id="ch11lev2sec10">Compiling Java Classes</h4>
+<p class="docText">To build applets, JavaBeans, and servlets, or to subclass 
+Python classes in Java, you need to compile the classes into
+<span class="docEmphasis">*.class</span> files. The Jython distribution includes 
+a utility called <tt>jythonc</tt> to do this.</p>
+<p class="docText">If you execute <tt>jythonc</tt> from the command line with 
+the <tt>–h</tt> option, it will describe the command-line options for the 
+compiler. Go ahead and try it. (If you're a Jython user, you can type <tt>
+jythonc</tt> instead of <tt>jpythonc</tt>.)</p>
+<p class="docText">The following options are used with <tt>jythonc</tt>:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>-p</tt>— the <tt>package</tt> option; puts the compiled 
+  classes in the specified package</li>
+  <li>
+  <p class="docText"><tt>-j</tt>— the <tt>jarfile</tt> option; puts the compiled 
+  classes in a jar file</li>
+  <li>
+  <p class="docText"><tt>-d</tt>— the <tt>deep</tt> option; compiles Python 
+  dependencies of the compiled classes (necessary for creating applets that will 
+  run on most browsers, including Internet Explorer)</li>
+  <li>
+  <p class="docText"><tt>-c</tt>— the <tt>core</tt> option; compiles all 
+  dependencies and includes the core Jython libraries (necessary for creating 
+  applets that will run in Netscape Navigator)</li>
+  <li>
+  <p class="docText"><tt>-a</tt>— the <tt>all</tt> option; everything in the 
+  core plus the compiler and parser</li>
+  <li>
+  <p class="docText"><tt>-b</tt>— the <tt>bean</tt> option; puts classes in the 
+  jar file and adds a manifest file for the bean (necessary for creating 
+  JavaBeans)</li>
+  <li>
+  <p class="docText"><tt>-w</tt>— the <tt>workdir</tt> option; specifies where 
+  to compile the code (the default puts the code in a directory under the 
+  current directory called <span class="docEmphasis">jpywork</span>)</li>
+</ul>
+<p class="docText">We'll cover creating a JavaBean and an applet later. For now, 
+using <span class="docEmphasis">Overload.py,</span> let's create a Python class 
+that can be subclassed in Java. Before we can do this with <tt>jythonc</tt>, we 
+have to put the class in a module with the same name, and the class has to 
+subclass a Java class or interface. To compile the <tt>OutputScreen</tt> class, 
+we need to put it in a file called <span class="docEmphasis">OutputScreen.py.</span>
+<tt>OutputScreen</tt> already subclasses a Java class called <tt>OutputStream</tt>.</p>
+<p class="docText">Here's an exercise using the <tt>OutputScreen</tt> class:</p>
+<pre>from java.io import OutputStream
+import types
+
+      # Class OutputScreen is a subclass of Java class OutputStream.
+class OutputScreen (OutputStream):
+
+      def write(self, *args):
+
+                   # If the args length is greater than one or the first
+                   # argument is not type IntType, use the apply method.
+            if len(args) &gt; 1 or not type(args[0]) is types.IntType:
+
+                          # Use the apply method to call other forms:
+                          #       void write(byte[] b)
+                          #       void write(byte[] b, int off, int len)
+                   apply(OutputStream.write, (self,)+args)
+            else:
+                          # Overide the write (int) method.
+                   print args[0]</pre>
+<p class="docText">Go to the DOS prompt where the source code is located, and 
+then enter <tt>pythonc</tt> <tt>–d</tt> <tt>OutputScreen</tt> at the command 
+line.</p>
+<pre>C:\jpybook\chap11&gt;jythonc -d OutputScreen.py</pre>
+<p class="docText"><tt>jythonc</tt> creates a directory called
+<span class="docEmphasis">jpywork,</span> in which it places the Java source 
+code and the compiled Java class.</p>
+<pre>C:\jpybook\chap11\jpywork&gt;dir
+Directory of C:\jpybook\chap11\jpywork
+
+.              &lt;DIR&gt;        08-05-99 5:46p .
+..             &lt;DIR&gt;        08-05-99 5:46p ..
+OUTPUT~1 JAV         6,221  08-05-99 5:46p OutputScreen.java
+OUTPUT~1 CLA         3,305  08-05-99 5:46p OutputScreen.class
+OUTPUT~2 CLA         3,224  08-05-99 5:46p OutputScreen$_PyInner.class
+         3 file(s)         12,750 bytes
+         2 dir(s)        2,432.67 MB free</pre>
+<p class="docText">There should be one source file called
+<span class="docEmphasis">OutputScreen.java</span> and two class files.</p>
+<p class="docText">The following listing shows part of the <tt>OutputScreen</tt> 
+class.</p>
+<pre>import org.python.core.*;
+
+public class OutputScreen extends java.io.OutputStream implements org.python.core.PyProxy {
+...
+...
+             //The overloaded write method
+public void write(int arg0) throws java.io.IOException {
+        PyObject inst = Py.jgetattr(this, &quot;write&quot;);
+        try {
+            inst._jcallexc(new Object[] {Py.newInteger(arg0)} );
+        }
+      ...
+      ...
+}
+      //The write method
+public void write(byte[] arg0, int arg1, int arg2) throws java.io.IOException {
+      PyObject inst = Py.jfindattr(this, &quot;write&quot;);
+      if (inst != null) try {
+               inst._jcallexc(new Object[] {arg0, Py.newInteger(arg1),
+                  Py.newInteger(arg2)} );
+      }
+      ...
+...
+
+      else super.write(arg0, arg1, arg2);
+}
+             //The write method
+public void write(byte[] arg0) throws java.io.IOException {
+        PyObject inst = Py.jfindattr(this, &quot;write&quot;);
+        if (inst != null) try {
+            inst._jcallexc(new Object[] {arg0} );
+        }
+...
+...
+        else super.write(arg0);
+}</pre>
+<p class="docText">The code for the <tt>write()</tt> method that takes only one 
+argument has the Python instance of <tt>OutputScreen</tt> and gets the <tt>write</tt> 
+attribute from it. Then it executes the method.</p>
+<p class="docText">First it defines <tt>void write(int)</tt>.</p>
+<pre>public void write(int arg0) throws java.io.IOException {</pre>
+<p class="docText">Next it gets the <tt>write</tt> attribute from the Python 
+instance of <tt>OutputScreen</tt>, called <tt>Py</tt>. The attribute is stored 
+in <tt>inst</tt>.</p>
+<pre>PyObject inst = Py.jgetattr(this, &quot;write&quot;);</pre>
+<p class="docText">Then it executes the attribute.</p>
+<pre>inst._jcallexc(new Object[] {Py.newInteger(arg0)} );</pre>
+<p class="docText">Now the code has multiple arguments. The forms that were not 
+overridden check to see if the Python instance of <tt>OutputScreen</tt> has a
+<tt>write()</tt> method. If it doesn't, the superclass <tt>OutputStream</tt> is 
+called; if it does, the <tt>write()</tt> method of the Python instance is 
+invoked, and the arguments are passed to it.</p>
+<p class="docText">Next the code defines <tt>void write(byte[] arg0, int arg1, 
+int arg2)</tt>.</p>
+<pre>public void write(byte[] arg0, int arg1, int arg2) throws  java.io.IOException {</pre>
+<p class="docText">Then it attempts to get the <tt>write()</tt> method from the
+<tt>Py</tt> instance.</p>
+<pre>PyObject inst = Py.jfindattr(this, &quot;write&quot;);</pre>
+<p class="docText">If successful, it invokes the method with the following 
+arguments:</p>
+<pre>if (inst != null) try {
+    inst._jcallexc(new Object[] {arg0, Py.newInteger(arg1),
+                         Py.newInteger(arg2)} );
+}</pre>
+<p class="docText">If not successful, it invokes the superclass's (<tt>OutputStream</tt>'s)
+<tt>write()</tt> method.</p>
+<pre>else super.write(arg0, arg1, arg2);</pre>
+<p class="docText">Now that we've explained a little bit of how compiled Python 
+code works underneath, let's create some Java that uses it.</p>
+<h4 class="docSection2Title" id="ch11lev2sec11">Java Code That Uses a Jython Class</h4>
+<p class="docText">Here's <tt>testOutScreen.java</tt>, which treats <tt>
+OutputScreen</tt> like any other Java class:</p>
+<pre>public class testOutScreen{
+       public static void main(String[] args){
+              OutputScreen os = new OutputScreen();
+
+              byte [] bytes = {0,1,2,3,4,5,6,7,8,9,0xa,0xb,0xC} ;
+
+              try{
+                    os.write(1);
+                    os.write(bytes, 5, 5);
+                    os.write(bytes);
+              }
+              catch(java.io.IOException e){
+                    // do something useful with this exception
+              }
+       }
+}</pre>
+<p class="docText">The preceding code needs little explanation, as all it does 
+is create an instance of <tt>OutputScreen</tt> and call all three forms of the 
+overloaded <tt>write()</tt> method. To compile and run it, do this:</p>
+<pre>C:\jpybook\chap11\jpywork&gt;javac testOutScreen.java
+
+C:\jpybook\chap11\jpywork&gt;java testOutScreen</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The Java Default Package</h2>
+      <p class="docText">Both <tt>OutputScreen</tt> and <tt>testOutScreen</tt> 
+      are in the Java default package, which is okay for illustration. However, 
+      any experienced Java programmer knows that leaving anything there is 
+      impolite. To put <tt>OutputScreen</tt> in its own package use the <tt>–p</tt> 
+      option.</p>
+      <pre>C:\jpybook\chap11&gt;jythonc -d –p examples.chap11 OutputScreen.py</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch11lev1sec11">Summary</h3>
+<p class="docText">In this chapter, we covered how to integrate Java and Python. 
+Essentially, Jython makes this integration easy and, most of the time, 
+transparent. The mappings from Java types to Python types for passing arguments 
+and returning values from Java methods are straightforward.</p>
+<p class="docText">Jython has added the <span class="docEmphasis">jarray</span> 
+module, which allows the creation of the built-in <tt>array</tt> type that maps 
+to Java arrays. <span class="docEmphasis">jarray</span> allows you to create 
+both empty arrays and arrays initialized with the contents of a sequence. A Java 
+array is like a homogeneously typed Python sequence with a fixed length, so you 
+can use a Python sequence operation on it.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2010.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2012.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

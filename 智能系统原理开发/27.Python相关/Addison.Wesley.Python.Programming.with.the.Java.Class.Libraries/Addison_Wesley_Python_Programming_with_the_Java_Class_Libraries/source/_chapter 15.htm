@@ -1,0 +1,2484 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 15</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 15.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 15.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 15.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2014.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2016.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 15. Graphics and Events</h2><ul><li>&nbsp;<a class="docLink" href="#ch15lev1sec1">A Quick Graphics Tour</a></li>
+<li>&nbsp;<a class="docLink" href="#ch15lev1sec2">A Quick Tour of Common Events</a></li>
+<li>&nbsp;<a class="docLink" href="#ch15lev1sec3">Putting Things Together: A Drawing Program</a></li>
+<li>&nbsp;<a class="docLink" href="#ch15lev1sec4">The Complete Shapes and DrawShapes Modules</a></li>
+<li>&nbsp;<a class="docLink" href="#ch15lev1sec5">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Coupling</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Encapsulation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Event-driven programming</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Event model</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Graphics object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Hit testing</span></li>
+</ul>
+      </td>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Input focus</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Modularity</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Polyline</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Scaffolding code</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Static versus interactive mode</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Unit level test</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In this chapter, we'll learn the basics of events and 
+graphics. These are the things you'll need to know when you write your own 
+graphical components. In particular, you'll need to understand the event model 
+and some rudimentary graphics programming. In a later chapter, we'll see how to 
+package your component in a Java bean so you can distribute it to the 
+unsuspecting world. We're just scratching the surface of graphics in this book.</p>
+<h3 class="docSection1Title" id="ch15lev1sec1">A Quick Graphics Tour</h3>
+<p class="docText">Every AWT component has a method called <tt>getGraphics()</tt>, 
+which returns the instance of the graphics object associated with it. The 
+graphics object allows you to draw on the component. With the <tt>
+java.awt.Graphics</tt> object you can draw arcs, images, lines, ovals, polylines, 
+and such. We can't cover all of the possibilities, only enough to whet your 
+appetite. Later we'll build a drawing package that works with text, rectangles, 
+circles, and ovals. For now, let's do an interactive session that introduces 
+drawing on a component.</p>
+<p class="docText">Import a frame, and create an instance of it. We'll use it to 
+do our drawing.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame, JPanel
+&gt;&gt;&gt; frame = JFrame(&quot;Drawing&quot;, size=(400,400), visible=1)
+
+&gt;&gt;&gt; graphics = frame.contentPane.graphics</pre>
+<p class="docText">Get the <tt>graphics</tt> instance from the frame, and draw a 
+line, but first make sure that no other window is obscuring the frame. You may 
+have to reduce the size of the window that contains the Jython prompt for this.</p>
+<p class="docText">Draw a line with starting coordinates of 50,50 and ending 
+coordinates of 200,200 (in pixels).</p>
+<pre>&gt;&gt;&gt; graphics = frame.getGraphics()()
+&gt;&gt;&gt; graphics.drawLine(50, 50, 200,200)</pre>
+<p class="docText">Draw a circle (actually an oval with equal width and height).</p>
+<pre>&gt;&gt;&gt; graphics.drawOval(50,50,300,300)</pre>
+<p class="docText">To put text on the frame, pass the starting coordinates and 
+the string you want to draw to the graphic's <tt>drawString()</tt> method. The 
+string will be in the component's current font. Draw a string with starting 
+coordinates of 50,50.</p>
+<pre>&gt;&gt;&gt; graphics.drawString(&quot;Hello World&quot;, 50,50)</pre>
+<p class="docText">Draw a string with starting coordinates of 75,75.</p>
+<pre>&gt;&gt;&gt; graphics.drawString(&quot;I am late again&quot;, 75,75)</pre>
+<p class="docText">Draw a string with starting coordinates of 200,200.</p>
+<pre>&gt;&gt;&gt; graphics.drawString(&quot;Hello Cruel World&quot;, 200, 200)</pre>
+<p class="docText">We can draw filled shapes as well as outlines. We can also 
+change color by setting the graphics color property. Draw an oval.</p>
+<pre>&gt;&gt;&gt; graphics.fillOval(150,150, 50, 100)</pre>
+<p class="docText">Draw a blue oval.</p>
+<pre>&gt;&gt;&gt; from java.awt import Color
+&gt;&gt;&gt; graphics.color = Color.blue
+&gt;&gt;&gt; graphics.fillOval(150,150, 100, 50)</pre>
+<p class="docText">Dispose of the graphics resource. You must always do this 
+when you're done with your drawing.</p>
+<pre>&gt;&gt;&gt; graphics.dispose()</pre>
+<p class="docText">Your frame should look like
+<a class="docLink" href="#ch15fig01">Figure 15-1</a>. Notice that, if you resize 
+or obscure the frame with another window, the image is erased. This simply won't 
+do. We need something a little less transitive, which gets us back to 
+event-driven programming. Enter the <tt>paint()</tt> method, which will tell us 
+when the window needs to be redrawn so that we can take the necessary action.</p>
+<center>
+<h5 id="ch15fig01" class="docFigureTitle">Figure 15-1. Outlined and Filled Shapes</h5>
+<p class="docText"><img alt="graphics/15fig01.gif" src="15fig01.gif" border="0" width="400" height="400"></p>
+</center>
+<p class="docText">A component (window, frame, panel, etc.) is notified that its 
+window needs to be redrawn via the <tt>paint()</tt> method. <tt>paint()</tt> is 
+passed a <tt>Graphics</tt> class instance that refers to the current component. 
+With <tt>paint()</tt>, you don't dispose of this instance when you're done.</p>
+<p class="docText">Here's an example of the <tt>paint()</tt> method (class <tt>
+DrawPicture</tt> from <span class="docEmphasis">draw2.py</span>) showing how it 
+redraws the image we created in our first session. This time we'll be able to 
+resize and obscure the window, and it will always redraw the picture properly.</p>
+<pre>from javax.swing import JFrame
+from java.awt import Color
+
+class DrawPicture(JFrame):
+       def __init__(self):
+             JFrame.__init__(self,&quot;Drawing&quot;, size=(400,400), visible=1)
+             def closing(event):
+                    from java.lang import System
+                    System.exit(0)
+             self.windowClosing = closing
+
+       def paint(self,graphics):
+                    #Draw a line and a circle.
+             graphics.drawLine(50, 50, 200,200)
+             graphics.drawOval(50,50,300,300)
+
+                    #Draw some strings
+             graphics.drawString(&quot;Hello World&quot;, 50,50)
+             graphics.drawString(&quot;I am late again&quot;, 75,75)
+             graphics.drawString(&quot;Hello Cruel World&quot;, 200, 200)
+
+                    #Draw an Oval
+             graphics.fillOval(150,150, 50, 100)
+
+                    #Draw a Blue Oval
+            graphics.color = Color.blue
+            graphics.fillOval(150, 150, 100, 50)
+if __name__ == '__main__':
+       d = DrawPicture()</pre>
+<p class="docText">The frame should now look like
+<a class="docLink" href="#ch15fig02">Figure 15-2</a>. Notice that you can resize 
+it and obscure it with other windows. Every time you return to the picture, it 
+will be just like it was when you left it.</p>
+<center>
+<h5 id="ch15fig02" class="docFigureTitle">Figure 15-2. <a class="docLink" href="#ch15fig01">
+Figure 15-1</a> Redrawn with the <tt>paint()</tt> Method</h5>
+<p class="docText"><img alt="graphics/15fig02.gif" src="15fig02.gif" border="0" width="400" height="400"></p>
+</center>
+<p class="docText">That was a painless introduction to graphics programming. 
+Look up <tt>java.awt.Graphics</tt> in the Java API documentation; you'll see 
+that we've covered only a fraction of what you can do with it. You may also want 
+to learn about the 2D and 3D APIs.</p>
+<h3 class="docSection1Title" id="ch15lev1sec2">A Quick Tour of Common Events</h3>
+<p class="docText"><a class="docLink" href="#ch15table01">Table 15-1</a> lists 
+common events and their corresponding event properties.
+<a class="docLink" href="#ch15table02">Table 15-2</a> lists common events and 
+the first component in the class hierarchy to which each event maps. The first 
+thing you may notice in <a class="docLink" href="#ch15table02">Table 15-2</a> is 
+that some components are missing, such as <tt>JFrame</tt> and, for that matter,
+<tt>Frame</tt>. Remember, though, that <tt>JFrame</tt> is a subclass of <tt>
+Frame</tt>, and that <tt>Frame</tt> is a subclass of <tt>Window</tt>. Thus, <tt>
+JFrame</tt> publishes window events through the <tt>Window</tt>'s interface, <tt>
+WindowListener</tt>.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch15table01" class="docTableTitle">Table 15-1. Common Graphics Events and Their Event 
+  Properties</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Event</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Listener Interface</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Property</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ActionEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ActionListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>actionPerformed</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>AdjustmentEvent</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>AdjustmentListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    adjustmentValueChanged</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ComponentEvent</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ComponentListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>componentHidden</tt></p>
+    <p class="docText"><tt>componentMoved</tt></p>
+    <p class="docText"><tt>componentResized</tt></p>
+    <p class="docText"><tt>componentShown</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ContainerEvent</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ContainerListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>componentAdded</tt></p>
+    <p class="docText"><tt>componentRemoved</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>FocusEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>FocusListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>focusGained</tt></p>
+    <p class="docText"><tt>focusLost</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ItemEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ItemListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>itemStateChanged</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>KeyEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>KeyListener</tt> </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>keyPressed</tt></p>
+    <p class="docText"><tt>keyReleased</tt></p>
+    <p class="docText"><tt>keyTyped</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>mouseClicked</tt></p>
+    <p class="docText"><tt>mouseEntered</tt></p>
+    <p class="docText"><tt>mouseExited</tt></p>
+    <p class="docText"><tt>mousePressed</tt></p>
+    <p class="docText"><tt>mouseReleased</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseMotionListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>mouseDragged</tt></p>
+    <p class="docText"><tt>mouseMoved</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>TextEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>TextListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>textValueChanged</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>WindowEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>WindowListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>windowActivated</tt></p>
+    <p class="docText"><tt>windowClosed</tt></p>
+    <p class="docText"><tt>windowClosing</tt></p>
+    <p class="docText"><tt>windowDeactivated</tt></p>
+    <p class="docText"><tt>windowDeiconified</tt></p>
+    <p class="docText"><tt>windowIconified</tt></p>
+    <p class="docText"><tt>windowOpened</tt></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch15table02" class="docTableTitle">Table 15-2. Common Graphic Events and Their Class 
+  Hierarchy Mappings</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Component</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Event Published through Listener</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Meaning</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>AbstractButton</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ActionEvent, 
+    ActionListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User clicked button </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JButton</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ActionEvent, 
+    ActionListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User clicked button </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JCheckBox</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ItemEvent, 
+    ItemListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User selected or 
+    unselected checkbox </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JCheckBoxMenuItem</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ItemEvent, 
+    ItemListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User selected or 
+    unselected <tt>CheckboxMenuItem</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Component</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ComponentEvent, 
+    ComponentListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Component moved, resized 
+    shown, or hidden </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">&nbsp;</td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>FocusEvent, 
+    FocusListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Component lost or got 
+    focus </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">&nbsp;</td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseEvent, 
+    MouseListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User clicked, pressed, 
+    and released mouse, and mouse cursor entered or exited component </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">&nbsp;</td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseEvent, 
+    MouseMotionListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User moved mouse in 
+    component, and dragged mouse, i.e., pressed button while moving mouse cursor
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Container</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ContainerEvent, 
+    ContainerListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Component added or 
+    removed </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JComboBox</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ActionEvent, 
+    ActionListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Item double-clicked </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">&nbsp;</td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ItemEvent, 
+    ItemListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Item selected or 
+    unselected </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JList</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ListSelectionEvent, 
+    ListSelectionListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Item double-clicked </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">&nbsp;</td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ItemEvent, 
+    ItemListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Item selected or 
+    unselected </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JMenuItem</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ActionEvent, 
+    ActionListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Menu item selected </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JScrollBar</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>AdjustmentEvent, 
+    AdjustmentListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User moved scrollbar </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>JTextField</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>ActionEvent, 
+    ActionListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">User pressed Enter in 
+    text box </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Window</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>WindowEvent, 
+    WindowListener</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Window was opened, 
+    closed, iconified, restored, or a close was requested </td>
+  </tr>
+</table>
+<p class="docText">It doesn't stop there. <tt>Window</tt> is a subclass of <tt>
+Container</tt>, so <tt>JFrame</tt> publishes container events through the <tt>
+ContainerListener</tt> interface as well. And, like other components, <tt>JFrame</tt> 
+is a subclass of <tt>Component</tt>, so it publishes component events through 
+the <tt>ComponentListener</tt> interface, focus events through the <tt>
+FocusListener</tt> interface, and mouse events through the <tt>MouseListener</tt> 
+and <tt>MouseMotionListener</tt> interfaces (<tt>Container</tt> is a direct 
+subclass of <tt>Component</tt>). The point is that a component doesn't just 
+publish the events it defines; it publishes all events from its hierarchy of 
+superclasses.</p>
+<p class="docText">Another example of this is <tt>JButton</tt>, which is a 
+subclass of <tt>AbstractButton</tt>, which is a subclass of <tt>JComponent</tt>, 
+which is a subclass of <tt>Container</tt>, which is a subclass of <tt>Component</tt>. 
+As such, it publishes all of the events that its superclasses define.</p>
+<h4 class="docSection2Title" id="ch15lev2sec1">An Event Frame</h4>
+<p class="docText">Let's create a frame that handles every possible event—that 
+is, essentially, one frame that handles every event mentioned in the last 
+section that <tt>Frame</tt> supports. We'll use the <tt>Frame</tt> class in
+<span class="docEmphasis">java.awt</span> (from which Swing gets much of its 
+behavior and design). Examine the source code closely (it's from
+<span class="docEmphasis">FrameEvents.py</span>). Later we'll break it down.</p>
+<pre>from java.awt import Frame, List, Panel, Button, FlowLayout, BorderLayout
+
+class EventFrame(Frame):
+      def __init__(self, event_viewer):
+            Frame.__init__(self, &quot;Event Frame&quot;)
+
+            self.event_viewer = event_viewer
+            self.layout = FlowLayout()
+
+                  #ComponentEvent publishes to ComponentListener
+            self.componentHidden = self.__handle_event
+            self.componentMoved = self.__handle_event
+            self.componentResized = self.__handle_event
+            self.componentShown = self.__handle_event
+
+                  #ContainerEvent publishes to ContainerListener
+            self.componentAdded = self.__handle_event
+            self.componentRemoved = self.__handle_event
+
+                  #FocusEvent publishes to FocusListener
+            self.focusGained = self.__handle_event
+            self.focusLost = self.__handle_event
+
+                  #KeyEvent publishes to KeyListener
+            self.keyPressed = self.__handle_event
+            self.keyReleased = self.__handle_event
+            self.keyTyped = self.__handle_event
+
+                  #MouseEvent publishes to MouseListener
+            self.mouseClicked = self.__handle_event
+            self.mouseEntered = self.__handle_event
+            self.mouseExited = self.__handle_event
+            self.mousePressed = self.__handle_event
+            self.mouseReleased = self.__handle_event
+
+                  # MouseEvent publishes to MouseMotionListener
+            self.mouseDragged = self.__handle_event
+            self.mouseMoved = self.__handle_event
+
+                  # WindowEvent publishes to WindowListener
+            self.windowActivated = self.__handle_event
+            self.windowClosed = self.__handle_event
+            self.windowClosing = self.__handle_event
+            self.windowDeactivated = self.__handle_event
+            self.windowDeiconified = self.__handle_event
+            self.windowIconified = self.__handle_event
+            self.windowOpened = self.__handle_event
+
+               self.size=(100,100)
+            self.visible=1
+
+            #handles all of the events in this demo
+      def __handle_event(self, event):
+            self.event_viewer.addEvent(event)
+
+. . .
+. . .
+
+class EventViewer(Frame):
+      def __init__(self, close):
+            Frame.__init__(self,&quot;Event Viewer&quot;)
+
+                  # Create a list to display events
+            self.__list = List()
+            self.add(self.__list, BorderLayout.CENTER)
+
+                  # Set up toolbar to add and remove components from frame
+            add = Button(&quot;Add&quot;)
+            add.actionPerformed = self.__handle_add
+            remove = Button(&quot;Remove&quot;)
+            remove.actionPerformed = self.__handle_remove
+            tool_pane = Panel()
+            tool_pane.add(add)
+            tool_pane.add(remove)
+            self.add(tool_pane, BorderLayout.NORTH)
+            self.size=(500,400)
+            self.visible=1
+            self.location=(300,300)
+            . . .
+
+      def addEvent(self, event):
+            self.__list.add(`event`,0)
+
+            #add a component to the frame
+      def __handle_add(self, event):
+            global frame
+            frame.add(Button(`frame.componentCount`))
+            frame.invalidate();frame.validate()
+
+            #removes a component from the frame
+      def __handle_remove(self, event):
+            if (frame.componentCount &gt; 0):
+                  frame.remove(frame.componentCount-1)
+                  frame.invalidate();frame.validate()
+
+if __name__ == '__main__':
+      viewer = EventViewer(close)
+      frame = EventFrame(viewer)</pre>
+<h4 class="docSection2Title" id="ch15lev2sec2">Window Events with EventFrame</h4>
+<p class="docText">The code for our example is pretty simple. In the constructor 
+of the <tt>EventFrame</tt> class, we register for every event that <tt>Frame</tt> 
+publishes. All of the events are registered to the same event handler method,
+<tt>__handle_event()</tt>.</p>
+<pre>       #handles all of the events in this demo
+def __handle_event(self, event):
+       self.event_viewer.addEvent(event)</pre>
+<p class="docText">The event handler calls <tt>self.event_viewer.addEvent</tt>, 
+which adds the event to a listbox so we can view it. <tt>addEvent()</tt> forces 
+the event to the top of the list, using back quotes to get its string 
+representation.</p>
+<pre>def addEvent(self, event):
+       self.__list.add(`event`,0)</pre>
+<p class="docText">Now let's use <tt>EventFrame</tt> to examine all of the 
+events that the frame handles:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>windowActivated</tt></li>
+  <li>
+  <p class="docList"><tt>windowClosed</tt></li>
+  <li>
+  <p class="docList"><tt>windowClosing</tt></li>
+  <li>
+  <p class="docList"><tt>windowDeactivated</tt></li>
+  <li>
+  <p class="docList"><tt>windowDeiconified</tt></li>
+  <li>
+  <p class="docList"><tt>windowIconified</tt></li>
+  <li>
+  <p class="docList"><tt>windowOpened</tt></li>
+</ul>
+<p class="docText">To use <tt>WindowActivated</tt>, all we need to do is start
+<span class="docEmphasis">EventFrames.py.</span> When the window comes up, we 
+get the following events:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_ACTIVATED]</tt></span>
+  <tt>on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.FocusEvent[</tt><span class="docEmphStrong"><tt>FOCUS_GAINED</tt></span><tt>,permanent] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.ComponentEvent[</tt><span class="docEmphStrong"><tt>COMPONENT_SHOWN</tt></span><tt>] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_OPENED</tt></span><tt>] 
+  on frame0</tt></li>
+</ul>
+<p class="docText"><tt>WindowEvent</tt>, with its ID set to <tt>WINDOW_ACTIVATED</tt>, 
+corresponds to the <tt>windowActivated</tt> event property of the frame. This 
+pattern repeats itself for all event properties and event IDs. Notice that, in 
+addition to <tt>windowOpened</tt> and <tt>windowActivated</tt>, <tt>Frame</tt> 
+publishes <tt>focusGained</tt> and <tt>componentShown</tt>.</p>
+<p class="docText">When the focus changes to another window, you get the 
+following <tt>windowDeactivated</tt> events. Click on the caption of the event 
+viewer.</p>
+<ul>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_DEACTIVATED</tt></span><tt>] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.FocusEvent[</tt><span class="docEmphStrong"><tt>FOCUS_LOST</tt></span><tt>,temporary] 
+  on frame0</tt></li>
+</ul>
+<p class="docText">To get a <tt>windowIconified</tt> event, we have to minimize 
+the window by clicking the Minimize button on the right side of the window's 
+caption. The following events result:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>java.awt.event.FocusEvent[</tt><span class="docEmphStrong"><tt>FOCUS_LOST</tt></span><tt>,temporary] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_ICONIFIED</tt></span><tt>] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_DEACTIVATED</tt></span><tt>] 
+  on frame0</tt></li>
+</ul>
+<p class="docText">Now we want to restore the frame, so we go to the taskbar and 
+click the Frames icon. These are the events we get:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_ACTIVATED</tt></span><tt>] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_DEICONIFIED</tt></span><tt>] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.FocusEvent[</tt><span class="docEmphStrong"><tt>FOCUS_GAINED</tt></span><tt>,permanent] 
+  on frame0</tt></li>
+</ul>
+<p class="docText">Then we click the window's Close button to get the <tt>
+windowClosing</tt> event:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>java.awt.event.WindowEvent[</tt><span class="docEmphStrong"><tt>WINDOW_CLOSING</tt></span><tt>] 
+  on frame0</tt></li>
+</ul>
+<p class="docText">The event is a request to close, not the actual closing. For 
+that we have to restart the application in the interactive interpreter and type</p>
+<pre>&gt;&gt;&gt; frame.visible = 0
+java.awt.event.ComponentEvent[COMPONENT_HIDDEN] on frame0
+
+&gt;&gt;&gt; frame.dispose()
+java.awt.event.WindowEvent[WINDOW_CLOSED] on frame0</pre>
+<p class="docText">Hiding the frame doesn't close it. The <tt>dispose()</tt> 
+function does that.</p>
+<h4 class="docSection2Title" id="ch15lev2sec3">Container Events with EventFrame</h4>
+<p class="docText">On the event viewer window are the Add and Remove buttons, 
+which add components to and remove them from the frame. If you hit Add twice and 
+Remove twice, you'll get the following events:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>java.awt.event.ContainerEvent[</tt><span class="docEmphStrong"><tt>C</tt></span><tt>OMPONENT_ADDED,child=button0] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.ContainerEvent[COMPONENT_ADDED,child=button1] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.ContainerEvent[COMPONENT_REMOVED,child=button1] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.ContainerEvent[COMPONENT_REMOVED,child=button0] 
+  on frame0</tt></li>
+</ul>
+<h4 class="docSection2Title" id="ch15lev2sec4">Key Events with EventFrame</h4>
+<p class="docText">If you make the frame the active window and press the A key, 
+you should get the following events:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>java.awt.event.KeyEvent[KEY_PRESSED,keyCode=65,keyChar='a'] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyChar='a'] 
+  on frame0</tt></li>
+  <li>
+  <p class="docList"><tt>java.awt.event.KeyEvent[KEY_RELEASED,keyCode=65,keyChar='a'] 
+  on frame0</tt></li>
+</ul>
+<p class="docText">If you hold the key down, you'll get <tt>keyPressed</tt> and
+<tt>keyTyped</tt>, but you won't get <tt>keyReleased</tt>.</p>
+<p class="docText">As an exercise, look up <tt>KeyListener</tt> in the Java API 
+documentation. Note the difference between <tt>keyPressed</tt> and <tt>keyTyped</tt>. 
+If you want to create a typing program, which event do you handle for capturing 
+alphanumeric characters? Which one for handling special keys like Enter and 
+Backspace? You'll need to know this later.</p>
+<h4 class="docSection2Title" id="ch15lev2sec5">Mouse Events from FrameEvent</h4>
+<p class="docText">If you click in the <tt>FrameEvent</tt> frame, you'll get the
+<tt>mousePressed</tt>, <tt>mouseClicked</tt>, and <tt>mouseReleased</tt> mouse 
+events. If you hold the mouse button down and drag it, you'll get the <tt>
+mouseDragged</tt> event. If you move the mouse pointer anywhere in the work area 
+of the frame (or any place but the caption [titlebar] and system menus), you'll 
+get the <tt>mouseMoved</tt> event. <a class="docLink" href="#ch15table03">Table 
+15-3</a> lists the mouse events.</p>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Click on the frame's work area with both the right and the 
+  left buttons. What's the difference in the output?</li>
+  <li>
+  <p class="docList">This sample application was written in AWT components, 
+  which are similar to Swing components. Convert to JFC/Swing. (The component 
+  events must be set up with <tt>JFrame</tt>'s <tt>contentPane</tt>.)</li>
+</ul>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch15table03" class="docTableTitle">Table 15-3. Mouse Events and Event Properties</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Event</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Listener Interface</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Property</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>mouseClicked</tt></p>
+    <p class="docText"><tt>mouseEntered</tt></p>
+    <p class="docText"><tt>mouseExited</tt></p>
+    <p class="docText"><tt>mousePressed</tt></p>
+    <p class="docText"><tt>mouseReleased</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>MouseEvent</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>mouseMotionListener</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>mouseDragged</tt></p>
+    <p class="docText"><tt>mouseMoved</tt></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">To AWT or Not to AWT</h2>
+      <p class="docText">Many of the concepts in Swing and AWT are very similar. 
+      Most of the examples in this book are written in Swing because that's the 
+      dominant choice for the Java Standard Edition. However, for the Java Micro 
+      edition (Windows CE and handheld devices) AWT is still the best. That's 
+      why I used it for some of the examples.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch15lev1sec3">Putting Things Together: A Drawing Program</h3>
+<p class="docText">Although not as ubiquitous as the famous <tt>&quot;Hello World&quot;</tt>, 
+the sample application explained in the following sections is quite common. We 
+want it to draw ovals, rectangles, circles, and so forth. I've opted for 
+simplicity rather than perfection in my design. Later I'll point out what's 
+wrong with it.</p>
+<p class="docText">We'll incorporate ideas from many chapters in our program, 
+which we'll develop in two modules and three phases. The first phase is a simple 
+application that draws ovals and rectangles. The second phase will add circles, 
+squares, rounded rectangles, and text. (I know text isn't a shape, but I don't 
+like the correct terminology, &quot;glyph.&quot;) The third phase will correct a serious 
+design flaw introduced in the first and second phases.</p>
+<p class="docText">The first module, <span class="docEmphasis">Shapes,</span> 
+contains all of the graphics. The second module, <span class="docEmphasis">
+DrawShapes,</span> defines the user interface, that is, the event handling and 
+the component container layout.</p>
+<h4 class="docSection2Title" id="ch15lev2sec6">Phase 1: Shapes</h4>
+<p class="docText">The <span class="docEmphasis">Shapes</span> module contains 
+four main classes: <tt>Shape</tt>, <tt>Rectangle</tt>, <tt>Oval</tt>, and <tt>
+Shapes</tt>. <tt>Shape</tt> is the superclass of the others; it defines the 
+interface that all shape classes use so they all can be treated polymorphically 
+(one can be replaced with another). <tt>Rectangle</tt> inherits most of its 
+functionality from <tt>Shape</tt>, as does <tt>Oval</tt>. <tt>Shapes</tt> 
+represents a collection of shape objects and implements the <tt>Shape</tt> 
+interface.</p>
+<p class="docText">The <tt>Shape</tt> class defines three methods:</p>
+<ul>
+  <li>
+  <p class="docList">The constructor—stores shape parameters like
+  <span class="docEmphasis">x,</span> <span class="docEmphasis">y</span> 
+  position, dimensions (width, height), and color</li>
+  <li>
+  <p class="docList">The <tt>paint()</tt> method—paints a shape using the given 
+  graphics context</li>
+  <li>
+  <p class="docList">The <tt>draw_filled()</tt> method—draws a filled shape</li>
+  <li>
+  <p class="docList">The <tt>draw_outline()</tt> method—draws the outline of a 
+  shape</li>
+</ul>
+<p class="docText">The constructor stores five values: <span class="docEmphasis">
+x,y</span> position, width, height, color, and fill/nofill. Here's some of its 
+code. (All of the following examples are from <span class="docEmphasis">One\Shape.py.</span>)</p>
+<pre>class Shape:
+       def __init__(self, x, y, width=0, height=0, color=None, fill=0):
+             self.x=x
+             self.y=y
+             self.width=width
+             self.height=height
+             self.color=color
+             self.fill=fill</pre>
+<p class="docText"><tt>paint()</tt> paints on the given graphics context and so 
+takes a graphics object as an argument. It also checks to see if a color was 
+assigned; if so, it sets the graphics color property to the shape color property 
+and saves the original color to be restored later. If the <tt>fill</tt> 
+attribute is true, <tt>paint()</tt>calls the <tt>draw_filled()</tt> method; 
+otherwise, it calls the <tt>draw_outline()</tt> method.</p>
+<h5 class="docSection3Title" id="ch15lev3sec1">paint() Code and Breakdown</h5>
+<p class="docText">Here's the code for <tt>paint()</tt>:</p>
+<pre>def paint (self, graphics):
+
+      if not self.color is None:
+             oldcolor = graphics.color
+             graphics.color = self.color
+
+      if self.fill:
+             self.draw_filled (graphics)
+      else:
+             self.draw_outline(graphics)
+
+      if not self.color is None:
+             graphics.color = oldcolor</pre>
+<p class="docText"><tt>draw_filled()</tt> and <tt>draw_outline()</tt>draw the 
+shape as filled or outlined, respectively. They're abstract, meaning that they 
+don't do anything until they're defined by subclasses of <tt>Shape</tt>. This 
+makes sense when you think about it—for example, only the <tt>Rectangle</tt> 
+class knows how to draw a rectangle.</p>
+<p class="docText">Here are the two drawing methods as defined by <tt>Shape</tt>:</p>
+<pre>def draw_filled(self, graphics):
+       pass
+
+def draw_outline(self, graphics):
+       pass</pre>
+<p class="docText">The <tt>draw_outline()</tt> method gets the bounds of the 
+shape: position (<span class="docEmphasis">x,y</span>) and dimensions (width, 
+height). We'll use these to calculate the area of the window that needs to be 
+redrawn. First, we need the <tt>getRect()</tt> function.</p>
+<pre>def getRect(self):
+       return self.x, self.y, self.width, self.height</pre>
+<p class="docText">Both <tt>Rectangle</tt> and <tt>Oval</tt> subclass <tt>Shape</tt>, 
+and both implement the abstract methods <tt>draw_filled()</tt> and <tt>
+draw_outline()</tt>. To implement them, the <tt>Rectangle</tt> class uses the
+<tt>java.awt.Graphics</tt> methods <tt>fillRect()</tt> and <tt>drawRect()</tt>, 
+respectively; the <tt>Oval</tt> class uses <tt>fillOval()</tt> and <tt>drawOval()</tt>.</p>
+<p class="docText">Here are the <tt>Rectangle</tt> and <tt>Oval</tt> classes:</p>
+<pre>class Rectangle(Shape):
+       def __init__(self, x, y, width, height, color=None, fill=0):
+              Shape.__init__(self, x, y, width, height, color, fill)
+
+       def draw_filled(self,graphics):
+              graphics.fillRect(self.x, self.y, self.width, self.height)
+
+       def draw_outline(self,graphics):
+              graphics.drawRect(self.x, self.y, self.width, self.height)
+
+class Oval(Shape):
+       def __init__(self, x, y, width, height, color=None, fill=0):
+              Shape.__init__(self, x, y, width, height, color, fill)
+
+       def draw_filled(self,graphics):
+              graphics.fillOval(self.x, self.y, self.width, self.height)
+
+       def draw_outline(self,graphics):
+              graphics.drawOval(self.x, self.y, self.width, self.height)</pre>
+<h5 class="docSection3Title" id="ch15lev3sec2">The Shapes Class</h5>
+<p class="docText">The <tt>Shapes</tt> class (note the plural) holds many shapes 
+and, like <tt>Rectangle</tt> and <tt>Oval</tt>, subclasses <tt>Shape</tt>. <tt>
+Shapes</tt> overrides only the <tt>paint()</tt> method, which when overridden 
+iterates through the list of shapes in the <tt>Shapes</tt> instance and calls 
+each one of their <tt>paint()</tt> methods. Also, <tt>Shapes</tt> calls a <tt>
+getRect()</tt> method that calculates the union of all of the bounds of all of 
+the shapes it contains.</p>
+<p class="docText">Here's the <tt>Shapes</tt> class:</p>
+<pre>class Shapes (Shape):
+       def __init__(self):
+              self.__shapes=[]
+
+       def addShape(self, shape):
+              self.__shapes.append(shape)
+
+       def paint(self, graphics):
+              for shape in self.__shapes:
+                     shape.paint(graphics)
+
+       def getRect(self):
+                     # Lists to hold x,y, height and width
+                     # from shape in shapes
+              xl,yl,wl,hl = [],[],[],[]
+
+                     # Iterate through the list gathering each shapes
+                     # bounding rectangle
+              for shape in shapes:
+                     x,y,width, height = shape.getRect()
+                     xl.append(x)
+                     yl.append(y)
+                     wl.append(width)
+                     hl.append(height)
+                     # Calculate and return the bounding
+                     # rectangle for all of the shapes.
+              return min(xl), min(yl), max(wl), max(hl)</pre>
+<h5 class="docSection3Title" id="ch15lev3sec3">Testing</h5>
+<p class="docText">Before we start building the graphical interface, we need to 
+create a unit level test for this module to test the classes defined in <tt>
+Shape</tt>. It's much easier to debug the classes in static than in interactive 
+mode. We also need scaffolding code to test the module. (Our scaffolding code 
+adds three shapes to the <tt>TestPanel</tt> class.)</p>
+<pre>       # This is for testing only
+if __name__ == '__main__':
+       from javax.swing import JFrame, JPanel
+       from java.awt import Color, Font
+
+       class TestPanel(JPanel):
+
+       def __init__(self):
+                  self.background=Color.white
+
+       def addShape(self,shape):
+                  self.shapes.addShape(shape)
+
+       def __init__(self):
+                  self.shapes = Shapes()
+                  self.addShape(Rectangle(0,0,100,100,Color.blue, 1))
+                  self.addShape(Rectangle(100,0,100,100,Color.blue))
+                  self.addShape(Oval(0,100,100,100,Color.blue,1))
+                  self.addShape(Oval(100,100,100,100, Color.blue))
+
+       def paint(self,graphics):
+                  self.shapes.paint()(graphics)
+
+frame = JFrame(&quot;Test Shapes&quot;, size=(400,440), visible=1)
+pane = TestPanel()
+frame.contentPane = pane
+frame.validate()</pre>
+<p class="docText">After every major change to the <span class="docEmphasis">
+Shapes</span> module, you'll want to update the scaffolding code, if necessary, 
+and retest.</p>
+<h4 class="docSection2Title" id="ch15lev2sec7">Phase 1: DrawShapes</h4>
+<p class="docText">The <span class="docEmphasis">DrawShapes</span> module does 
+the actual shape drawing. It defines classes to work with mouse and key events, 
+shows the status of operations, sets a shape's fill attribute, and sets up 
+components that allow the user to select rectangles or ovals.</p>
+<p class="docText">DrawShapes defines four classes:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>ShapeButton</tt>— draws a shape in a button</li>
+  <li>
+  <p class="docText"><tt>ToolBox</tt>— holds components; has a preferred size</li>
+  <li>
+  <p class="docText"><tt>StatusBox</tt>— displays the status of a drawing 
+  operation</li>
+  <li>
+  <p class="docText"><tt>PaintBox</tt>— displays shapes the user has drawn</li>
+  <li>
+  <p class="docText"><tt>DrawShapes</tt>— as the user interface frame, contains 
+  all of the above</li>
+</ul>
+<h5 class="docSection3Title" id="ch15lev3sec4">Shapes Button</h5>
+<p class="docText"><tt>ShapeButton</tt> represents a particular shape and 
+extends <tt>javax.swing</tt>.<tt>JButton</tt>. It's passed a <tt>Shape</tt> 
+instance and draws the shape in its overridden <tt>paint()</tt> method. It also 
+defines the preferred width and height for the button.</p>
+<pre>class ShapeButton(JButton):
+       def __init__(self, shape):
+              self.shape = shape
+
+       def paint(self, graphics):
+              JButton.paint()(self, graphics)
+              self.shape.paint()(graphics)
+
+       def getPreferredSize(self):
+              d = Dimension(30,30)
+              return d</pre>
+<h5 class="docSection3Title" id="ch15lev3sec5">ToolBox</h5>
+<p class="docText"><tt>ToolBox</tt> holds <tt>ShapeButton</tt> and extends <tt>
+javax.swing.Jpanel</tt>. It doesn't do much besides define a preferred size.</p>
+<pre>class ToolBox (JPanel):
+       def __init__(self):
+              JPanel.__init__(self)
+
+       def getPreferredSize(self):
+              d = Dimension(40, 0)
+              return d</pre>
+<h5 class="docSection3Title" id="ch15lev3sec6">StatusBox</h5>
+<p class="docText"><tt>StatusBox</tt> holds the current status of events and 
+also extends <tt>javax.swing.JPanel</tt>. As a helper class, it displays the 
+current status of the drawing options, such as the <span class="docEmphasis">x,y</span> 
+position of the mouse pointer and the shape being drawn.</p>
+<pre>class StatusBox (JPanel):
+       def __init__(self):
+              JPanel.__init__(self)
+              self.coordinates = JTextField(15, editable=0)
+              self.format = 'x = %d, y = %d'
+              self.add(self.coordinates)
+
+              self.event_type = JLabel ('MOUSE STATUS ')
+              self.add(self.event_type)
+              self.shape_type = JLabel ('SHAPE STATUS ')
+              self.add(self.shape_type)
+
+       def setXY(self, x,y):
+              self.coordinates.text = self.format % (x,y,)
+
+       def setMouseDrag(self, x, y):
+              self.event_type.text = 'MOUSE DRAG '
+              self.setXY(x,y)
+
+       def setMouseMove(self, x, y):
+              self.event_type.text = 'MOUSE MOVE '
+              self.setXY(x,y)
+
+       def setMousePress(self, x, y):
+              self.event_type.text = 'MOUSE PRESS '
+              self.setXY(x,y)
+
+       def setMouseRelease(self, x, y):
+              self.event_type.text = 'MOUSE RELEASE '
+              self.setXY(x,y)
+
+       def setShapeType(self, shape_type):
+
+                    # Set the label based on the shape type
+              if shape_type == PaintBox.RECTANGLE:
+                    self.shape_type.text = 'RECTANGLE'
+
+              elif shape_type == PaintBox.OVAL:
+                    self.shape_type.text = 'OVAL'</pre>
+<h5 class="docSection3Title" id="ch15lev3sec7">PaintBox</h5>
+<p class="docText"><tt>PaintBox</tt> performs all of the graphics operations and 
+handles the mouse events (later it will handle the key events). It's the bread 
+and butter of this sample application, the center ring in this three-ring 
+circus.</p>
+<p class="docText">When the user hits the mouse button in the paint box, the 
+shape drawing begins. As he drags the lower corner of the shape, an outline 
+appears (this is called rubberbanding). When he lets go of the mouse, the shape 
+is created, added to the other shapes, and redrawn when <tt>PaintBox</tt>'s <tt>
+paint()</tt>method is called.</p>
+<p class="docText"><tt>PaintBox</tt> extends <tt>JComponent</tt>. It can draw 
+either rectangles or ovals and has four attributes that determine how the 
+current shape will be drawn: color, fill, rectangle, and oval. The constructor 
+defines these attributes and sets up the event handlers for the <tt>mouseDragged</tt>,
+<tt>mouseMoved</tt>, <tt>mousePressed</tt>, and <tt>mouseReleased</tt> events. 
+It's passed an instance of <tt>StatusBox (status)</tt>, which it uses to show 
+the status of the drawing operations.</p>
+<p class="docText">Here's the <tt>PaintBox</tt> constructor:</p>
+<pre>class PaintBox (JComponent):
+       RECTANGLE=1
+       OVAL=2
+
+       def __init__(self, status):
+              JComponent.__init__(self)
+                 self.opaque=1
+                 self.background=Color.white
+              self.status = status
+              self.shapes = Shapes()
+              self.shape_type = PaintBox.RECTANGLE
+
+              self.mouseDragged = self.handle_mouseDragged
+              self.mouseMoved = self.handle_mouseMoved
+              self.mousePressed = self.handle_mousePress
+              self.mouseReleased = self.handle_mouseRelease
+
+              self.fill=0
+              self.color=Color.red</pre>
+<p class="docText">The drawing mechanism starts off when the user clicks the 
+mouse button, which fires the <tt>handle_mousePress</tt> method. The event 
+handler sets the shape's starting point (<tt>start</tt>) and initializes its 
+ending point (<tt>last</tt>) to that value.</p>
+<pre>def handle_mousePress(self, event):
+
+             # Print the status
+      self.status.setMousePress(event.x, event.y)
+
+             # Save the initial location.
+             # In addition save the initial
+             # location as the last.
+      self.last = self.start = event.point</pre>
+<p class="docText">As the user drags the mouse, she gets visual feedback via 
+rubberbanding. When called, the event handler for <tt>mouseDragged</tt> draws an 
+outline of the shape and sets the last point to the current point. Then it calls
+<tt>drawRubberShape()</tt> twice, once with the last point and once with the 
+current point.</p>
+<pre>def handle_mouseDragged(self,event):
+
+             # Print the status.
+      self.status.setMouseDrag(event.x, event.y)
+
+             # Erase the old rubberband shape at the
+             # old location. Create the new rubberband shape
+             # at the new location
+      self.drawRubberShape(self.last.x, self.last.y)
+      self.drawRubberShape(event.x, event.y)
+             # Save the current event.x and
+             # event.y as the last.
+      self.last = event.point</pre>
+<p class="docText"><tt>drawRubberShape()</tt> is smart enough to erase the last 
+shape drawn whenever it's called twice with the same point. It does this with 
+the <tt>setXORMode()</tt> method of the <tt>java.awt.Graphics</tt> class 
+instance, which sets the graphic mode to <tt>XOR</tt>. <tt>XOR</tt> sees to it 
+that a line drawn more than once will be erased. Essentially, it ensures that 
+the colors of the graphics are those specifed in <tt>setXORMode()</tt> for the 
+current graphic context.</p>
+<p class="docText">Notice that we dispose of the graphic when we're done with 
+it, using a <tt>finally</tt> block. After <tt>drawRubberShape()</tt> sets the 
+graphics mode, it calculates the shape's width and height and then calls the <tt>
+__drawShape()</tt> method, which actually draws the shape in the current mode.</p>
+<pre>def drawRubberShape(self, x, y):
+       g = self.graphics
+
+             # Set the graphics to XOR mode,
+             # which allows rubberbanding.
+             # Calculate the width and height.
+             # Draw the outline of the shape.
+       try:
+             g.setXORMode(self.background)
+             width = abs(self.start.x - x)
+             height = abs(self.start.y - y)
+             self.__drawShape(g, self.start.x, self.start.y, width, height)
+       finally:
+             g.dispose()</pre>
+<p class="docText"><tt>__drawShape()</tt> checks for the shape it's supposed to 
+draw—rectangle or oval. It then creates the specified shape and uses it to draw 
+the corresponding shape, which in turn calls <tt>drawOval()</tt> or <tt>drawRect()</tt> 
+accordingly. The <tt>x</tt> and <tt>y</tt> of <tt>__drawShape</tt> correspond to 
+the starting point defined in the event handler for the <tt>mousePress</tt> 
+event. The width and height are the width and height as calculated from the last 
+or current point in the <tt>mouseDrag</tt> event handler.</p>
+<pre>def __drawShape(self, g, x, y, width, height):
+      if self.shape_type == PaintBox.RECTANGLE:
+             rect=Rectangle(self.start.x,self.start.y, width,height,fill=0)
+             rect.paint(g)
+      if self.shape_type == PaintBox.OVAL:
+             oval = Oval(self.start.x, self.start.y, width, height, fill=0)
+             oval.paint()(g)</pre>
+<p class="docText">When the user lets go of the mouse, the <tt>mouseRelease</tt> 
+event is fired. The handler for this event is <tt>handle_mouseRelease</tt>, 
+which calculates the width and height of the shape and then creates a 
+corresponding rectangle or oval.</p>
+<p class="docText">The shape's <span class="docEmphasis">x,y</span> coordinates 
+are the starting point obtained during the handling of the <tt>mousePress</tt> 
+event. Its width and height are the distance from the starting point at which 
+the <tt>mouseRelease</tt> event handler is invoked (that is, when the user 
+releases the mouse button). The shape is then added to the <tt>shapes</tt> 
+attribute. The panel's <tt>repaint()</tt> method is called with the boundary of 
+the shape so that the shape is drawn with the <tt>paint()</tt> method.</p>
+<pre>def handle_mouseRelease(self, event):
+
+             # Print the status
+      self.status.setMouseRelease(event.x, event.y)
+
+             # Calculate the width and the height
+      width = abs(self.start.x - event.x)
+      height = abs(self.start.y - event.y)
+
+      shape = None #to hold the shape we are about to create
+
+             # Create the shape based on the current shape type.
+             # Then add the shape to self.shapes.
+      if self.shape_type == PaintBox.RECTANGLE:
+
+             shape = Rectangle(self.start.x, self.start.y, width, height,
+                     self.color, self.fill)
+
+      elif self.shape_type == PaintBox.OVAL:
+             shape = Oval(self.start.x, self.start.y, width, height,
+                     self.color, self.fill)
+
+      if not shape is None:
+             self.shapes.addShape(shape)
+             x,y,width,height = shape.getRect()
+             self.repaint(x,y,width+1, height+1)</pre>
+<p class="docText">The <tt>paint()</tt> method calls the <tt>shapes.paint()</tt> 
+method, which iterates through the shapes list and calls all of the shapes' <tt>
+paint()</tt> methods.</p>
+<pre>def paint (self, graphics):
+        ...
+        ...
+               #Draw all of the shapes.
+        self.shapes.paint(graphics)</pre>
+<p class="docText">Since the selection of <tt>shape</tt> attributes happens in 
+another class, <tt>PaintBox</tt> exposes the following methods so that the 
+attributes can be set by the class that contains a <tt>PaintBox</tt> instance:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>setShapeType()</tt>— sets the current shape type</li>
+  <li>
+  <p class="docText"><tt>setFill()</tt>— turns the shape fill property on or off</li>
+  <li>
+  <p class="docText"><tt>setShapeColor()</tt>— sets the current color of the 
+  shape to be drawn</p>
+  <pre>def setShapeType(self, shape_type):
+       self.status.setShapeType(shape_type)
+       self.shape_type = shape_type
+
+def getShapeType(self):
+       return shape_type
+
+def setFill(self, value):
+       self.fill = value
+
+def setShapeColor(self, color):
+       self.color = color</pre>
+  </li>
+</ul>
+<h5 class="docSection3Title" id="ch15lev3sec8">DrawShapes</h5>
+<p class="docText">As the parent frame for the drawing application, <tt>
+DrawShapes</tt> contains <tt>StatusBox</tt>, <tt>ToolBox</tt>, and <tt>PaintBox</tt> 
+instances. It also handles all of the options for the shapes and allows the user 
+to pick different shapes as represented by <tt>ShapeButton</tt> in the <tt>
+ToolBox</tt> instance.</p>
+<p class="docText">The <tt>DrawShapes</tt> constructor creates four panels, <tt>
+options</tt> (an instance of <tt>Panel</tt>), <tt>toolbar</tt> (an instance of
+<tt>Panel</tt>), <tt>status</tt> (an instance of <tt>StatusBox</tt>), and <tt>
+paint</tt> (an instance of <tt>PaintBox</tt>). The <tt>paint</tt> panel is added 
+to the center region of the <tt>DrawShapes</tt> frame; the <tt>status</tt> panel 
+is added to the south region.</p>
+<pre>class DrawShapes(JFrame):
+       def __init__(self):
+           JFrame.__init__(self,title='Draw Shapes',visible=1,size=(400,400))
+           self.__init__toolbar()
+           self.__init__options()
+
+           self.statusPane = StatusBox()
+           self.contentPane.add(self.statusPane, BorderLayout.SOUTH)
+           self.PaintPane = PaintBox(self.statusPane)
+           self.contentPane.add(self.PaintPane, BorderLayout.CENTER)
+     ...
+     ...</pre>
+<p class="docText">The constructor also calls <tt>__init__toolbar</tt> and <tt>
+__init__option</tt> , which create the <tt>toolbar</tt> and <tt>option</tt> 
+panels, respectively.</p>
+<p class="docText"><tt>__init__toolbar</tt> creates two shape buttons and adds 
+them to the toolbar pane. One of the buttons is initialized with an instance of 
+the <tt>Rectangle</tt> class; the other, with an instance of the <tt>Oval</tt> 
+class. The <tt>ShapeButton</tt> class represents changing the drawing mode to 
+either rectangle or oval. Its handlers are set to the <tt>rect_pressed()</tt> 
+and <tt>oval_pressed()</tt> methods, which change the shape to an oval or a 
+rectangle.</p>
+<p class="docText"><tt>__init__toolbar</tt> also adds the <tt>toolbar</tt> panel 
+to the west region of the <tt>DrawShapes</tt> frame and is defined as follows:</p>
+<pre>def __init__toolbar(self):
+       toolbar = ToolBox()
+
+             # Add the rectangle button to the toolbar
+       rect = ShapeButton(Rectangle(4, 4, 20, 20))
+       toolbar.add(rect)
+       rect.actionPerformed = self.rect_pressed
+
+             # Add the oval button to the toolbar
+       oval = ShapeButton(Oval(4, 4, 10, 20))
+       toolbar.add(oval)
+       oval.actionPerformed = self.oval_pressed
+
+        self.add(toolbar, BorderLayout.WEST)</pre>
+<p class="docText"><tt>__init__options</tt> does the equivalent for the <tt>
+options</tt> pane. It creates a choice component for color and a checkbox 
+component fill/no fill. It then adds these components to the options pane and 
+places the pane in the north region of the <tt>DrawShapes</tt> frame.</p>
+<pre>def __init__options(self):
+       optionsPane = Panel()
+
+             # Set up the checkbox item for the fill option
+       check = Checkbox('Fill')
+       optionsPane.add(check)
+       check.itemStateChanged = self.fill_clicked
+
+             # Set up the choice for color
+       colors = Choice()
+       self.colors_dict = {'blue':Color.blue,
+                        'green':Color.green,
+                        'red':Color.red,
+                        'yellow':Color.yellow,
+                        'orange':Color.orange,
+                        'cyan':Color.cyan,
+                        'pink':Color.pink,
+                        'gray':Color.gray
+                        }
+       for color in self.colors_dict.keys():
+             colors.add(color)
+
+       optionsPane.add(colors)
+       colors.itemStateChanged = self.color_changed
+       self.add(optionsPane, BorderLayout.NORTH)</pre>
+<h5 class="docSection3Title" id="ch15lev3sec9">DrawShapes Event Handler</h5>
+<p class="docText">All of the event handlers for the components added to the <tt>
+options</tt> and <tt>toolbar</tt> panes correspond to setting properties in the
+<tt>paint</tt> pane (<tt>PaintBox</tt> instance).</p>
+<ul>
+  <li>
+  <p class="docList">The <tt>rect_pressed</tt> event handler is called when the 
+  rectangle button is pressed; it sets the shape type of the <tt>paint</tt> pane 
+  to <tt>PaintBox</tt>.<tt>RECTANGLE</tt>.</li>
+  <li>
+  <p class="docList">The <tt>oval_pressed</tt> event handler is called when the 
+  oval button is pressed; it sets the shape type of the <tt>paint</tt> pane to
+  <tt>PaintBox.OVAL</tt>.</li>
+  <li>
+  <p class="docList">The <tt>fill_clicked</tt> event handler is called when the 
+  user checks or unchecks the fill checkbox. If the box is unchecked, the <tt>
+  paint</tt> pane fill property is set to false. If the box is checked, the <tt>
+  paint</tt> pane property is set to true.</li>
+  <li>
+  <p class="docList">The <tt>color_changed</tt> event handler is called when the 
+  user selects a new color in the choice box; it sets the color of the paint 
+  box's current paint mode to the color selected.</li>
+</ul>
+<p class="docText">These event handlers are defined as follows:</p>
+<pre>def rect_pressed(self, event):
+      self.paintPane.setShapeType(PaintBox.RECTANGLE)
+
+def oval_pressed(self, event):
+      self.paintPane.setShapeType(PaintBox.OVAL)
+
+def fill_clicked(self, event):
+      if(event.stateChange==ItemEvent.SELECTED):
+             self.PaintPane.setFill(1)
+      elif (event.stateChange==ItemEvent.DESELECTED):
+             self.PaintPane.setFill(0)
+
+def color_changed(self,event):
+      colorname = event.item
+      color = self.colors_dict[colorname]
+      self.PaintPane.setShapeColor(color)</pre>
+<h3 class="docSection1Title" id="ch15lev1sec4">The Complete Shapes and DrawShapes Modules</h3>
+<p class="docText">We've covered all of the classes. At this point, you may want 
+to run the <span class="docEmphasis">Shapes</span> and
+<a class="docLink" href="#ch15lev3sec8">
+DrawShapes</a> modules to see the drawing package in action. Here's the
+<span class="docEmphasis">Shapes</span> module.</p>
+<pre>class Shape:
+       def __init__(self, x, y, width=0, height=0, color=None, fill=0):
+             self.x=x
+             self.y=y
+             self.width=width
+             self.height=height
+             self.color=color
+             self.fill=fill
+
+       def paint(self, graphics):
+
+             if not self.color is None:
+                    oldcolor = graphics.foregroundColor
+                    graphics.color = self.color
+
+             if self.fill:
+                    self.draw_filled(graphics)
+             else:
+                    self.draw_outline(graphics)
+
+             if not self.color is None:
+                    graphics.color = oldcolor
+
+       def draw_filled(self, graphics):
+             pass
+
+       def draw_outline(self, graphics):
+             pass
+
+       def getRect(self):
+             return self.x, self.y, self.width, self.height
+
+class Rectangle(Shape):
+       def __init__(self, x, y, width, height, color=None, fill=0):
+             Shape.__init__(self, x, y, width, height, color, fill)
+
+       def draw_filled(self,graphics):
+             graphics.fillRect(self.x, self.y, self.width, self.height)
+
+       def draw_outline(self,graphics):
+             graphics.drawRect(self.x, self.y, self.width, self.height)
+
+class Oval(Shape):
+       def __init__(self, x, y, width, height, color=None, fill=0):
+             Shape.__init__(self, x, y, width, height, color, fill)
+
+       def draw_filled(self,graphics):
+             graphics.fillOval(self.x, self.y, self.width, self.height)
+
+       def draw_outline(self,graphics):
+             graphics.drawOval(self.x, self.y, self.width, self.height)
+
+class Shapes (Shape):
+       def __init__(self):
+             self.__shapes=[]
+
+       def addShape(self, shape):
+             self.__shapes.append(shape)
+
+       def paint(self, graphics):
+             for shape in self.__shapes:
+                    shape.paint()(graphics)
+
+       def getRect(self):
+                    # Lists to hold x,y,height and width from shape in shapes
+                       xl,yl,wl,hl = [],[],[],[]
+                    # Iterate through the list gathering each shapes
+                    # bounding rectangle
+             for shape in shapes:
+                    x,y,width, height = shape.getRect()
+                    xl.append(x)
+                    yl.append(y)
+                    wl.append(width)
+                    hl.append(height)
+
+             return min(xl), min(yl), max(wl), max(hl)
+
+       # This is for testing only
+if __name__ == '__main__':
+       from javax.swing import JFrame, JPanel
+       from java.awt import Color, Font
+
+       class TestPanel(JPanel):
+
+             def __init__(self):
+                         self.background=Color.white
+
+             def addShape(self,shape):
+                         self.shapes.addShape(shape)
+
+             def __init__(self):
+                         self.shapes = Shapes()
+                         self.addShape( Rectangle( 0, 0, 100, 100,
+                                      Color.blue, 1))
+                         self.addShape( Rectangle(100, 0, 100, 100,
+                                      Color.blue))
+                         self.addShape( Oval( 0, 100, 100, 100, Color.blue,
+                                      1))
+                         self.addShape( Oval(100, 100, 100, 100, Color.blue))
+
+             def paint(self,graphics):
+                         self.shapes.paint(graphics)
+
+       frame = JFrame(&quot;Test Shapes&quot;, size=(400,440), visible=1)
+       pane = TestPanel()
+       frame.contentPane = pane
+       frame.validate()</pre>
+<p class="docText">Here's the <span class="docEmphasis">DrawShapes</span> 
+module:</p>
+<pre>from Shapes import *
+from java.awt import Font, Color, Dimension, BorderLayout
+from javax.swing import JComboBox, JLabel, JTextField, JComponent
+from javax.swing import BoxLayout, JCheckBox, JButton, JFrame, JPanel
+from java.awt.event import KeyEvent, ItemEvent
+
+class ShapeButton(JButton):
+       def __init__(self, shape):
+              self.shape = shape
+
+       def paint(self, graphics):
+              JButton.paint(self, graphics)
+              self.shape.paint(graphics)
+
+       def getPreferredSize(self):
+              d = Dimension(30,30)
+              return d
+
+class ToolBox (JPanel):
+       def __init__(self):
+              JPanel.__init__(self)
+
+       def getPreferredSize(self):
+              d = Dimension(40, 0)
+              return d
+
+class StatusBox (JPanel):
+       def __init__(self):
+              JPanel.__init__(self)
+              self.coordinates = JTextField(15, editable=0)
+              self.format = 'x = %d, y = %d'
+              self.add(self.coordinates)
+
+              self.event_type = JLabel ('MOUSE STATUS ')
+              self.add(self.event_type)
+              self.shape_type = JLabel ('SHAPE STATUS ')
+              self.add(self.shape_type)
+
+       def setXY(self, x,y):
+              self.coordinates.text = self.format % (x,y,)
+
+       def setMouseDrag(self, x, y):
+              self.event_type.text = 'MOUSE DRAG '
+              self.setXY(x,y)
+
+       def setMouseMove(self, x, y):
+              self.event_type.text = 'MOUSE MOVE '
+              self.setXY(x,y)
+
+       def setMousePress(self, x, y):
+              self.event_type.text = 'MOUSE PRESS '
+              self.setXY(x,y)
+
+       def setMouseRelease(self, x, y):
+              self.event_type.text = 'MOUSE RELEASE '
+              self.setXY(x,y)
+
+       def setShapeType(self, shape_type):
+
+                    # Set the label based on the shape type
+              if shape_type == PaintBox.RECTANGLE:
+                    self.shape_type.text = 'RECTANGLE'
+
+              elif shape_type == PaintBox.OVAL:
+                    self.shape_type.text = 'OVAL'
+
+class PaintBox (JComponent):
+       RECTANGLE=1
+       OVAL=2
+
+       def __init__(self, status):
+              JComponent.__init__(self)
+               self.opaque=1
+               self.background=Color.white
+              self.status = status
+              self.shapes = Shapes()
+              self.shape_type = PaintBox.RECTANGLE
+              self.mouseDragged = self.handle_mouseDragged
+              self.mouseMoved = self.handle_mouseMoved
+              self.mousePressed = self.handle_mousePress
+              self.mouseReleased = self.handle_mouseRelease
+
+              self.fill=0
+              self.color=Color.red
+
+       def getPreferredSize(self):
+              d = Dimension(400,400)
+              return d
+
+       def __drawShape(self, g, x, y, width, height):
+
+              if self.shape_type == PaintBox.RECTANGLE:
+                         rect = Rectangle(self.start.x, self.start.y, width,height,fill=0)
+                    rect.paint(g)
+              if self.shape_type == PaintBox.OVAL:
+                    oval = Oval(self.start.x, self.start.y, width, height,fill=0)
+                    oval.paint()(g)
+
+       def drawRubberShape(self, x, y):
+              g = self.graphics
+
+                    # Set the graphics to XOR mode, which allows rubberbanding.
+                    # Calculate the width and height.
+                    # Draw the outline of the shape.
+              try:
+                    g.setXORMode(self.background)
+                    width = abs(self.start.x - x)
+                    height = abs(self.start.y - y)
+                    self.__drawShape(g, self.start.x, self.start.y, width,
+                        height)
+              finally:
+                    g.dispose()
+
+       def handle_mousePress(self, event):
+
+                    # Print the status
+                         self.status.setMousePress(event.x, event.y)
+                    # Save the initial location.
+                    # In addition save the initial location as the last.
+              self.last = self.start = event.point
+
+       def handle_mouseDragged(self,event):
+
+                    # Print the status.
+              self.status.setMouseDrag(event.x, event.y)
+
+                    # Erase the old rubberband shape at the old location.
+                    # Create the new rubberband shape at the new location
+              self.drawRubberShape(self.last.x, self.last.y)
+              self.drawRubberShape(event.x, event.y)
+
+                    # Save the current event.x and event.y as the last.
+              self.last = event.point
+
+       def handle_mouseMoved(self,event):
+
+                    # Print the status.
+              self.status.setMouseMove(event.x,event.y)
+
+       def handle_mouseRelease(self, event):
+
+                    # Print the status
+              self.status.setMouseRelease(event.x, event.y)
+
+                    # Calculate the width and the height
+              width = abs(self.start.x - event.x)
+              height = abs(self.start.y - event.y)
+
+              shape = None #to hold the shape we are about to create
+
+                    # Create the shape based on the current shape type.
+                    # Then add the shape to self.shapes.
+              if self.shape_type == PaintBox.RECTANGLE:
+                    shape = Rectangle(self.start.x, self.start.y, width,
+                            height, self.color, self.fill)
+
+              elif self.shape_type == PaintBox.OVAL:
+                    shape = Oval(self.start.x, self.start.y, width, height,
+                            self.color, self.fill)
+
+              if not shape is None:
+                    self.shapes.addShape(shape)
+                    x,y,width,height = shape.getRect()
+                    self.repaint()(x,y,width+1, height+1)
+
+       def paint (self, graphics):
+              self.fillBackground(graphics)
+                    #Draw all of the shapes.
+              self.shapes.paint(graphics)
+
+       def fillBackground (self, graphics):
+
+                    #Get the background color
+              background=self.background
+                    #Get the size
+              size=self.getSize()
+              width, height = size.width, size.height
+
+                    # Create a rectangle that is as big
+                    # as the whole drawing area.
+              rect = Rectangle(0,0, width, height, background, 1)
+              rect.paint(graphics)
+
+       def setShapeType(self, shape_type):
+              self.status.setShapeType(shape_type)
+              self.shape_type = shape_type
+
+       def getShapeType(self):
+              return shape_type
+
+       def setFill(self, value):
+              self.fill = value
+
+       def setShapeColor(self, color):
+              self.color = color
+
+class DrawShapes(JFrame):
+
+       def __init__(self):
+              JFrame.__init__(self, title='Draw Shapes', visible=1,
+                  size=(400,400))
+              self.__init__toolbar()
+              self.__init__options()
+
+              self.statusPane = StatusBox()
+              self.contentPane.add(self.statusPane, BorderLayout.SOUTH)
+
+              self.PaintPane = PaintBox(self.statusPane)
+              self.contentPane.add(self.PaintPane, BorderLayout.CENTER)
+
+              self.pack()
+              def close(event):
+                    mainWindow.visible=0
+                    mainWindow.dispose()
+                    from java.lang import System
+                    System.exit(0)
+
+              global mainWindow
+              mainWindow = self
+              self.windowClosing=close
+
+       def __init__toolbar(self):
+              toolbar = ToolBox()
+
+                    # Add the rectangle button to the toolbar
+              rect = ShapeButton(Rectangle(4, 4, 20, 20))
+              toolbar.add(rect)
+              rect.actionPerformed = self.rect_pressed
+
+                    # Add the oval button to the toolbar
+              oval = ShapeButton(Oval(4, 4, 10, 20))
+              toolbar.add(oval)
+              oval.actionPerformed = self.oval_pressed
+
+              self.contentPane.add(toolbar, BorderLayout.WEST)
+
+       def rect_pressed(self, event):
+              self.PaintPane.setShapeType(PaintBox.RECTANGLE)
+
+       def oval_pressed(self, event):
+              self.PaintPane.setShapeType(PaintBox.OVAL)
+
+       def fill_clicked(self, event):
+              if(event.stateChange==ItemEvent.SELECTED):
+                    self.PaintPane.setFill(1)
+
+              elif (event.stateChange==ItemEvent.DESELECTED):
+                    self.PaintPane.setFill(0)
+
+       def color_changed(self,event):
+              colorname = event.item
+              color = self.colors_dict[colorname]
+              self.PaintPane.setShapeColor(color)
+
+       def __init__options(self):
+              optionsPane = JPanel()
+
+                    # Set up the checkbox item for the fill option
+              check = JCheckBox('Fill')
+              optionsPane.add(check)
+              check.itemStateChanged = self.fill_clicked
+
+                    # Set up the choice for color
+              colors = JComboBox()
+              self.colors_dict = {'blue':Color.blue,
+                               'green':Color.green,
+                               'red':Color.red,
+                               'yellow':Color.yellow,
+                               'orange':Color.orange,
+                               'cyan':Color.cyan,
+                               'pink':Color.pink,
+                               'gray':Color.gray
+                               }
+              for color in self.colors_dict.keys():
+                    colors.addItem(color)
+
+                 colors.setSelectedItem('red')
+
+              optionsPane.add(colors)
+              colors.itemStateChanged = self.color_changed
+
+              self.contentPane.add(optionsPane, BorderLayout.NORTH)
+
+if __name__ == '__main__':
+       frame = DrawShapes()</pre>
+<p class="docText">Notice that, for all the functionality we get, the code is 
+relative simple.</p>
+<p class="docText">Now let's fire up <span class="docEmphasis">DrawShapes</span> 
+and draw some rectangles and ovals. <a class="docLink" href="#ch15fig03">Figure 
+15-3</a> is a screen dump of what we're going to do.</p>
+<center>
+<h5 id="ch15fig03" class="docFigureTitle">Figure 15-3. Screen Dump of the <tt>DrawShapes</tt> 
+Example</h5>
+<p class="docText"><img alt="graphics/15fig03.gif" src="15fig03.gif" border="0" width="500" height="551"></p>
+</center>
+<h4 class="docSection2Title" id="ch15lev2sec8">Phase 2: DrawShapes—Adding Text</h4>
+<p class="docText">We've seen how <tt>DrawShapes</tt> handles mouse events. Now 
+let's extend it to include a text shape that handles keyboard events. In 
+addition to text, this second phase of our example will add squares, rounded 
+rectangles, and circles to show the design flaw of phase 1, which we'll have to 
+wait until phase 3 to correct.</p>
+<p class="docText">To add a text shape, we need to do the following:</p>
+<ul START>
+  <li>
+  <p class="docList">Define a text shape in the <span class="docEmphasis">Shapes</span> 
+  module.</li>
+  <li>
+  <p class="docList">Add a shape button to the toolbar that represents text.</li>
+  <li>
+  <p class="docList">Add support for the text mode to the <tt>mousePress</tt> 
+  event handler.</li>
+  <li>
+  <p class="docList">Set up event handling in the paint box for the following 
+  user actions:<ol>
+    <li>
+    <p class="docList">Clicking a point in the paint box to make it the starting 
+    position of the text</li>
+    <li>
+    <p class="docList">Entering text</li>
+    <li>
+    <p class="docList">Pressing the Backspace key to delete the last character 
+    entered</li>
+    <li>
+    <p class="docList">Pressing Enter to end the text entry</p>
+    <p class="docList">The result is that the bounding rectangle of the text is 
+    calculated and the area is repainted immediately by force.</li>
+  </ol>
+  </li>
+</ul>
+<h5 class="docSection3Title" id="ch15lev3sec10">The Text Class</h5>
+<p class="docText">The Text class extends the <tt>Shape</tt> class and is 
+defined in the <span class="docEmphasis">Shapes</span> module. It has font, 
+string, and color attributes, which are passed via <tt>Shape</tt>'s constructor. 
+Text must be passed a reference to the component where it will be drawn so that 
+it can acquire the font metrics, which it uses to calculate its ascent, descent, 
+width, and height. (Look up <tt>java.awt.FontMetrics</tt> in the Java API 
+documentation to learn more about fonts.) Ascent and descent determine how far 
+above and below the baseline a character extends (more on this later).</p>
+<p class="docText">Here's the <tt>Text</tt> class constructor (from
+<span class="docEmphasis">TwoShapes.py</span>).</p>
+<pre>Class Text(Shape):
+       def __init__(self, x, y, string, font, component, color=None):
+             Shape.__init__(self, x, y, color=color)
+             fm = component.getFontMetrics(font)
+             self.width = fm.stringWidth(string)
+             self.height = fm.maxAscent + fm.maxDescent
+             self.ascent = fm.maxAscent
+             self.descent = fm.maxDescent
+             self.font = font
+             self.string = string</pre>
+<p class="docText"><tt>Text</tt> overrides both the <tt>draw_outline()</tt> and
+<tt>draw_filled()</tt> methods. <tt>Draw_filled()</tt> calls <tt>draw_outline()</tt> 
+because <tt>Text</tt> doesn't differentiate between filled and unfilled mode.
+<tt>draw_outline()</tt> changes the font to <tt>Text</tt>'s font, saving the 
+original to be restored after the call to <tt>drawString()</tt>, which does the 
+actual drawing. Saving and restoring the graphics context attributes ensure that
+<tt>draw_outline()</tt> doesn't adversely affect other graphics operations.</p>
+<p class="docText">Here's the code for <tt>draw_outline()</tt> (<span class="docEmphasis">Two\Shapes.py</span>):</p>
+<pre>def draw_outline(self, graphics):
+
+      if(self.font):
+                   #Get the original font.
+             font = graphics.font
+                   #Set the graphics to this font.
+             graphics.font = self.font
+
+             #Draw the string.
+      graphics.drawString(self.string, self.x, self.y)
+      if(self.font):
+                   # Set the graphics back
+                   # to the original font.
+             graphics.font = font
+
+def draw_filled(self, graphics):
+      self.draw_outline(graphics)</pre>
+<p class="docText"><tt>Text</tt>'s final method is <tt>getRect()</tt>, which, 
+you'll remember, is used by <tt>PaintBox</tt> to calculate the area that needs 
+to be redrawn. Most of the other shapes simply use the inherited version of this 
+method; however, <tt>Text</tt> needs it to calculate the bounding rectangle for 
+the string because, unlike the other shape classes, its
+<span class="docEmphasis">x,y</span> coordinates don't begin in the upper left 
+corner, as shown in <a class="docLink" href="#ch15fig04">Figure 15-4</a>.</p>
+<center>
+<h5 id="ch15fig04" class="docFigureTitle">Figure 15-4. Baseline, Starting Point, Width, Ascent, 
+and Descent</h5>
+<p class="docText"><img alt="graphics/15fig04.gif" src="15fig04.gif" border="0" width="300" height="337"></p>
+</center>
+<p class="docText"><tt>GetRect()</tt> calculates the rectangle by moving its 
+starting point to the upper left corner. The <span class="docEmphasis">x,y</span> 
+axis increases down and to the right, so subtracting the ascent moves the point 
+up (if down is positive, up is negative).</p>
+<pre>def getRect(self):
+              return self.x, self.y-self.ascent, self.width, self.height</pre>
+<h5 class="docSection3Title" id="ch15lev3sec11">The Text Class Code</h5>
+<p class="docText"><tt>Text</tt> is the most complex shape we've seen so far, 
+and it isn't as complex as it seems. Here it is in its entirety (from
+<span class="docEmphasis">Two\Shapes.py</span>):</p>
+<pre>class Text(Shape):
+       def __init__(self, x, y, string, font, component, color=None):
+             Shape.__init__(self, x, y, color=color)
+             fm = component.getFontMetrics(font)
+             self.width = fm.stringWidth(string)
+             self.height = fm.maxAscent + fm.maxDescent
+             self.ascent = fm.maxAscent
+             self.descent = fm.maxDescent
+             self.font = font
+             self.string = string
+
+       def draw_outline(self, graphics):
+
+             if(self.font):
+                          #Get the original font.
+                    font = graphics.font
+                          #Set the graphics to this font.
+                    graphics.font = self.font
+
+                    #Draw the string.
+             graphics.drawString(self.string, self.x, self.y)
+
+             if(self.font):
+                          #Set the graphics back to the original font.
+                    graphics.font = font
+
+       def draw_filled(self, graphics):
+             self.draw_outline(graphics)
+
+       def getRect(self):
+             return self.x, self.y-self.ascent, self.width, self.height</pre>
+<h5 class="docSection3Title" id="ch15lev3sec12">Supporting the Text Class</h5>
+<p class="docText">Now let's add support for <tt>Text</tt> to our <tt>DrawShapes</tt> 
+module—font name and point size options and keyboard event handling. Here are 
+some typical user actions that illustrate the type of things we need:</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Clicking the <tt>Text</tt> shape button in the <tt>
+  DrawShapes</tt> toolbar</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Changing the font name in the <tt>options</tt> pane</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Clicking on the <tt>PaintBox</tt> panel</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Typing characters</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Pressing the Enter key</span></li>
+</ol>
+</span>
+<p class="docText">Step 1 fires the event handler for the Shape button, which 
+sets the shape type of the <tt>PaintBox</tt> panel to <tt>TEXT</tt>. Step 2 
+fires the event handler for font choice, which sets <tt>PaintBox</tt>'s font 
+attribute. Step 3 fires the <tt>mousePressed</tt> event, whose handler sets the
+<span class="docEmphasis">x,y</span> position of the text. Then Step 4 fires the
+<tt>keyTyped</tt> event, whose handler draws text on the paint box. Step 5 
+causes a <tt>Text</tt> class to be instantiated and added to <tt>PaintBox</tt>'s
+<tt>shapes</tt> attribute.</p>
+<p class="docText"><tt>PaintBox</tt> also handles the Backspace key for those of 
+us who occasionally make mistakes. (I got tired of typing &quot;Hekko World.&quot;)</p>
+<p class="docText">To implement <tt>Text</tt> we first need to add the text 
+shape button to the toolbar of the <tt>DrawShapes</tt> frame. We create an 
+instance of <tt>Text</tt> and pass it to the <tt>ShapeButton</tt> class.</p>
+<pre>def __init__toolbar(self):
+             toolbar = ToolBox()
+                    #Add the rectangle button to the toolbar
+             rect = ShapeButton(Rectangle(4, 4, 20, 20))
+             toolbar.add(rect)
+             rect.actionPerformed = self.rect_pressed
+       ...
+       ...
+
+                    # Set the current font to Arial,
+                    # then get the FontMetrics
+             font = Font(&quot;Arial&quot;, Font.PLAIN, 20)
+             fm = self.getFontMetrics(font)
+
+                    #Add the Text button to the toolbar.
+             text=ShapeButton(Text(2, 2+fm.maxAscent, &quot;A&quot;, font, self))
+             toolbar.add(text)
+             text.actionPerformed = self.text_pressed</pre>
+<p class="docText">As you can see, we need to get the font metrics to put the 
+text shape in the button. The font metrics calculate where to move the start 
+position of the text so that it's displayed in the button's upper right corner. 
+Then we have to set the event handler for the button's action event to <tt>
+text_pressed</tt>.</p>
+<pre>def text_pressed(self, event):
+      self.PaintPane.setShapeType(PaintBox.TEXT)
+      self.PaintPane.requestFocus()</pre>
+<p class="docText">The <tt>text_pressed</tt> event handler sets the shape type 
+of the paint box to <tt>TEXT</tt>. Calling <tt>requestFocus</tt> gives the <tt>
+paint box</tt> input focus, which is essential for it to receive key events. 
+There can be no key events without input focus.</p>
+<p class="docText">Next, the <tt>DrawShapes</tt> frame needs the font options 
+(point size and typeface) added to its <tt>options</tt> pane. Here's the code:</p>
+<pre>def __init__options(self):
+       optionsPane = Panel()
+       optionsPane.add(Label(&quot;Font&quot;))
+
+              #Set up the Font point List.
+       point_list = Choice()
+       points = (8,9,10,12,14,16,18,20,24,32)
+
+       for point in points:
+              point_list.add(str(point))
+
+       optionsPane.add(point_list)
+       point_list.itemStateChanged = self.point_changed
+
+             #Set up font List.
+       from java.awt import GraphicsEnvironment
+       ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
+       fonts = ge.getAvailableFontFamilyNames()
+       fonts_list = Choice()
+       for font in fonts:
+             fonts_list.add(font)
+
+       optionsPane.add(fonts_list)
+       fonts_list.itemStateChanged = self.font_changed</pre>
+<p class="docText">The <tt>__init_options</tt> method creates a list of point 
+sizes and adds it to a choice control called <tt>point_list</tt>. Next it gets a 
+list of fonts from <tt>GraphicsEnvironment.getAvailableFontFamilyNames</tt> and 
+adds it to a choice control called <tt>font_list</tt>. <tt>font_list</tt> and
+<tt>point_list</tt> are added to the <tt>options</tt> pane, and event handlers 
+are set up for both.</p>
+<p class="docText">The event handler for <tt>font_list</tt> sets the name 
+property of the <tt>paint</tt> pane (an instance of <tt>PaintBox</tt>) when the 
+user selects a font name. <tt>event.item</tt> contains the font name selected by 
+the user and is passed to the <tt>setFontName()</tt> method of the <tt>PaintBox</tt> 
+instance, which sets the instance's font.</p>
+<p class="docText">The event handler for <tt>point_list</tt> converts <tt>
+event.item</tt> to an integer and then sets the <tt>paint</tt> pane's point size 
+property.</p>
+<p class="docText">Here are the event handlers for both <tt>font_list</tt> and
+<tt>point_list</tt>:</p>
+<pre>def font_changed(self, event):
+       self.PaintPane.setFontName(event.item)
+
+def point_changed(self, event):
+       self.PaintPane.setFontPoint(int(event.item))</pre>
+<p class="docText">That about does it for the changes made to
+<span class="docEmphasis">DrawShapes</span> to support text. Now I'll describe 
+the changes made to <tt>PaintBox</tt> to add text shape support. This is the 
+interesting part.</p>
+<h4 class="docSection2Title" id="ch15lev2sec9">Test and PaintBox</h4>
+<p class="docText"><tt>PaintBox</tt> adds another shape type, <tt>TEXT</tt>. It 
+adds three attributes to its class instance in its constructor: <tt>text</tt> (a 
+string), which denotes the text being typed by the user but not yet entered 
+in—that is, the transitional text; <tt>startText</tt> (an integer representing a 
+Boolean value), which denotes whether or not a text operation has begun; and <tt>
+text_in</tt>, which holds the transitional instance of the text shape, that is, 
+the text being keyed in and edited. When the shape type is <tt>TEXT</tt> and the 
+user clicks the paint box, <tt>startText</tt> is set to true, and <tt>PaintBox</tt> 
+begins processing key events. The key event handlers control the text operation 
+and add characters to the <tt>text</tt> attribute.</p>
+<p class="docText">Here's the definition for <tt>PaintBox</tt> and its 
+constructor (from <span class="docEmphasis">two\DrawShapes.py</span>):</p>
+<pre>class Paint box (Panel):
+       RECTANGLE=1
+       OVAL=2
+...
+...
+       TEXT=4
+
+       def __init__(self, status):
+              Panel.__init__(self)
+              self.status = status
+              self.shapes = Shapes()
+              self.shape_type = PaintBox.RECTANGLE
+
+              self.mouseDragged = self.handle_mouseDragged
+...
+...
+              self.keyPressed = self.handle_keyPressed
+              self.keyTyped = self.handle_keyTyped
+
+              self.point = 20
+              self.fontname = &quot;Arial&quot;
+              self.font = Font(self.fontname, Font.PLAIN, self.point)
+
+              self.text = &quot;&quot;
+              self.startText = 0
+              self.text_in = None
+
+              ...
+              ...</pre>
+<p class="docText">When the user presses the mouse button, the <tt>mousePress</tt> 
+event handler is called, which sets <tt>startText</tt> to true and sets the text 
+to an empty string if the shape type is <tt>TEXT</tt>. This defines the text's 
+starting point. In the following example, code that has been added to
+<span class="docEmphasis">two\DrawShapes.py</span> is hightlighted in bold.</p>
+<pre>     def handle_mousePress(self, event):
+...
+...
+           self.last = self.start = event.point
+
+           <span class="docEmphStrong">if (self.shape_type ==</span> PaintBox<span class="docEmphStrong">.TEXT):</span>
+                 <span class="docEmphStrong">self.text = &quot;&quot;</span>
+                 <span class="docEmphStrong">self.startText = 1</span></pre>
+<p class="docText"><tt>PaintBox</tt> uses only <tt>keyPressed</tt> to handle 
+control keys and <tt>keyTyped</tt> to handle character keys when drawing a text 
+shape.</p>
+<p class="docText">The <tt>keyPressed</tt> event handler handles the Enter and 
+Backspace keys. When Enter is pressed, the text shape being defined is added to 
+the paint box's shapes collection. Here's the code:</p>
+<pre>def handle_keyPressed(self, event):
+       self.ignore = 0
+
+              # Perfom actions for drawing text
+              # if this in text draw mode.
+       if self.shape_type == PaintBox.TEXT and self.startText:
+
+                    # If the user presses the Enter key,
+                    # We add this shape to the shape list.
+              if (event.keyCode == KeyEvent.VK_ENTER):
+                    self.shapes.addShape(self.text_in)
+                    self.startText = 0
+                    self.text_in = None</pre>
+<p class="docText">When the Backspace key is pressed, the last character of the 
+text string is removed, and the <tt>ignore</tt> attribute of <tt>PaintBox</tt> 
+is set to true. <tt>ignore</tt> is needed because the Backspace key generates a 
+character (here '<tt>\b</tt>') that we don't want to show up in our text shape 
+(it appears as a square). A true value tells the <tt>keyTyped</tt> event handler 
+to disregard any such character. Also when the Backspace key is pressed, a new 
+text shape is created and assigned to the <tt>text_in</tt> attribute (whose last 
+character was just removed), which forces a repaint of <tt>text_in</tt>'s bounds 
+(before the backspace operation).</p>
+<pre>     def handle_keyPressed(self, event):
+            self.ignore = 0
+                  # Perform actions for drawing text
+                  # if this in text draw mode.
+            if self.shape_type == PaintBox.TEXT and self.startText:
+...
+...
+
+                         # If the user presses the Backspace key,
+                         # we delete the last character in the text.
+                  if (event.keyCode == KeyEvent.VK_BACK_SPACE):
+                         x,y,width,height = self.text_in.getRect()
+                         self.ignore = 1
+                         self.text = self.text[:-1]
+                         self.text_in=Text(self.start.x, self.start.y, \
+                                self.text,self.font,self, self.color)
+                         self.repaint()(x,y,width+1, height+1)</pre>
+<p class="docText">Unlike the <tt>keyPressed</tt> handler, the <tt>keyTyped</tt> 
+handler works with characters the user types in, which are collected in the text 
+string. After each character is typed, a new text shape object is created (<tt>text_in</tt>). 
+The <tt>keyTyped</tt> event handler uses the bounds of <tt>text_in</tt> to force 
+a repaint so that the shape is redrawn.</p>
+<pre>def handle_keyTyped(self,event):
+
+             # See if this is in text draw mode,
+             # and the backspace was not pressed
+      if self.shape_type == PaintBox.TEXT and self.startText \
+                           and not self.ignore:
+                    # Get the character typed, add it to the text.
+             self.text = self.text + event.keyChar
+
+                    # Force the text to be shown.
+                    # Create the Text instance, and force repaint().
+             self.text_in = Text(self.start.x, self.start.y, \
+                           self.text, self.font, self, self.color)
+             x,y,width,height = self.text_in.getRect()
+             self.repaint()(x,y,width+1, height+1)</pre>
+<p class="docText">The <tt>paint()</tt>method checks to see if the <tt>text_in</tt> 
+shape exists. If so, it draws it. Remember, the <tt>text_in</tt> attribute 
+corresponds to the current shape, that is, the one being worked on.</p>
+<pre>def paint(self, graphics):
+
+             #Draw all of the shapes.
+       self.shapes.paint(graphics)
+
+             #For showing text while we type
+       if(self.text_in):
+             self.text_in.paint(graphics)</pre>
+<p class="docText"><tt>PaintBox</tt> also creates several methods to change its
+<tt>font</tt> and <tt>point</tt> attributes.</p>
+<pre>def setFontName(self, font):
+       self.fontname = font
+       self.font = Font(self.fontname, Font.PLAIN, self.point)
+
+def setFontPoint(self,point):
+       self.point = point
+       self.font = Font(self.fontname, Font.PLAIN, point)</pre>
+<p class="docText">So now we've added text shape support. Oh, yes, I said 
+earlier that we would add squares, circles, and rounded rectangles. Well, we 
+won't go into detail about these shapes, but we will take a look at the problem 
+they cause.</p>
+<p class="docText">If all you wanted out of this chapter was an introduction to 
+graphics programming, you just got it. But if you want to learn what makes 
+dynamic object-oriented programming tick, read on. We're going to modify
+<span class="docEmphasis">DrawShapes</span> and its classes and make them 
+significantly smaller and more extensible. In other words, we're going to write 
+tight, dynamic, object-oriented Python code.</p>
+<h5 class="docSection3Title" id="ch15lev3sec13"><span class="docEmphasis">DrawShapes</span>' Ugly, 
+Inefficient, Nonextensible Code</h5>
+<p class="docText">Let's see what's wrong with
+<a class="docLink" href="#ch15lev3sec8">
+DrawShapes</a> as it stands now. We'll start with the <tt>DrawShapes</tt> class. 
+First look at <tt>__init__toolbar</tt> (from <span class="docEmphasis">two\DrawShapes.py</span>).</p>
+<pre>def __init__toolbar(self):
+             toolbar = ToolBox()
+
+                   #Add the Rectangle button to the toolbar
+             rect = ShapeButton(Rectangle(4, 4, 20, 10))
+             toolbar.add(rect)
+             rect.actionPerformed = self.rect_pressed
+
+                   #Add the Circle button to the toolbar
+             circle = ShapeButton(Circle(4, 4, 10))
+             toolbar.add(circle)
+             circle.actionPerformed = self.circle_pressed
+
+                   #Add the Oval button to the toolbar
+             oval = ShapeButton(Oval(4, 4, 10, 20))
+             toolbar.add(oval)
+             oval.actionPerformed = self.oval_pressed
+
+                   #Add the Square button to the toolbar
+             square = ShapeButton(Square(4, 4, 20))
+             toolbar.add(square)
+             square.actionPerformed = self.square_pressed
+
+                   #Add the RoundRectangle button to the toolbar
+             rrect = ShapeButton(RoundedRectangle(4, 4, 20, 20))
+             toolbar.add(rrect)
+             rrect.actionPerformed = self.round_rect_pressed
+
+                   # Set the current font to Arial,
+                   # then get the FontMetrics
+             font = Font(&quot;Arial&quot;, Font.PLAIN, 20)
+             fm = self.getFontMetrics(font)
+
+                   # Add the Text button to the toolbar.
+             text=ShapeButton(Text(2, 2+fm.maxAscent, &quot;A&quot;, font, self))
+
+             toolbar.add(text)
+             text.actionPerformed = self.text_pressed
+
+             self.add(toolbar, BorderLayout.WEST)</pre>
+<p class="docText">Every time we define a new shape, we have to write three to 
+five lines of code in <tt>__init__toolbar</tt>; then we have to write an event 
+handler for each one. As you can see, with just six shapes it gets pretty messy.</p>
+<pre>def circle_pressed(self, event):
+       self.PaintPane.setShapeType(PaintBox.CIRCLE)
+
+def rect_pressed(self, event):
+       self.PaintPane.setShapeType(PaintBox.RECTANGLE)
+
+def round_rect_pressed(self, event):
+       self.PaintPane.setShapeType(PaintBox.ROUND_RECTANGLE)
+
+def square_pressed(self, event):
+       self.PaintPane.setShapeType(PaintBox.SQUARE)
+
+def oval_pressed(self, event):
+       self.PaintPane.setShapeType(PaintBox.OVAL)
+
+def text_pressed(self, event):
+       self.PaintPane.setShapeType(PaintBox.TEXT)
+       self.PaintPane.requestFocus()</pre>
+<p class="docText">They all look pretty similar, don't they? Why not replace all 
+of the code above with this:</p>
+<pre>class ShapeTool:
+       def __init__(self, shape_class, toolbar, PaintBox):
+
+                     # Use eval to create a shape. shape_class
+                     # holds a string representing the class.
+              self.__shape = eval(shape_class+'()')
+              button = ShapeButton(self.__shape)
+              toolbar.add(button)
+              button.actionPerformed = self.actionPerformed
+              self.PaintBox = PaintBox
+
+       def actionPerformed(self, event):
+              self.PaintBox.requestFocus()
+              self.PaintBox.setShapeType(self.__shape.__class__)
+              def getShape(self):return self.__shape</pre>
+<h5 class="docSection3Title" id="ch15lev3sec14">The ShapeTool Class</h5>
+<p class="docText"><tt>__init__toolbar</tt> uses <tt>ShapeTool</tt> to create 
+shape buttons, add them to the toolbar, and register them with an event handler. 
+Notice that it uses strings to denote each shape's class. The <tt>ShapeTool</tt> 
+constructor uses the strings as arguments to the built-in <tt>eval()</tt> 
+function.</p>
+<pre>class DrawShapes(Frame):
+...
+...
+
+      def __init__toolbar(self):
+             toolbar = ToolBox()
+             Shapes = ['Square', 'Rectangle', 'RoundedRectangle',
+                      'Oval', 'Text', 'Circle' ]
+
+             for shape in Shapes:
+                      shape_tool=ShapeTool(shape,toolbar, self.PaintPane)
+
+                      if (isinstance(shape_tool.getShape(), Text)):
+                             shape_tool.getShape().initForToolbar('A', self.PaintPane)
+
+             self.add(toolbar, BorderLayout.WEST)</pre>
+<p class="docText">The <tt>ShapeTool</tt> class defines the event handler for 
+each button and adds it to the toolbar. It eliminates thirty lines of code and 
+five function definitions. What's more, it's extensible: Any additional shapes 
+are just added to the shapes list in <tt>__init__toolbar</tt> with no extra 
+code. With the old way, for thirty shapes we'd need thirty event handlers and 
+about seventy-five additional lines of code. With the new way, all we need is 
+thirty entries in the shapes list.</p>
+<p class="docText">Less code to write equates to less code to test and fewer 
+bugs. In addition, we can create a text file our program can read that lists the 
+shapes we want to display. This is extremely flexible.</p>
+<p class="docText">Notice that the event handler for <tt>ShapeTool</tt> passes 
+the class, not an integer representing the type. The old way passed an integer 
+with the type as defined by constant values in the <tt>PaintBox</tt> class. This 
+is directly from the Department of Redundancy Department (with thanks to Monty 
+Python). A class is a type, and shapes can be uniquely identified by their 
+class. Now <tt>PaintBox</tt> uses the class as the shape type.</p>
+<h5 class="docSection3Title" id="ch15lev3sec15">Making PaintBox Modular</h5>
+<p class="docText">There's a lot wrong with the old <tt>PaintBox</tt>. First of 
+all, as I mentioned, every time we add a shape, we need to add a shape constant. 
+This tightly couples shapes to <tt>PaintBox</tt>.</p>
+<pre>class PaintBox (JComponent):
+       RECTANGLE=1
+       OVAL=2
+       CIRCLE=3
+       TEXT=4
+       ROUND_RECTANGLE=5
+       SQUARE = 6
+       ...
+       ...</pre>
+<p class="docText">The shape type integer is passed to <tt>PaintBox</tt>, making 
+it necessary to add another suite to <tt>PaintBox</tt>'s <tt>if</tt> statement—<tt>drawShape()</tt>—for 
+each new shape.</p>
+<pre>def setShapeType(self, shape_type):
+       self.status.setShapeType(shape_type)
+       self.shape_type = shape_type
+def __drawShape(self, g, x, y, width, height):
+
+      if self.shape_type == PaintBox.RECTANGLE:
+            g.drawRect(self.start.x, self.start.y, width, height)
+
+      if self.shape_type == PaintBox.ROUND_RECTANGLE:
+            g.drawRoundRect(self.start.x, self.start.y, width, height, 10,10)
+
+      if self.shape_type == PaintBox.OVAL:
+            g.drawOval(self.start.x, self.start.y, width, height)
+
+      if self.shape_type == PaintBox.CIRCLE:
+            g.drawOval(self.start.x, self.start.y, width, width)
+
+      if self.shape_type == PaintBox.SQUARE:
+            g.drawRect(self.start.x, self.start.y, width, width)</pre>
+<p class="docText">There are a couple of things wrong with this. First, the code 
+for drawing a shape should be in a shape object, not in <tt>PaintBox</tt>. This 
+means that the original code for <tt>drawShape()</tt> isn't modular, and that's 
+bad. If there's a problem drawing a shape, the developer who inherits this code 
+won't know if she should look in the <span class="docEmphasis">Shapes</span> 
+module or in the <tt>PaintBox</tt> class.</p>
+<p class="docText">Code should be modular; that is, a class should do one set of 
+related things. The shape should know how to do shape things like draw itself, 
+and this knowledge should be hidden from <tt>PaintBox</tt>—in other words, 
+encapsulated.</p>
+<p class="docText">Here's our modular version (<span class="docEmphasis">Three\PaintBox.py</span>):</p>
+<pre>def createShape(self):
+      &quot;&quot;&quot;Create a new shape with the shape_type.
+      The shape_type is a Shape class.&quot;&quot;&quot;
+
+      self.shape = self.shape_type()
+      if (isinstance(self.shape, Text)):
+            self.shape.setComponent(self)
+
+def setShapeType(self, shape_type):
+      &quot;&quot;&quot;Set the current Shape type,
+      then create an instance of the shape&quot;&quot;&quot;
+      self.status.setShapeType(shape_type)
+      self.shape_type = shape_type
+      self.createShape()
+
+def __drawShape(self, g, x, y, width, height):
+      self.shape.fromBounds(self.start.x, self.start.y, width, height)
+      self.shape.draw_outline()(g)</pre>
+<p class="docText">In the new <tt>drawShape()</tt>, we initialize the shape with 
+the <tt>fromBounds()</tt> method, which tells the shape to initialize itself 
+from the given bounding rectangle. If you look at the shape classes in the code 
+above, you'll notice all of them either inherit the default, <tt>fromBound()</tt>, 
+from the <tt>Shape</tt> class or implement their own version.</p>
+<p class="docText">The great thing about our new code is that, if we add a 
+triangle, a hexagon, an octagon, and so forth, it doesn't change. With the old
+<tt>__DrawShapes</tt>, each time we add a new shape we have to add another <tt>
+elif</tt> suite to the <tt>if</tt> statement. Thirty shapes equal thirty <tt>
+elif</tt> branches.</p>
+<p class="docText">This is the magic of polymorphism. All we do is tell the 
+shape to initialize itself from the bounds we give it; we don't care if it's a 
+triangle or a parallelogram.</p>
+<p class="docText">Remember that there was another place where we had a long <tt>
+if</tt> statement with lots of <tt>elif</tt> suites—<tt>handle_mouseRelease</tt>, 
+which created a shape based on the shape type defined by the integer constants. 
+The new <tt>handle_mouseRelease</tt> does not need to do that, so it's not 
+coupled to adding new shapes. Look at the differences with the few shapes we 
+defined, and imagine what the old <tt>mouseRelease</tt> handler (from
+<span class="docEmphasis">Two\DrawShapes.py</span>) would look like if we had 
+thirty shapes.</p>
+<pre>def handle_mouseRelease(self, event):
+
+                    # Print the status
+             self.status.setMouseRelease(event.x, event.y)
+
+                    # Calculate the width and the height
+             width = abs(self.start.x - event.x)
+             height = abs(self.start.y - event.y)
+
+             shape = None #hold the shape we are about to create
+
+                    # Create shape based on the current shape type.
+                    # Then add the shape to self.shapes.
+             if self.shape_type == PaintBox.RECTANGLE:
+                    shape = Rectangle(self.start.x, self.start.y, width,
+                            height, self.color, self.fill)
+
+             elif self.shape_type == PaintBox.OVAL:
+                    shape = Oval(self.start.x, self.start.y, width, height,
+                            self.color, self.fill)
+
+             elif self.shape_type == PaintBox.CIRCLE:
+                    shape = Circle(self.start.x, self.start.y, width/2,
+                            self.color, self.fill)
+
+             elif self.shape_type == PaintBox.SQUARE:
+                    shape = Square(self.start.x, self.start.y, width,
+                            self.color, self.fill)
+
+             elif self.shape_type == PaintBox.ROUND_RECTANGLE:
+                    shape = RoundedRectangle(self.start.x, self.start.y,
+                             width, height, self.color, self.fill)
+
+             if not shape is None:
+                    self.shapes.addShape(shape)
+                    x,y,width,height = shape.getRect()
+                    self.repaint(x,y,width+1, height+1)</pre>
+<p class="docText">Here's the new <tt>mouseRelease</tt> handler (<span class="docEmphasis">Three\DrawShapes.py</span>):</p>
+<pre>def handle_mouseRelease(self, event):
+
+                    # Print the status
+             self.status.setMouseRelease(event.x, event.y)
+
+                    # Calculate the width and the height
+             width = abs(self.start.x - event.x)
+             height = abs(self.start.y - event.y)
+
+                    # Set the shape bounds, i.e.,
+                    # the bounds the shape initializes from.
+                    # Add the shape to the shape list.
+                    # Calculate the shape actual bounds,
+                    # and repaint().
+             self.shape.fromBounds(self.start.x, self.start.y, width, height,
+self.color, self.fill)
+             self.shapes.addShape(self.shape)
+             x,y,width,height = self.shape.getRect()
+             self.repaint(x,y,width+1, height+1)
+
+                    # Create a new shape.
+             self.createShape()</pre>
+<p class="docText">I don't want you to confuse the fooling around with objects 
+we're doing with defining an extensible architecture for an application. I just 
+want to highlight those simple changes and show that dynamic object-oriented 
+programming saves us huge headaches.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">A Broken Record</h2>
+      <p class="docText">Remember to read <span class="docEmphasis">
+      Object-Oriented Analysis and Design with Applications</span> (Booch, 1994) 
+      and then <span class="docEmphasis">Design Patterns</span> (Gamma et al., 
+      1995).</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Try these exercises, which extend the drawing package in 
+directory 3:</p>
+<ul>
+  <li>
+  <p class="docList">Add three new shapes: a triangle (use <tt>drawPolygon</tt> 
+  and <tt>fillPolygon</tt>), a line, and a scribble.</li>
+  <li>
+  <p class="docList">Create an Undo button on the <tt>options</tt> pane that 
+  allows users to undo the last shape drawn.</li>
+  <li>
+  <p class="docList">Create a <tt>button</tt> on the options pane that allows a 
+  user to change the z-order of the shapes (that is, the order in which the 
+  shapes are &quot;stacked&quot; in the view); this might pop up a dialog box that has a 
+  list of shapes representing the z-order.</li>
+  <li>
+  <p class="docList">Add the ability to drag an already drawn shape to a new 
+  position. You'll need to do hit testing for the shape.</li>
+  <li>
+  <p class="docList">Add the ability to select a shape and change its color.</li>
+  <li>
+  <p class="docList">Create a composite shape, and call it <tt>TextBox</tt>. It 
+  should contain two shapes: the text to be drawn and the bounding rectangle. 
+  The user draws the textbox first and adds text to it. The text entered 
+  word-wraps; that is, it stays within the bounds of the rectangle, filling the 
+  box left to right and then top to bottom, and if the text is too long for one 
+  line, it starts a new one. If there are too many lines for the bounds, only 
+  the text that fits is shown.</li>
+</ul>
+<p class="docText">If you don't do at least the first exercise, you won't get 
+much out of this chapter. If you can handle the last one, you're well on your 
+way to programmer stardom.</p>
+<h3 class="docSection1Title" id="ch15lev1sec5">Summary</h3>
+<p class="docText">This chapter mainly covered events and graphics using Java 
+AWT. We learned about the different events the various graphics components 
+publish, and we got some firsthand experience of the order in which events take 
+place. We prototyped a <tt>FrameEvents</tt> class that allowed us to see the 
+runtime behavior of many events. With prototyping it's much easier to see how 
+events work.</p>
+<p class="docText">We dealt with the basic drawing of shapes and the <tt>XOR</tt> 
+graphics mode for rubberbanding. We were able to put together the things we 
+learned about graphics programming and events in a very simple drawing 
+application, which we extended to incorporate ideas in earlier chapters about 
+object-oriented programming and the dynamic behavior of Jython.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2014.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2016.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

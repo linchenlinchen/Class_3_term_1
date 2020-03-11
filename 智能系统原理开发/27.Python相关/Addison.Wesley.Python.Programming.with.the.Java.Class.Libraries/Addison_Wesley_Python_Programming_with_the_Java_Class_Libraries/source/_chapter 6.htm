@@ -1,0 +1,1289 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 6</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 6.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 6.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 6.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%205.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%207.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 6. Object-Oriented Programming</h2><ul><li>&nbsp;<a class="docLink" href="#ch06lev1sec1">What Is OOP?</a></li>
+<li>&nbsp;<a class="docLink" href="#ch06lev1sec2">Objects and Classes</a></li>
+<li>&nbsp;<a class="docLink" href="#ch06lev1sec3">Special Class Methods</a></li>
+<li>&nbsp;<a class="docLink" href="#ch06lev1sec4">Inheritance</a></li>
+<li>&nbsp;<a class="docLink" href="#ch06lev1sec5">Polymorphism</a></li>
+<li>&nbsp;<a class="docLink" href="#ch06lev1sec6">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Aggregation/containment</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Attribute</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Cardinality</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class hierarchy</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Code reuse</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Cohesion</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Coupling</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Encapsulation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">First class object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Garbage collection</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Getter/Setter methods</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Inheritance (implementation/ 
+  interface)</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Instance</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Instantiation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Late-bound polymorphism</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Multiple inheritance</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Replaceability</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Specialization</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Typed polymorphism</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">This chapter explains the fundamentals of object-oriented 
+programming, as well as why it's important and how to do it in Python.</p>
+<h3 class="docSection1Title" id="ch06lev1sec1">What Is OOP?</h3>
+<p class="docText">Object-oriented programming (OOP) is a tool for organizing 
+your programs into reusable objects. It won't necessarily make you program 
+better or faster, yet it's one of the best ideas in programming to come along so 
+far. A common myth about object-oriented programming is that it's hard to learn 
+and that you should learn a non-OOP language first, but you don't have to do 
+this. In fact, OOP is easy to learn because it models the real world. Bottom 
+line? Don't fear object-oriented programming.</p>
+<p class="docText">Here are the triple pillars of OOP:</p>
+<ul>
+  <li>
+  <p class="docList">Polymorphism</li>
+  <li>
+  <p class="docList">Encapsulation</li>
+  <li>
+  <p class="docList">Inheritance</li>
+</ul>
+<p class="docText">Of the three, polymorphism is the most important because it 
+supports the replaceable nature of objects.</p>
+<h4 class="docSection2Title" id="ch06lev2sec1">Objects as Black Boxes (Encapsulation)</h4>
+<p class="docText">Say you're driving along and a young child racing toward his 
+fleeing ball runs right in front of your car. Do you pause and think about what 
+to do? No. Instinctively, your foot reaches for the break pedal.</p>
+<p class="docText">Think of the break pedal as the interface to your car's 
+breaking system. You know how to use it because it's well defined, whether this 
+is your car or one you've rented or borrowed, whether the breaks are drum or 
+antilock. The details of the system's implementation are encapsulated—that is, 
+hidden from you. All you need to know is how to use the interface to the break 
+system—the break pedal.</p>
+<p class="docText">What does all this have to do with OOP? A great deal. With 
+OOP you define classes that support interfaces, and you use them to instantiate 
+objects. Two classes with the same interface can be used interchangeably. You 
+can organize your program into many objects, each of which has a specific role 
+(this is called cohesion). The objects perform their roles in ways that are 
+encapsulated from the rest of the program, which means that you change the way 
+an object works and keep the rest of your program intact.</p>
+<p class="docText">Here are some important object-oriented ideas:</p>
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Coupling</span> is when you 
+  change one module or class, and doing so adversely affects another module or 
+  class. (Some coupling may be necessary.)</li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Cohesion</span> is defining 
+  modules and classes that have specific roles. (Cohesion helps to reduce 
+  coupling.)</li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Encapsulation</span> is hiding 
+  the implementation details. In OOP, we hide them behind an interface.</li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Interface,</span> in OOP speak, 
+  is a collection of methods associated with a class or module.</li>
+</ul>
+<h3 class="docSection1Title" id="ch06lev1sec2">Objects and Classes</h3>
+<p class="docText">Objects in the real world are made up of many other objects 
+(in OOP speak this is called aggregation or containment). For example, a car 
+object contains tire objects, an engine object, a steering system object, a 
+breaking system object, and so forth. Organizing a program into a hierarchy of 
+objects helps us conceptualize it. Essentially, you break down the program into 
+interrelated objects, which are in turn broken down into other objects. This is 
+called inheritance.</p>
+<p class="docText">A class is a template for creating objects by defining their 
+behavior and attributes. Thus, a car class defines the behaviors of a car, such 
+as</p>
+<ul>
+  <li>
+  <p class="docList">Moving forward or backward</li>
+  <li>
+  <p class="docList">Breaking</li>
+  <li>
+  <p class="docList">Turning</li>
+</ul>
+<p class="docText">It also defines the car's attributes, such as</p>
+<ul>
+  <li>
+  <p class="docList">Make</li>
+  <li>
+  <p class="docList">Model</li>
+  <li>
+  <p class="docList">Color</li>
+  <li>
+  <p class="docList">Year</li>
+  <li>
+  <p class="docList">Two door or four door</li>
+</ul>
+<p class="docText">The car class acts as a generic template for cars. Just as 
+there are many cars in the world, so there can be many car objects in your 
+program (this concept is known as object cardinality), but they share attributes 
+and behavior. So, for example, you can stop and start both a Volvo and a Chevy. 
+Think of the class as a cookie cutter and its objects as the cookies it stamps 
+out. The cookies themselves are the instances of the class.</p>
+<p class="docText">The great thing about programming in Python (and Java for 
+that matter) is that you don't have to start from scratch. There are lots of 
+general-purpose classes and modules for doing common things. For example, Python 
+has a URL module that knows how to work with files from FTP and HTTP servers.</p>
+<p class="docText">Let's review the key concepts so far:</p>
+<ul>
+  <li>
+  <p class="docList">A class (<tt>Car</tt>) is a template for defining objects (<tt>Volvo</tt>).</li>
+  <li>
+  <p class="docList">Attributes describe an object's appearance, state, or 
+  quality.</li>
+  <li>
+  <p class="docList">Behavior defines how an object acts.</li>
+  <li>
+  <p class="docList">Cardinality is the number of instances of an object in a 
+  system.</li>
+</ul>
+<p class="docText">Define a <tt>Car</tt> class in Python as.</p>
+<pre>       jython –i car.py):
+
+class Car:
+       make = &quot;?&quot;
+       model = &quot;?&quot;
+       color = &quot;?&quot;
+       running = 0 #1 is true, 0 is false</pre>
+<h4 class="docSection2Title" id="ch06lev2sec2">Attributes</h4>
+<p class="docText">Here we see that the attributes of <tt>Car</tt> are defined 
+by its variables, which are indented. We can use this class template to create
+<tt>car</tt> instances.</p>
+<pre>              # create an instance of my car
+       # and display its attributes
+myCar = Car()
+print &quot;After Create:&quot;, myCar.color, myCar.make, myCar.model
+
+       # Set myCars attributes then display attributes
+myCar.color, myCar.make, myCar.model = &quot;Red&quot;, &quot;Ford&quot;, &quot;Taurus&quot;
+print &quot;After set:&quot;, myCar.color, myCar.make, myCar.model</pre>
+<p class="docText">The output is</p>
+<pre>After Create: ? ? ?
+After set: Red Ford Taurus</pre>
+<h4 class="docSection2Title" id="ch06lev2sec3">Behavior</h4>
+<p class="docText">An object's behavior is determined by methods defined by its 
+class. Let's return to the <tt>Car</tt> class example and add <tt>start</tt> and
+<tt>stop</tt> behavior.</p>
+<pre>class Car:
+       make = &quot;?&quot;
+       model = &quot;?&quot;
+       color = &quot;?&quot;
+       running = 0 #1 is true, 0 is false
+
+       def start(self):
+              if self.running == 1:
+                     print &quot;The car is already running&quot;
+              else:
+                     self.running = 1
+
+       def stop(self):
+              if self.running ==0:
+                     print &quot;The car is already stopped&quot;
+              else:
+                     self.running = 0</pre>
+<p class="docText">Here are some examples of the <tt>Car</tt> class methods 
+followed by their output:</p>
+<pre>car = Car()
+car.color = &quot;Red&quot;
+car.make = &quot;Ford&quot;
+car.model =&quot;Taurus&quot;
+
+             # Start the car
+car.start()
+print &quot;After Start:&quot;, car.color, car.make, car.model, car.running
+
+             #Stop the car
+car.stop()
+print &quot;After Stop:&quot;, car.color, car.make, car.model, car.running
+
+       After Start: Red Ford Taurus 1
+       After Stop: Red Ford Taurus 0</pre>
+<h4 class="docSection2Title" id="ch06lev2sec4">The Python Objects Model</h4>
+<p class="docText">Unlike in Java, everything in Python is an object—functions, 
+modules, classes, packages, numeric types—everything. Objects have an identity, 
+a type, and a value. The type determines the methods and operations that an 
+object supports. The value can be changeable (dictionaries, classes, lists) or 
+immutable (strings, integers, tuples).</p>
+<p class="docText">You know, for example, that you can create many instances of 
+the same class. But did you know that a class is itself an object, a first class 
+object, that can be dynamically modified? When you modify the template (class), 
+you in effect modify the class instances not yet created.</p>
+<p class="docText">To illustrate, we'll modify the attributes of the <tt>Car</tt> 
+class for Fords.</p>
+<pre>&gt;&gt;&gt; Car.make, Car.model, Car.color = &quot;Ford&quot;, &quot;Taurus&quot;, &quot;Red&quot;</pre>
+<p class="docText">Then we'll create a list of three Ford cars.</p>
+<pre>&gt;&gt;&gt; ford_cars = [Car(), Car(), Car()]</pre>
+<p class="docText">Next we'll print out their make.</p>
+<pre>&gt;&gt;&gt; ford_cars[0].make, ford_cars[1].make, ford_cars[2].make
+('Ford', 'Ford', 'Ford')</pre>
+<p class="docText">Now we use the same technique to create three Hondas.</p>
+<pre>&gt;&gt;&gt; Car.make, Car.model = &quot;Honda&quot;, &quot;Civic&quot;
+&gt;&gt;&gt; honda_cars = [Car(), Car(), Car()]
+&gt;&gt;&gt; honda_cars[0].make, honda_cars[1].make, honda_cars[2].make
+('Honda', 'Honda', 'Honda')</pre>
+<p class="docText">As you can see, when you can change the template, you 
+essentially create objects with new attributes.</p>
+<h3 class="docSection1Title" id="ch06lev1sec3">Special Class Methods</h3>
+<p class="docText">In Python you can define special methods for classes that 
+have special meaning. You can also define methods to make your class look like 
+other objects such as lists, dictionaries, and tuples.</p>
+<h4 class="docSection2Title" id="ch06lev2sec5">Creating and Destroying Class Instances</h4>
+<p class="docText">Like other OOP languages, Python has a destructor and a 
+constructor. A constructor is called when an instance is instantiated. A 
+destructor is called when an instance is garbage-collected. The method <tt>
+__init__</tt> denotes the constructor. The method <tt>__del__</tt> denotes the 
+destructor.</p>
+<p class="docText">Here's the <tt>Car</tt> class (<span class="docEmphasis">Car2.py</span>) 
+with its constructor and destructor:</p>
+<pre>class Car:
+       make = &quot;?&quot;
+       model = &quot;?&quot;
+       color = &quot;?&quot;
+       running = 0 #1 is true, 0 is false
+
+       def __init__(self, make, model, color):
+              self.make = make
+              self.model = model
+              self.color = color
+              print &quot;constructor called&quot;
+
+       def __del__(self):
+              print &quot;destructor called&quot;
+       ...</pre>
+<p class="docText">The __<tt>init</tt>__ method takes the form</p>
+<pre>__init__ (self[, args...]):</pre>
+<p class="docText">The __<tt>del</tt>__ method takes the form</p>
+<pre>__del__ (self):</pre>
+<p class="docText">First we create an instance of the <tt>Car</tt> class. Notice 
+that <tt>constructor</tt> <tt>called</tt> is printed out, because the __<tt>init</tt>__ 
+method is called when we instantiate <tt>Car</tt>.</p>
+<pre>&gt;&gt;&gt; myCar = Car(&quot;Ford&quot;, &quot;Taurus&quot;, &quot;Red&quot;)
+constructor called</pre>
+<p class="docText">Next we print out the attributes that were set when the 
+constructor was called.</p>
+<pre>&gt;&gt;&gt; myCar.make, myCar.model, myCar.color
+('Ford', 'Taurus', 'Red')</pre>
+<p class="docText">Then we try to destroy this instance to see if the destructor 
+is called.</p>
+<pre>&gt;&gt;&gt; myCar = None
+&gt;&gt;&gt; myCar is None
+1
+&gt;&gt;&gt; None
+&gt;&gt;&gt; None
+destructor</pre>
+<p class="docText">The destructor isn't called when we assign <tt>myCar</tt> to
+<tt>None</tt>. That's because <tt>Car</tt> isn't destroyed until it's 
+garbage-collected, which may never happen. For example, the garbage collector 
+may be implemented to run only if there's no more memory left.</p>
+<h4 class="docSection2Title" id="ch06lev2sec6">Representing the Class Instance as a String</h4>
+<p class="docText">There are two methods for creating string representations of 
+an object: __<tt>repr</tt>__ and __<tt>string</tt>__.</p>
+<p class="docText">The __<tt>repr</tt>__ method represents your object in such a 
+way that it can be recreated with the <tt>eval</tt> statement. <tt>eval</tt> 
+evaluates a string as a Python expression and works much like the interactive 
+interpreter. __<tt>repr</tt>__ is called when you use back quotes or call the
+<tt>repr</tt> command. Here's what it looks like:</p>
+<pre>__repr__ (self):</pre>
+<p class="docText">The __<tt>str</tt>__ method is a way to do a nice looking 
+string for printing. It's called by the <tt>str()</tt> built-in function and by 
+the <tt>print</tt> statement. Here's what it looks like:</p>
+<pre>__str__ (self):</pre>
+<p class="docText">We can add __<tt>str</tt>__ to our <tt>Car</tt> class like 
+this:</p>
+<pre>class Car:
+       ...
+       ...
+       def __str__(self):
+              strRun = &quot;&quot;
+              if self.running == 1:
+                     strRun=&quot;\nThe car is running&quot;
+              else:
+                     strRun=&quot;\nThe car is stopped&quot;
+
+              str = &quot;make &quot; + make + \
+                     &quot;\nmodel &quot; + model + \
+                     &quot;\ncolor &quot; + color + strRun
+              return str</pre>
+<p class="docText">Here's the output (from the <span class="docEmphasis">Car2.py</span> 
+module) in interactive mode:</p>
+<pre>C:\py\book\chap9&gt;jython -i Car2.py
+
+&gt;&gt;&gt; car = Car(&quot;Ford&quot;, &quot;Mustang&quot;, &quot;Cherry Red&quot;)
+constructor called
+
+&gt;&gt;&gt; print car
+make Ford
+model Mustang
+color Cherry Red
+The car is stopped</pre>
+<p class="docText">__<tt>repr</tt>__ can also be used for display. However, if 
+at all possible, it should evaluate to an expression that returns the object. 
+Thus, if you use the Python <tt>eval</tt> statement, which reads in text and 
+parses it to an expression, you should be able to recreate the instance with the 
+string that __<tt>repr</tt>__ returns.</p>
+<p class="docText">Here's an example of __<tt>repr</tt>__:</p>
+<pre>def __repr__(self):
+       format = &quot;&quot;&quot;Car(&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;)&quot;&quot;&quot;
+       return format % (self.make, self.model, self.color)</pre>
+<p class="docText">Here's the output (from the <span class="docEmphasis">Car2.py</span> 
+module) in interactive mode:</p>
+<pre>C:\py\book\chap9&gt;jython -i Car2.py
+&gt;&gt;&gt; car = Car (&quot;Ford&quot;, &quot;Mustang&quot;, &quot;Midnight Blue&quot;)
+constructor
+
+&gt;&gt;&gt; print `car`
+Car(&quot;Ford&quot;,&quot;Mustang&quot;,&quot;Midnight Blue&quot;)
+
+&gt;&gt;&gt; print car
+make Ford
+model Mustang
+color Midnight Blue
+
+The car is stopped
+&gt;&gt;&gt; car2 = eval(`car`)
+constructor
+
+&gt;&gt;&gt; print car2
+make Ford
+model Mustang
+
+color Midnight Blue
+The car is stopped</pre>
+<p class="docText">In the above example, we used the return from <tt>car.__repr__()</tt> 
+in conjunction with the <tt>eval</tt> statement to create <tt>car2</tt>. The <tt>
+car2</tt> instance has the same attributes as the original <tt>car</tt> 
+instance.</p>
+<h4 class="docSection2Title" id="ch06lev2sec7">Comparing, Hashing, and Truth Testing</h4>
+<p class="docText">Three other methods, shown in
+<a class="docLink" href="#ch06table01">Table 6-1</a>, have special meaning in 
+Python. We'll use module <span class="docEmphasis">Car3.py</span> to demonstrate 
+them.</p>
+<pre>max_Price = 7000
+running = 0
+
+def __nonzero__(self):
+       if (self.price &gt; Car.max_Price):
+             return 0
+       else:
+             return 1
+
+def __cmp__(self, other):
+       if (self.price &gt; other.price): return 1
+       if (self.price &lt; other.price): return -1
+       if (self.price == other.price): return 0
+
+def __hash__(self):
+       v= self.make + self.model + self.color + `self.price`
+       return hash(v)
+
+def __init__(self, make, model, color, price=5000):
+       self.make = make
+       self.model = model
+       self.color = color
+       self.price = price
+       ...
+       ...</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch06table01" class="docTableTitle">Table 6-1. Python Class Methods</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Method</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>__cmp__ (self, other)</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Called by the comparison 
+    operators, ==,=&gt;, &gt;, &lt;, =&lt; </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>__hash__ (self)</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Used in conjunction with 
+    the hash function to return a 32-bit integer used for hash values in 
+    dictionaries </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>__nonzero__ (self)</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Used for Boolean truth 
+    testing; is the object in a true state or a false state </td>
+  </tr>
+</table>
+<p class="docText">Here we've added a class variable called <tt>max_Price</tt> 
+and an instance variable called <tt>price</tt>. The __<tt>nonzero</tt>__ method 
+uses <tt>max_Price</tt> to see if the price of the instance is under the maximum 
+price. The __<tt>cmp</tt>__ method uses the price to compare another <tt>Car</tt> 
+instance to the current one. The hash is calculated by creating a large string 
+representation of all the hash values of the individual attributes of the <tt>
+Car</tt> instance.</p>
+<p class="docText">The following code is also part of <span class="docEmphasis">
+Car3.py.</span></p>
+<pre>if __name__ == &quot;__main__&quot;:
+       car1 = Car(&quot;Ford&quot;, &quot;Mustang&quot;, &quot;Midnight Blue&quot;, 5000)
+       car2 = Car(&quot;Chevrolet&quot;, &quot;Corvette&quot;, &quot;Champagne gold&quot;, 9000)
+              #To demonstrate compare __cmp__
+       if (car1 &gt; car2):
+              print car1
+       else:
+              print car2
+
+              #to demonstrate Boolean __nonzero__
+       if(car1): print &quot;Buy It&quot;
+       if(not car2): print &quot;I can't afford it&quot;
+
+              #to demonstrate hash __hash__
+       print `hash(car1)`</pre>
+<p class="docText">The output looks like this:</p>
+<pre>C:\py\book\chap9&gt;jython car3.py
+make Chevrolet
+model Corvette
+color Champagne gold
+The car is stopped
+Buy It
+I can't afford it
+-1273809553</pre>
+<h4 class="docSection2Title" id="ch06lev2sec8">Getting, Setting, and Deleting Attributes</h4>
+<p class="docText">We can override the default behavior for how objects are 
+displayed, printed, constructed, compared, truth-tested, and so forth. We can 
+also override how member variables in our instance are accessed. The methods 
+shown in <a class="docLink" href="#ch06table02">Table 6-2</a> customize 
+attribute access for class instances.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch06table02" class="docTableTitle">Table 6-2. Instance Access Methods</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Method</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Definition</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>__getattr__ (self, 
+    name)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Gets the value of an 
+    attribute </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>__setattr__ (self, 
+    name, value)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Sets the value of an 
+    attribute </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>__delattr__ (self, 
+    name)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Deletes an attribute </td>
+  </tr>
+</table>
+<p class="docText">Essentially, you provide getter/setter methods to control 
+access to your member variables. Let's create a version of the <tt>Car</tt> 
+class that controls access to the <tt>price</tt> attribute so that users can't 
+set the price under $1,000.</p>
+<pre>class Car:
+       ...
+       ...
+       def __setattr__(self, name, value):
+             if name == &quot;price&quot;:
+                   if (value &gt; 1000):
+                          self.__dict__[&quot;price&quot;] = value
+                   else:
+                          self.__dict__[&quot;price&quot;] = 1000
+             else:
+                   self.__dict__[name] = value
+       ...
+       ...</pre>
+<p class="docText">Notice that we use the __<tt>dict</tt>__ method that contains 
+all of the member variables of the class instance. If we had tried to use <tt>
+self.attribute_name</tt>, we would have thrown our program into an endless loop 
+of recursive calls to __<tt>setattr</tt>__ (I know this from experience). The 
+method checks to see if the name of the attribute is <tt>price</tt>. If so, we 
+provide some special handling for setting price. Otherwise, we just set the 
+value of all other attributes: <tt>self.__dict__[name] = value</tt>, which, by 
+the way, is the behavior of the default implementation. A similar technique 
+could be used for __<tt>getattr</tt>__ and __<tt>delattr</tt>__. The sample code 
+here uses the above added logic in the __<tt>setattr</tt>__ method.</p>
+<pre>C:\py\book\chap9&gt;jython -i car4.py
+&gt;&gt;&gt; car = Car(&quot;Ford&quot;, &quot;Mustang&quot;, &quot;Bright Orange&quot;, 5000)
+&gt;&gt;&gt; car.price = 2000
+&gt;&gt;&gt; car.price
+2000
+
+&gt;&gt;&gt; car.price = 1001
+&gt;&gt;&gt; car.price
+1001
+
+&gt;&gt;&gt; car.price = 900
+&gt;&gt;&gt; car.price
+1000</pre>
+<h3 class="docSection1Title" id="ch06lev1sec4">Inheritance</h3>
+<p class="docText">Inheritance allows you to reuse common code and so has a 
+profound effect on the way you implement your Python classes. It also allows you 
+to organize your classes into a hierarchical arrangement. Classes toward the 
+bottom of the hierarchy inherit from classes higher up (like a family tree). 
+Thus, if you create a class, <tt>classB</tt>, that inherits behavior and 
+attributes from another class, <tt>ClassA</tt>, then <tt>classB</tt> becomes the 
+subclass of <tt>classA</tt>, and <tt>classA</tt> becomes the superclass of <tt>
+classB</tt>.</p>
+<p class="docText">A subclass can override or create new behavior and attributes 
+specific to its role. This is called specialization.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The Limits of Inheritance</h2>
+      <p class="docText">It may look like one, but inheritance is no silver 
+      bullet. In fact, there are reasons to limit its use. Like all good things, 
+      inheritance should be used in moderation, primarily to avoid coupling 
+      between subclass and superclass.</p>
+      <p class="docText">There are two forms of inheritance: implementation and 
+      interface.</p>
+      <p class="docText">Remember that the implementation of a class is one of 
+      the things we try to hide with encapsulation. If you're going to do 
+      implementation inheritance from a weakly written base class (superclass), 
+      watch out—if a base class is buggy, so are all of its subclasses. And, if 
+      you introduce a bug into the base class, you introduce it into all of the 
+      subclasses.</p>
+      <p class="docText">I'm not saying organizing your classes into a hierarchy 
+      of classes is wrong; just proceed with caution because inheritance 
+      provides code reuse at the expense of encapsulation.</p>
+      <p class="docText">A good book on object-oriented design is
+      <span class="docEmphasis">Design Patterns</span> (Gamma et al., 
+      Addison-Wesley, 1995). It describes some of the pitfalls of inheritance, 
+      including tight coupling of subclasses to superclasses, and provides 
+      blueprints for good designs. The book is indispensable to OOP programmers.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch06lev2sec9">Code Reuse and the Class Hierarchy</h4>
+<p class="docText">One of the major advantages of object-oriented programming is 
+code reuse. We'll illustrate this with a real-world example of inheritance.</p>
+<p class="docText">Cars and trucks are similar in that they both have certain 
+physical characteristics like doors and windows and they both have a make, 
+model, and vehicle identification number (VIN). Of course, they're also very 
+different. One is for carrying loads; the other is for carrying passengers. 
+Still, we can put the things common to trucks and cars in a base class, which we 
+can then subclass into separate car and truck classes</p>
+<p class="docText">Based on these principles we can create a base class called
+<tt>Automobile</tt> that consists of make, model, VIN, price, mpg, and so forth. 
+The <tt>Truck</tt> subclass may specialize <tt>Automobile</tt> with towing 
+capacity, bed size, and the like; the <tt>Car</tt> subclass may do so with trunk 
+capacity and number of passengers.</p>
+<p class="docText">The class hierarchy for cars and trucks might look like
+<a class="docLink" href="#ch06fig01">Figure 6-1</a>.</p>
+<center>
+<h5 id="ch06fig01" class="docFigureTitle">Figure 6-1. <tt>Automobile</tt> Class Hierarchy</h5>
+<p class="docText"><img alt="graphics/06fig01.gif" src="06fig01.gif" border="0" width="400" height="362"></p>
+</center>
+<p class="docText">Now we'll derive two classes from Automobile called <tt>Car</tt> 
+and <tt>Truck</tt>, as in the figure. Here is the base class (from
+<span class="docEmphasis">Automobile1.py):</span></p>
+<pre>class Automobile:
+       max_Price = 7000
+       running = 0
+
+       def __setattr__(self, name, value):
+              ...
+
+       def __nonzero__(self):
+              ...
+
+       def __cmp__(self, other):
+              ...
+              ...
+
+       def __hash__(self):
+              ...
+
+       def __init__(self, make, model, color, price=5000):
+              ...
+
+       def __del__(self):
+              ...
+
+       def start(self):
+              ...
+
+       def stop(self):
+              ...
+
+       def __str__(self):
+              ...
+
+       def __repr__(self):
+              ...</pre>
+<p class="docText">Here are the <tt>Car</tt> and <tt>Truck</tt> subclasses (from
+<span class="docEmphasis">Automobile2.py</span>):</p>
+<pre>class Car (Automobile):
+       def __init__(self, make, model, color, price, trunk_space= 5):
+              Automobile.__init__(self, make, model, color, price)
+              self.trunk_space = trunk_space
+
+class Truck (Automobile):
+
+       def __init__(self, make, model, color, price, tow_capacity = 2):
+              Automobile.__init__(self, make, model, color, price)
+              self.tow_capacity = tow_capacity</pre>
+<p class="docText">The statement <tt>class Car (Automobile)</tt> tells Python to 
+subclass a <tt>Car</tt> class from <tt>Automobile</tt>. The statement <tt>
+Automobile.__init__(self, make, model, color, price)</tt> tells Python to call 
+the base class constructor. The constructor isn't doing much right now, but when 
+we build graphical user interfaces it will do a lot.</p>
+<p class="docText">When you create a new instance of the <tt>Truck</tt> class, 
+you get the attributes defined in it as well as all attributes defined in its 
+base class, <tt>Automobile</tt>. Thus, the base classes and current classes mix 
+to assemble a template for the class instance. Then each class instance is 
+initialized with the attribute data that describes it.</p>
+<p class="docText">Methods work similarly. An instance can access all of the 
+methods of its class and its superclasses (base classes). If you call a method 
+on an instance, Python checks its class for that method definition. If it finds 
+it, it calls the method. If not, it checks the superclass (or superclasses). 
+Python will look all the way up the class hierarchy for the method to call, so 
+when you define a method with the same name as that of a base class method, you 
+effectively override that method's functionality.</p>
+<p class="docText">Python, unlike Java, provides multiple inheritance, which 
+means that it can inherit functionality from more than one class. Java provides 
+single inheritance, which means that a class can inherit only from one 
+superclass.</p>
+<p class="docText">There are problems with multiple inheritance. For example, 
+two base classes can have a method with the same name. Python gets rid of these 
+problems by having left-to-right multiple inheritance. That is, the base class 
+to the left in the definition of the class overrides the base class to the 
+right.</p>
+<p class="docText">Let's say that our <tt>Car</tt> class inherits from two base 
+classes, <tt>Automobile</tt> and <tt>Vehicle</tt>. Let's also say that both of 
+these classes have a __<tt>start</tt>__ method. If we want <tt>Car</tt> to use
+<tt>Vehicle</tt>'s __<tt>start</tt>__ method, we have to define it like this:</p>
+<pre>def Car (Vehicle, Automobile):</pre>
+<p class="docText">If we want <tt>Car</tt> to use <tt>Automobile</tt>'s __<tt>start</tt>__ 
+method, we have to define it like this:</p>
+<pre>def Car (Automobile, Vehicle):</pre>
+<h3 class="docSection1Title" id="ch06lev1sec5">Polymorphism</h3>
+<p class="docText">Of the three pillars of OOP, inheritance and encapsulation 
+are nice to have but polymorphism is the true key to OOP's success. Polymorphism 
+gives objects the most important feature of all: replaceability.</p>
+<p class="docText">There are two forms of polymorphism: late-bound and typed. 
+Visual Basic uses late-bound, whereas Java uses typed. Python polymorphism is a 
+hybrid of the two.</p>
+<h4 class="docSection2Title" id="ch06lev2sec10">Late-Bound Polymorphism</h4>
+<p class="docText">In Python, late-bound polymorphism means that class instances 
+can appear to be other objects if their class implements special methods. Thus, 
+because a function is an object, a class can act like a function just by 
+implementing a special method. Numeric types are also objects, so with special 
+methods a class can act like a numeric type.</p>
+<p class="docText">For example, to make a class act like a function we can use 
+the function notation with the class to make a call and pass instances of the 
+class where we expect a function object. All we need to do is add a __<tt>call</tt>__ 
+method to a class in the form <tt>__call__(self[, args…]</tt>. The following 
+interactive session shows how:</p>
+<pre>&gt;&gt;&gt; class hello:
+...          def __call__(self):
+...                print &quot;Hello World&quot;
+...
+&gt;&gt;&gt; hi = hello()   # define an instance of hello
+&gt;&gt;&gt; hi()           # use the hi instance as a function
+Hello World</pre>
+<p class="docText">Also, we can use a variable number of arguments with the __<tt>call</tt>__ 
+method as follows:</p>
+<pre>&gt;&gt;&gt; class Add:
+...          def __call__(self, num1, num2):
+...                return num1 + num2
+...
+&gt;&gt;&gt; add = Add()    #define an instance of the Add class
+&gt;&gt;&gt; add(1,2)       # use the add instance as a function
+3</pre>
+<p class="docText">We can define classes that act like numeric types with the __<tt>add</tt>__, 
+__<tt>radd</tt>__, __<tt>sub</tt>__, and __<tt>rsub</tt>__ methods. The method 
+used depends on the class, as shown in <a class="docLink" href="#ch06table03">
+Table 6-3</a>. To demonstrate how we use them, let's define a simple <tt>Car</tt> 
+class that implements __<tt>add</tt>__. Follow along in interactive mode.</p>
+<pre>&gt;&gt;&gt; class Car:
+...          def __init__(self, inventory):
+...                self.inventory = inventory
+...          def __add__(self, other):  #define an __add__ method
+...                return self.inventory + other
+...
+&gt;&gt;&gt; #define a Car instance to hold the # of buicks
+&gt;&gt;&gt; buicks_in_lot = Car(5)
+
+&gt;&gt;&gt; #define a Car instance to hold the # of chevys
+&gt;&gt;&gt; chevys_in_lot = Car(20)</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch06table03" class="docTableTitle">Table 6-3. Methods That Define Classes to Act Like 
+  Numbers</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Method</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Behavior</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__add__ (self, other), __radd__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 + num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__sub__ (self, other), __rsub__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 - num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__mul__ (self, other), __rmul__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 * num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__div__ (self, other), __rdiv__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 / num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__mod__ (self, other), __rmod__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 % num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__divmod__ (self, other), __rdivmod__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; divmod(num1, num2)</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__pow__ (self, other), __rpow__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 ** num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__lshift__ (self, other), __rlshift__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 &lt;&lt; num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__rshift__ (self, other), __rrshift__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 &gt;&gt; num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__and__ (self, other), __rand__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 &amp; num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__xor__ (self, other), __rxor__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 ^ num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__or__ (self, other), __ror__ (self, other)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; num1 | num2</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__neg__ (self)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt; num1 = 1
+&gt;&gt; -num1
+-1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__pos__ (self)
+</pre>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt; num1 = 1
+&gt;&gt; +num1
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__abs__ (self)
+</pre>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt; num1 = -1
+&gt;&gt; abs(num1)
+1</pre>
+    </td>
+  </tr>
+</table>
+<pre>&gt;&gt;&gt; buicks_in_lot + 5            # if we add 5 more...how many buicks?
+      10
+&gt;&gt;&gt; chevys_in_lot + 5            # if we add 5 more; how many chevys?
+      25</pre>
+<p class="docText">Now we can add numeric types to our instances.</p>
+<p class="docText">What about adding other instances? For example, what happens 
+if we add <tt>chevys_in_lot + buicks_in_lot</tt>?</p>
+<pre>&gt;&gt;&gt; chevys_in_lot + buicks_in_lot
+Traceback (innermost last):
+  File &quot;&lt;interactive input&gt;&quot;, line 0, in ?
+  File &quot;&lt;interactive input&gt;&quot;, line 5, in __add__
+TypeError: __add__ nor __radd__ defined for these operands</pre>
+<p class="docText">Of course, this isn't what we want. To get the proper 
+behavior we need to define a __<tt>radd</tt>__ method, which is necessary when 
+the operand is on the right and the left operand doesn't support __<tt>add</tt>__. 
+To add both instances together, we have to do this (follow along):</p>
+<pre>&gt;&gt;&gt; class Car:
+...          def __init__(self, inventory):
+...                self.inventory = inventory
+...          def __add__(self, other):
+...                return self.inventory + other
+...          def __radd__(self, other):
+...                return self.inventory + other
+...
+&gt;&gt;&gt; buicks_in_lot, chevys_in_lot = Car(5), Car(20)
+&gt;&gt;&gt; chevys_in_lot + buicks_in_lot
+25</pre>
+<p class="docText">If you define the methods shown in
+<a class="docLink" href="#ch06table04">Table 6-4</a>, you can create a class 
+whose instances act like a dictionary. Let's create such a class that implements 
+all of the methods in the table and calls a real dictionary.</p>
+<pre>class MyDict:
+       def __init__(self):
+             self.dict = {}
+       def __len__(self):
+             return len(self.dict)
+       def __getitem__(self, key):
+             return self.dict[key]
+       def __setitem__(self, key, value):
+             self.dict[key]=value
+       def __delitem__(self, key):
+             del(self.dict[key])
+       def keys(self):
+             return self.dict.keys()
+       def values(self):
+             return self.dict.values()
+       def items(self):
+             return self.dict.items()
+       def has_key(self, key):
+             return self.dict.has_key(key)
+       def get(self, key):
+             return self.dict.get(key)
+       def clear(self):
+             self.dict.clear()
+       def copy(self):
+             return self.dict.copy()
+       def __str__(self):
+             return str(self.dict)
+       def __repr__(self):
+             return repr(dict)
+       def update(self, dict):
+             self.dict.update(dict)
+</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch06table04" class="docTableTitle">Table 6-4. Methods That Define Classes to Act like 
+  Dictionaries</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Method</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Behavior</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__len__(self)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; len(dict) 3</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__getitem__(self, key)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; dict[key] 'Missy'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__setitem__(self, key, value)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; dict[key] = value</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>__delitem__(self, key)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; del dict[key]</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>keys(self)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; dict.keys() ['Miguel', 'Adam', 'Rick']</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>values(self)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; dict.value() ['Martha', 'Missy',
+'Kiley']</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>items(self)
+</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; dict.items() [('Rick', 'Kiley'),
+('Adam', 'Missy'), ('Miguel', 'Martha')]</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>has_key(self, key)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt; dict.has_key(key) 1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>get(self, key)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt;&gt; dict.get('Rick') 'Kiley'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>clear(self)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt;dict.clear()</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>copy(self)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt;cdict = dict.copy()</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>update(self, dict)</pre>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt;dict2.update(dict)</pre>
+    </td>
+  </tr>
+</table>
+<p class="docText">To test the dictionary, we write the following code:</p>
+<pre>if __name__ == &quot;__main__&quot;:
+      main()
+
+def main():
+      dict = MyDict()
+      print &quot;test __setitem__&quot;
+      dict[&quot;Ham&quot;] = &quot;Eggs&quot;
+      dict[&quot;Tom&quot;] = &quot;Jerry&quot;
+      dict[&quot;Mike&quot;] =&quot;Ike&quot;
+      print &quot;setitem &quot;, dict
+
+      print &quot;test __getitem__ and get&quot;
+      print &quot;getiem &quot;, dict[&quot;Ham&quot;], dict[&quot;Tom&quot;], dict[&quot;Mike&quot;]
+      print &quot;get &quot;, dict.get(&quot;Ham&quot;), dict.get(&quot;Tom&quot;), dict.get(&quot;Mike&quot;)
+
+      print &quot;test del&quot;
+      del dict[&quot;Ham&quot;]
+      print dict
+
+      print &quot;test keys&quot;
+      for key in dict.keys():
+             print &quot; &quot; + key
+
+      print &quot;test values&quot;
+      for value in dict.values():
+             print &quot; &quot; + `value`
+
+      print &quot;test items&quot;
+      for item in dict.items():
+             print &quot; &quot; + `item`
+
+      print &quot;test has_keys&quot;
+      print &quot;true &quot; + `dict.has_key(&quot;Tom&quot;)`
+      print &quot;false &quot; + `dict.has_key(&quot;Ham&quot;)`
+
+      print &quot;test copy&quot;
+      cdict = dict.copy()
+      print cdict
+
+      print &quot;test clear&quot;
+      dict.clear()
+      print dict
+
+      print &quot;test update&quot;
+      dict.update(cdict)
+      print cdict</pre>
+<p class="docText">We put the code we use to test the dictionary in the section 
+of the module that runs only as a main module. That is,</p>
+<pre>&gt;&gt;&gt; import dict
+&gt;&gt;&gt; dict.main()
+test __setitem__
+setitem {'Tom': 'Jerry', 'Mike': 'Ike', 'Ham': 'Eggs'}
+test __getitem__ and get
+getitem Eggs Jerry Ike
+get Eggs Jerry Ike
+test del
+{'Tom': 'Jerry', 'Mike': 'Ike'}
+test keys
+  Tom
+  Mike
+test values
+  'Jerry'
+  'Ike'
+test items
+  ('Tom', 'Jerry')
+  ('Mike', 'Ike')
+test has_keys
+true 1
+false 0
+test copy
+{'Tom': 'Jerry', 'Mike': 'Ike'}
+test clear
+{}
+test update
+{'Tom': 'Jerry', 'Mike': 'Ike'}</pre>
+<p class="docText">As promised, our dictionary class acts just like a regular 
+dictionary.</p>
+<p class="docText">To find out more about how to simulate built-in objects, 
+refer to the documentation that ships with Python. It's a wealth of well-written 
+information.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The Power of Polymorphism</h2>
+      <p class="docText">The dictionary we created is simple; it only delegates 
+      operations to a real dictionary object. Imagine building a dictionary-like 
+      class that accesses a file, a database, or a directory server. To the 
+      application developer, this class looks just like another dictionary but 
+      does far more. You can even use it like a class instance transparently, 
+      with code written to work with built-in dictionaries. This is truly a 
+      powerful concept.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">To write a class whose instances behave like a list, you 
+implement the methods <tt>__getslice__()</tt>, <tt>__setslice__()</tt>, <tt>__delslice__()</tt>,
+<tt>append()</tt>, <tt>count()</tt>, <tt>index()</tt>, <tt>insert()</tt>, <tt>
+pop()</tt>, <tt>remove()</tt>, <tt>reverse()</tt>, and <tt>sort()</tt>, just 
+like you do with Python standard list objects. For concatenation you use <tt>
+__add__()</tt> and <tt>__radd__()</tt>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Python's List and Dictionary Modules</h2>
+      <p class="docText">Python ships with two class modules,
+      <span class="docEmphasis">userdict</span> and <span class="docEmphasis">
+      userlist,</span> that implement a dictionary and a list, respectively. 
+      Both are well documented.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">We won't implement a list in this section. As an exercise at 
+the end of the chapter, you'll create a list using a technique similar to the 
+one we used for a dictionary.</p>
+<h4 class="docSection2Title" id="ch06lev2sec11">Typed Polymorphism</h4>
+<p class="docText">With OOP you can build an entire framework of extensible 
+reusable components. Python, unlike other languages, isn't strictly typed. In 
+Java, Visual Basic, and C++, classes become types that the user can make into 
+objects (i.e., instances), whereas in Python all instances of a class are of 
+type <tt>Instance</tt>; also, classes aren't types unto themselves but are part 
+of a type class. The following examples illustrate these ideas.</p>
+<p class="docText">First we define a simple class, <tt>Myclass</tt>.</p>
+<pre>&gt;&gt;&gt; class Myclass:
+...    pass
+...</pre>
+<p class="docText">Then we create an instance of <tt>Myclass</tt> and check its 
+type.</p>
+<pre>&gt;&gt;&gt; an_instance = Myclass()
+&gt;&gt;&gt; type(an_instance)
+&lt;jclass org.python.core.PyInstance at 5325988&gt;</pre>
+<p class="docText">Next we check the type of <tt>Myclass</tt>.</p>
+<pre>&gt;&gt;&gt; type(Myclass)
+&lt;jclass org.python.core.PyClass at 7914640&gt;</pre>
+<p class="docText">Programmers, if you're used to other languages that use typed 
+classes, you may think that Python is a little weird. Actually, the typed system 
+of other languages is orthogonal to Python's. The only real difference is a 
+little bit of syntax and the fact that in Python classes don't define types.</p>
+<p class="docText">For example, in Java you do this to get the type of a class:</p>
+<pre>an_instance.getClass().getName()</pre>
+<p class="docText">whereas in Python you do this:</p>
+<pre>an_instance.__class__.__name__</pre>
+<p class="docText">Again, in Java you do this to see if an object is an instance 
+of a class:</p>
+<pre>if(an_instance instanceof MyClass)System.out.println(&quot;true&quot;);</pre>
+<p class="docText">In Python you do this:</p>
+<pre>if(isinstance(an_instance, MyClass)): print(&quot;true&quot;)</pre>
+<p class="docText">In Python, classes and instances are objects that can be 
+manipulated at runtime, which is a good thing. For instance, you can add a 
+method to a class at runtime so that every instance of that class has that 
+method available in its interface. Also, you can add members to an instance at 
+runtime. Whether those members are methods or other objects doesn't matter, 
+because everything is an object that can be manipulated. This makes Python very 
+flexible.</p>
+<p class="docText">So, why have a section on typed polymorphism if Python 
+doesn't really support it? Actually, Python has something very close. For 
+example, you can check to see if an instance is a class type like this:</p>
+<pre>if isinstance(an_instance, MyClass)</pre>
+<p class="docText">Let's go back to our earlier example of cars and trucks with 
+a function that takes a list of automobiles and starts each one.</p>
+<pre>def startAuto(list):
+       for auto in list:
+              if isinstance(auto, Automobile):
+                    auto.start()</pre>
+<p class="docText">The function invokes the __<tt>start</tt>__ method of each
+<tt>auto</tt> instance in the list. It doesn't care if the instance is a <tt>Car</tt> 
+or a <tt>Truck</tt> because any instance of either is also an instance of <tt>
+Automobile</tt> and thus supports the __<tt>start__</tt> method. This is the 
+form of polymorphism most people with a Java background are used to.</p>
+<p class="docText">The __<tt>start__</tt> method works not only with the <tt>Car</tt> 
+and <tt>Truck</tt> subclasses but also with any future subclass that inherits 
+from <tt>Automobile</tt>, such as <tt>Motorcycle</tt>.</p>
+<h3 class="docSection1Title" id="ch06lev1sec6">Summary</h3>
+<p class="docText">In this chapter we covered the fundamentals of 
+object-oriented programming: polymorphism, inheritance, and encapsulation. We 
+also looked at typed and late-bound polymorphism.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%205.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%207.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

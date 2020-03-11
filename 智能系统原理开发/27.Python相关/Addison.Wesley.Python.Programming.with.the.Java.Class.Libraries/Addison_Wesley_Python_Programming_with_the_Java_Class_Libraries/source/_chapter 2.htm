@@ -1,0 +1,1194 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 2</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 2.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 2.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 2.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%201.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%203.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 2. Statements and Expressions</h2><ul><li>&nbsp;<a class="docLink" href="#ch02lev1sec1">Comments and Document Strings</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec2">Statements</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec3">Expressions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec4">Variables</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec5">Data Types</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec6">Python Collection Types</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec7">Advanced Topic: Determining Types at Runtime</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec8">Literals</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec9">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Assignment</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Case sensitivity</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Collection type</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Comment</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Declaration</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Definition</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Document string</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Escape sequence</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Expression</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">File path</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Immutability</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Initialization</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Instance</span></li>
+<li>
+  <p class="docList"><span class="docEmphasis">Key</span></li></ul>
+      </td>
+      <td width="50%">
+<ul>
+  
+  <li>
+  <p class="docList"><span class="docEmphasis">Key/value pair</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Literal</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Module</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Operator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Runtime</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Sequence</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Source code</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Statement execution</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Tuple</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Type</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Value</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Variable</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Whitespace</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In this chapter, we continue our tour of Python with perhaps 
+the most basic feature: statements. We'll also look at data types, comments, 
+variables, and literals.</p>
+<p class="docText">Novices, you should know the drill by now: You learn to 
+program by programming, so try to follow along with the interactive sessions in 
+this chapter. If you get stuck on something, just enter in a few of the examples 
+in Jython and skip the rest. Most of the ideas here will be used through the 
+rest of the book, so what you don't understand here you may later on in a 
+different context. Go ahead and read the Advanced Topic sections, but again, 
+don't worry if they confuse you at this point.</p>
+<p class="docText">You programmers can skim or skip this chapter. The material 
+here—literals, variables, and the like—is common to almost all languages. If you 
+do read the chapter through, focus on the parts that are unique to Python, 
+particularly the section &quot;<a class="docLink" href="#ch02lev1sec6">Python 
+Collection Types</a>&quot; and the Advanced Topic section &quot;Determining Types at 
+Runtime.&quot; Also read the &quot;<a class="docLink" href="front%20matter.htm#fmlev2sec2">For 
+Programmers</a>&quot; sidebars.</p>
+<h3 class="docSection1Title" id="ch02lev1sec1">Comments and Document Strings</h3>
+<p class="docText">Python has two ways to document, or explain, what your code 
+is doing. One way uses code comments; the other uses document strings.</p>
+<h4 class="docSection2Title" id="ch02lev2sec1">Comments</h4>
+<p class="docText">Comments, unlike the code itself, don't tell Python what to 
+do. They're more like notes to yourself, and to other programmers who may want 
+to modify or edit your code later, that say, &quot;This is why I wrote it this way.&quot; 
+In Python, a comment starts with the pound (#) character, which tells the 
+interpreter to ignore the text after it until the end of the line. Each line of 
+a comment must start with this character.</p>
+<p class="docText">As the following example shows, you can put comments on their 
+own line or you can add them after a statement.</p>
+<pre>#The following example demonstrates
+#printing hello world to the console
+print (&quot;hello world&quot;) #this prints hello world</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Comments in Other Languages</h2>
+      <p class="docText">Visual Basic uses two double quotes (<tt>&quot; &quot;</tt>) to 
+      indicate a comment, but otherwise it uses comments like Python does; so 
+      does UNIX. Java, C, and C++ have two types of comments. One is similar to 
+      Python's but uses two forward slashes (<tt>//</tt>). The other is a 
+      multiline comment starting with <tt>/*</tt> and ending with <tt>*/</tt>. 
+      Python doesn't have a multiline comment style.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec2">Document Strings</h4>
+<p class="docText">Document strings are literals that you put at the beginning 
+of modules, functions, classes, and methods. Unlike comments, they're not thrown 
+away but can be displayed from the interactive interpreter. The following 
+example (<span class="docEmphasis">comments.py</span>) shows a document string 
+for a module, a class, and a function, respectively. (We'll get to these in
+<a class="docLink" href="_chapter%205.htm">Chapter 5</a>.)</p>
+<pre>&quot;&quot;&quot;Example showing a module document string for the comments module. This
+module document string is multi-line.
+&quot;&quot;&quot;
+
+class Camp:
+      &quot;&quot;&quot;Example showing a class document string&quot;&quot;&quot;
+      def sayHello(self):
+            return &quot;\n Hello Mom \n Hello Dad&quot;
+
+def sayCampHello():
+      &quot;&quot;&quot;Example showing a function document string&quot;&quot;&quot;
+
+      camp = Camp()
+      print (&quot;Hello: &quot; + camp.sayHello())
+
+if __name__ == &quot;__main__&quot;:
+      sayCampHello()</pre>
+<p class="docText">Here's another example. The <tt>__doc__</tt> attribute of the
+<tt>Camp</tt> class and the <tt>sayCampHello()</tt> function hold the document 
+strings.</p>
+<pre>C:\book\chap2&gt;jython -i comments.py
+Hello:
+ Hello Mom
+ Hello Dad
+&gt;&gt;&gt; Camp.__doc__
+'Example showing a class document string'
+&gt;&gt;&gt; sayCampHello.__doc__
+'Example showing a function document string'</pre>
+<p class="docText">Let's say we want to learn something about a module named
+<span class="docEmphasis">comments</span> and we don't have the source code. So, 
+we start a new Jython session, import <span class="docEmphasis">comments</span> 
+to it, and view its document string.</p>
+<pre>&gt;&gt;&gt; import comments
+&gt;&gt;&gt; print comments.__doc__
+Example showing a module document string for the comments module. This module
+document string is multi-line.</pre>
+<p class="docText">In the example below, notice the <tt>dir</tt> command. 
+Python's <tt>dir</tt> is like the <tt>dir</tt> command at a DOS prompt, but, 
+unlike the DOS <tt>dir</tt>, which lists files and directories, it shows members 
+of a module, class, or instance. This means that you can use it to list a 
+comment's attributes.</p>
+<pre>&gt;&gt;&gt; dir (comments)
+['Camp', '__doc__', '__file__', '__name__', 'sayCampHello']</pre>
+<p class="docText">Here we see the <tt>__file__</tt> and __<tt>name</tt>__ 
+attributes, which provide the file path and name of this module. We also see <tt>
+Camp</tt> and <tt>sayCampHello</tt>, so we can check if they have the __<tt>doc</tt>__ 
+attribute. (Follow along.)</p>
+<pre>&gt;&gt;&gt; from comments import Camp, sayCampHello
+&gt;&gt;&gt; dir (Camp) # List the attributes for Camp class
+['__doc__', '__module__', 'sayHello']
+&gt;&gt;&gt; dir (sayCampHello) # List attributes for sayCampHello
+[]
+&gt;&gt;&gt; Camp.__doc__
+'Example showing a class document string'
+&gt;&gt;&gt; sayCampHello.__doc__
+'Example showing a function document string'</pre>
+<p class="docText">The <tt>Camp</tt> class does have a __<tt>doc</tt>__ 
+attribute listing, but, strangely, the <tt>sayCampHello()</tt> function doesn't. 
+Still, we can print out its document string. That's because, although functions 
+don't show attributes, they do have the __<tt>doc</tt>__ attribute built in.</p>
+<h3 class="docSection1Title" id="ch02lev1sec2">Statements</h3>
+<p class="docText">A statement is simply an instruction to Python to perform a 
+task. Through the interpreter, Python reads the statement and does as 
+instructed. In other words, it executes the statement. In this example, each 
+line is a statement.</p>
+<pre>Hello = &quot;Hello %s how are you doing&quot;
+from java import awt
+print (&quot;Hello World&quot;)</pre>
+<p class="docText">By default, a statement is contained on a single line. A 
+multiline statement is indicated by a backslash at the end of each of its lines 
+and an indentation at the beginning of the next. Here's one complete statement 
+spanning two lines:</p>
+<pre>&gt;&gt;&gt; reallyLongLine = 5 + 5 - 5 * 5 /5 * 100 - 1000 \
+ + 200 - 300 + 60 / 5</pre>
+<p class="docText">Two statements can fit on one line if they're separated by a 
+semicolon.</p>
+<pre>&gt;&gt;&gt; print(&quot;Hello&quot;); print(&quot;Goodbye&quot;)
+Hello
+Goodbye</pre>
+<p class="docText">You can also end a statement with a semicolon.</p>
+<pre>&gt;&gt;&gt; print (&quot;This statement has a semicolon at the end&quot;);
+This statement has a semicolon at the end
+&gt;&gt;&gt; print (&quot;This one does not&quot;)
+This one does not
+&gt;&gt;&gt;</pre>
+<p class="docText">Stylewise, an ending semicolon isn't the best idea, but if 
+you're switching between Jython and Java or CPython and C or C++, it's a nice 
+feature because in these languages using semicolons to terminate a line is 
+standard. You can't do this when switching between C++ and Visual Basic. If you 
+try, you'll probably get a few frustrating syntax errors.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Multiline Statements and 
+      Visual Basic</h2>
+      <p class="docText">If you come from a Visual Basic background, Python's 
+      style of line continuation should be familiar. The only real difference 
+      between the two is Python's use of a backslash (<tt>\</tt>) and Visual 
+      Basic's use of an underscore(<tt>_</tt>) and an <tt>End</tt> statement (<tt>Function 
+      End</tt>, <tt>Sub End</tt>, etc.) to mark the end of a statement instead 
+      of indentation.</p>
+      <p class="docText">If you come from a Java background, Python's line 
+      continuation and code block indentation may seem a little weird. Java 
+      explicitly ends statements with a semicolon, so there's no need for a line 
+      continuation indicator. It uses the backslash for string continuation. 
+      Indenting in Java is strictly up to the taste and style of the individual 
+      programmer.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Statements use whitespace—tabs and spaces—to denote an 
+associated block of code. It can also denote a suite associated with a clause in 
+a compound statement. (Compound statements and suites will be covered in
+<a class="docLink" href="_chapter%203.htm">Chapter 3</a>.) The 
+amount of whitespace within a statement doesn't matter. All of the following 
+examples do the same thing even though the whitespace in each is different.</p>
+<pre>x=1
+x = 1
+x =   1
+x =     1</pre>
+<h3 class="docSection1Title" id="ch02lev1sec3">Expressions</h3>
+<p class="docText">Expressions are also instructions to Python to perform a 
+task. That task is to return a value, such as the result of a mathematical 
+operation or the truth or falsity of a statement. Expressions can be assigned 
+variables. Also, many of them use operators, which can be words like <tt>and</tt>,
+<tt>or</tt>, and <tt>not</tt>, or symbols such as <tt>+</tt> (plus), <tt>-</tt> 
+(minus), <tt>*</tt> (multiplication), and <tt>=</tt> (equals). We'll cover 
+operators in detail in <a class="docLink" href="_chapter%203.htm">
+Chapter 3</a>. For now, just remember that expressions return a value and 
+usually use operators.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Novices: Expressions in Spreadsheets</h2>
+      <p class="docText">If you've ever used spreadsheets, you've used 
+      expressions and operators. An expression is equivalent to a spreadsheet 
+      formula.</p>
+      <p class="docText">Let's say that, in cell D1 of a spreadsheet, you have 
+      the formula <tt>=(A1*B1)/C1</tt>, which multiplies cell A1 by cell B1 and 
+      then divides their product by C1. The equivalent in Python is <tt>D1 = 
+      (A1*B1)/C1</tt>, where <tt>D1</tt>, <tt>A1</tt>, and <tt>C1</tt> are 
+      variables. The right side of this equation—<tt>(A1*B1)/C1</tt>—is the 
+      actual expression.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">To illustrate how expressions work, we'll first create three 
+variables, <tt>x</tt>, <tt>y</tt>, and <tt>z</tt>.</p>
+<pre>&gt;&gt;&gt; x,y,z = 1, 2, 3 # This is *not* an expression</pre>
+<p class="docText">(Notice the comment in the above example. See the box titled 
+&quot;<a class="docLink" href="#ch02sb04">Assignment</a>&quot; for an explanation.)</p>
+<p class="docText">The following examples are pretty self-explanatory. They 
+illustrate, in turn, the use of the multiplication operator, the division 
+operator, and the logical operator <tt>and</tt> (all of which will be covered in
+<a class="docLink" href="_chapter%203.htm">Chapter 3</a>). What 
+they all demonstrate is this simple point: <span class="docEmphasis">Expressions 
+are statements that return values.</span></p>
+<pre>&gt;&gt;&gt; y * 2
+4
+
+&gt;&gt;&gt; 10 / z
+3
+
+&gt;&gt;&gt; x and y
+2
+
+&gt;&gt;&gt; x and 0
+0</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle" id="ch02sb04">Assignment</h2>
+      <p class="docText">In the example that creates the variables we used in 
+      our expression, the comment stated <tt>This is *not* an expression</tt>. 
+      In fact, it may look like an expression, but in Python it's actually an 
+      assignment. Take a look at the following code, in which it appears that a 
+      value is returned:</p>
+      <pre>x = y = z = 3
+</pre>
+      <p class="docText">We might think that <tt>z</tt> = <tt>3</tt> returns <tt>
+      3</tt>, and <tt>y = z</tt> returns the value of <tt>z</tt>, which is <tt>3</tt>, 
+      but this isn't the case. We know this because in interactive interpreter 
+      mode an expression is printed out to the screen.</p>
+      <pre>&gt;&gt;&gt; x = y = z = 3
+&gt;&gt;&gt; x = z
+&gt;&gt;&gt; x==z
+1
+</pre>
+      <p class="docText">As you can see, <tt>x = z</tt> and <tt>x = y = z = 3</tt> 
+      aren't printed to the screen, which means that they don't return a value 
+      and so are not expressions. In Python, the use of the comparison operator 
+      (<tt>==</tt>), not the assignment operator, is what makes a statement an 
+      expression. This is because the <tt>==</tt> returns a value, usually <tt>1</tt> 
+      or <tt>0</tt>, whereas <tt>=</tt> doesn't.</p>
+      <p class="docText">In Java, C, and C++, an assignment
+      <span class="docEmphasis">is</span> an expression, which is why confusing 
+      the assignment and comparison operators is a common programmer error 
+      (mostly in C and C++; Java has its own way of dealing with this problem).</p>
+      <p class="docText">Consider these two examples:</p>
+      <pre>if(x=z): pass
+while(x=z): pass
+</pre>
+      <p class="docText">Here the <tt>if</tt> and <tt>while</tt> statements 
+      expect an expression, that is, a value to be returned, but the assignment 
+      operator can't do this, and syntax errors are the result.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch02lev1sec4">Variables</h3>
+<p class="docText">Think of variables as individual storage containers that hold 
+different kinds of data in memory. Each variable has a name and a value, and 
+each variable value has a type.</p>
+<h4 class="docSection2Title" id="ch02lev2sec3">Declaring Variables</h4>
+<p class="docText">In most languages, before you can use a variable you have to 
+declare it; that is, you must assign it a name and a type. Python is different; 
+unlike in other languages, you declare a variable <span class="docEmphasis">
+implicitly</span> by assigning a value to it. Here's an example:</p>
+<pre># declare age to be of type integer and of value 28.
+age = 28
+
+# declare name to be of type string
+# and of value &quot;rick&quot;
+name = &quot;rick&quot;</pre>
+<p class="docText">Variable declarations can go anywhere in a module. You can 
+declare more than one variable at once by stringing them together. (Follow 
+along).</p>
+<pre>&gt;&gt;&gt; x,y,z = 1,2,3
+&gt;&gt;&gt; print (&quot;x=&quot; + `x` + &quot; y=&quot; + `y` + &quot; z=&quot; +`z`)
+x=1 y=2 z=3</pre>
+<p class="docText">The first statement defines three variables as of type <tt>
+Integer</tt> (that is, whole numbers) and assigns them the values <tt>1</tt>,
+<tt>2</tt>, and <tt>3</tt>, such that <tt>x = 1</tt>, <tt>y = 2</tt>, and <tt>z 
+= 3</tt>. Notice that in the second statement the variable names are enclosed in 
+back quotes. That tells Python to convert the variable to a string.</p>
+<p class="docText">Here's an interactive example of Python stringing together 
+several variable definitions with different types:</p>
+<pre>&gt;&gt;&gt; name, age, sex = &quot;Kiley&quot;, 22, &quot;female&quot;
+&gt;&gt;&gt; print (name + &quot; is &quot; + `age` + &quot; and &quot; + sex)
+Kiley is 22 and female</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Variable Declarations in 
+      Python as Compared to Visual Basic and Java</h2>
+      <p class="docText">In Python, you can't access a variable that you haven't 
+      declared, but remember: The first time you assign a value to a variable, 
+      you declare that variable. That means that you can't make the mistake of 
+      trying to use an unassigned variable, as you can in Visual Basic. Only if 
+      you don't use Visual's <tt>Explicit</tt> option can you use a variable 
+      that has no value assigned.</p>
+      <p class="docText">Visual Basic has a <tt>Variant</tt> type, which can be 
+      anything. Python variables don't have a type unto themselves but are 
+      whatever type is assigned to them—<tt>String</tt>, <tt>List</tt>, and so 
+      forth—so they support dynamic polymorphism with their late-binding 
+      features. Visual Basic also supports dynamic polymorphism as well. 
+      (Polymorphism is discussed in
+      <a class="docLink" href="_chapter%206.htm">Chapter 6</a>.)</p>
+      <p class="docText">In Java, variable declaration is very strict. You have 
+      to explicitly declare the variables themselves and their types. Even so, 
+      you can do dynamic polymorphic programming if you declare a variable a 
+      superclass of the instance you're working with.</p>
+      <p class="docText">Obviously, Python is more flexible and dynamic than 
+      Java, but not as type safe. If you come from a Smalltalk background, this 
+      is probably a boon, but probably not if you come from C++. Read
+      <a class="docLink" href="appendix%20c.htm">Appendix C</a> 
+      on the advantages of scripting languages, and then decide for yourself.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec4">Valid Variable Names</h4>
+<p class="docText">Variable names in Python can start with a letter or an 
+underscore (<tt>_</tt>). After the first character, they can also contain 
+numbers, and they can be as long as you want them to be. Keep in mind that 
+variable names are case sensitive. That is, <tt>age</tt>, <tt>AGE</tt>, and <tt>
+Age</tt> mean different things to the interpreter. Here are a few valid variable 
+names:</p>
+<pre>_name = &quot;John Souza&quot;
+favorite_sport = &quot;Baseball&quot;
+SF49ers = &quot;San Francisco 49ers&quot;</pre>
+<p class="docText">Here are some invalid ones:</p>
+<pre>$name = &quot;John Souza&quot;
+favorite sport = &quot;Baseball&quot;
+49ers = &quot;San Francisco 49ers&quot;</pre>
+<h3 class="docSection1Title" id="ch02lev1sec5">Data Types</h3>
+<p class="docText">Each variable has a type, which can be the following:</p>
+<ul>
+  <li>
+  <p class="docList">One of the six basic data types (see the next section)</li>
+  <li>
+  <p class="docList">One of the five standard container types</li>
+  <li>
+  <p class="docList">One of the standard callable types</li>
+  <li>
+  <p class="docList">One of the two object-oriented types</li>
+  <li>
+  <p class="docList">Any Java class or standard object</li>
+</ul>
+<p class="docText">In this chapter we'll cover the basic types.</p>
+<h4 class="docSection2Title" id="ch02lev2sec5">The Basic Data Types</h4>
+<p class="docText">Most of the six basic data types in Python are analogous to 
+the basic types in Visual Basic and Java. Here they are:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>String</tt>— sequences of characters</li>
+  <li>
+  <p class="docText"><tt>Integer</tt>— integers (whole numbers)</li>
+  <li>
+  <p class="docText"><tt>Float</tt>— floating-point numbers</li>
+  <li>
+  <p class="docText"><tt>Long</tt>— large integers</li>
+  <li>
+  <p class="docText"><tt>None</tt>— no value</li>
+  <li>
+  <p class="docText"><tt>Type</tt>— type</li>
+</ul>
+<p class="docText">All of them are built into the system. Unlike in Java, 
+everything in Python is an object, including functions, modules, and types. 
+(We'll get to objects in
+<a class="docLink" href="_chapter%206.htm">Chapter 6</a>, which is 
+on object-oriented programming.)</p>
+<p class="docText"><tt>Float</tt>, <tt>Integer</tt>, and <tt>Long</tt> are 
+numeric types. The table below shows their individual ranges—that is, the size 
+of the values they can hold.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Type</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">From</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">To</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">–2,147,483,648 </td>
+    <td class="docTableCell" vAlign="top" align="left">2,147,483,647 </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">4.9e–324 </td>
+    <td class="docTableCell" vAlign="top" align="left">1.7976931348623157e308
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Long</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">As small as you want </td>
+    <td class="docTableCell" vAlign="top" align="left">As big as you want </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Numeric Type Ranges</h2>
+      <p class="docText">The range of the numeric types depends on the system 
+      running them, unless, of course, they're running under Java. This means 
+      that, in Jython, <tt>Integer</tt> is implemented with Java <tt>Int</tt>, 
+      and <tt>Float</tt> is implemented with Java <tt>Double</tt>. The reverse 
+      is true in CPython: <tt>Integer</tt> is implemented with C <tt>Long</tt>, 
+      and <tt>Float</tt> with C <tt>Double</tt>. <tt>Long</tt> has an unlimited 
+      range in both CPython and Jython. Unlike in C, in Java <tt>Integer</tt> 
+      always holds the same range of values.</p>
+      <p class="docText">You often need to know the biggest or smallest <tt>
+      Integer</tt> or <tt>Float</tt> type, but trying to remember this 
+      information is difficult. I'm going to show you an interactive session 
+      that will give you this information when you need it. Remember that <tt>
+      Float</tt> in Python equates to Java <tt>Double</tt>, so the first thing 
+      to do is import class <tt>Double</tt> from the <span class="docEmphasis">
+      java.lang</span> package.</p>
+      <pre>&gt;&gt;&gt; from java.lang import Double
+</pre>
+      <p class="docText">We could instead do a <tt>dir</tt> on <tt>Double</tt> 
+      to see its <tt>MAX_VALUE</tt> and <tt>MIN_VALUE</tt> attributes.</p>
+      <pre>&gt;&gt;&gt; dir (Double)
+['MAX_VALUE', 'MIN_VALUE', 'NEGATIVE_INFINITY', 'NaN',
+'POSITIVE_INFINITY', 'TYPE', '__doc__', '__init__', '__module__',
+'compareTo', 'doubleToLongBits', 'infinite', 'isInfinite', 'isNaN',
+'longBitsToDouble', 'naN', 'parseDouble', 'toString', 'valueOf']
+</pre>
+      <p class="docText">Here's how to access the largest and smallest <tt>Float</tt>, 
+      respectively:</p>
+      <pre>&gt;&gt;&gt; Double.MAX_VALUE
+1.7976931348623157E308
+
+&gt;&gt;&gt; Double.MIN_VALUE
+4.9E-324
+</pre>
+      <p class="docText">Now we'll do the same thing for the biggest and 
+      smallest <tt>Integer</tt>.</p>
+      <pre>&gt;&gt;&gt; from java.lang import Integer
+&gt;&gt;&gt; max = Integer.MAX_VALUE
+&gt;&gt;&gt; min = Integer.MIN_VALUE
+&gt;&gt;&gt; max, min
+(2147483647, -2147483648)
+</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec6">TypeType</h4>
+<p class="docText">As I said before, everything in Python is an object, that is, 
+a &quot;container&quot; for properties and methods. This means that all of the basic types 
+are of type <tt>Type</tt>—that is, a variable type that holds another variable 
+type. Here's the proof:</p>
+<pre>&gt;&gt;&gt; if type(FloatType) == TypeType:
+...     print(&quot;FloatType is of TypeType&quot;)
+...
+FloatType is of TypeType</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Jython versus Python</h2>
+      <p class="docText">In Jython, the built-in <tt>type()</tt> function 
+      returns the class name of the Java implementation for that type for 
+      Jython. For example:</p>
+      <pre>&gt;&gt;&gt; int = 1 #holds a integer
+&gt;&gt;&gt; float = 1.0 #holds a float
+&gt;&gt;&gt; long = 1L #holds a long
+&gt;&gt;&gt; string = &quot;string&quot; #holds a string
+&gt;&gt;&gt; type (int)
+&lt;jclass org.python.core.PyInteger at -712990957&gt;
+&gt;&gt;&gt; type (long)
+&lt;jclass org.python.core.PyLong at 46702445&gt;
+&gt;&gt;&gt; type (string)
+&lt;jclass org.python.core.PyString at -710631661&gt;
+&gt;&gt;&gt; type (float)
+&lt;jclass org.python.core.PyFloat at -1307009172&gt;
+&gt;&gt;&gt; type (FloatType)
+&lt;jclass org.python.core.PyJavaClass at -693854445&gt;
+&gt;&gt;&gt; type (TypeType)
+&lt;jclass org.python.core.PyJavaClass at -693854445&gt;
+&gt;&gt;&gt; type (None)
+&lt;jclass org.python.core.PyNone at -693592301&gt;
+</pre>
+      <p class="docText">In Python, the <tt>type()</tt> function returns <tt>Int</tt>,
+      <tt>Long</tt>, <tt>String</tt>, and <tt>Float</tt> instead of the Java 
+      class name.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec7">None</h4>
+<p class="docText">Variables that reference nothing are of type <tt>None</tt>, 
+meaning that they have no value. If you work with databases, think of <tt>None</tt> 
+as similar to <tt>NULL</tt>. Don't think of it as zero, which
+<span class="docEmphasis">is</span> a value. Programmers, you may know that in 
+Java and Visual Basic the counterparts to Python's <tt>None</tt> are, 
+respectively, <tt>null</tt> and <tt>Nothing</tt>. In Delphi, this same concept 
+is called <tt>Nil</tt>.</p>
+<h3 class="docSection1Title" id="ch02lev1sec6">Python Collection Types</h3>
+<p class="docText">One thing that sets Python apart from most other languages is 
+its built-in collection types. As in the real world, in programming a collection 
+represents more than one item. By &quot;built-in&quot; I mean that Python uses a special 
+syntax for its collections, which it calls sequences. Strings are also 
+considered sequences in Python, so all of the rules that apply to strings also 
+apply to collections—slice notation, indexes, and so forth.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Hashtables<span class="docEmphStrong">,
+      </span>Vectors, and Collection Objects</h2>
+      <p class="docText">If you use Java, you probably use hashtables and 
+      vectors in about 85 percent of the programs you write. Hashtables are 
+      similar to Python dictionaries, and vectors are similar to Python lists. 
+      The key difference is that Python's lists, dictionaries, and tuples have 
+      built-in syntax support for addition, multiplication, member referencing, 
+      literals, <tt>for</tt> loop iteration, and so forth. This makes things 
+      easier on the programmer. It also means that you can define objects to act 
+      like collections so that other programmers can use the syntax when working 
+      with them.</p>
+      <p class="docText">The Visual Basic collection object is like Python's 
+      list and dictionary rolled into one. Visual Basic supports <tt>for</tt> 
+      loop iteration, as Python does, but otherwise it offers no collection 
+      support. Perl's collection support is the only one that comes close to 
+      Python's.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec8">Lists</h4>
+<p class="docText">Whereas a string holds a sequence of characters, a list holds 
+a sequence of objects of various types, which you access as you do characters in 
+strings. You can even use slice notation, which we learned about in
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>.</p>
+<pre>&gt;&gt;&gt;    #Define a list with 5 values in it
+&gt;&gt;&gt; mylist = [&quot;hello&quot;,&quot;goodbye&quot;, 1, 1.0, 50000000000000000L]
+&gt;&gt;&gt;    #print the first object in the list
+&gt;&gt;&gt; print (mylist[0])
+hello
+&gt;&gt;&gt;    #print the first two objects in the list
+&gt;&gt;&gt; print (mylist[0:2])
+['hello', 'goodbye']
+&gt;&gt;&gt;    #print the whole list
+&gt;&gt;&gt; print (mylist[0:])
+['hello', 'goodbye', 1, 1.0, 50000000000000000L]
+&gt;&gt;&gt;</pre>
+<p class="docText">You can tell a list by the square brackets (<tt>[ ]</tt>) 
+that surround it. Empty brackets mean that there are no items in the list.</p>
+<p class="docText">Lists can be added and multiplied.</p>
+<pre>&gt;&gt;&gt; list1 = [] #create an empty list
+&gt;&gt;&gt; list2 = [&quot;a&quot;, &quot;b&quot;, 10, 11, 12, 13]
+&gt;&gt;&gt; list1 # show the empty lists contents
+[]
+
+&gt;&gt;&gt; list2 #show the contents of the list with items
+['a', 'b', 10, 11, 12, 13]
+
+&gt;&gt;&gt; list1 = list2 + list2 #add the lists together
+&gt;&gt;&gt; list1
+['a', 'b', 10, 11, 12, 13, 'a', 'b', 10, 11, 12, 13]
+
+&gt;&gt;&gt; list1 = list2 * 2 #multiply a list
+&gt;&gt;&gt; list1
+['a', 'b', 10, 11, 12, 13, 'a', 'b', 10, 11, 12, 13]</pre>
+<p class="docText">You can also append and remove list items, with the list 
+object's <tt>append()</tt> and <tt>remove()</tt> methods.
+<a class="docLink" href="_chapter%205.htm">Chapter 5</a> is where 
+we'll cover methods and functions; for now all you need to know to use <tt>
+append()</tt> and <tt>remove()</tt> is the form <tt>
+variable_name.methodname(arguments)</tt>. (You'll learn about arguments in
+<a class="docLink" href="_chapter%205.htm">Chapter 5</a> as well.) 
+Here's an example that continues the previous interactive session:</p>
+<pre>&gt;&gt;&gt; # remove 'a' from the list
+&gt;&gt;&gt; list1.remove('a')
+&gt;&gt;&gt; # display the contents of list1
+&gt;&gt;&gt; list1
+['b', 10, 11, 12, 13, 'a', 'b', 10, 11, 12, 13]
+
+&gt;&gt;&gt; # remove 'a' from the list again
+&gt;&gt;&gt; list1.remove('a')
+&gt;&gt;&gt; #display the contents of the list
+&gt;&gt;&gt; list1
+['b', 10, 11, 12, 13, 'b', 10, 11, 12, 13]
+
+&gt;&gt;&gt; #put the 'a' back in the list
+&gt;&gt;&gt; list1.append('a')
+&gt;&gt;&gt; list1
+['b', 10, 11, 12, 13, 'b', 10, 11, 12, 13, 'a']
+
+&gt;&gt;&gt; len (list1)
+11</pre>
+<p class="docText">Note that <tt>remove()</tt> gets rid of only the first 
+occurrence of an item, so to remove both instances of <tt>'a'</tt>, we have to 
+invoke <tt>list1.remove('a')</tt> twice. By the way, you can determine how many 
+items are in a list with the <tt>len()</tt> (length) function.</p>
+<p class="docText">Another interesting thing you can do with lists is sort them, 
+with <tt>sort()</tt>, and reverse their order, with <tt>reverse().</tt> For 
+instance, you might want your list in alphabetical or reverse alphabetical 
+order.</p>
+<pre>&gt;&gt;&gt; names = []
+&gt;&gt;&gt; #append a bunch of names to the names list
+&gt;&gt;&gt; names.append(&quot;Kiley&quot;)
+&gt;&gt;&gt; names.append(&quot;Rick&quot;)
+&gt;&gt;&gt; names.append(&quot;Mary&quot;)
+&gt;&gt;&gt; names.append(&quot;Adam&quot;)
+&gt;&gt;&gt; names.append(&quot;Missy&quot;)
+&gt;&gt;&gt; names.append(&quot;Martha&quot;)
+&gt;&gt;&gt; #display names before the sort
+&gt;&gt;&gt; names
+['Kiley', 'Rick', 'Mary', 'Adam', 'Missy', 'Martha']
+
+&gt;&gt;&gt; #sort the names alphabetically
+&gt;&gt;&gt; names.sort()
+&gt;&gt;&gt; #display names after sort
+&gt;&gt;&gt; names
+['Adam', 'Kiley', 'Martha', 'Mary', 'Missy', 'Rick']
+
+&gt;&gt;&gt; #reverse the order of the list
+&gt;&gt;&gt; names.reverse()
+&gt;&gt;&gt; names
+['Rick', 'Missy', 'Mary', 'Martha', 'Kiley', 'Adam']</pre>
+<p class="docText">With <tt>insert()</tt> you can insert items into the middle 
+of a list. With <tt>index()</tt>, you determine where an item is numerically.</p>
+<pre>&gt;&gt;&gt; #display the contents of the names list
+&gt;&gt;&gt; names
+['Rick', 'Missy', 'Mary', 'Martha', 'Kiley', 'Adam']
+
+&gt;&gt;&gt; #determine the index of the &quot;Rick&quot; string
+&gt;&gt;&gt; names.index(&quot;Rick&quot;)
+0
+
+&gt;&gt;&gt; #insert &quot;Kiley&quot; string next to &quot;Rick&quot;
+&gt;&gt;&gt; names.insert(1, &quot;Kiley&quot;)
+&gt;&gt;&gt; names
+['Rick', 'Kiley', 'Missy', 'Mary', 'Martha', 'Kiley', 'Adam']
+
+&gt;&gt;&gt; #find the index of the &quot;Martha&quot; string
+&gt;&gt;&gt; names.index(&quot;Martha&quot;)
+4
+
+&gt;&gt;&gt; #insert the &quot;Miguel&quot; string next to Martha
+&gt;&gt;&gt; names.insert(5, &quot;Miguel&quot;)
+&gt;&gt;&gt; #display the name list
+&gt;&gt;&gt; names
+['Rick', 'Kiley', 'Missy', 'Mary', 'Martha', 'Miguel', 'Kiley', 'Adam']</pre>
+<p class="docText"><tt>count()</tt> determines the number of times an item 
+occurs in a list.</p>
+<pre>&gt;&gt;&gt; # Initialize the names list
+&gt;&gt;&gt; names = [&quot;James&quot;, &quot;James&quot;, &quot;James&quot;, &quot;Bob&quot;, &quot;Joe&quot;, &quot;Sam&quot;]
+&gt;&gt;&gt; # Count number of &quot;James&quot; strings in names
+&gt;&gt;&gt; names.count(&quot;James&quot;)
+3</pre>
+<h4 class="docSection2Title" id="ch02lev2sec9">Tuples</h4>
+<p class="docText">Tuples are collection types similar to lists in that they 
+contain items. However, they're immutable, which means that you can't change 
+them once defined—you can't append or remove items or add two tuples together. 
+All you can do is multiply them.</p>
+<pre>&gt;&gt;&gt; # create an empty tuple
+&gt;&gt;&gt; tuple1 = ()
+&gt;&gt;&gt; # create a tuple with three greetings
+&gt;&gt;&gt; tuple2 = (&quot;Hi&quot;, &quot;Bye&quot;, &quot;Salutations&quot;)
+&gt;&gt;&gt; # multiply this tuple2 and assign to tuple
+&gt;&gt;&gt; tuple1 = tuple2 * 2
+&gt;&gt;&gt; # display the contents of tuple
+&gt;&gt;&gt; tuple1
+('Hi', 'Bye', 'Salutations', 'Hi', 'Bye', 'Salutations')</pre>
+<p class="docText">This example shows tuples being declared in parentheses, but 
+this isn't mandatory. Furthermore, you can use a tuple to initialize more than 
+one variable and use more than one variable to initialize a tuple. To see this, 
+follow along with this interactive session.</p>
+<pre>&gt;&gt;&gt; #initialize a tuple without parentheses
+&gt;&gt;&gt; tuple3 = 3,2,1
+&gt;&gt;&gt; tuple3
+(3, 2, 1)</pre>
+<p class="docText">Here we initialized <tt>tuple3</tt> with three numbers 
+without parentheses. To be explicit, we defined a variable of type <tt>Tuple</tt> 
+that contains three numeric items with values of <tt>3</tt>, <tt>2</tt>, and <tt>
+1</tt>.</p>
+<p class="docText">In the following example, we initialize three numbers with a 
+tuple. In other words, we declare three variables named <tt>x</tt>, <tt>y</tt>, 
+and <tt>z</tt>; then we assign <tt>3</tt> to <tt>x</tt>, <tt>2</tt> to <tt>y</tt>, 
+and <tt>1</tt> to <tt>z</tt>.</p>
+<pre>&gt;&gt;&gt; x,y,z = 3,2,1
+&gt;&gt;&gt; x
+3
+&gt;&gt;&gt; y
+2
+&gt;&gt;&gt; z
+1</pre>
+<p class="docText">Now we can use these three variables to create a tuple. That 
+is, we use them to declare a tuple, <tt>tuple4</tt>, that contains the three 
+variables' values.</p>
+<pre>&gt;&gt;&gt; tuple4 = x,y,z
+&gt;&gt;&gt; tuple4
+(3, 2, 1)</pre>
+<p class="docText">The opposite of this is to use a tuple to declare three new 
+variables by defining them and using <tt>tuple4</tt> to initialize them.</p>
+<pre>&gt;&gt;&gt; q,r,s = tuple4
+&gt;&gt;&gt; q
+3
+&gt;&gt;&gt; r
+2
+&gt;&gt;&gt; s
+1</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Novices: Lists and Tuples Are Both 
+      Sequences</h2>
+      <p class="docText">Lists work as tuples do for declaring multiple 
+      variables and for using variables to assign values to lists. The only 
+      difference is that they require brackets. The following example is similar 
+      to the examples we saw for tuples, but it uses lists instead.</p>
+      <pre>&gt;&gt;&gt; x,y,z = [5,6,7]
+&gt;&gt;&gt; x
+5
+&gt;&gt;&gt; y
+6
+&gt;&gt;&gt; z
+7
+&gt;&gt;&gt; list1 = [x,y,z]
+&gt;&gt;&gt; list1
+[5, 6, 7]
+&gt;&gt;&gt; q,r,s = list1
+&gt;&gt;&gt; q
+5
+&gt;&gt;&gt; r
+6
+&gt;&gt;&gt; s
+7</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec10">Dictionaries</h4>
+<p class="docText">A dictionary, another Python collection type, stores keys and 
+values. It uses key/value pairs to locate a value, which can be any object of 
+any type. The dictionary declares a series of key/value pairs using the notation
+<tt>key:value</tt> and separates the individual pairs with commas.</p>
+<pre>&gt;&gt;&gt; namesToAges = {&quot;joe&quot;:30, &quot;kelly&quot;:32, &quot;john&quot;:28}
+&gt;&gt;&gt; joesAge = namesToAges[&quot;joe&quot;]
+&gt;&gt;&gt; print (&quot;Joe is &quot; + `joesAge` + &quot; years old&quot;)
+Joe is 30 years old
+&gt;&gt;&gt;</pre>
+<p class="docText"><tt>namesToAges</tt> is the dictionary, <tt>&quot;joe&quot;</tt> is the 
+key, and <tt>30</tt> is the value.</p>
+<p class="docText">Remember that a dictionary is a sequence, and like a sequence 
+you access it by its name and by the index of the value in it that you're 
+looking for. What's different is that the location is a key into the dictionary. 
+In the last example, we wanted to find Joe's age. To do that we had to use the 
+key, <tt>&quot;joe&quot;</tt>, in square brackets like a list, in the <tt>namesToAges</tt> 
+dictionary. Keys can be any object of any immutable type, such as strings, 
+tuples, or numeric values. However, you can use tuples for dictionary keys only 
+if they contain only immutable items.</p>
+<p class="docText">A dictionary can be searched by its keys, its values, or its 
+key/value pairs. To get all of a dictionary's keys, values, or pairs, you use
+<tt>keys()</tt>, <tt>values()</tt>, or <tt>items()</tt>, respectively. We'll 
+continue the previous example to illustrate how.</p>
+<pre>&gt;&gt;&gt;          #display namesToAges dictionary
+&gt;&gt;&gt; namesToAges
+{'john': 28, 'joe': 30, 'kelly': 32}
+
+&gt;&gt;&gt;          #display keys in dictionary
+&gt;&gt;&gt; namesToAges.keys()
+['john', 'joe', 'kelly']
+
+&gt;&gt;&gt;          #display values in dictionary
+&gt;&gt;&gt; namesToAges.values()
+[28, 30, 32]
+
+&gt;&gt;&gt;          #display items in dictionary
+&gt;&gt;&gt; namesToAges.items()
+[('john', 28), ('joe', 30), ('kelly', 32)]</pre>
+<p class="docText">To see if a particular key, such as <tt>&quot;joe&quot;</tt> or <tt>&quot;james&quot;</tt> 
+is in a dictionary, we can do this:</p>
+<pre>&gt;&gt;&gt; namesToAges.has_key(&quot;joe&quot;)
+1
+&gt;&gt;&gt; namesToAges.has_key(&quot;james&quot;)
+0</pre>
+<h3 class="docSection1Title" id="ch02lev1sec7">Advanced Topic: Determining Types at Runtime</h3>
+<p class="docText">You can determine a type at runtime with the built-in <tt>
+type()</tt> function along with the Python <span class="docEmphasis">types</span> 
+module, which defines all of the basic types.</p>
+<p class="docText">First, we import the <span class="docEmphasis">types</span> 
+module and create some variables from all of the basic types.</p>
+<pre>&gt;&gt;&gt; from types import *
+&gt;&gt;&gt; int = 1 #holds a integer
+&gt;&gt;&gt; float = 1.0 #holds a float
+&gt;&gt;&gt; long = 1L #holds a long
+&gt;&gt;&gt; string = &quot;string&quot; #holds a string</pre>
+<p class="docText">Now we test to see if the variable
+<a class="docLink" href="appendix%20e.htm#ch23lev2sec32">
+string</a> is of type <tt>String</tt>. Here we'll be using the <tt>if</tt> 
+statement, which works like <tt>if</tt> in other languages. Just remember that
+<tt>if</tt>'s subordinate statements must be indented. (We'll be covering this 
+in <a class="docLink" href="_chapter%204.htm">Chapter 4</a>.)</p>
+<p class="docText">The <tt>...</tt> prompt tells you to enter the subordinate 
+statement, <tt>print</tt>. Make sure to indent <tt>print</tt>, and then hit 
+Enter to indicate that the <tt>if</tt> statement is finished.</p>
+<p class="docText">Here is your first <tt>if</tt> statement, step by step.</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">At the <tt>&gt;&gt;&gt;</tt>, type</p>
+  <p class="docList"><tt>&gt;&gt;&gt; if type(string) == StringType:</tt> [hit Return]</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">At the <tt>...</tt> prompt,</p>
+  <p class="docList">[hit Tab] <tt>print (&quot;string is a StringType&quot;)</tt> [hit 
+  Return]</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">At the <tt>...</tt> prompt,</p>
+  <p class="docList">[hit Return]</span></li>
+</ol>
+</span>
+<p class="docText">The next three interactive sessions test whether the variable
+<tt>int</tt> is of type <tt>Integer</tt>, the variable <tt>float</tt> is of type
+<tt>Float</tt>, and the variable <tt>long</tt> is of type <tt>Long</tt>.</p>
+<pre>&gt;&gt;&gt; if type(int) == IntType:
+...     print(&quot;int is a IntType&quot;)
+...
+int is a IntType
+
+&gt;&gt;&gt; if type(float) == FloatType:
+...     print(&quot;float is a FloatType&quot;)
+...
+float is a FloatType
+
+&gt;&gt;&gt; if type(long) == LongType:
+...     print(&quot;long is a Long&quot;)
+...
+long is a Long</pre>
+<p class="docText">Just for a sanity check, let's see if the
+<a class="docLink" href="appendix%20e.htm#ch23lev2sec32">
+string</a> variable is a <tt>Float</tt> type.</p>
+<pre>&gt;&gt;&gt; if type(string) == FloatType:
+...     print(&quot;string is a float&quot;)
+... else:
+...     print(&quot;Don't be a GOOF!&quot;)
+...
+Don't be a GOOF!</pre>
+<h3 class="docSection1Title" id="ch02lev1sec8">Literals</h3>
+<p class="docText">We've been using literals since
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>, but we 
+didn't call them that. The term is computerspeak for a constant value; that is, 
+what you type is <span class="docEmphasis">literally</span> what you get. In the 
+following interactive session, for example, the literals are <tt>&quot;Hello World&quot;</tt>,
+<tt>100</tt>, <tt>3200000000000L</tt>, and <tt>3.5</tt>.</p>
+<pre>&gt;&gt;&gt; a_literal_string = &quot;Hello World&quot;
+&gt;&gt;&gt; a_literal_integer = 100
+&gt;&gt;&gt; a_literal_long = 3200000000000L
+&gt;&gt;&gt; a_float_literal = 3.5</pre>
+<p class="docText">Literals can be contained in statements.</p>
+<pre>print (&quot;Hello I am a literal string&quot;)</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch02table01" class="docTableTitle">Table 2-1. Escape Sequence Characters</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Character</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Meaning</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\\</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Backslash </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\'</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Single quote </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\&quot;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Double quote </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\a</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII Bell (BEL) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\b</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII Backspace (BS) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\f</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII Formfeed (FF) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\n</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII Linefeed (LF) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\r</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII Carriage return 
+    (CR) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\t</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII Horizontal tab 
+    (TAB) </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\v</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII Vertical tab (VT)
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\</tt><span class="docEmphasis"><tt>ooo</tt></span>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII character with 
+    octal value <span class="docEmphasis">ooo</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <span class="docEmphasis"><tt>\xhh...</tt></span> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII character with hex 
+    value <span class="docEmphasis">hh…</span> </td>
+  </tr>
+</table>
+<p class="docText">String literals are identified by the quotes that enclose 
+them. The quotes can be single (<tt>' '</tt>), double (<tt>&quot; &quot;</tt>), triple 
+single (<tt>' ' '</tt>), or triple double ( <tt>&quot; &quot; &quot;</tt> ). Here are the four 
+styles illustrated:</p>
+<pre>&gt;&gt;&gt; string1 = &quot;Hello World&quot;
+&gt;&gt;&gt; print (string1) #print the string1 to the output
+Hello World
+
+&gt;&gt;&gt; string2 = 'Hello World'
+&gt;&gt;&gt; print (string2) #compare this output to the first form
+Hello World
+
+&gt;&gt;&gt; string3 = &quot;&quot;&quot;Hello World&quot;&quot;&quot;
+&gt;&gt;&gt; print (string3) #compare this output to the 1st and 2nd form
+Hello World
+&gt;&gt;&gt; string4 = '''Hello World'''
+&gt;&gt;&gt; print (string4) #compare this output to the first three forms of Strings
+Hello World</pre>
+<p class="docText">If you're wondering why there are four ways to identify 
+literals, I intend to tell you, but first I have to explain escape sequences.</p>
+<p class="docText">An escape sequence is a way to add special ASCII characters 
+to a new line or a formfeed. As in Java and C, it's identified in Python by the 
+backslash (<tt>\</tt>)—for example <tt>\n</tt> (newline).
+<a class="docLink" href="#ch02table01">Table 2-1</a> lists the escape sequence 
+characters.</p>
+<p class="docText">In the following example, we see that <tt>\n</tt> places the 
+phrase <tt>Goodbye Earth</tt> on a new line.</p>
+<pre>&gt;&gt;&gt; string = &quot;Hello Mars \n Goodbye Earth \n&quot;
+&gt;&gt;&gt; print (string)
+Hello Mars
+ Goodbye Earth
+&gt;&gt;&gt;</pre>
+<p class="docText">Here we see that <tt>\t</tt> inserts tabs between <tt>Hello 
+Mars</tt> and <tt>Goodbye Earth</tt> and between <tt>Goodbye Earth</tt> and <tt>
+Goodbye Moon</tt>.</p>
+<pre>&gt;&gt;&gt; string = &quot;Hello Mars \t Goodbye Earth \t Goodbye Moon&quot;
+&gt;&gt;&gt; print (string)
+Hello Mars    Goodbye Earth    Goodbye Moon
+&gt;&gt;&gt;</pre>
+<p class="docText">Escape sequences can get a little messy, especially when you 
+add quotes or newlines to your string. Consider the following interactive 
+session:</p>
+<pre>&gt;&gt;&gt; print (&quot;She said, \&quot;I love you \&quot; and I said \n \&quot;remember Paris in the
+spring&quot;) #one line
+She said, &quot;I love you &quot; and I said
+&quot;remember Paris in the spring
+&gt;&gt;&gt;</pre>
+<p class="docText">Python has another way, and this is where the different 
+quoting styles come in handy. Strings that use triple-double or triple-single 
+quotes can span multiple lines and include actual quoted lines within them. That 
+means that the previous example can be rewritten as</p>
+<pre>&gt;&gt;&gt; print (&quot;&quot;&quot;She said, &quot;I love you&quot;, and I said,
+... &quot;remember Paris in the spring&quot; &quot;&quot;&quot;) #two lines
+She said, &quot;I love you&quot;, and I said,
+&quot;remember Paris in the spring&quot;
+&gt;&gt;&gt;</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Fun with Escape Characters</h2>
+      <p class="docText">Redo the tabs (<tt>\t</tt>) interactive session with 
+      vertical tabs (<tt>\v</tt>). You should get something weird that looks 
+      like the universal symbol for male. Now cut and paste the output line from 
+      the DOS box into Microsoft Word. (Use Edit-&gt;Mark from the Windows menu 
+      from the DOS box. Once the text is selected, choose Edit-&gt;Copy Enter from 
+      the Windows menu of the DOS box, which will put the text on the clipboard. 
+      Then return to Word and paste the text.) What happens?</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec11">Numeric Literals</h4>
+<p class="docText">We define integer literals in three ways: regular (base 10), 
+hexadecimal (base 16), and octal (base 8). This code shows three literals that 
+equate to the same integer value, 255.</p>
+<pre>&gt;&gt;&gt; base10 = 255
+&gt;&gt;&gt; base16 = 0xff
+&gt;&gt;&gt; base8 = 0377
+&gt;&gt;&gt; base10,base16,base8
+(255, 255, 255)
+&gt;&gt;&gt;</pre>
+<p class="docText">An octal starts with 0; a hexadecimal, with 0x. If you're not 
+familiar with octal and hexadecimal numbers, don't worry; you don't need them to 
+program in Python.</p>
+<p class="docText">Exponential notation defines floating-point literals like 
+this:</p>
+<pre>&gt;&gt;&gt; million = 1e6
+&gt;&gt;&gt; million
+1000000.0
+
+&gt;&gt;&gt; billion = 1e+9
+&gt;&gt;&gt; billion
+1.0E9
+
+&gt;&gt;&gt; gates_net = 36.7e+9
+&gt;&gt;&gt; gates_net
+3.67E10
+
+&gt;&gt;&gt; average_income = 30e3
+&gt;&gt;&gt; average_income
+30000.0
+
+&gt;&gt;&gt; volts = 3e-3
+&gt;&gt;&gt; volts
+0.003</pre>
+<p class="docText">We define arbitrarily long integers by appending an <tt>L</tt> 
+to them.</p>
+<pre>&gt;&gt;&gt; bignum = 99999999999999999999999999999999999999L
+&gt;&gt;&gt; bignum
+99999999999999999999999999999999999999L</pre>
+<h3 class="docSection1Title" id="ch02lev1sec9">Summary</h3>
+<p class="docText">In this chapter, we covered comments and document strings, 
+which can be used to document Python code. Unlike comments, document strings can 
+be accessed with the interactive interpreter.</p>
+<p class="docText">We looked at Python easy-to-use built-in container types 
+(dictionaries, tuples, and lists), the values of which are defined by literals. 
+Literals indicate simple values of types <tt>Integer</tt>, <tt>Float</tt>, <tt>
+String</tt>, and <tt>Long</tt>.</p>
+<p class="docText">Statements are instructions to Python to perform tasks. 
+Expressions are simple statements that return a value and usually involve the 
+use of operators. Function and class methods are made up of statements and 
+expressions.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%201.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%203.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

@@ -1,0 +1,2232 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 14</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 14.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 14.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 14.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2013.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2015.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 14. First Swing Application, Layout, and 
+Menus</h2><ul><li>&nbsp;<a class="docLink" href="#ch14lev1sec1">Putting Things Together with Basic Java GUIs</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec2">Adding an Input Form for an Address Entry: The Prototype</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec3">Adding an Input Form for an Address Entry: First Cut</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec4">Adding a Main Window for the Address Book Application: Prototype</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec5">Adding a Main Window: First Cut</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec6">Adding a Toolbar and a Dialog for the Address Book Application</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec7">Menus</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec8">Layout Managers</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec9">A GridBagLayout Example</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec10">Putting Things Together: Adding GridBagLayout to the Address Application</a></li>
+<li>&nbsp;<a class="docLink" href="#ch14lev1sec11">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Absolute positioning</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Dialog</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Helper function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Index</span></li>
+</ul>
+      </td>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Layout manager</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Main window</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Modal</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Separator</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In the last chapter, we covered Swing with short code 
+snippets; in this chapter, we'll build an example Swing application. Snippets 
+are great for learning how to use an API, but to see how things really come 
+together you need a more involved example.</p>
+<p class="docText">We'll continue with the address book application, but we'll 
+start off with minimal features and add more as we put the application together, 
+gradually showing more of Java GUI programming like menus and layout managers. 
+Before we add any features, though, we'll do a prototype in an interactive 
+session to give you hands-on, instant gratification.</p>
+<h3 class="docSection1Title" id="ch14lev1sec1">Putting Things Together with Basic Java GUIs</h3>
+<p class="docText">As promised, we're going to extend the address book 
+application with a GUI front end. For this extension we'll use
+<span class="docEmphasis">Address5.py</span> ,which is based on
+<span class="docEmphasis">Address4.py</span> from
+<a class="docLink" href="_chapter%208.htm">Chapter 8</a> with a 
+few changes, all within the <tt>readAddresses()</tt> and <tt>writeAddresses()</tt> 
+functions. One change is the use of <tt>ObjectOutputStream</tt> instead of the 
+Python <span class="docEmphasis">pickle</span> module; another is the 
+introduction of the <tt>__repr__</tt> method for the <tt>Address</tt> class, 
+which allows us to create address objects with <tt>eval</tt> and makes the 
+printing of dictionaries more meaningful.</p>
+<p class="docText">As an exercise, run the <tt>text_read_write()</tt> function 
+in <tt>readAddresses()</tt> and <tt>writeAddresses()</tt> in both files. What 
+differences do you notice in the output? How are these differences related to
+<tt>__repr__</tt>? Also try creating one instance of <tt>Address</tt> using the
+<tt>eval</tt> function and the return value from <tt>__repr__</tt> of another 
+instance.</p>
+<h3 class="docSection1Title" id="ch14lev1sec2">Adding an Input Form for an Address Entry: The 
+Prototype</h3>
+<p class="docText">In an interactive session, let's create a GUI form that can 
+edit an address entry. We want a frame that holds text field components, which 
+will be used to gather the address information. We also want an OK button, which 
+signifies that the user is done entering the current address.</p>
+<p class="docText">To get the layout for the frame components, we'll use a 
+technique that layers components in a container. For this we'll put the text 
+fields in one panel and the OK button in another. The panels themselves are 
+components that we'll put in the frame.</p>
+<p class="docText">The first thing we need to do is import the <tt>JFrame</tt>,
+<tt>JButton</tt>, and <tt>JTextField</tt> classes from <span class="docEmphasis">
+javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; from javax.swing import JButton, JTextField</pre>
+<p class="docText">Next we create a frame with the titlebar set to &quot;Address 
+Entry,&quot; create an OK button and a panel to hold it, set the frame's layout to
+<tt>BorderLayout</tt>, and add the panel to the south region of the frame. Then 
+we pack the frame and look at the results.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(&quot;Address Entry&quot;, visible=1)
+&gt;&gt;&gt; okay = JButton(&quot;OK&quot;)
+&gt;&gt;&gt; from javax.swing import JPanel
+&gt;&gt;&gt; buttonbar = JPanel()
+&gt;&gt;&gt; buttonbar.add(okay)
+&gt;&gt;&gt; from java.awt import BorderLayout
+&gt;&gt;&gt; frame.contentPane.add(buttonbar, BorderLayout.SOUTH)
+&gt;&gt;&gt; frame.pack()</pre>
+<h4 class="docSection2Title" id="ch14lev2sec1">Adding Text Fields</h4>
+<p class="docText">Now we want to add text fields to the frame. There may be 
+many of them, and the frame is using <tt>BorderLayout</tt>, which can hold only 
+five components (<tt>EAST</tt>, <tt>WEST</tt>, <tt>NORTH</tt>, <tt>SOUTH</tt>, 
+and <tt>CENTER</tt>). Therefore, we add the fields to another panel, which we 
+place in the <tt>CENTER</tt> region of the frame. We'll use <tt>GridLayout</tt> 
+for the layout manager of the panel, which will lay the components out in a 
+grid. As we add fields, we'll label them so that the user knows what each one 
+represents. We'll do this by adding instances of the <tt>Label</tt> class near 
+the corresponding text field.</p>
+<p class="docText">Import <tt>GridLayout</tt>, and create an instance of it that 
+lays out components in a 2-by-2 grid. Create a panel to hold the text fields 
+called <tt>contentPane</tt>. Set the layout of <tt>contentPane</tt> to the <tt>
+GridLayout</tt> instance.</p>
+<pre>&gt;&gt;&gt; from java.awt import GridLayout
+&gt;&gt;&gt; grid = GridLayout(2,2)
+&gt;&gt;&gt; contentPane = JPanel()
+&gt;&gt;&gt; contentPane.setLayout(grid)</pre>
+<p class="docText">Create a <tt>JTextField</tt> instance called <tt>name</tt>. 
+Import the <tt>Label</tt> class, create an instance of it, and add it to <tt>
+contentPane</tt>. Add the name <tt>JTextField</tt> to the panel. Then pack the 
+frame, and look at the results.</p>
+<pre>&gt;&gt;&gt; name = JTextField()
+&gt;&gt;&gt; from java.swing import JLabel
+&gt;&gt;&gt; contentPane.add(JLabel(&quot;Name&quot;))
+&gt;&gt;&gt; contentPane.add(name)
+&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.contentPane.add(contentPane, BorderLayout.CENTER)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Now use the same technique to add phone number and email text 
+fields.</p>
+<p class="docText">Add the phone number field.</p>
+<pre>&gt;&gt;&gt; phoneNumber = JTextField()
+&gt;&gt;&gt; contentPane.add(JLabel(&quot;Phone Number&quot;))
+&gt;&gt;&gt; contentPane.add(phoneNumber)</pre>
+<p class="docText">Add the email field.</p>
+<pre>&gt;&gt;&gt; email = JTextField()
+     &gt;&gt;&gt; contentPane.add(JLabel(&quot;eMail&quot;))
+     &gt;&gt;&gt; contentPane.add(email)
+     &gt;&gt;&gt; frame.pack()</pre>
+<h4 class="docSection2Title" id="ch14lev2sec2">Adding Event Handlers</h4>
+<p class="docText">We could improve our form by setting the labels' alignment to 
+the right, but pretty interfaces are only the start. For the form to be useful, 
+we need to set up the event handlers. This is just the prototype, so the event 
+handlers will access the text field component data but only print it to the 
+console.</p>
+<p class="docText">To set up the event handler for the OK button, we need to 
+define an event handler that takes one argument to hold the event.</p>
+<p class="docText">Create a function that acts as an event handler for the OK 
+button.</p>
+<pre>&gt;&gt;&gt; def okayHandler(event):
+...     global name, email, phoneNumber
+...     print (name.text, email.text, phoneNumber.text)
+...</pre>
+<p class="docText">Register the <tt>okayHandler()</tt> function with the OK 
+button's <tt>actionPerformed</tt> event property.</p>
+<pre>&gt;&gt;&gt; okay.actionPerformed = okayHandler</pre>
+<p class="docText">Now we have a working prototype. Try it out by entering a 
+name, a phone number, and an email address, and then hit the OK button.</p>
+<h3 class="docSection1Title" id="ch14lev1sec3">Adding an Input Form for an Address Entry: First 
+Cut</h3>
+<p class="docText">At this point, you probably feel comfortable with the 
+concepts the prototype introduces. To incorporate these concepts into the 
+address book program, let's organize our code into a class called <tt>
+AddressForm</tt>. This class extends the <tt>javax.swing.JFrame</tt> class, 
+which makes it a <tt>JFrame</tt>.</p>
+<p class="docText"><tt>AddressForm</tt> is passed an instance of the <tt>Address</tt> 
+class in its constructor. <tt>okayHandler()</tt> populates the fields of the 
+instance with values extracted from <tt>AddressForm</tt>'s text fields. Look at
+<span class="docEmphasis">Address6.py</span> below and make sure to read all of 
+the comments.</p>
+<pre>from javax.swing import JFrame, JButton, JTextField, JLabel, JPanel
+from java.awt import BorderLayout, GridLayout
+      # AddressForm Class.
+
+      # This class is used to edit an instance of the Address class
+class AddressForm(JFrame):
+      def __init__(self, address):
+            &quot;&quot;&quot;Constructor for the AddressForm class \n &quot;&quot;&quot;
+                   # Call constuctor
+            JFrame.__init__(self, &quot;Address Entry&quot;, visible=1)
+
+                   # Declare private variables
+            self.__address = address #hold address to be edited
+            self.__name = NONE   #hold the private name textfield
+            self.__email = NONE   #hold the private email textfield
+            self.__phoneNumber = NONE #hold the private phone# field
+
+            self.__init__CreateButtonBar()
+            self.__init__CreateTextFieldPanel()
+
+      def __init__CreateButtonBar(self):
+            &quot;&quot;&quot; Create okay button, a panel for the button. \n &quot;&quot;&quot;
+            &quot;&quot;&quot;   Add the button panel to this frame.             &quot;&quot;&quot;
+            okay = JButton(&quot;OK&quot;)
+            buttonbar = JPanel()
+            buttonbar.add(okay)
+            self.contentPane.add(buttonbar, BorderLayout.SOUTH)
+
+                   # Set the event handler for the okay button.
+            okay.actionPerformed = self.__okayHandler
+
+      def __init__CreateTextFieldPanel(self):
+            &quot;&quot;&quot; Set up the email, phoneNumber and name text fields &quot;&quot;&quot;
+
+                   # Create the panel and set the grid layout.
+                   # The grid has a layout of a
+                   # 3 row by 2 column grid.
+            editPane = JPanel()
+            editPane.setLayout(GridLayout(3,2))
+            self.contentPane.add(editPane, BorderLayout.CENTER)
+
+                   # Create the name textfield and add it and its
+                   # associated label to the contentPane.
+                   # Note that name is a member of AddressForm
+            self.__name = JTextField()
+            editPane.add(JLabel(&quot;Name&quot;))
+            editPane.add(self.__name)
+
+                   # Create the phoneNumber textfield and add it and its
+                   # associated label to the contentPane.
+                   # Note that phoneNumber is a member of AddressForm.
+            self.__phoneNumber = JTextField()
+            editPane.add(JLabel(&quot;Phone Number&quot;))
+            editPane.add(self.__phoneNumber)
+
+                   # Create the email textfield and add it and its
+                   # associated label to the contentPane.
+                   # Note that email is a member of AddressForm.
+            self.__email = JTextField()
+            editPane.add(JLabel(&quot;eMail&quot;))
+            editPane.add(self.__email)
+            self.pack()
+
+            #Defines the event handler for the okay button
+      def __okayHandler(self, event):
+            &quot;&quot;&quot;Event handler for the okay button&quot;&quot;&quot;
+            print (self.__name.text, self.__email.text,
+                   self.__phoneNumber.text)
+            Address.__init__(self.__address, self.__name.text,
+                             self.__phoneNumber.text, self.__email.text)
+            print self.__address</pre>
+<p class="docText">Try adding the ability to edit the address lines of the <tt>
+Address</tt> class and to right-align the labels that describe the text fields.</p>
+<h3 class="docSection1Title" id="ch14lev1sec4">Adding a Main Window for the Address Book 
+Application: Prototype</h3>
+<p class="docText">The main window will have a list of names from the address 
+book. As you select a name from the list, an <tt>AddressForm</tt> instance pops 
+up in which you edit the <tt>Address</tt> instance corresponding to that name.</p>
+<p class="docText">As a rule, code written to access data shouldn't be in the 
+same module with code written to build GUIs, so first we have to break our code 
+into separate modules:</p>
+<ul>
+  <li>
+  <p class="docText"><span class="docEmphasis">AddressForm.py</span>— holds the 
+  AWT version of <tt>AddressForm</tt></li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Address7.py</span>— holds the 
+  address data code</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">AddressMain.py</span>— holds the 
+  main window of the code</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">AddressFormPane.py</span>— holds 
+  the AWT panel version of <tt>AddressForm</tt></li>
+</ul>
+<p class="docText">The first step is creating a frame that acts as the main 
+window and then adding a list to it. Then we pack the frame and make it visible.</p>
+<p class="docText">Import <tt>JFrame</tt> and <tt>JList</tt> from
+<span class="docEmphasis">javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame, JList</pre>
+<p class="docText">Create instances of <tt>JFrame</tt>. Import <tt>
+DefaultListModel</tt>, and create a JFC list using an instance of it. Add the 
+instance to the frame container.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(&quot;Main Frame&quot;)
+&gt;&gt;&gt; from javax.swing import DefaultListModel
+&gt;&gt;&gt; addresses = JList(DefaultListModel())
+&gt;&gt;&gt; frame.contentPane.add(addresses)</pre>
+<p class="docText">Pack the frame, and make it visible.</p>
+<pre>&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible=1</pre>
+<h4 class="docSection2Title" id="ch14lev2sec3">Adding Names</h4>
+<p class="docText">A list with no items is like a pizza with no toppings. For 
+this next part, we're going to add names to our list from the dictionary that 
+holds a collection of address entries.</p>
+<p class="docText">Import everything from <span class="docEmphasis">address7.py.</span> 
+(Run it as a main module to create a clean set of data files.)</p>
+<pre>&gt;&gt;&gt; from address7 import *</pre>
+<p class="docText">Use the <tt>readAddresses()</tt> function to open the
+<span class="docEmphasis">testaddr.dat</span> file, which is full of address 
+entries.</p>
+<pre>&gt;&gt;&gt; fname=&quot;c:\\dat\\testaddr.dat&quot;
+&gt;&gt;&gt; dict = readAddresses(fname)</pre>
+<p class="docText">Iterate through the keys of the dictionary of address entries 
+returned by <tt>readAddresses()</tt>, and add the keys as names in the list.</p>
+<pre>&gt;&gt;&gt; for name in dict.keys():
+... addresses.model.addElement(name)
+...
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Now our list has the names from our address application. The 
+frame should look like <a class="docLink" href="#ch14fig01">Figure 14-1</a>.</p>
+<center>
+<h5 id="ch14fig01" class="docFigureTitle">Figure 14-1. Address Book Names List</h5>
+<p class="docText"><img alt="graphics/14fig01.gif" src="14fig01.gif" border="0" width="175" height="122"></p>
+</center>
+<h4 class="docSection2Title" id="ch14lev2sec4">Adding Event Handlers</h4>
+<p class="docText">Next we need to add some functionality to our list. First 
+we'll make the <tt>AddressForm</tt> instance pop up when we select an item, so 
+we need to define a list event handler. How do we know which one? Remember that 
+you can use the <span class="docEmphasis">jinfo</span> module to inspect a 
+component's event properties. Or, if you remember which event listener a 
+component handles, you can inspect it.</p>
+<p class="docText">For example, you may remember that <tt>JList</tt> handles <tt>
+ListSelectionListener</tt>, or you may haved looked up <tt>JList</tt> in the 
+Java API documentation and seen the <tt>addListSelectionListener()</tt> method, 
+which is a dead giveaway. Let's say that we remembered, so we can do the 
+following:</p>
+<p class="docText">Import <tt>ListSelectionListener</tt> from the
+<span class="docEmphasis">javax.swing.event</span> package.</p>
+<pre>&gt;&gt;&gt; from javax.swing.event import ListSelectionListener</pre>
+<p class="docText">Use the <tt>dir()</tt> function to list <tt>
+ListSelectionListener</tt>'s methods.</p>
+<pre>&gt;&gt;&gt; dir(ListSelectionListener)
+['valueChanged']</pre>
+<p class="docText">Let's also say that we remember that all methods of a given
+<tt>XListener</tt> interface take an <tt>XEvent</tt> argument, so we can inspect 
+the interface of the event object that will be passed to our event handler.</p>
+<p class="docText">As an exercise look up the <tt>ListSelectionListener</tt> 
+interface and the <tt>ListSelectionEvent</tt> class in the Java API 
+documentation.</p>
+<p class="docText">Import <tt>ListSelectionEvent</tt> from
+<span class="docEmphasis">javax.swing.event,</span> and inspect its attributes 
+with the <tt>dir()</tt> function.</p>
+<pre>&gt;&gt;&gt; from javax.swing.event import ListSelectionEvent
+&gt;&gt;&gt; dir(ListSelectionEvent)
+['firstIndex', 'getFirstIndex', 'getLastIndex', getValueIsAdjusting',
+    'valueIsAdjusting']</pre>
+<p class="docText">Now that we understand the event properties for <tt>List</tt>, 
+we can set up our event handler to pop up an <tt>AddressForm</tt> instance when 
+an item in the list is clicked.</p>
+<p class="docText">Import <tt>AddressForm</tt> from the <tt>AddressForm</tt> 
+module.</p>
+<pre>&gt;&gt;&gt; from AddressForm import AddressForm</pre>
+<p class="docText">Create an event handler that gets the selected item from the 
+list, looks up the corresponding <tt>Address</tt> instance in the dictionary, 
+and passes it to the <tt>AddressForm</tt> instance, where it can be edited.</p>
+<pre>&gt;&gt;&gt; def itemSelected(event):
+...     list = event.source
+...     name = list.selectedValue
+...     address = dict[name]
+...     form = AddressForm(address)
+...</pre>
+<p class="docText">Register the event handler with the event property of the 
+list.</p>
+<pre>&gt;&gt;&gt; addresses.valueChanged = itemSelected</pre>
+<p class="docText">Now, every time you click on the listbox, a new window pops 
+up that lets you edit the address. So far, so good, but we've left out a few 
+things, like reading and writing files and closing the main window.</p>
+<h3 class="docSection1Title" id="ch14lev1sec5">Adding a Main Window: First Cut</h3>
+<p class="docText">We're going to create the main window for the address book 
+application, which will have the list on the left side of the frame—when the 
+user selects an item, it appears in the <tt>AddressForm</tt> instance on the 
+right side. To do this we'll convert <tt>AddressForm</tt> so that it extends <tt>
+java.awt.Panel</tt> instead of <tt>java.awt.Frame</tt>. We'll also need to add 
+some code to initialize the text fields in the <tt>AddressForm</tt> class (in
+<span class="docEmphasis">AddressForm.py</span>) so that every time an address 
+is passed to <tt>AddressForm</tt> (that is, when the user selects a name in the 
+list), <tt>AddressForm</tt> shows that <tt>Address</tt> instance.</p>
+<p class="docText">Here is a listing of <tt>AddressForm</tt> in
+<span class="docEmphasis">AddressFormPane.py:</span></p>
+<pre>from Address7 import Address
+...
+      # AddressForm Class.
+      # This class is used to edit an instance of the Address class
+class AddressForm(JPanel):
+      ...
+      ...
+      def set(self, address):
+            &quot;&quot;&quot;Used to put a new address in this form
+               Initializes all of the text fields with
+               the attributes from self.__address.
+            &quot;&quot;&quot;
+            self.__address = address
+            self.__name.text = address.name()
+            self.__email.text = address.email()
+            self.__phoneNumber.text = address.phoneNumber()
+       ...
+       ...
+
+def __init__CreateTextFieldPanel(self):
+            &quot;&quot;&quot; Set up the email, phoneNumber and name text fields &quot;&quot;&quot;
+
+...
+...
+
+                  # Create the name textfield and add it and its
+                  # associated label to the contentPane.
+                  # Note that name is a member of AddressForm
+            self.__name = JTextField(self.__address.name())
+            editPane.add(JLabel(&quot;Name&quot;))
+            editPane.add(self.__name)
+                 # Create the phoneNumber textfield and add it and its
+                 # associated label to the contentPane.
+                 # Note that phoneNumber is a member of AddressForm.
+            self.__phoneNumber=JTextField(self.__address.phoneNumber())
+            editPane.add(JLabel(&quot;Phone Number&quot;))
+            editPane.add(self.__phoneNumber)
+                 # Create the email textfield and add it and its
+                 # associated label to the contentPane.
+                 # Note that email is a member of AddressForm.
+            print self.__address.email()
+            self.__email = JTextField(self.__address.email())
+            editPane.add(JLabel(&quot;eMail&quot;))
+            editPane.add(self.__email)</pre>
+<p class="docText">Notice that I've added extra functions to the <tt>Address</tt> 
+class—<tt>email()</tt>, <tt>name()</tt>, and <tt>phoneNumber()</tt>—to allow 
+access to the private variables of the <tt>Address</tt> instance.</p>
+<h4 class="docSection2Title" id="ch14lev2sec5">Moving Things Around</h4>
+<p class="docText">Now let's change the application so that the list shows up on 
+the left side of the screen and the information shows up on the right side. The 
+next example, from <span class="docEmphasis">AddressMain.py,</span> shows the
+<tt>AddressMain</tt> class. Much of its code was covered in the prototype from 
+the last section.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Don't Overdo the Comments</h2>
+      <p class="docText">I don't recommend using comments as I have here when 
+      you're writing real code. For more on writing comments and maintainable 
+      code, read <span class="docEmphasis">Enough Rope to Shoot Yourself in the 
+      Foot</span> (Holub, 1995).</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<pre>from javax.swing import JFrame, JList, DefaultListModel
+from java.awt import BorderLayout
+from address7 import *
+from AddressFormPane import AddressForm
+
+class AddressMain(JFrame):
+       def __init__(self):
+                    # Call the base class constructor
+             JFrame.__init__(self, &quot;Main Frame&quot;)
+
+                    # Create a list.
+             self.addresses = JList(DefaultListModel())
+
+                    # Add the addresses list to the
+                    # container, on the left side
+             self.contentPane.add(self.addresses, BorderLayout.WEST)
+
+                    # Open up the file.
+             self.fname=&quot;c:\\dat\\testaddr.dat&quot;
+             self.dict = readAddresses(self.fname)
+                    # Populate the address list.
+             for name in self.dict.keys():
+                    self.addresses.model.addElement(name)
+
+                    # Set the event handler for the addresses.
+             self.addresses.valueChanged = self.__itemSelected
+
+                    # Create the AddressForm and add it to the EAST.
+             self.form = AddressForm()
+             self.contentPane.add(self.form, BorderLayout.EAST)
+
+                    # Pack the frame and make it visible.
+             self.pack()
+             self.visible=1
+
+             self.windowClosing = self.__windowClosing
+
+       def __itemSelected(self, event):
+             name = event.source.selectedValue
+             address = self.dict[name]
+                    #Notify the panel that the address has changed
+             self.form.set(address)
+
+       def __windowClosing(self,event):
+             writeAddresses(self.fname, self.dict)
+             from java.lang import System
+             System.exit(0)
+if __name__ == &quot;__main__&quot;:
+       mainWindow = AddressMain()</pre>
+<p class="docText">If you run <span class="docEmphasis">AddressMain.py,</span> 
+you should get a frame that looks like <a class="docLink" href="#ch14fig02">
+Figure 14-2</a>. Notice that, when you click on a name in the list, its fields 
+are displayed in the form. You can edit the fields and then hit the Apply 
+button. Also notice that, when you change the names and then reload the 
+application, the changed values are displayed.</p>
+<center>
+<h5 id="ch14fig02" class="docFigureTitle">Figure 14-2. Address Main Frame</h5>
+<p class="docText"><img alt="graphics/14fig02.gif" src="14fig02.gif" border="0" width="300" height="131"></p>
+</center>
+<h4 class="docSection2Title" id="ch14lev2sec6">Changes in AddressMain.py</h4>
+<p class="docText">As for what's different in <span class="docEmphasis">
+AddressMain.py,</span> the most obvious thing is that all of the code is 
+contained in a class. We created an instance of <tt>AddressForm</tt> and added 
+it to the main frame.</p>
+<pre>     # Create the AddressForm and add it to the EAST.
+self.form = AddressForm()
+self.container.add(self.form, BorderLayout.EAST)</pre>
+<p class="docText">Another difference appears in the list event handler. In the 
+prototype, we created a new instance of <tt>AddressForm</tt> and passed its 
+constructor an <tt>address</tt> instance from the dictionary. Here we passed the
+<tt>address</tt> instance from the dictionary to <tt>AddressForm</tt>'s <tt>
+set()</tt> function. The <tt>set()</tt> function changes the <tt>address</tt> 
+attribute of the <tt>AddressForm</tt> instance and initializes the text fields.</p>
+<pre>class AddressMain(Frame):
+...
+       def __itemSelected(self, event):
+              if (event.stateChange == event.SELECTED):
+                    name = event.itemSelectable.getItem(event.item)
+                    address = self.dict[name]
+                           # Notify the panel that the address has changed
+                    self.form.set(address)
+
+class AddressForm(Panel):
+       ...
+       ...
+       def set(self, address):
+              &quot;&quot;&quot;Used to put a new address in this form
+              Initializes all of the text fields with
+              the attributes from self.__address.
+              &quot;&quot;&quot;
+              self.__address = address
+              self.__name.text = address.name()
+              self.__email.text = address.email()
+              self.__phoneNumber.text = address.phoneNumber()</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Where to Find the Example</h2>
+      <p class="docText">Throughout this chapter and into the next, we'll return 
+      to this <span class="docEmphasis">AddressMain.py</span> and make 
+      improvements to it. We'll put each improvement in a new directory within 
+      the current chapter directory, so the next improvement will be in the
+      <span class="docEmphasis">One</span> directory within the
+      <span class="docEmphasis">Chap14</span> directory of the Web site's
+      <span class="docEmphasis">Examples</span> directory (i.e.,
+      <span class="docEmphasis">C\JYTHONBook\Examples\Chap14\One</span>).</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">We've created a GUI application that wins no prizes for 
+beauty and grace but gets the job done. Now, as all good programmers do, let's 
+muck with it.</p>
+<h3 class="docSection1Title" id="ch14lev1sec6">Adding a Toolbar and a Dialog for the Address Book 
+Application</h3>
+<p class="docText">We want to be able to add new addresses to the address list. 
+Essentially, that means two new buttons, Add and Remove, which we'll put in a 
+new panel in the north region of the main frame. (See
+<a class="docLink" href="#ch14fig03">Figure 14-3</a>.) When the user presses the 
+Add button a dialog pops up. A dialog is like a frame, except that it's modal 
+(i.e., you have to close it before you can continue using your application).</p>
+<center>
+<h5 id="ch14fig03" class="docFigureTitle">Figure 14-3. The Add and Remove Buttons</h5>
+<p class="docText"><img alt="graphics/14fig03.gif" src="14fig03.gif" border="0" width="350" height="169"></p>
+</center>
+<h4 class="docSection2Title" id="ch14lev2sec7">The Dialog Class</h4>
+<p class="docText">The dialog class, <tt>AddAddressDialog</tt>, is in the same 
+module as <tt>AddressMain</tt> and contains an instance of the <tt>AddressForm</tt> 
+panel. It extends <tt>java.awt.Dialog</tt>.</p>
+<pre>from java.awt import Dialog
+class AddAddressDialog(Dialog):
+      ...
+      ...</pre>
+<p class="docText"><tt>AddAddressDialog</tt> gets most of its functionality from
+<tt>AddressFormPane</tt>, which it contains, and adds two buttons, OK and 
+Cancel, which appear on a panel that acts as a toolbar. (See
+<a class="docLink" href="#ch14fig04">Figure 14-4</a>.) The toolbar is placed in 
+the south region of the panel. The <tt>AddressFormPane</tt> instance is placed 
+in the center region.</p>
+<center>
+<h5 id="ch14fig04" class="docFigureTitle">Figure 14-4. The Okay and Cancel Buttons</h5>
+<p class="docText"><img alt="graphics/14fig04.gif" src="14fig04.gif" border="0" width="175" height="162"></p>
+</center>
+<pre>class AddAddressDialog(JDialog):
+      ...
+      ...
+      def __init__(self, frame):
+            ...
+            ...
+
+                   # Create a dialog box and add the AddressForm to it.
+            self.contentPane.add(self.__form, BorderLayout.CENTER)
+
+                   # Create a toolbar with two buttons and
+                   # add it to the south part of the dialog
+            toolbar = Panel()
+            ok = Button(&quot;OK&quot;)
+            cancel = Button(&quot;Cancel&quot;)
+            toolbar.add(ok)
+            toolbar.add(cancel)
+            ok.actionPerformed = self.__okEventHandler
+            cancel.actionPerformed = self.__cancelEventHandler
+            self.contentPane.add(toolbar, BorderLayout.SOUTH)</pre>
+<p class="docText">Pressing the OK button hides the dialog, saves its state, and 
+invokes a <tt>commit()</tt> method that commits the changes to the <tt>
+AddressForm</tt> instance.</p>
+<pre>class AddAddressDialog(JDialog):
+      OK = 0
+      CANCEL = 1
+            ...
+            ...
+      def __okEventHandler(self,event):
+            self.visible = 0
+            self.__state = AddAddressDialog.OK
+            self.__form.commit()
+class AddressForm(Panel):
+      ...
+      ...
+      def commit(self):
+            self.__address.__init__(self.__name.text,
+            self.__phoneNumber.text, self.__email.text, [])</pre>
+<p class="docText">Pressing the Cancel button hides the dialog and saves its 
+state.</p>
+<pre>class AddAddressDialog(JDialog):
+       OK = 0
+       CANCEL = 1
+             ...
+             ...
+       def __cancelEventHandler(self,event):
+             self.visible = 0
+             self.__state = AddAddressDialog.CANCEL</pre>
+<p class="docText"><tt>AddAddressDialog</tt> has a method called <tt>GetState()</tt>, 
+which returns whether the dialog was closed with OK or Cancel, and a method 
+called <tt>getAddress()</tt>, which returns the new <tt>address</tt> instance.</p>
+<pre>class AddAddressDialog(JDialog):
+       OK = 0
+       CANCEL = 1
+             ...
+       def GetState()(self):
+             return self.__state
+
+       def getAddress()(self):
+             return self.__address</pre>
+<p class="docText">Here is the complete listing for <tt>AddAddressDialog</tt> 
+(from <span class="docEmphasis">One\AddressMain.py</span>):</p>
+<pre>from java.awt import BorderLayout
+from javax.swing import JFrame, JList, DefaultListModel, JPanel, JDialog,
+JButton
+from address import *
+from AddressFormPane import AddressForm
+class AddAddressDialog(JDialog):
+       OK = 0
+       CANCEL = 1
+
+       def __init__(self, frame):
+             JDialog.__init__(self, frame, &quot;Add a new address&quot;)
+
+             self.__address = Address() #hold the address to be added.
+             self.__form = AddressForm(self.__address)
+
+                    # Create a dialog box and add the AddressForm to it.
+             self.contentPane.add(self.__form, BorderLayout.CENTER)
+
+                    # Create a toolbar with two buttons and
+                    # add it to the south part of the dialog
+             toolbar = JPanel()
+             ok = JButton(&quot;OK&quot;)
+             cancel = JButton(&quot;Cancel&quot;)
+             toolbar.add(ok)
+             toolbar.add(cancel)
+             ok.actionPerformed = self.__okEventHandler
+             cancel.actionPerformed = self.__cancelEventHandler
+             self.contentPane.add(toolbar, BorderLayout.SOUTH)
+
+                    # Pack it, make it modal, and show it
+             self.setModal(1)
+             self.pack()
+             self.show()
+
+       def __okEventHandler(self,event):
+             self.__state = AddAddressDialog.OK
+             self.__form.commit()
+
+       def __cancelEventHandler(self,event):
+             self.visible = 0
+             self.__state = AddAddressDialog.CANCEL
+
+       def GetState(self):
+             return self.__state
+
+       def getAddress()(self):
+             return self.__address</pre>
+<h4 class="docSection2Title" id="ch14lev2sec8">Adding the Toolbar</h4>
+<p class="docText">Remember that the dialog is opened in response to a click of 
+the Add button. Let's take a look at Add in a partial listing of <tt>AddressMain</tt> 
+with the toolbar added.</p>
+<pre>class AddressMain(JFrame):
+       def __init__(self):
+                    # Call the base class constructor
+             JFrame.__init__(self, &quot;Main Frame&quot;)
+
+             ...
+...
+             <span class="docEmphStrong">self.</span>__init__<span class="docEmphStrong">toolbar()</span>
+
+             ...
+             ...
+
+       <span class="docEmphStrong">def __init__toolbar(self):</span>
+
+                    <span class="docEmphStrong"># Create the toolbar panel and</span>
+                    <span class="docEmphStrong"># add it to the NORTH border of the container.</span>
+             <span class="docEmphStrong">toolbar = JPanel()</span>
+             <span class="docEmphStrong">self.</span>contentPane<span class="docEmphStrong">.add(toolbar,</span> BorderLayout.NORTH)
+
+                    <span class="docEmphStrong"># Create two buttons</span>
+             <span class="docEmphStrong">addAddress</span> = JButton<span class="docEmphStrong">(&quot;Add&quot;)</span>
+             <span class="docEmphStrong">removeAddress</span> = JButton <span class="docEmphStrong">(&quot;Remove&quot;)</span>
+
+                    <span class="docEmphStrong"># Add the buttons to the toolbar</span>
+             <span class="docEmphStrong">toolbar.add(addAddress)</span>
+             <span class="docEmphStrong">toolbar.add(removeAddress)</span>
+
+                    <span class="docEmphStrong"># Registers the buttons event handler</span>
+             <span class="docEmphStrong">addAddress.</span>actionPerformed<span class="docEmphStrong">=self.</span>__addAddress_Clicked
+             <span class="docEmphStrong">removeAddress.</span>actionPerformed<span class="docEmphStrong">=self.</span>__RemoveAddress_Clicked
+
+       <span class="docEmphStrong">def</span> __addAddress_Clicked<span class="docEmphStrong">(self,event):</span>
+             <span class="docEmphStrong">dialog =</span> AddAddressDialog<span class="docEmphStrong">(self)</span>
+             <span class="docEmphStrong">if dialog.</span>GetState<span class="docEmphStrong">() ==</span> AddAddressDialog<span class="docEmphStrong">.OK:</span>
+                    <span class="docEmphStrong">addr = dialog.</span>getAddress<span class="docEmphStrong">()</span>
+                    <span class="docEmphStrong">self.dict[addr.name()] = addr</span>
+                    <span class="docEmphStrong">self.addresses.add(addr.name())</span>
+             <span class="docEmphStrong">else:</span>
+                    <span class="docEmphStrong">print &quot;Cancel Add: &quot; + `dialog.</span>getAddress<span class="docEmphStrong">()`</span>
+
+       <span class="docEmphStrong">def</span> __RemoveAddress_Clicked<span class="docEmphStrong">(self,event):</span>
+             <span class="docEmphStrong">index = self.addresses.selectedIndex</span>
+             <span class="docEmphStrong">key = self.addresses.selectedItem</span>
+             <span class="docEmphStrong">del self.dict[key]</span>
+             <span class="docEmphStrong">self.addresses.remove(key)</span>
+
+                    <span class="docEmphStrong"># Get the index of the item before this one.</span>
+                    <span class="docEmphStrong"># Unless the index of the item we removed is 0.</span>
+
+             <span class="docEmphStrong">if index-1 &lt; 0: index = 0</span>
+             <span class="docEmphStrong">else: index = index -1</span>
+
+                    <span class="docEmphStrong"># Select the index of the adjacent item.</span>
+             <span class="docEmphStrong">if len(self.dict.keys()) &gt; index:</span>
+                    <span class="docEmphStrong">print self.dict.keys()[index]</span>
+                    <span class="docEmphStrong">self.addresses.select(index)</span>
+                         <span class="docEmphStrong"># set the form to the index</span>
+                         <span class="docEmphStrong"># that we selected in the list</span>
+                    <span class="docEmphStrong">address = self.dict[self.dict.keys()[index]]</span>
+                    <span class="docEmphStrong">self.form.set(address)</span></pre>
+<p class="docText">The <tt>__init__toolbar</tt> method creates a toolbar and 
+adds it to the north region of the main frame. Then it instantiates two buttons 
+and adds them to the toolbar. The Add and Remove buttons are registered with the 
+event handler methods. <tt>__addAddress_Clicked</tt> and <tt>__RemoveAddress_Clicked</tt>.</p>
+<pre>      def __init__toolbar(self):
+
+                   # Create the toolbar panel and
+                   # add it to the NORTH border of the container.
+            toolbar = Panel()
+            self.container.add(toolbar, BorderLayout.NORTH)
+
+                   # Create two buttons
+            addAddress = Button(&quot;Add&quot;)
+            removeAddress = Button (&quot;Remove&quot;)
+
+                   # Add the buttons to the toolbar
+            toolbar.add(addAddress)
+            toolbar.add(removeAddress)
+
+                   # Registers the buttons event handler
+            addAddress.actionPerformed=self.__addAddress_Clicked
+            removeAddress.actionPerformed=self.__RemoveAddress_Clicked</pre>
+<h4 class="docSection2Title" id="ch14lev2sec9">Adding and Removing Addresses</h4>
+<p class="docText">The <tt>__addAddress_Clicked</tt> event handler is where the
+<tt>AddAddressDialog</tt> class is used. It creates an instance of <tt>
+AddAddressDialog</tt> called <tt>dialog</tt>. After the user opens the dialog to 
+enter an address (or not), the method checks to see if the OK button was pressed 
+by calling <tt>dialog</tt>'s <tt>GetState()</tt> method. If the <tt>OK</tt> 
+state is set, the address is added to the address dictionary (<tt>dict</tt>) and 
+the address list (<tt>addresses</tt>).</p>
+<pre>def __addAddress_Clicked(self,event):
+       dialog = AddAddressDialog(self)
+       if dialog.GetState() == AddAddressDialog.OK:
+              addr = dialog.getAddress()
+              self.dict[addr.name()] = addr
+              self.addresses.add(addr.name())
+       else:
+              print &quot;Cancel Add: &quot; + `dialog.getAddress()`</pre>
+<p class="docText">Clicking the Remove button calls <tt>__RemoveAddress_Clicked()</tt>. 
+This method is a little long, so we'll go through it step by step.</p>
+<p class="docText">First, we get the index of the selected item in the address 
+list (<tt>addresses</tt>). Then we get the value of the string at that index, 
+which is the name of the person in the address entry.</p>
+<pre>index = self.addresses.selectedIndex
+key = self.addresses.selectedItem</pre>
+<p class="docText">Now we can remove the person from the address dictionary (<tt>dict</tt>) 
+and from the address list.</p>
+<pre>del self.dict[key]
+self.addresses.remove(key)</pre>
+<p class="docText">Next we need to select another person in the list and 
+reinitialize the address form so that both are synchronized. This means that we 
+have to get the index of the item before this one, unless the index of the item 
+we removed is 0.</p>
+<pre>if index-1 &lt; 0: index = 0
+else: index = index -1</pre>
+<p class="docText">Then we select the index of the adjacent item in the list and 
+the form. We also do some sanity checking to see if the dictionary has enough 
+items in it—that is, that the index value is no greater than the number of items 
+in the dictionary.</p>
+<pre>if len(self.dict.keys()) &gt; index:</pre>
+<p class="docText">Select the address in the list.</p>
+<pre>self.addresses.select(index)</pre>
+<p class="docText">Get the <tt>address</tt> instance from the dictionary; then 
+select the address in the form.</p>
+<pre>address = self.dict[self.dict.keys()[index]]
+self.form.set(address)</pre>
+<p class="docText">The following line of code does a lot and may be hard to 
+understand:</p>
+<pre>address = self.dict[self.dict.keys()[index]]</pre>
+<p class="docText">Essentially, it's equivalent to writing these three lines of 
+code:</p>
+<pre>listAddressNames = self.dict.keys()
+currentAddressKey = listAddressNames[index]
+address = self.dict[currentAddressKey]</pre>
+<p class="docText">Here's what it means step by step:</p>
+<p class="docText">Get the dictionary keys, which act as a list of names from
+<tt>address</tt> instances.</p>
+<pre>listAddressNames = self.dict.keys()</pre>
+<p class="docText">Get the name corresponding to the value of the index, which 
+is the address closest to the address just removed.</p>
+<pre>currentAddressKey = listAddressNames[index]</pre>
+<p class="docText">Use that name as a key into the dictionary to get the <tt>
+address</tt> instances corresponding to the address that was next to the address 
+just removed.</p>
+<pre>address = self.dict[currentAddressKey]</pre>
+<p class="docText">Set the <tt>AddressForm</tt> instance, <tt>form</tt>, to the 
+new address.</p>
+<pre>self.form.set(address)</pre>
+<p class="docText">Now that you have a good understanding of how to add and 
+remove addresses, run <span class="docEmphasis">AddressMain.py,</span> and try 
+these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Add and remove a couple of address entries. Get the feel 
+  for how the program works because you'll need it for the rest of the 
+  exercises.</li>
+  <li>
+  <p class="docList">Add a company field and a title field to the <tt>Address</tt> 
+  class. You'll need an extra text field in the <tt>AddressForm</tt> class for 
+  this.</li>
+  <li>
+  <p class="docList">Add a flag argument called <tt>isDialog</tt> in the 
+  constructor of <tt>AddressForm</tt> that allows you to forgo adding the Apply 
+  button to the form. This flag will be used when the form acts as a dialog. 
+  Also, change the background color of the dialog to match the background color 
+  of the address form.</li>
+  <li>
+  <p class="docList">Add two buttons to the toolbar of <tt>MainAddressForm</tt>. 
+  The Copy button (<tt>copyAddress</tt>) should copy the current selected 
+  address. The Insert button (<tt>insertAddress</tt>) should insert the address 
+  into the list.</li>
+</ul>
+<h3 class="docSection1Title" id="ch14lev1sec7">Menus</h3>
+<p class="docText">In Java there are two types of menus: menubar and popup. The 
+following section shows how to add a menubar to a frame.</p>
+<h4 class="docSection2Title" id="ch14lev2sec10">JMenu Bar</h4>
+<p class="docText">Import the <tt>JMenuBar</tt> class from
+<span class="docEmphasis">java.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JJMenuBar</pre>
+<p class="docText">Create an instance of it.</p>
+<pre>&gt;&gt;&gt; bar = JJMenuBar()</pre>
+<p class="docText">Import and create an instance of <tt>JFrame</tt>.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; frame = JFrame()</pre>
+<p class="docText">Set the <tt>JMenuBar</tt> property of the frame to the <tt>
+JMenuBar</tt> instance.</p>
+<pre>&gt;&gt;&gt; frame.JJMenuBar = bar
+&gt;&gt;&gt; frame.visible=1</pre>
+<p class="docText">Now that we have a menubar added in the frame, we need to add 
+a menu to it. Create a menu (<tt>JMenu)</tt>, and add it to the menubar.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JMenu
+&gt;&gt;&gt; fruitMenu = JMenu(&quot;Fruit&quot;)
+&gt;&gt;&gt; bar.add(fruitMenu)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Add menu items to the menu.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JMenuItem
+&gt;&gt;&gt; fruitMenu.add(MenuItem(&quot;Apple&quot;))
+&gt;&gt;&gt; fruitMenu.add(JMenuItem(&quot;Pear&quot;))
+&gt;&gt;&gt; fruitMenu.add(JMenuItem(&quot;Peaches&quot;))</pre>
+<h4 class="docSection2Title" id="ch14lev2sec11">Menus Event Handling</h4>
+<p class="docText">The menu just created should look like the one in
+<a class="docLink" href="#ch14fig05">Figure 14-5</a> (if not, try manually 
+resizing the frame). It's pretty, but it doesn't do anything. We need to handle 
+events from the menu or menu items.</p>
+<center>
+<h5 id="ch14fig05" class="docFigureTitle">Figure 14-5. The Fruit Menu</h5>
+<p class="docText"><img alt="graphics/14fig05.gif" src="14fig05.gif" border="0" width="250" height="142"></p>
+</center>
+<p class="docText">Define an event handler.</p>
+<pre>&gt;&gt;&gt; def actionPerformed(event):
+...     print event.source
+...     print event.paramString()
+...     print event.actionCommand
+...</pre>
+<p class="docText">Get the Apple menu from the Fruit menu. It's the first one, 
+so it's at index 0.</p>
+<pre>&gt;&gt;&gt; appleMenu = fruitMenu.getMenuComponent(0)</pre>
+<p class="docText">Set the <tt>actionPerformed</tt> event property to <tt>
+actionPerformed</tt>.</p>
+<pre>&gt;&gt;&gt; appleMenu.actionPerformed = actionPerformed</pre>
+<p class="docText">Try selecting the Apple menu item in the Fruit menu again. 
+You should get the following output from the event handler we just defined:</p>
+<pre>javax.swing.JMenuItem[...]
+ACTION_PERFORMED,cmd=Apple
+Apple</pre>
+<p class="docText">Notice that <tt>actionCommand</tt> is a string set to <tt>
+Apple</tt>. Now try selecting <tt>Pear</tt> and <tt>Peaches</tt>. Nothing 
+happens because we didn't register event handlers for them.</p>
+<p class="docText">Set the event handlers for all menu items.</p>
+<pre>&gt;&gt;&gt; for menuItem in fruitMenu.menuComponents:
+...     menuItem.actionPerformed = actionPerformed
+...</pre>
+<p class="docText">Select <tt>Pear</tt> and <tt>Peaches</tt> again.</p>
+<p class="docText">In this next example we'll add another menu to <tt>JMenuBar</tt> 
+called Veggies. Then we'll add menu items to it and handle events from specific 
+items instead of from the menu as a whole.</p>
+<p class="docText">Create the Veggies menu.</p>
+<pre>&gt;&gt;&gt; veggiesMenu = JMenu(&quot;Veggies&quot;)</pre>
+<p class="docText">Create three menu items.</p>
+<pre>&gt;&gt;&gt; spinach = JMenuItem(&quot;Spinach&quot;)
+&gt;&gt;&gt; carrots = JMenuItem(&quot;Carrots&quot;)
+&gt;&gt;&gt; peas = JMenuItem(&quot;Peas&quot;)</pre>
+<p class="docText">Define event handlers for each menu item and register them.</p>
+<pre>&gt;&gt;&gt; def spinachEvent(event):
+...   print &quot;You Picked Spinach&quot;
+
+&gt;&gt;&gt; spinach.actionPerformed = spinachEvent
+&gt;&gt;&gt; def carrotEvent(event):
+...   print &quot;What's up DOC?&quot;
+&gt;&gt;&gt; carrots.actionPerformed = carrotEvent
+
+&gt;&gt;&gt; def peaEvent(event):
+...   print &quot;Yuck!&quot;
+&gt;&gt;&gt; peas.actionPerformed = peaEvent</pre>
+<p class="docText">Add the menu items to the Veggies menu.</p>
+<pre>&gt;&gt;&gt; veggiesMenu.add(spinach)
+&gt;&gt;&gt; veggiesMenu.add(carrots)
+&gt;&gt;&gt; veggiesMenu.add(peas)</pre>
+<p class="docText">Add the Veggies menu to the menubar.</p>
+<pre>&gt;&gt;&gt; bar.add(veggiesMenu)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Select each menu item; notice that its handler is called.</p>
+<pre>You Picked Spinach
+What's up DOC?
+Yuck!</pre>
+<p class="docText">Now we'll add cooking options to the Veggies menu so that, 
+once the user selects an option (Fry, Broil, Boil, Roast), he can select the 
+Cook menu item to prepare the veggies accordingly. The exercise that follows 
+will use separators and checkboxes.</p>
+<p class="docText">Add a separator to the end of the Veggies menu using the <tt>
+addSeparator()</tt> method.</p>
+<pre>&gt;&gt;&gt; veggiesMenu.addSeparator()</pre>
+<p class="docText">Add a submenu to Veggies by creating <tt>cookMenu</tt> and 
+adding it to <tt>veggiesMenu</tt>.</p>
+<pre>&gt;&gt;&gt; cookMenu = JMenu(&quot;Cooking&quot;)
+&gt;&gt;&gt; veggiesMenu.add(cookMenu)</pre>
+<p class="docText">Add a menu item to <tt>cookMenu</tt> called <tt>Cook</tt>.</p>
+<pre>&gt;&gt;&gt; cookMenuItem = JMenuItem(&quot;Cook&quot;)
+&gt;&gt;&gt; cookMenu.add(cookMenuItem)
+&gt;&gt;&gt; cookMenu.insertSeparator(cookMenu.itemCount)</pre>
+<p class="docText">Now we'll demonstrate creating and using checkboxes.</p>
+<p class="docText">Import <tt>JCheckboxMenuItem</tt> from
+<span class="docEmphasis">javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JCheckBoxMenuItem</pre>
+<p class="docText">Create a list of item names, and create a dictionary to hold 
+mappings from the items to the names.</p>
+<pre>&gt;&gt;&gt; cookItems = ('Fry', 'Broil', 'Boil', 'Roast')
+&gt;&gt;&gt; dict ={}</pre>
+<p class="docText">Add each item in the above list to the Cook menu (<tt>cookMenu</tt>). 
+In addition, add the item to the dictionary so it can be found easily.</p>
+<pre>&gt;&gt;&gt; for item in cookItems:
+...    cb = JCheckBoxMenuItem(item)
+...    dict[item]=cb
+...    cookMenu.add(cb)</pre>
+<p class="docText">Now let's set up the event handler, <tt>cookOptionEvent</tt>, 
+to handle these checkbox menu items. For clarity, let's go through it step by 
+step. The currently selected menu item's caption is equal to <tt>event.item</tt>. 
+If it's Broil, <tt>event.item</tt> is <tt>Broil</tt>.</p>
+<pre>...    if event.item in cookItems:</pre>
+<p class="docText">Iterate through each item in <tt>cookItems</tt>, which you'll 
+recall holds all of the possible cooking options.</p>
+<pre>...    for item in cookItems:</pre>
+<p class="docText">If the item in <tt>cookItems</tt> <span class="docEmphasis">
+isn't</span> the current item, make sure its checkbox isn't selected.</p>
+<pre>...    if (item != event.item):
+...           cb = dict[item]
+...           cb.state = 0</pre>
+<p class="docText">The statement <tt>cb = dict[item]</tt> looks up the <tt>
+JCheckboxMenuItem</tt> instance in the dictionary that contains mappings of 
+strings to menu items. The statement <tt>cb.state = 0</tt> sets the state of the
+<tt>JCheckBoxMenuItem</tt> instance (<tt>cb</tt>) to false, which removes its 
+check.</p>
+<p class="docText">Now we need to set up the event handler for <tt>cookMenuItem</tt>.</p>
+<pre>&gt;&gt;&gt; def cookEvent(event):
+...   for item in cookItems:
+...          if dict[item].state:
+...                print &quot;I will &quot; + item + &quot; your veggies&quot;
+&gt;&gt;&gt; cookMenuItem.actionPerformed = cookEvent</pre>
+<p class="docText">At this point, the menu in your frame should look like the 
+one in <a class="docLink" href="#ch14fig06">Figure 14-6</a>. If it doesn't, try 
+resizing it.</p>
+<center>
+<h5 id="ch14fig06" class="docFigureTitle">Figure 14-6. The Veggies Menu with the Cooking 
+Submenu</h5>
+<p class="docText"><img alt="graphics/14fig06.gif" src="14fig06.gif" border="0" width="500" height="409"></p>
+</center>
+<p class="docText">Now try selecting Fry and then Cook. You should get the 
+following output:</p>
+<pre>I will Fry your veggies</pre>
+<p class="docText">Then try Broil and Boil.</p>
+<pre>I will Broil your veggies
+I will Boil your veggies</pre>
+<p class="docText">Here are some more things to try:</p>
+<ul>
+  <li>
+  <p class="docList">Convert the previous interactive session into a class that 
+  contains all of the functionality derived from <tt>Frame</tt>. Remember how we 
+  converted an earlier interactive session that worked with <tt>Frame</tt> into 
+  a class.</li>
+  <li>
+  <p class="docList">Change the code to use <tt>JRadioButtonMenuItem</tt>. 
+  Remember from <a class="docLink" href="_chapter%2013.htm">Chapter 
+  13</a> that <tt>JMenuItem</tt> and <tt>JRadioButtonMenuItem</tt> inherit 
+  functionality from <tt>AbstractButton</tt>. <span class="docEmphasis">Hint:</span> 
+  Add all of the <tt>JRadioButtonMenuItem</tt>s to <tt>ButtonGroup</tt>.</li>
+  <li>
+  <p class="docList">Add icons to the various menu items.</li>
+  <li>
+  <p class="docList">Set the mnemonics of the JFC menu items.</li>
+</ul>
+<h4 class="docSection2Title" id="ch14lev2sec12">JPopupMenus</h4>
+<p class="docText">Popup menus are context-sensitive. Typically, they appear 
+when you right-click an icon or component. The following example demonstrates 
+popup menus. Using JFC creates a frame with two buttons: Switch and Pop.</p>
+<p class="docText">Import <tt>JPopupMenu</tt> and all of its support classes 
+from <span class="docEmphasis">javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JPopupMenu
+&gt;&gt;&gt; from javax.swing import JFrame, JButton, JPanel, JLabel</pre>
+<p class="docText">Create instances of the popup menu.</p>
+<pre>&gt;&gt;&gt; popup = JPopupMenu(&quot;JFC Popup&quot;)</pre>
+<p class="docText">Put some menu items in it.</p>
+<pre>&gt;&gt;&gt; fruits = (&quot;Apple&quot;, &quot;Oranges&quot;, &quot;GrapeFruit&quot;, &quot;Grapes&quot;)
+&gt;&gt;&gt; for fruit in fruits:
+...   popup.add(fruit)</pre>
+<p class="docText">Create a frame, a pane, and a label. The label holds a 
+string, which shows the state of the current popup menu—JFC.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(size=(200,200))
+&gt;&gt;&gt; pane = JPanel()
+&gt;&gt;&gt; label = JLabel(&quot;JFC Popup Menu&quot;)
+&gt;&gt;&gt; pop = JButton(&quot;Pop&quot;)</pre>
+<p class="docText">Add the popup menu to the pane.</p>
+<pre>&gt;&gt;&gt; pane.add(popup)</pre>
+<p class="docText">Add the <tt>label</tt> and <tt>pop</tt> components to the 
+pane. Add the pane to the frame.</p>
+<pre>&gt;&gt;&gt; pane.add(pop)
+&gt;&gt;&gt; pane.add(label)
+&gt;&gt;&gt; frame.contentPane.add(pane)</pre>
+<p class="docText">Create an event handler for <tt>pop</tt> that pops up the 
+current menu at the x, y location—20,10 in the pane.</p>
+<pre>&gt;&gt;&gt; def popEvent(event):
+...    global popup, pane
+...    popup.show(pane, 20, 10)</pre>
+<p class="docText">Register the event handlers with the corresponding buttons.</p>
+<pre>&gt;&gt;&gt; pop.actionPerformed = popEvent</pre>
+<p class="docText">Pack the frame, and show it off.</p>
+<pre>&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible=1
+Putting Things Together with Menubar Menus and Popup Menus</pre>
+<h4 class="docSection2Title" id="ch14lev2sec13">Adding Menus to the Address Application</h4>
+<p class="docText">Let's add a menubar menu and a popup menu to our address 
+application. Essentially, we'll set the menubar property of <tt>AddressMain</tt> 
+to a <tt>JMenuBar</tt> instance. Then we'll add the Address menu to the menubar 
+and give it two items, Add and Remove. The <tt>actionPerformed</tt> event 
+properties of these items are set to the same handler as for the Add and Remove 
+buttons.</p>
+<p class="docText">All of this is done from the constructor of <tt>AddressMain</tt>. 
+It's rather long, so we'll break out the functionality of adding the menu to a 
+method called <tt>__init__menu()</tt>. Here's the code (from class <tt>
+AddressMain</tt> in <span class="docEmphasis">Two\AddressMain.py</span>):</p>
+<pre>def __init__(self)
+     ...
+self.__init__menu()
+     ...
+def __init__menu(self):
+
+                    # Create the JMenuBar and
+                    # add it to the addressMenu.
+            jmb = JMenuBar()
+            self.JMenuBar = JMenuBar
+            addressMenu = JMenu(&quot;Address&quot;)
+
+                    # Create two menu items.
+            addAddress = JMenuItem(&quot;Add&quot;)
+            removeAddress = JMenuItem(&quot;Remove&quot;)
+
+                    # Add the menu items to the menu.
+                    # then add the menu to the menu bar
+            addressMenu.add(addAddress)
+            addressMenu.add(removeAddress)
+            JMenuBar.add(addressMenu)
+
+                    # Register the menu items event handler
+            addAddress.actionPerformed = self.__addAddress_Clicked
+            removeAddress.actionPerformed= self.__RemoveAddress_Clicked</pre>
+<p class="docText">We also want to add a popup menu to our application that 
+appears when the user clicks the address list. The <tt>__init__popup</tt> method 
+is similar to <tt>__init__menu</tt>, the only difference being that the <tt>
+mousePressed</tt> event is handled for addresses. Notice that, if <tt>
+event.metaDown</tt> (in the event handler for <tt>mousePressed</tt>) is true (<tt>1</tt>), 
+the right mouse button was clicked.</p>
+<pre>def __init__(self)
+      ...
+self.popup = NONE    #to hold the popup menu
+self.__init__popup()
+self.addresses.mousePressed = self.__popupEvent
+...
+
+def __popupEvent(self, event):
+             if event.metaDown == 1:
+                    self.popup.show(self.addresses, event.x, event.y)
+
+def __init__popup(self):
+             self.popup = JPopupMenu(&quot;Address&quot;)
+             self.addresses.add(self.popup)
+                    # Create two menu items.
+             addAddress = JMenuItem(&quot;Add&quot;)
+             removeAddress = JMenuItem(&quot;Remove&quot;)
+
+                    # Add the menu items to the menu.
+             self.popup.add(addAddress)
+             self.popup.add(removeAddress)
+
+                    # Register the menu item's event handler
+             addAddress.actionPerformed = self.__addAddress_Clicked
+             removeAddress.actionPerformed= self.__RemoveAddress_Clicked</pre>
+<p class="docText">As an exercise, add and then remove an address entry with the 
+Add and Remove menu items on <tt>JMenuBar</tt>. Do it again with <tt>JPopupMenu</tt>. 
+Also create a duplicate menu item for both the menubar menu and the popup menu 
+that allows an address to be duplicated, that is, copied and pasted into the 
+list.</p>
+<h3 class="docSection1Title" id="ch14lev1sec8">Layout Managers</h3>
+<p class="docText">If you've worked with Visual Basic or any other tools that 
+support GUI code generation, you may be accustomed to laying out components on a 
+form and specifying their size and position in pixels. (A pixel is <sup>1/20</sup> 
+inch.) The problem is, of course, that you may develop your application on a 
+25-inch monitor, and then someone will try to use it on a 12-inch monitor, 
+leaving half the GUI off the screen. This problem becomes even more pronounced 
+if you have no control over the type of display your GUI will be used on. For 
+these reasons, Java needs a flexible way to display user interfaces on a variety 
+of platforms.</p>
+<p class="docText">Layout managers provide a way to lay out components in a 
+container with great flexibility, but with flexibility comes greater complexity, 
+and sometimes there's just no substitute for absolute positioning. Even so, in 
+most cases you should use layout managers, and if you do use absolute 
+positioning, make sure it's in a container whose container is a layout manager.</p>
+<p class="docText">The positioning of components on the screen is decided by the 
+order in which they're added to the container, the constraints passed to the 
+container's <tt>add()</tt> method, and the layout manager properties the 
+container is using.</p>
+<p class="docText">Each type of container has its own default layout manager. 
+For example, <tt>java.awt.Frame</tt> and <tt>javax.swing.JFrame</tt> use <tt>
+BorderLayout</tt> whereas <tt>Panel</tt> and <tt>JPanel</tt> use <tt>FlowLayout</tt>. 
+However, you can change the default so that a frame can use <tt>FlowLayout</tt> 
+and a panel can use <tt>BorderLayout</tt>.</p>
+<p class="docText">In one GUI, you'll usually have many layout managers. Nested 
+containers with different layout managers will give you the desired result, as 
+we saw with the address book application. There <tt>AddressMain</tt> used <tt>
+BorderLayout</tt>; <tt>ToolBar</tt>, which contains the Add and Remove buttons, 
+used <tt>FlowLayout</tt>; and <tt>editPane</tt> used <tt>GridLayout</tt> (to 
+arrange the labels and text fields used to edit the addresses).</p>
+<p class="docText">The key to understanding layout managers is using them, so 
+we'll be doing plenty of interactive examples and exercises. I've also provided 
+a tutor application (<span class="docEmphasis">Layout3.py</span>) that works 
+with <tt>FlowLayout</tt>, <tt>BorderLayout</tt>, <tt>GridLayout</tt>, and <tt>
+GridBagLayout</tt>. Feel free to fire up <span class="docEmphasis">Layout3.py</span> 
+and experiment with layout managers at any time.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Strategy Design Pattern</h2>
+      <p class="docText">The layout manager approach uses the Strategy design 
+      pattern developed by Gamma and his colleagues (<span class="docEmphasis">Design 
+      Patterns</span>, 1995). This is another reminder to read Gamma, but first 
+      read <span class="docEmphasis">Object-Oriented Analysis and Design with 
+      Applications</span> (Booch, 1994).</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch14lev2sec14">FlowLayout</h4>
+<p class="docText">The <tt>FlowLayout</tt> class is the simplest of the layout 
+managers. (Actually, it's the second simplest; I'll explain later.) As 
+components are added one at a time to the container, they're positioned from 
+left to right and from top to bottom. When one row fills up, the components 
+begin filling up the next row. You can set the alignment of each row so that the 
+components can be centered or left- or right-aligned.</p>
+<p class="docText">Here's an interactive <tt>FlowLayout</tt> example. Import the
+<tt>FlowLayout</tt> class and some container and component support classes.</p>
+<pre>&gt;&gt;&gt; from java.awt import FlowLayout
+&gt;&gt;&gt; from javax.swing import JFrame, JButton, JTextField, JLabel</pre>
+<p class="docText">Create an instance of <tt>Frame</tt>, and set its layout to
+<tt>FlowLayout</tt>, that is, an instance of the <tt>FlowLayout</tt> class. 
+Remember that the frame is a container.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(&quot;FlowLayout&quot;, size = (200, 200), visible=1)
+&gt;&gt;&gt; frame.contentPane.layout = FlowLayout()</pre>
+<p class="docText">Add a label to the frame, and validate the frame. (<tt>validate()</tt> 
+forces the frame to redraw itself, which makes the label just added visible.)</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(JLabel(&quot;Name&quot;))
+javax.swing.JLabel[...text=Name,...verticalTextPosition=CENTER]
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Add a text field to the frame, and validate the frame.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(JTextField(20))
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Remember, if the component doesn't fit on the current row, 
+it's added to the next row. If we eyeball the components, they look like they 
+almost fit. To be sure, we have to check their width.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.components[0].width +
+frame.contentPane.components[1].width
+253</pre>
+<p class="docText">The first component's width (<tt>frame.contentPane.components[0]</tt>) 
+plus the second's width (<tt>frame.contentPane.components[1]</tt>) is 253. Take 
+a look at the call to the constructor to see what the frame width is.</p>
+<pre>&gt;&gt;&gt; frame.width
+200</pre>
+<p class="docText">Clearly both components can't fit on the same row. (We'll 
+make them fit later.)</p>
+<p class="docText">Let's make this example more interesting and add eight more 
+components to the container (frame). Create a tuple of strings and iterate 
+through it, creating buttons with the strings and adding them to the frame.</p>
+<pre>&gt;&gt;&gt; blist = (&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot;, &quot;six&quot;, &quot;seven&quot;, &quot;eight&quot;)
+&gt;&gt;&gt; for label in blist:
+...     frame.contentPane.add(Button(label))
+...
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">The frame should now look like
+<a class="docLink" href="#ch14fig07">Figure 14-7</a>. Notice that the components 
+in each row are centered, which is the default row alignment with <tt>FlowLayout</tt> 
+(<tt>FlowLayout.CENTER</tt>). We'll change the alignment to the left and then to 
+the right. Then we'll change the vertical and horizontal spacing between the 
+components.</p>
+<center>
+<h5 id="ch14fig07" class="docFigureTitle">Figure 14-7. Center Alignment of Components (<tt>FlowLayout</tt>'s 
+Default)</h5>
+<p class="docText"><img alt="graphics/14fig07.gif" src="14fig07.gif" border="0" width="200" height="200"></p>
+</center>
+<p class="docText">Set the layout of the frame to the left.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.layout.alignment = FlowLayout.LEFT
+&gt;&gt;&gt; frame.contentPane.doLayout()</pre>
+<p class="docText">It should look like <a class="docLink" href="#ch14fig08">
+Figure 14-8</a>. Notice that the components are aligned along the left border. 
+If we change the layout to right alignment, the frame should look like
+<a class="docLink" href="#ch14fig09">Figure 14-9</a>.</p>
+<center>
+<h5 id="ch14fig08" class="docFigureTitle">Figure 14-8. Left Alignment of Components with <tt>
+FlowLayout</tt></h5>
+<p class="docText"><img alt="graphics/14fig08.gif" src="14fig08.gif" border="0" width="250" height="183"></p>
+</center><center>
+<h5 id="ch14fig09" class="docFigureTitle">Figure 14-9. Right Alignment of Components with <tt>
+FlowLayout</tt></h5>
+<p class="docText"><img alt="graphics/14fig09.gif" src="14fig09.gif" border="0" width="250" height="182"></p>
+</center>
+<pre>&gt;&gt;&gt; frame.contentPane.layout.alignment = FlowLayout.RIGHT
+&gt;&gt;&gt; frame.contentPane.doLayout()</pre>
+<p class="docText">Recall that the first two components didn't fit on the first 
+row. What would happen if we made the frame bigger than the 253 pixels that make 
+up the width of the label plus the width of the text field? Change the width of 
+the frame to 275 pixels.</p>
+<pre>&gt;&gt;&gt; frame.size = 275, 200
+&gt;&gt;&gt; frame.contentPane.doLayout()
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">The frame should now look like
+<a class="docLink" href="#ch14fig10">Figure 14-10</a>.</p>
+<center>
+<h5 id="ch14fig10" class="docFigureTitle">Figure 14-10. Effect of Resizing on Component Layout</h5>
+<p class="docText"><img alt="graphics/14fig10.gif" src="14fig10.gif" border="0" width="275" height="200"></p>
+</center>
+<p class="docText">Let's set the spacing between the components with the <tt>
+vgap</tt> property, which controls vertical spacing, and the <tt>hgap</tt> 
+property, which controls horizontal spacing. Set <tt>vgap</tt> and <tt>hgap</tt> 
+to 0 so that your frame will look like the one in
+<a class="docLink" href="#ch14fig11">Figure 14-11</a>.</p>
+<center>
+<h5 id="ch14fig11" class="docFigureTitle">Figure 14-11. Vertical and Horizontal Gap Set to 0</h5>
+<p class="docText"><img alt="graphics/14fig11.gif" src="14fig11.gif" border="0" width="275" height="200"></p>
+</center>
+<pre>&gt;&gt;&gt; frame.contentPane.layout.vgap=0
+&gt;&gt;&gt; frame.contentPane.layout.hgap=0
+&gt;&gt;&gt; frame.contentPane.doLayout()</pre>
+<p class="docText">Now set <tt>vgap</tt> and <tt>hgap</tt> to 10 pixels.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.layout.vgap=10
+&gt;&gt;&gt; frame.contentPane.layout.hgap=10
+&gt;&gt;&gt; frame.contentPane.doLayout()</pre>
+<p class="docText">Finally, we want to pack the frame with <tt>FlowLayout</tt> 
+if the container is an instance of <tt>JFrame</tt>, <tt>JDialog</tt>, or <tt>
+Window</tt>. <tt>FlowLayout</tt> lays out the components' <tt>preferredSize</tt> 
+property (if you try to resize a component yourself, <tt>FlowLayout</tt> will 
+change it back) and adjusts the width of the frame to the cumulative width of 
+all of its components. If you pack the frame (<tt>frame.pack()</tt>), <tt>
+FlowLayout</tt> will try to fit all of the components on the top row, as in
+<a class="docLink" href="#ch14fig12">Figure 14-12</a>.</p>
+<center>
+<h5 id="ch14fig12" class="docFigureTitle">Figure 14-12. Result of Packing the Frame</h5>
+<p class="docText"><img alt="graphics/14fig12.gif" src="14fig12.gif" border="0" width="500" height="44"></p>
+</center>
+<h5 class="docSection3Title" id="ch14lev3sec1">Surprise</h5>
+<p class="docText">All of you who weren't following along (and you know who you 
+are), fire up <span class="docEmphasis">layout4.py,</span> which lets you adjust 
+properties for all of the layout managers that we discuss in this chapter. It 
+looks like <a class="docLink" href="#ch14fig13">Figure 14-13</a>. Notice, in the 
+frame at the left, that you can adjust the properties of the current layout and 
+those of the components (or those of the <tt>constraint objects</tt> associated 
+with a component). Play around with it:</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Set the layout manager to <tt>FlowLayout</tt>.</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Align the components on the left by selecting the <tt>LEFT</tt> 
+  item in the alignment list and then clicking the Apply button.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Align the components on the right.</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Change the vertical gap to 0 by editing the <tt>vgap</tt> 
+  text field to 0 and then hitting the Apply button.</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Change the horizontal gap to 0.</span></li>
+  <li><span style="font-weight: normal" value="6">
+  <p class="docList">Change the vertical and horizontal gaps to 20.</span></li>
+  <li><span style="font-weight: normal" value="7">
+  <p class="docList">Size the frame with the mouse so that it's half its 
+  original size.</span></li>
+  <li><span style="font-weight: normal" value="8">
+  <p class="docList">Hit the Resize button on the control frame.</span></li>
+  <li><span style="font-weight: normal" value="9">
+  <p class="docList">Hit the Pack button to resize the frame.</span></li>
+  <li><span style="font-weight: normal" value="10">
+  <p class="docList">Try all of the available layout managers.</span></li>
+</ol>
+</span><center>
+<h5 id="ch14fig13" class="docFigureTitle">Figure 14-13. Layout4.py after Playing with It</h5>
+<p class="docText"><img alt="graphics/14fig13.gif" src="14fig13.gif" border="0" width="500" height="463"></p>
+</center>
+<p class="docText">There are four versions of the layout program,
+<span class="docEmphasis">Layout.py,</span> <span class="docEmphasis">
+Layout2.py,</span> <span class="docEmphasis">Layout3.py,</span> and
+<span class="docEmphasis">Layout4.py,</span> which increase in complexity. To 
+understand what's going on, examine <span class="docEmphasis">Layout.py</span> 
+without looking at <span class="docEmphasis">Layout4.py,</span> which, since it 
+supports all of the layout managers, is pretty long.</p>
+<h4 class="docSection2Title" id="ch14lev2sec15">BoxLayout</h4>
+<p class="docText">You may remember that I referred to <tt>FlowLayout</tt> as 
+the second simplest layout manager. It used to be the easiest, but that was 
+before <tt>BoxLayout</tt>, which was added as part of JFC/Swing. <tt>BoxLayout</tt> 
+can be used with AWT components, but it works better with the JFC variety.</p>
+<p class="docText"><tt>BoxLayout</tt> has only one parameter, <tt>AXIS</tt>, and 
+there are only two choices: <tt>X</tt> and <tt>Y</tt>. Here's a short 
+interactive example.</p>
+<p class="docText">Import <tt>BoxLayout</tt>, <tt>JFrame</tt>, and <tt>JButton</tt> 
+from <span class="docEmphasis">javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import BoxLayout, JFrame, JButton</pre>
+<p class="docText">Create a frame, and add some buttons to it.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(&quot;BoxLayout Example&quot;, size = (300,200), visible=1)
+&gt;&gt;&gt; list = [&quot;one&quot;,&quot;two&quot;,&quot;three&quot;, &quot;four&quot;]
+&gt;&gt;&gt; for button in list:
+...     frame.contentPane.add(JButton(button))
+...</pre>
+<p class="docText">Change the layout of the frame to <tt>BoxLayout</tt>, which 
+uses <tt>X_AXIS</tt>. (<tt>invalidate()</tt> tells the frame that something has 
+changed and that the window needs to be redrawn; <tt>validate()</tt> tells the 
+frame that it's time to fix any problems. Calling <tt>invalidate()</tt> and then
+<tt>validate()</tt> forces the frame to call <tt>doLayout</tt>.)</p>
+<pre>&gt;&gt;&gt; frame.contentPane.layout=BoxLayout(frame.contentPane, BoxLayout.X_AXIS)
+&gt;&gt;&gt; frame.invalidate()
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Look at <a class="docLink" href="#ch14fig14">Figure 14-14</a>, 
+and notice that <tt>BoxLayout</tt> has arranged things from left to right along 
+the <span class="docEmphasis">x</span> axis. Now arrange the layout along the
+<span class="docEmphasis">y</span> axis (<a class="docLink" href="#ch14fig15">Figure 
+14-15</a>).</p>
+<center>
+<h5 id="ch14fig14" class="docFigureTitle">Figure 14-14. Components Laid Out Left to Right on 
+the <span class="docEmphasis">x</span> Axis</h5>
+<p class="docText"><img alt="graphics/14fig14.gif" src="14fig14.gif" border="0" width="300" height="199"></p>
+</center><center>
+<h5 id="ch14fig15" class="docFigureTitle">Figure 14-15. Components Laid Out Vertically on the
+<span class="docEmphasis">y</span> Axis</h5>
+<p class="docText"><img alt="graphics/14fig15.gif" src="14fig15.gif" border="0" width="300" height="199"></p>
+</center>
+<pre>&gt;&gt;&gt; frame.contentPane.layout=BoxLayout(frame.contentPane, BoxLayout.Y_AXIS)
+&gt;&gt;&gt; frame.invalidate()
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Like <tt>FlowLayout</tt>, <tt>BoxLayout</tt> uses the <tt>
+preferredSize</tt> property. It simply spaces the components evenly against a 
+given axis. Try this exercise using <tt>BoxLayout</tt> from
+<span class="docEmphasis">Layout4.py.</span> Explain what happens in each step.</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Set the axis to <tt>X_AXIS</tt>. (Remember to hit the Apply 
+  button on the control frame.)</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Reduce the size of the frame to half and then half again 
+  along the <span class="docEmphasis">x</span> axis.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Hit the Resize button on the control frame.</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Hit the Pack button on the control frame. (This is the same 
+  as calling <tt>frame.pack()</tt>.)</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Set the axis to <tt>Y_AXIS</tt>.</span></li>
+  <li><span style="font-weight: normal" value="6">
+  <p class="docList">Hit the Resize button again to set the frame to the default 
+  starting size.</span></li>
+  <li><span style="font-weight: normal" value="7">
+  <p class="docList">Reduce the size of the layout frame by half and then by 
+  half again along the <span class="docEmphasis">y</span> axis.</span></li>
+  <li><span style="font-weight: normal" value="8">
+  <p class="docList">Hit the Pack button again.</span></li>
+</ol>
+</span>
+<h4 class="docSection2Title" id="ch14lev2sec16">GridLayout</h4>
+<p class="docText">The <tt>GridLayout</tt> manager lays out components in a 
+grid. We used it in the address application for <tt>editPane</tt>. Like <tt>
+FlowLayout</tt>, <tt>GridLayout</tt> has the <tt>vgap</tt> and <tt>hgap</tt> 
+properties that set the vertical and horizontal spacing between components.</p>
+<p class="docText"><tt>GridLayout</tt> also has properties that specify the rows 
+and columns of the grid. The row property is dominant. The only component 
+property that <tt>GridLayout</tt> pays any attention to is <tt>minimumSize</tt>. 
+If you pack the container (<tt>frame.pack()</tt>), it uses <tt>minimumSize</tt> 
+to create the smallest components that are all the same size. It ignores <tt>
+preferredSize</tt> and stretches the width and height of the components so that 
+they all have the same area and fill the container (if possible). Here's an 
+example.</p>
+<p class="docText">Import the classes needed.</p>
+<pre>&gt;&gt;&gt; from java.awt import GridLayout
+&gt;&gt;&gt; from javax.swing import JFrame, JButton</pre>
+<p class="docText">Create a frame and add some components to it.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(&quot;GridLayout Example&quot;, size=(300,300), visible=1)
+&gt;&gt;&gt; blist = (&quot;One&quot;, &quot;Two&quot;, &quot;Three&quot;, &quot;Four&quot;, &quot;Five&quot;, &quot;Six&quot;, &quot;Seven&quot;, &quot;Eight&quot;)
+&gt;&gt;&gt; for label in blist:
+...     frame.contentPane.add(JButton(label))
+...</pre>
+<p class="docText">Create a grid layout that lays out components in a 2-by-4 
+grid.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.layout = GridLayout(2,4)
+&gt;&gt;&gt; frame.contentPane.doLayout()</pre>
+<p class="docText">Your frame should look like
+<a class="docLink" href="#ch14fig16">Figure 14-16</a>. Notice that neither the 
+width nor the height is observed from <tt>preferredSize</tt>. With the mouse, 
+drag the right corner of the frame so that it's twice its original size, which 
+doubles the width and height of the components as well. Now return the frame to 
+its original size.</p>
+<center>
+<h5 id="ch14fig16" class="docFigureTitle">Figure 14-16. A 2-by-4 Component Layout with <tt>
+GridLayout</tt></h5>
+<p class="docText"><img alt="graphics/14fig16.gif" src="14fig16.gif" border="0" width="300" height="300"></p>
+</center>
+<p class="docText">Set the row property of the <tt>GridLayout</tt> instance to 
+3.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.layout.rows=3</pre>
+<p class="docText">Your frame should now look like
+<a class="docLink" href="#ch14fig17">Figure 14-17</a>. Although we didn't change 
+the columns to 3, only three columns show up. That's because <tt>GridLayout</tt> 
+adjusts the number of columns to fit the desired number of rows. Also, the grid 
+is 3 by 3 and, since we only have eight components, the last cell is left blank.</p>
+<center>
+<h5 id="ch14fig17" class="docFigureTitle">Figure 14-17. A 3-by-3 Layout (with the Last Cell 
+Blank)</h5>
+<p class="docText"><img alt="graphics/14fig17.gif" src="14fig17.gif" border="0" width="300" height="300"></p>
+</center>
+<p class="docText">Now set the rows to four. Then print out the row and column 
+properties (<tt>layout.rows</tt> and <tt>layout.columns</tt>).</p>
+<pre>&gt;&gt;&gt; frame.contentPane.layout.rows=4
+&gt;&gt;&gt; frame.contentPane.doLayout()
+&gt;&gt;&gt; layout=frame.contentPane.layout
+&gt;&gt;&gt; print layout.rows, layout.columns
+4 4</pre>
+<p class="docText">Your frame should look like
+<a class="docLink" href="#ch14fig18">Figure 14-18</a>. Again, the number of 
+columns has changed to accommodate the number of rows; however, the column 
+property is still set to 4 because, as I said earlier, the row property is 
+dominant.</p>
+<center>
+<h5 id="ch14fig18" class="docFigureTitle">Figure 14-18. A 4-Row Layout</h5>
+<p class="docText"><img alt="graphics/14fig18.gif" src="14fig18.gif" border="0" width="300" height="299"></p>
+</center>
+<p class="docText">Set <tt>vgap</tt> and <tt>hgap</tt> of <tt>frame.layout</tt> 
+to 3. Look at the frame, and then set these properties to 7.</p>
+<pre>&gt;&gt;&gt; layout.vgap, layout.hgap = 3,3
+&gt;&gt;&gt; frame.contentPane.doLayout()</pre>
+<p class="docText">Look at the frame.</p>
+<pre>&gt;&gt;&gt; layout.vgap, layout.hgap = 7,7
+&gt;&gt;&gt; frame.invalidate();frame.validate()</pre>
+<p class="docText">It should look like <a class="docLink" href="#ch14fig19">
+Figure 14-19</a>. Notice that the spacing is between the components and not 
+between the components and the edges. (If you want to set the area between the 
+components and the edges, you need to set the <tt>insets</tt> of the frame.)</p>
+<center>
+<h5 id="ch14fig19" class="docFigureTitle">Figure 14-19. Horizontal and Vertical Gap Set to 3</h5>
+<p class="docText"><img alt="graphics/14fig19.gif" src="14fig19.gif" border="0" width="300" height="300"></p>
+</center>
+<p class="docText">Set the layout back to the way it was.</p>
+<pre>&gt;&gt;&gt; layout.vgap, layout.hgap = 0,0
+&gt;&gt;&gt; frame.contentPane.layout = GridLayout(2,4)</pre>
+<p class="docText">As we discussed, <tt>GridLayout</tt> uses <tt>minimumSize</tt> 
+when you pack the frame. It lays out all components with the same size by 
+checking the minimum size for each one and then setting all of them to the 
+largest size it finds. Pack the frame. It should look like
+<a class="docLink" href="#ch14fig20">Figure 14-20</a>.</p>
+<center>
+<h5 id="ch14fig20" class="docFigureTitle">Figure 14-20. Packed Frame</h5>
+<p class="docText"><img alt="graphics/14fig20.gif" src="14fig20.gif" border="0" width="300" height="85"></p>
+</center>
+<pre>&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Now let's go through the components and find the maximum <tt>
+minimumSize</tt>. First we'll create two lists to collect the widths and heights 
+from the components.</p>
+<pre>&gt;&gt;&gt; widths, heights = [], []</pre>
+<p class="docText">Iterate through the components in the frame, and collect the 
+widths and heights in the widths and heights lists.</p>
+<pre>&gt;&gt;&gt; for component in frame.contentPane.components
+...     widths.append(component.minimumSize.width)
+...     heights.append(component.minimumSize.height)</pre>
+<p class="docText">Print the maximum <tt>minimumSize</tt> width.</p>
+<pre>&gt;&gt;&gt; print &quot;Minimum width &quot; + `max(widths)`
+Minimum width 48</pre>
+<p class="docText">Print the maximum <tt>minimumSize</tt> height.</p>
+<pre>&gt;&gt;&gt; print &quot;Minimum height &quot; + `max(heights)`
+Minimum height 23</pre>
+<p class="docText">Print the actual size of the components. (Remember that with
+<tt>GridLayout</tt> all components are the same size.) Notice that the width and 
+height match the maximum <tt>minimumSize</tt>.</p>
+<pre>&gt;&gt;&gt; print &quot;Size of all of the components &quot; + `frame.components[0].size`
+Size of all of the components java.awt.Dimension[width=48,height=23]</pre>
+<p class="docText">Try this exercise with <span class="docEmphasis">layout4.py:</span></p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Select <tt>GridLayout</tt> from the layouts list in the 
+  control pane.</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Hit the Pack button. You should have a frame that looks 
+  like <a class="docLink" href="#ch14fig21">Figure 14-21</a>.</p>
+  <center>
+  <h5 id="ch14fig21" class="docFigureTitle">Figure 14-21. Packed <tt>GridLayout</tt> Frame</h5>
+  <p class="docText">
+  <img alt="graphics/14fig21.gif" src="14fig21.gif" border="0" width="300" height="160"></p>
+  </center></span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Change <tt>hgap</tt> and <tt>vgap</tt> to 5 pixels. Then 
+  hit the Apply button. The frame should look like
+  <a class="docLink" href="#ch14fig22">Figure 14-22</a>.</p>
+  <center>
+  <h5 id="ch14fig22" class="docFigureTitle">Figure 14-22. Frame with Horizontal and Vertical 
+  Gaps of 5</h5>
+  <p class="docText">
+  <img alt="graphics/14fig22.gif" src="14fig22.gif" border="0" width="300" height="167"></p>
+  </center></span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Hit the Pack button again.</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Change the number of columns to 100. What happens?</span></li>
+  <li><span style="font-weight: normal" value="6">
+  <p class="docList">Set the number of columns to 0. What happens?</span></li>
+  <li><span style="font-weight: normal" value="7">
+  <p class="docList">Set the number of columns back to 5. What happens?</span></li>
+  <li><span style="font-weight: normal" value="8">
+  <p class="docList">Set the rows from 4 to 6. Then hit Pack. Notice that the 
+  last two rows are empty (<a class="docLink" href="#ch14fig23">Figure 14-23</a>).</p>
+  <center>
+  <h5 id="ch14fig23" class="docFigureTitle">Figure 14-23. Six-Row Packed Frame with Last Two 
+  Rows Empty</h5>
+  <p class="docText">
+  <img alt="graphics/14fig23.gif" src="14fig23.gif" border="0" width="300" height="167"></p>
+  </center></span></li>
+  <li><span style="font-weight: normal" value="9">
+  <p class="docList">Increment the rows by 1 until you reach 10. Be sure to hit 
+  Apply each time, and then repack the frame with Pack.</span></li>
+</ol>
+</span>
+<h4 class="docSection2Title" id="ch14lev2sec17">BorderLayout</h4>
+<p class="docText"><tt>BorderLayout</tt> works well with top-level containers. 
+It can have at most five components, so the components added to it are usually 
+containers themselves—that is, panels.</p>
+<p class="docText">The five regions of <tt>BorderLayout</tt> are north, south, 
+east, west, and center. What you put in them is up to you and is 
+application-specific. North is used mainly for toolbars (panels with buttons or 
+similar components); south, usually for status windows (panels with labels that 
+show the status of an application). West can be used for tree views, lists, and 
+the like; east, for toolboxes (panels with buttons and property text fields). 
+Center is usually the main view of the application, perhaps where the text 
+fields for editing an object are located.</p>
+<p class="docText">The north and south regions span the full width of the parent 
+container. Their height is the preferred height of the component. The east and 
+west regions span the full height of the container minus the height of the north 
+and/or south regions (if any). Their width is the preferred width of the 
+component. The center region gets whatever is left over, usually the largest 
+portion of the frame. Now for our <tt>BorderLayout</tt> example.</p>
+<p class="docText">Set up a frame.</p>
+<pre>&gt;&gt;&gt; from java.awt import BorderLayout
+&gt;&gt;&gt; from javax.swing import JFrame, JButton
+&gt;&gt;&gt; f = JFrame(&quot;BorderLayout&quot;, size = (300,300), visible=1)
+&gt;&gt;&gt; f.contentPane.layout = BorderLayout()</pre>
+<p class="docText">Add a button to the north region, and force the frame to lay 
+out the components (<a class="docLink" href="#ch14fig24">Figure 14-24</a>).</p>
+<center>
+<h5 id="ch14fig24" class="docFigureTitle">Figure 14-24. <tt>BorderLayout</tt> Frame with a 
+Button in the North Region</h5>
+<p class="docText"><img alt="graphics/14fig24.gif" src="14fig24.gif" border="0" width="300" height="300"></p>
+</center>
+<pre>&gt;&gt;&gt; f.contentPane.add(JButton(&quot;NORTH&quot;),BorderLayout.NORTH)
+&gt;&gt;&gt; f.contentPane.doLayout()</pre>
+<p class="docText">Notice that the button's width is stretched to the full width 
+of the container. Add a button to the east region (<a class="docLink" href="#ch14fig25">Figure 
+14-25</a>).</p>
+<center>
+<h5 id="ch14fig25" class="docFigureTitle">Figure 14-25. <tt>BorderLayout</tt> Frame with a 
+Button Added in the East Region</h5>
+<p class="docText"><img alt="graphics/14fig25.gif" src="14fig25.gif" border="0" width="300" height="300"></p>
+</center>
+<pre>&gt;&gt;&gt; f.contentPane.add(JButton(&quot;EAST&quot;), BorderLayout.EAST)
+&gt;&gt;&gt; f.contentPane.doLayout()</pre>
+<p class="docText">Notice that its height is the full height of the container 
+minus the height of the button added to the north region. Add a button to the 
+west region (<a class="docLink" href="#ch14fig26">Figure 14-26</a>).</p>
+<center>
+<h5 id="ch14fig26" class="docFigureTitle">Figure 14-26. <tt>BorderLayout</tt> Frame with a 
+Button Added in the West Region</h5>
+<p class="docText"><img alt="graphics/14fig26.gif" src="14fig26.gif" border="0" width="300" height="300"></p>
+</center>
+<pre>&gt;&gt;&gt; f.contentPane.add(JButton(&quot;WEST&quot;), BorderLayout.WEST)
+&gt;&gt;&gt; f.contentPane.doLayout()</pre>
+<p class="docText">Add a button to the south region (<a class="docLink" href="#ch14fig27">Figure 
+14-27</a>).</p>
+<center>
+<h5 id="ch14fig27" class="docFigureTitle">Figure 14-27. <tt>BorderLayout</tt> Frame with a 
+Button Added in the South Region</h5>
+<p class="docText"><img alt="graphics/14fig27.gif" src="14fig27.gif" border="0" width="300" height="300"></p>
+</center>
+<pre>&gt;&gt;&gt; f.contentPane.add(JButton(&quot;SOUTH&quot;), BorderLayout.SOUTH)
+&gt;&gt;&gt; f.contentPane.doLayout()</pre>
+<p class="docText">Notice that the height of the west and south buttons 
+decreases by the height of the south button. Add a button to the center region (<a class="docLink" href="#ch14fig28">Figure 
+14-28</a>).</p>
+<center>
+<h5 id="ch14fig28" class="docFigureTitle">Figure 14-28. <tt>BorderLayout</tt> Frame with a 
+Button Added in the Center Region</h5>
+<p class="docText"><img alt="graphics/14fig28.gif" src="14fig28.gif" border="0" width="300" height="300"></p>
+</center>
+<pre>&gt;&gt;&gt; f.contentPane.add(JButton(&quot;CENTER&quot;), BorderLayout.CENTER)
+&gt;&gt;&gt; f.contentPane.doLayout()</pre>
+<p class="docText">Notice that it gets all the leftovers.</p>
+<p class="docText">Let's verify that the width of the east and west regions is 
+equal to the preferred size of the components added to them. Set up some 
+constants to extract the components from the container.</p>
+<pre>&gt;&gt;&gt; NORTH,EAST,WEST,south=0,1,2,3</pre>
+<p class="docText">Get the preferred size and the actual size of the component 
+added to the east region.</p>
+<pre>&gt;&gt;&gt; f.contentPane.components[EAST].preferredSize
+java.awt.Dimension[width=65,height=27]
+&gt;&gt;&gt; f.contentPane.components[EAST].size
+java.awt.Dimension[width=65,height=219]</pre>
+<p class="docText">Get the preferred size and the actual size of the component 
+added to the west region.</p>
+<pre>&gt;&gt;&gt; f.contentPane.components[WEST].preferredSize
+java.awt.Dimension[width=69,height=27]
+&gt;&gt;&gt; f.contentPane.components[WEST].size
+java.awt.Dimension[width=69,height=219]</pre>
+<p class="docText">Notice that the preferred width and the actual width of the 
+button added to the east region are both 65. Also notice that the preferred 
+width and the actual width of the button added to the west region are both 69.</p>
+<p class="docText">As an exercise, use the same technique just demonstrated to 
+prove that the north and south regions stretch the width of the component but 
+use the preferred height. Then, using <span class="docEmphasis">Layout4.py,</span> 
+try this:</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Change the layout manager in the layouts list to <tt>
+  BorderLayout</tt>.</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Select the north component in the components list.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Select height in the growth direction list. The Grow button 
+  sets the preferred height of the button that was added to the north region.</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Hit the Grow button several times to make the north region 
+  expand.</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Make the frame half the width and height it was before. Do 
+  this in small increments with the mouse. Notice that the height of the north 
+  component doesn't change.</span></li>
+  <li><span style="font-weight: normal" value="6.">
+  <p class="docList">Hit the Resize button to set the size back to normal.</span></li>
+  <li><span style="font-weight: normal" value="7.">
+  <p class="docList">Make the frame twice as big (use the mouse to drag the 
+  corner of the frame). Notice that the north component doesn't change.</span></li>
+  <li><span style="font-weight: normal" value="8">
+  <p class="docList">Hit the Resize button.</span></li>
+  <li><span style="font-weight: normal" value="9">
+  <p class="docList">Select the west component in the components list.</span></li>
+  <li><span style="font-weight: normal" value="10">
+  <p class="docList">Select the width item in the growth direction list.</span></li>
+  <li><span style="font-weight: normal" value="11">
+  <p class="docList">Hit the Grow button several times. Notice that the width of 
+  the west button grows.</span></li>
+  <li><span style="font-weight: normal" value="12">
+  <p class="docList">Make the frame larger and smaller by dragging a corner.</span></li>
+  <li><span style="font-weight: normal" value="13">
+  <p class="docList">Change the horizontal and vertical gap properties to 5, and 
+  hit the Apply button.</span></li>
+</ol>
+</span>
+<p class="docText">If you've followed along the layout frame should look like
+<a class="docLink" href="#ch14fig29">Figure 14-29</a>.</p>
+<center>
+<h5 id="ch14fig29" class="docFigureTitle">Figure 14-29. <span class="docEmphasis">Layout4.py</span> 
+Result</h5>
+<p class="docText"><img alt="graphics/14fig29.gif" src="14fig29.gif" border="0" width="300" height="250"></p>
+</center>
+<h4 class="docSection2Title" id="ch14lev2sec18">GridBagLayout</h4>
+<p class="docText"><tt>GridBagLayout</tt> is the most complex and most feared 
+layout manager. It's also the most hated and yet the most loved. Most important, 
+it's the most powerful and, in my opinion, the most useful.</p>
+<p class="docText">This layout manager is somewhat like <tt>GridLayout</tt> in 
+that you lay out components in cells in a grid. However, its components can span 
+multiple cells, and the cells aren't always the same size. Instead, you set the 
+ratio of container space the cells will use. For example, one column of cells 
+can span half the width of the container; the other two columns can span a 
+quarter of the width.</p>
+<p class="docText">Unlike in <tt>GridLayout</tt>, in <tt>GridBagLayout</tt> 
+components don't have to span the width and height of the cells, so their 
+preferred size can be maintained. You can specify that the component width 
+and/or height span the cell width or height. You can also specify that the 
+component be anchored in the center, north, south, east, or west region of a 
+cell.</p>
+<h5 class="docSection3Title" id="ch14lev3sec2">GridBagConstraints</h5>
+<p class="docText">To create a <tt>GridBagLayout</tt> component, you need to 
+master the <tt>GridBagConstraints</tt> class, which specifies all constraints 
+for a given cell. The instances of this class are associated with components 
+added to the container that has <tt>GridBagLayout</tt> as its layout manager.
+<tt>GridBagConstraints</tt> determines the placement, cell dimensions, 
+alignment, ratio, and so forth. The association among the <tt>GridBagLayout</tt> 
+instance, <tt>GridBagConstraints</tt>, and each component defines the overall 
+layout of components in the container.</p>
+<p class="docText">Here are <tt>GridBagConstraint</tt>'s properties:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>gridx</tt>, <tt>gridy</tt>— defines the cell location 
+  of the constraint</li>
+  <li>
+  <p class="docText"><tt>gridheight</tt>, <tt>gridwidth</tt>— defines the cell 
+  width and cell height</li>
+  <li>
+  <p class="docText"><tt>weightx</tt>, <tt>weighty</tt>— defines the ratio 
+  between the cells</li>
+  <li>
+  <p class="docText"><tt>anchor</tt>— defines the justification of a component 
+  within the cell (<tt>CENTER</tt>, <tt>NORTH</tt>, <tt>WEST</tt>, etc.)</li>
+  <li>
+  <p class="docText"><tt>fill</tt>— holds the fill type, i.e., whether or not 
+  the component spans the width or height of the cell (possible values are <tt>
+  BOTH</tt>, <tt>VERTICAL</tt>, <tt>NONE</tt>, <tt>HORIZONTAL</tt>)</li>
+  <li>
+  <p class="docText"><tt>insets</tt>— sets the insets</li>
+  <li>
+  <p class="docText"><tt>ipadx</tt>, <tt>ipady</tt>— sets additional padding 
+  needed for a cell (width or height in addition to the ratio defined by <tt>
+  weightx</tt> or <tt>weighty</tt> for a particular cell)</li>
+</ul>
+<p class="docText">The number of rows and columns in the container is a function 
+of the largest <tt>gridx</tt> and <tt>gridy</tt> specified in a constraint if no 
+rows or columns are blank. Say you specify a particular cell location as <tt>
+gridx=5</tt>, <tt>gridy=5</tt>. If there are no cells in the fourth row or 
+column but there are cells in the third row or column, cell 5,5 actually equates 
+to cell 4,4.</p>
+<p class="docText"><tt>GridBagLayout</tt> lays out cells left to right and then 
+top to bottom, so <tt>gridx=0</tt> and <tt>gridy=0</tt>, respectively, indicate 
+the first row and first column at the top left corner of the component.</p>
+<p class="docText"><tt>gridheight</tt> and <tt>gridwidth</tt> specify the cell 
+width. If we have a constraint that has a <tt>gridx</tt> and a <tt>gridy</tt> of 
+1 and a <tt>gridheight</tt> and a <tt>gridwidth</tt> of 2, that region spans 
+multiple cells (1,1 to 3,3).</p>
+<p class="docText"><tt>weightx</tt> and <tt>weighty</tt> specify the ratio given 
+to a certain cell. If the <tt>weightx</tt> is 0, there's another cell in the 
+same column setting the ratio of width space for it. If <tt>weighty</tt> is 0, 
+there's another cell in that row setting the ratio of height space for the 
+column. If three cells in the row have <tt>weightx</tt> of 33, each cell gets a 
+horizontal width equal to 33 percent of the width of the container, in other 
+words, each cell width = 33/(33+33+33) = 33%.</p>
+<p class="docText">If three cells in the same column have a weight of 33, each 
+cell gets a vertical height equal to 33 percent of the height of the container, 
+in other words, each cell height = 33/(33+33+33) = 33%.</p>
+<p class="docText"><tt>fill</tt> holds the fill type. The possible values in 
+this situation are <tt>BOTH</tt>, <tt>VERTICAL</tt>, <tt>NONE</tt>, and <tt>
+HORIZONTAL</tt>. <tt>BOTH</tt> specifies that the component span both the 
+vertical and horizontal space of the cell (this is similar to the <tt>GridLayout</tt> 
+cells). <tt>VERTICAL</tt> specifies that the component stretch across the 
+vertical area of the cell. <tt>HORIZONTAL</tt> specifies that the component 
+stretch across the horizontal area of the cell. <tt>NONE</tt> specifies that the 
+component not stretch in either direction, so that it remains its preferred size 
+in the cell.</p>
+<h3 class="docSection1Title" id="ch14lev1sec9">A GridBagLayout Example</h3>
+<p class="docText">Theory is good, but we need to put some code behind these 
+abstract concepts. The following example, from <span class="docEmphasis">
+GridBag.py,</span> takes us step by step through the layout of components with
+<tt>GridBagLayout</tt>. At first we'll use only buttons; then we'll graduate to 
+other components such as text fields and labels. To start, import the classes 
+needed.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JButton, JTextField, JFrame, JButton, JPanel, JLabel
+&gt;&gt;&gt; from <span class="docEmphasis">java.awt</span> import GridBagLayout, GridBagConstraints</pre>
+<h4 class="docSection2Title" id="ch14lev2sec19">Constraints</h4>
+<p class="docText">Define a helper function for creating <tt>GridBagConstraints</tt>. 
+If you're following along in the interactive interpreter, enter <tt>from</tt>
+<tt>GridBag import makeConstraint</tt>.</p>
+<pre>def makeConstraint()
+gridx=0, gridy=0,      # Holds the x, y cell location in the grid
+gridheight=1, gridwidth=1, # Holds the cell width and cell height
+weightx=0,weighty=0,   # Determines ratio relative to another.
+anchor= GridBagConstraints.CENTER,  # Holds the justification
+fill=GridBagConstraints.NONE,     # Holds the fill type BOTH, NONE,...
+insets=Insets(0,0,0,0),
+ipadx=0, ipady=0        ):
+return
+GridBagConstraints(gridx,gridy,gridwidth,gridheight,weightx,weighty,anchor,
+fill,insets, ipadx, ipady)</pre>
+<p class="docText">Import the helper method to create <tt>GridBagConstraints</tt> 
+without specifying all of its parameters.</p>
+<pre>&gt;&gt;&gt; from GridBag import makeConstraint</pre>
+<p class="docText">Create a <tt>GridBagLayout</tt> instance. Then create a panel 
+that has its layout manager property set to the <tt>GridBagLayout</tt> instance.</p>
+<pre>&gt;&gt;&gt; gbag = GridBagLayout()
+&gt;&gt;&gt; contentPane = JPanel(layout=gbag)
+&gt;&gt;&gt; frame = JFrame(contentPane=contentPane)</pre>
+<p class="docText">Create a 2-row–by–2-column layout, first defining the top 
+left region.</p>
+<pre>&gt;&gt;&gt; top_left = makeConstraint(0,0,1,1, weightx=20, weighty=50,
+fill=GridBagConstraints.BOTH)</pre>
+<p class="docText">Notice that <tt>gridx</tt> and <tt>gridy</tt> are both set to 
+0, so this component will be in the top left, or the first row, first column of 
+the grid.</p>
+<p class="docText">Define the top right region.</p>
+<pre>&gt;&gt;&gt; top_right = makeConstraint(1,0,1,1, weightx=80,
+fill=GridBagConstraints.BOTH)</pre>
+<p class="docText">Notice that <tt>gridx</tt> is set to 1 and <tt>gridy</tt> is 
+set to 0, which means that this region equates to the cell located at the first 
+row, second column of the grid.</p>
+<p class="docText">Define the bottom left region.</p>
+<pre>&gt;&gt;&gt; bottom_left = makeConstraint(0,1,1,1, weighty=50,
+fill=GridBagConstraints.BOTH)</pre>
+<p class="docText"><tt>gridx</tt> is set to 0, so this is the first column. <tt>
+gridy</tt> is set to 1, so this is the second row.</p>
+<pre>&gt;&gt;&gt; bottom_right = makeConstraint(1,1,1,1,fill=GridBagConstraints.BOTH)</pre>
+<p class="docText">Notice that <tt>weightx</tt> of cell <tt>top_left</tt> (0,0) 
+is set to 20 and <tt>weightx</tt> of cell <tt>top_right</tt> (1,0) is set to 80. 
+This means that the top left cell will get 20/(20+80), or 20 percent, of the 
+width of the container and that the top right cell will get 80/(20+80), or 80 
+percent, of the width. Also notice that both cells, <tt>top_left</tt> and <tt>
+top_right</tt>, have <tt>weighty</tt> of 50, so each gets 50/(50+50), or 50 
+percent, of the height of the container, The fill is set so that the components 
+fill the full height and width of the cell.</p>
+<h4 class="docSection2Title" id="ch14lev2sec20">Components</h4>
+<p class="docText">Now that we've set the dimensions of the cells, let's create 
+some components and add them to the containers.</p>
+<p class="docText">Define some sample components—buttons whose labels correspond 
+to where they'll be added in the grid layout.</p>
+<pre>&gt;&gt;&gt; tl = JButton(&quot;Top Left&quot;)
+&gt;&gt;&gt; tr = JButton(&quot;Top Right&quot;)
+&gt;&gt;&gt; bl = JButton(&quot;Bottom Left&quot;)
+&gt;&gt;&gt; br = JButton(&quot;Bottom Right&quot;)</pre>
+<p class="docText">Add the components to the <tt>contentPane</tt> using their 
+corresponding <tt>GridBag</tt> <tt>Constraints</tt>.</p>
+<pre>&gt;&gt;&gt; contentPane.add(tl, top_left)
+&gt;&gt;&gt; contentPane.add(tr, top_right)
+&gt;&gt;&gt; contentPane.add(bl, bottom_left)
+&gt;&gt;&gt; contentPane.add(br, bottom_right)</pre>
+<p class="docText">Size the frame and show it.</p>
+<pre>&gt;&gt;&gt; frame.size=(400,200)
+&gt;&gt;&gt; frame.validate()
+&gt;&gt;&gt; frame.visible=1</pre>
+<p class="docText">If you've been following along, your frame should look like 
+the one in <a class="docLink" href="#ch14fig30">Figure 14-30</a>. Now change the 
+size of the container to 600,100.</p>
+<center>
+<h5 id="ch14fig30" class="docFigureTitle">Figure 14-30. <span class="docEmphasis">GridBag.py</span> 
+Example</h5>
+<p class="docText"><img alt="graphics/14fig30.gif" src="14fig30.gif" border="0" width="400" height="200"></p>
+</center>
+<pre>&gt;&gt;&gt; frame.size=(600,100)
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Notice that the 80:20 ratio between the top left and top 
+right widths remains consistent. So does the 50:50 ratio between the top left 
+and bottom left heights. Your frame should look like the one in
+<a class="docLink" href="#ch14fig31">Figure 14-31</a>.</p>
+<center>
+<h5 id="ch14fig31" class="docFigureTitle">Figure 14-31. <span class="docEmphasis">GridBag.py</span> 
+Example with a Container Size of 600,100</h5>
+<p class="docText"><img alt="graphics/14fig31.gif" src="14fig31.gif" border="0" width="500" height="83"></p>
+</center>
+<p class="docText">Let's change the size to 500,500 so you can get the true feel 
+of things.</p>
+<pre>&gt;&gt;&gt; frame.size=(500,500)
+&gt;&gt;&gt; frame.invalidate()
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Try packing the frame. What do you think will happen?</p>
+<pre>&gt;&gt;&gt; frame.pack()</pre>
+<h4 class="docSection2Title" id="ch14lev2sec21">Adding and Removing Components</h4>
+<p class="docText">For this next set of exercises, we're going to remove and add 
+components after each step. We'll define a set of helper functions to do this. 
+(Import them from <span class="docEmphasis">GridBag.py.</span>)</p>
+<pre>def addComponents(contentPane, comps):
+     for (component, constraint) in comps:
+          contentPane.add(component, constraint)
+
+def removeComponents(contentPane):
+          #Remove the components
+     for x in range (0,contentPane.componentCount):
+          contentPane.remove(0)</pre>
+<p class="docText">Import the <tt>addComponents()</tt> and <tt>removeComponents()</tt> 
+functions.</p>
+<pre>&gt;&gt;&gt; from GridBag import addComponents, removeComponents</pre>
+<p class="docText">Group component/constraint pairs into a list.</p>
+<pre>&gt;&gt;&gt; comps = [(tl, top_left),(tr, top_right),(bl, bottom_left),(br,
+            bottom_right)]</pre>
+<p class="docText">We've essentially defined a list of tuples, each of which 
+contains a component and a constraint. We can use them to iterate through the 
+component/constraint pairs and add them to the panel.</p>
+<pre>for (component, constraint) in comps:
+     contentPane.add(component, constraint)</pre>
+<p class="docText">Set the <tt>ipadx</tt> and <tt>ipady</tt> properties for the 
+top left and top right cells, and set the fill to <tt>NONE</tt> for both. Then 
+resize the frame to 600,100, and add and remove the components from the 
+container. (See <a class="docLink" href="#ch14fig32">Figure 14-32</a>.)</p>
+<center>
+<h5 id="ch14fig32" class="docFigureTitle">Figure 14-32. Modified <span class="docEmphasis">
+GridBag.py</span> Example</h5>
+<p class="docText"><img alt="graphics/14fig32.gif" src="14fig32.gif" border="0" width="500" height="83"></p>
+</center>
+<pre>&gt;&gt;&gt; top_left.ipadx, top_left.ipady, top_left.fill = 10, 10,
+GridBagConstraints.NONE
+&gt;&gt;&gt; top_right.ipadx, top_right.ipady, top_right.fill = 10, 10,
+GridBagConstraints.NONE
+&gt;&gt;&gt; removeComponents(contentPane)
+&gt;&gt;&gt; addComponents(contentPane, comps)
+&gt;&gt;&gt; frame.size=(600,100); frame.validate()</pre>
+<p class="docText">Notice that the top left and top right components are 
+centered in their cells. That's because the default anchor is <tt>CENTER</tt>. 
+Remember that the <tt>anchor</tt> property moves the component to a particular 
+anchor or justification within a cell.</p>
+<p class="docText">Set the anchor to <tt>EAST</tt> for the top left and top 
+right constraints.</p>
+<pre>&gt;&gt;&gt; top_left.anchor = GridBagConstraints.EAST
+&gt;&gt;&gt; top_right.anchor = GridBagConstraints.EAST
+&gt;&gt;&gt; removeComponents();addComponents()
+&gt;&gt;&gt; frame.invalidate()
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Notice that the top left and top right components are lined 
+up along the east borders of their cells (<a class="docLink" href="#ch14fig33">Figure 
+14-33</a>).</p>
+<center>
+<h5 id="ch14fig33" class="docFigureTitle">Figure 14-33. Modified <span class="docEmphasis">
+GridBag.py</span> Example with <tt>anchor</tt> Set to <tt>EAST</tt></h5>
+<p class="docText"><img alt="graphics/14fig33.gif" src="14fig33.gif" border="0" width="500" height="83"></p>
+</center>
+<h4 class="docSection2Title" id="ch14lev2sec22">The Prototype</h4>
+<p class="docText">Now let's prototype a real application that subsets to the 
+components the address form needs. First, though, we need to clean house.</p>
+<pre>&gt;&gt;&gt; frame.visible=0
+&gt;&gt;&gt; frame.dispose()
+&gt;&gt;&gt; frame = NONE
+&gt;&gt;&gt; contentPane = NONE</pre>
+<p class="docText">Define some convenience variables for <tt>CENTER</tt>, <tt>
+WEST</tt>, and <tt>EAST</tt>.</p>
+<pre>&gt;&gt;&gt; CENTER=GridBagConstraints.CENTER
+&gt;&gt;&gt; WEST=GridBagConstraints.WEST
+&gt;&gt;&gt; EAST=GridBagConstraints.EAST</pre>
+<p class="docText">Create a 2-column–by–3-row grid that's almost identical to 
+the one created before except for the addition of an extra row at the bottom 
+called <tt>last</tt> (<tt>last</tt> goes underneath <tt>bottom</tt>).</p>
+<pre>&gt;&gt;&gt;                             # x,y,w,h
+&gt;&gt;&gt; top_left     = makeConstraint(0,0,1,1, weightx=20,weighty=33, anchor=EAST)
+&gt;&gt;&gt; top_right    = makeConstraint(1,0,1,1, weightx=80,            anchor=WEST)
+&gt;&gt;&gt; bottom_left  = makeConstraint(0,1,1,1,            weighty=33, anchor=EAST)
+&gt;&gt;&gt; bottom_right = makeConstraint(1,1,1,1,                       anchor=WEST)
+&gt;&gt;&gt; last         = makeConstraint(1,2,1,1,            weighty=33)</pre>
+<p class="docText">Define some sample components: labels, text fields, and a 
+button.</p>
+<pre>&gt;&gt;&gt; tl = JLabel(&quot;Name&quot;, JLabel.RIGHT)  #Top Left component
+&gt;&gt;&gt; tr = JTextField(20)                #Top Right component
+&gt;&gt;&gt; bl = JLabel(&quot;eMail&quot;, JLabel.RIGHT) #Bottom Left component
+&gt;&gt;&gt; br = JTextField(30)                #Bottom Right component
+&gt;&gt;&gt; okay = JButton(&quot;Okay&quot;)</pre>
+<p class="docText">Notice that we're using the same nomenclature as in the last 
+example. Only the components are different.</p>
+<p class="docText">Set up the frame with a panel that uses <tt>GridBagLayout</tt>.</p>
+<pre>&gt;&gt;&gt; gbag = GridBagLayout()
+&gt;&gt;&gt; contentPane = JPanel(layout=gbag)
+&gt;&gt;&gt; frame = JFrame(contentPane=contentPane)</pre>
+<p class="docText">Add the sample components to <tt>contentPane</tt>. They have 
+the same name so we can use the <tt>addComponents()</tt> method. Group the 
+components with the constraints (the OK button and the last constraint are now 
+on the end).</p>
+<pre>&gt;&gt;&gt; comps = [(tl, top_left),(tr, top_right),(bl, bottom_left),(br,
+bottom_right),(okay,last)]
+&gt;&gt;&gt; addComponents(contentPane, comps)</pre>
+<p class="docText">Size the frame, and make it visible. Your frame should look 
+like the one in <a class="docLink" href="#ch14fig34">Figure 14-34</a>.</p>
+<center>
+<h5 id="ch14fig34" class="docFigureTitle">Figure 14-34. Prototype of Name/Email Address Book 
+Entry Form</h5>
+<p class="docText"><img alt="graphics/14fig34.gif" src="14fig34.gif" border="0" width="400" height="200"></p>
+</center>
+<pre>&gt;&gt;&gt; frame.size=(400,200)
+&gt;&gt;&gt; frame.visible=1</pre>
+<p class="docText">Now let's try resizing the frame to see what happens to the 
+components. Change the frame size to 500,500.</p>
+<pre>&gt;&gt;&gt; frame.size=(500,500)
+&gt;&gt;&gt; frame.invalidate()
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Change the size to 600,100.</p>
+<pre>&gt;&gt;&gt; frame.size=(600,100)
+&gt;&gt;&gt; frame.invalidate()
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Now pack the frame, and see how good it looks. (It should 
+look like <a class="docLink" href="#ch14fig35">Figure 14-35</a>.)</p>
+<center>
+<h5 id="ch14fig35" class="docFigureTitle">Figure 14-35. A Better-Looking Version of the 
+Name/Email Address Book Entry Form</h5>
+<p class="docText"><img alt="graphics/14fig35.gif" src="14fig35.gif" border="0" width="375" height="96"></p>
+</center>
+<pre>&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Change <tt>ipadx</tt> and <tt>ipady</tt> for <tt>top_left</tt>. 
+Space is added only to the first column, and there's more space between the 
+components.</p>
+<pre>&gt;&gt;&gt; top_left.ipadx, top_left.ipady = 20,20
+&gt;&gt;&gt; removeComponents()
+&gt;&gt;&gt; addComponents()
+&gt;&gt;&gt; contentPane.add(okay, last)
+&gt;&gt;&gt; frame.pack()</pre>
+<h4 class="docSection2Title" id="ch14lev2sec23">Experimenting</h4>
+<p class="docText"><tt>GridBagLayout</tt> takes some up-front planning and a lot 
+of messing around with constraints to get what you want, but the reward is a 
+good-looking GUI that can be resized and still display a reasonable layout.</p>
+<p class="docText">In <span class="docEmphasis">Layout4.py,</span> try this 
+exercise:</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">From <tt>layouts</tt> select <tt>GridBagLayout</tt>. Notice 
+  that a 3-by-3 grid is defined. You should get two frames that look like
+  <a class="docLink" href="#ch14fig36">Figure 14-36</a>.</p>
+  <center>
+  <h5 id="ch14fig36" class="docFigureTitle">Figure 14-36. <span class="docEmphasis">Layout4.py</span> 
+  after the Exercise</h5>
+  <p class="docText">
+  <img alt="graphics/14fig36.gif" src="14fig36.gif" border="0" width="500" height="390"></p>
+  </center></span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Select the top right component in the components list.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Change the anchor to <tt>WEST</tt> from the anchor list. 
+  Then hit the Apply button. What happens?</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Select the center right component from the components list. 
+  Then change the anchor to <tt>EAST</tt>, and hit the Apply button. What 
+  happens?</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Try all possible combinations with <tt>anchor</tt> on 
+  several components. Then exit, and restart <span class="docEmphasis">
+  Layout4.py.</span></span></li>
+  <li><span style="font-weight: normal" value="6">
+  <p class="docList">Hit the Pack button. Select All from the components list. 
+  Change the fill from <tt>NONE</tt> to <tt>BOTH</tt>, and hit the Apply button. 
+  Notice that the anchors for center right and top right no longer have any 
+  effect. What happens?</span></li>
+  <li><span style="font-weight: normal" value="7">
+  <p class="docList">Hit Pack, and resize a few times.</span></li>
+  <li><span style="font-weight: normal" value="8">
+  <p class="docList">Change the fill type to <tt>HORIZONTAL</tt>; then hit the 
+  Apply button. What happens?</span></li>
+  <li><span style="font-weight: normal" value="9">
+  <p class="docList">Change the anchor to <tt>SOUTH</tt>; then hit the Apply 
+  button. What happens?</span></li>
+  <li><span style="font-weight: normal" value="10">
+  <p class="docList">Select the top left component, and set its <tt>gridx</tt> 
+  to 3. What happens? Hit the Apply button. What happens? Why?</span></li>
+  <li><span style="font-weight: normal" value="11">
+  <p class="docList">Select the top right component, and set its <tt>gridx</tt> 
+  to 4. What happens? Hit the Apply button. What happens? Why?</span></li>
+  <li><span style="font-weight: normal" value="12">
+  <p class="docList">Select the top middle component, and set its <tt>gridx</tt> 
+  to 5. What happens? Hit the Apply button. What happens? Why?</span></li>
+  <li><span style="font-weight: normal" value="13">
+  <p class="docList">Set the fill to <tt>BOTH</tt>, and then play with the 
+  insets of all of the components.</span></li>
+  <li><span style="font-weight: normal" value="14">
+  <p class="docList">Create a constraint that spans more than one cell.</span></li>
+  <li><span style="font-weight: normal" value="15">
+  <p class="docList">Try several combinations until you get the hang of things. 
+  Don't be afraid to experiment.</span></li>
+</ol>
+</span>
+<h3 class="docSection1Title" id="ch14lev1sec10">Putting Things Together: Adding GridBagLayout to 
+the Address Application</h3>
+<p class="docText">In our last iteration of the address book application we used
+<tt>GridLayout</tt> for the address form pane so that all of the text fields 
+were the same size. That's okay for the name field, which should be about 20 
+characters, but what about the phone number field, which should be only 13 
+characters? Left alone, it's about seven characters wider than it needs to be, 
+which is sloppy, not to mention ugly.</p>
+<p class="docText">To fix the address form pane so that the text fields vary in 
+length but are still flexible across displays, we'll use <tt>GridBagLayout</tt> 
+to create a 3-by-3 grid. The code to do this is nearly identical to the 
+interactive session explaining <tt>GridBagLayout</tt>, so you should be able to 
+follow along without much trouble. In case of confusion, I've added numerous 
+comments.</p>
+<p class="docText">Review the code (from <span class="docEmphasis">three\AddressFormPane.py</span>), 
+and then look at the new address book application in
+<a class="docLink" href="#ch14fig37">Figure 14-37</a>. Also run this version of 
+the application, and try resizing the frame to see what happens to the 
+components.</p>
+<center>
+<h5 id="ch14fig37" class="docFigureTitle">Figure 14-37. Address Book Entry Form with 
+Varying-length Fields</h5>
+<p class="docText"><img alt="graphics/14fig37.gif" src="14fig37.gif" border="0" width="500" height="179"></p>
+</center>
+<pre>def __init__CreateTextFieldPanel(self):
+
+           &quot;&quot;&quot; Set up the email, phoneNumber and name text fields &quot;&quot;&quot;
+                 # Create the panel and set the grid layout.
+                 # The grid has a layout of a 3 rows by 2 columns.
+           editPane = JPanel()
+           self.cadd(editPane, BorderLayout.CENTER)
+           editPane.setLayout(GridBagLayout())
+
+                 # Set up some constants for the anchor.
+           CENTER=GridBagConstraints.CENTER
+           WEST=GridBagConstraints.WEST
+           EAST=GridBagConstraints.EAST
+                 # Now let's create a 2 column by 3 row grid.
+                 # This will be almost identical to the one we created
+                 # before.
+                               # x,y,w,h
+           top_left=makeConstraint(0,0,1,1,weightx=20,weighty=33,anchor=EAST)
+           top_right = makeConstraint(1,0,1,1,weightx=80,anchor=WEST)
+           CENTER_left = makeConstraint(0,1,1,1,weighty=33,anchor=EAST)
+           CENTER_right = makeConstraint(1,1,1,1,anchor=WEST)
+           bottom_left = makeConstraint(0,2,1,1,weighty=33, anchor=EAST)
+           bottom_right = makeConstraint(1,2,1,1,anchor=WEST)
+                 # Create the name textfield. Then add it and its
+                 # associated label to the contentPane.
+                 # Add the label to the top_left and the __name
+                 # textField to the top_right.
+           self.__name = JTextField(22, text=self.__address.name())
+           editPane.add(JLabel(&quot;Name &quot;, JLabel.RIGHT), top_left)
+           editPane.add(self.__name, top_right)
+                 # Create the phoneNumber textfield. Then add it and
+                 # its corresponding label to the contentPane.
+                 # Add the label to the CENTER_left. Add the
+                 # __phoneNumber textfield to the CENTER_right.
+           self.__phoneNumber=
+               JTextField(13,text=self.__address.phoneNumber())
+           editPane.add(JLabel(&quot;Phone Number &quot;, JLabel.RIGHT), CENTER_left)
+           editPane.add(self.__phoneNumber, CENTER_right)
+                 # Create the email textfield. Then add it and its
+                 # associated label to the contentPane.
+                 # Add the label to the bottom_left. Add the __email
+                 # textfield to the bottom_right.
+           self.__email = JTextField(30, text=self.__address.email())
+           editPane.add(JLabel(&quot;eMail &quot;, JLabel.RIGHT), bottom_left)
+           editPane.add(self.__email, bottom_right)</pre>
+<p class="docText">Compare <a class="docLink" href="#ch14fig37">Figure 14-37</a> 
+to <a class="docLink" href="#ch14fig17">Figure 
+14-17</a>, which uses <tt>GridLayout</tt> for the address form instead of <tt>
+GridBagLayout</tt>. Which do you think looks better?</p>
+<h3 class="docSection1Title" id="ch14lev1sec11">Summary</h3>
+<p class="docText">In this chapter, we used the things we've learned about Java 
+GUIs to add a GUI to our address book application. Along the way, we added other 
+things: a list to select address entries based on a person's name, a toolbar, 
+menubar, and popup menus.</p>
+<p class="docText">With the address book application, we worked with <tt>
+GridLayout</tt>, <tt>FlowLayout</tt>, <tt>GridBagLayout</tt>, and <tt>
+BorderLayout</tt>. We also covered the ins and outs of Java menuing systems and 
+layout managers.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2013.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2015.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

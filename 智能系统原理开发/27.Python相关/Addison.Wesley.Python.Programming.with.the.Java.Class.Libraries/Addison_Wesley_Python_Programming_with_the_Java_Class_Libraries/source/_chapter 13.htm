@@ -1,0 +1,2050 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 13</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 13.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 13.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 13.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2012.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2014.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 13. JFC Fundamentals</h2><ul><li>&nbsp;<a class="docLink" href="#ch13lev1sec1">Components and Containers</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec2">JFrame</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec3">Handling Events with JFrame</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec4">The Python Way of Handling Events</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec5">The Class Hierarchy for JFrame and Frame</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec6">JPanel</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec7">JLabel</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec8">JComponent</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec9">JButton</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec10">JTextField</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec11">JCheckBox</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec12">JRadioButton</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec13">List and JList</a></li>
+<li>&nbsp;<a class="docLink" href="#ch13lev1sec14">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Abstract Window Toolkit</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Checkbox</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Container</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Data model</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Dropdown list</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Event object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">File path</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Frame</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">gif/jpeg</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Java APIs</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Java Foundation Classes/Swing</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Layout management</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Listener</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Menu (menubar/popup)</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Mnemonics</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Model View Controller</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Packing</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Panel</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Polymorphism</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Radio/Toggle button</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Single inheritance</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Superclass</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Titlebar</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Toolbar</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Vector</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In this chapter, we're going to cover the construction of 
+Java GUI applications, including listboxes, text fields, menus, buttons, 
+windows, checkboxes, and panels. In previous chapters, we played with Java 
+applications to work with events and Java classes. Events will be the focus 
+here.</p>
+<p class="docText">There are two ways to build GUIs in Java—Abstract Window 
+Toolkit (AWT) and Java Foundation Classes (JFC)/Swing, which are conceptually 
+similar although very different in execution. JFC is the newer of the two and is 
+supported only by current browsers. AWT is supported by newer and older 
+browsers, but our AWT tour will include only its post-Swing incarnation.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">AWT or JFC</h2>
+      <p class="docText">If you can't control the client—that is, what browser 
+      he's using—you may want to use AWT. You'll probably also use it when 
+      you're working with hand-held devices. Even so, JFC has many features that 
+      have no AWT equivalent, so it's a better general-purpose tool.</p>
+      <p class="docText">Actually, JFC encompasses both AWT and Swing, but Swing 
+      is the newer, so-called lightweight version of GUI widgets (components). 
+      Basically, Swing widgets have no operating system counterpart.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Learning GUI programming in Java is a fairly tall order, 
+especially when you factor in all of the advanced JFC controls such as trees and 
+tables. Covering this topic fully will take several chapters, and even then we 
+can only cover the basics. If you want more, there are plenty of good books out 
+there. One I recommend is <span class="docEmphasis">Graphic Java</span>, volumes 
+1 and 2 (Geary, 1998 and 1999), which provides exhaustive references and scores 
+of code examples. Geary documents components by their properties, which makes 
+them easy for Jython users to read and work with. Other good sources are the 
+Java tutorial on JFC and the abundant, and free, Java API documentation.</p>
+<p class="docText">Like most of the chapters in this book, this one is hands on. 
+For example, we don't go into detail about the Model View Controller (MVC) 
+architecture that JFC uses, but we show examples that use it. If you want to 
+understand the dynamic behavior of MVC, you have to follow along. Repeat after 
+me: <span class="docEmphasis">The only way to learn programming is to program.</span></p>
+<h3 class="docSection1Title" id="ch13lev1sec1">Components and Containers</h3>
+<p class="docText">In Java, you organize components as nested elements. 
+Typically you have a frame, which contains several panels and maybe a toolbar 
+and a menubar. In fact, each panel can contain other components such as text 
+fields and labels or even other panels, so a complete graphical user interface 
+can consist of many nested elements. The JFC and AWT containers are components 
+themselves and can be contained in other containers. You can see this in their 
+class diagrams, which also show their points of similarity.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Design Patterns</h2>
+      <p class="docText">AWT and JFC use the design patterns Publish and 
+      Subscribe, Observer/Observable, Decorator, and Strategy, among others. 
+      These are described in <span class="docEmphasis">Design Patterns</span> 
+      (Gamma et al., 1995)—a must read for a deep understanding of the Java 
+      APIs.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch13lev1sec2">JFrame</h3>
+<p class="docText">Frames are top-level interfaces that pop up as windows and 
+can be resized and closed. As containers, they typically contain panels and 
+other components, for which they initiate layout management. They can also have 
+an associated menubar and icons.</p>
+<p class="docText">Here's an example of how a simple frame works using <tt>
+JFrame</tt>.</p>
+<p class="docText">Import <tt>JFrame</tt> from <span class="docEmphasis">
+javax.swing.</span> Create an instance of it, show it, size it, change its 
+title.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; frame = JFrame()
+&gt;&gt;&gt; frame.show()
+&gt;&gt;&gt; frame.size = 200,200</pre>
+<p class="docText">Set the title to &quot;<tt>Hello JFC</tt>&quot;.</p>
+<pre>&gt;&gt;&gt; frame.title = &quot;Hello JFC&quot;</pre>
+<h4 class="docSection2Title" id="ch13lev2sec1">Setting the Frame's Mouse Cursor</h4>
+<p class="docText">With a frame, as with all components, you can set the mouse 
+cursor. You'll probably want to make the cursor wait during a long operation so 
+it shows a wristwatch or hourglass that lets the user know the application is 
+busy. In the example that follows, we'll set the cursor to <tt>WAIT</tt>, <tt>
+TEXT</tt>, and <tt>HAND</tt>. After each command, position the mouse over the 
+middle of the frame, and note the image the pointer becomes.</p>
+<p class="docText">Import <tt>Cursor</tt> from <span class="docEmphasis">
+java.awt,</span> and change the cursor three times.</p>
+<pre>&gt;&gt;&gt; from java.awt import Cursor
+&gt;&gt;&gt; frame.setCursor(Cursor.WAIT_CURSOR)
+&gt;&gt;&gt; frame.setCursor(Cursor.TEXT_CURSOR)
+&gt;&gt;&gt; frame.setCursor = Cursor.HAND_CURSOR</pre>
+<h4 class="docSection2Title" id="ch13lev2sec2">Adding Components to the Frame</h4>
+<p class="docText">To illustrate adding components to the frame, we'll import 
+some components from AWT. Then we'll create and add a button, a label, a 
+checkbox, and a text field.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JButton,      JLabel
+&gt;&gt;&gt; from javax.swing import JCheckBox, JTextField</pre>
+<p class="docText">Add a button component.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(JButton(&quot;Button&quot;))</pre>
+<p class="docText">Add a label component.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(JLabel(&quot;Label&quot;))</pre>
+<p class="docText">Add a checkbox component.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(JCheckBox(&quot;Checkbox&quot;))</pre>
+<p class="docText">Add a text field component.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(TextField(&quot;TextField&quot;))</pre>
+<p class="docText">You may think that our frame should be showing some 
+components at this point, but it won't until we tell it to by calling the <tt>
+pack()</tt> method.</p>
+<pre>&gt;&gt;&gt; frame.pack()</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">A Reminder</h2>
+      <p class="docText">Doing this:</p>
+      <pre>&gt;&gt;&gt; frame.contentPane.add(Button(&quot;Button&quot;))</pre>
+      <p class="docText">is equivalent to doing this:</p>
+      <pre>&gt;&gt;&gt; button = Button(&quot;Button&quot;)
+&gt;&gt;&gt; frame.contentPane.add(button)</pre>
+      <p class="docText">The first way creates an anonymous instance of <tt>
+      Button</tt> and adds it to the frame, which is okay since we don't need 
+      access to the button component for this example.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 class="docSection3Title" id="ch13lev3sec1">BorderLayout versus FrameLayout</h5>
+<p class="docText">Only the last component added to the frame shows up. Why? The 
+answer lies in the default layout manager for <tt>Frame</tt>—<tt>BorderLayout</tt>—which 
+lays out components along the borders. I won't go into detail about <tt>
+BorderLayout</tt> here (see
+<a class="docLink" href="_chapter%2014.htm">Chapter 14</a> for 
+that). Suffice it to say that we need to change to another manager, <tt>
+FlowLayout</tt>, which arranges the components from left to right as long as 
+there's room.</p>
+<p class="docText">I'll tell you more about <tt>FlowLayout</tt> later. For now, 
+we'll import the <tt>FlowLayout</tt> class from the <span class="docEmphasis">
+java.awt</span> package and set the frame's layout property to a <tt>FlowLayout</tt> 
+instance. Then we'll pack the frame, that is, invoke the layout manager.</p>
+<pre>&gt;&gt;&gt; from java.awt import FlowLayout
+&gt;&gt;&gt; frame.contentPane.layout = FlowLayout()
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Now all of the added components are visible.</p>
+<h4 class="docSection2Title" id="ch13lev2sec3">JFrame's Lineage</h4>
+<p class="docText">JFC frames work much like AWT frames because they're both cut 
+from the same cloth. Let's examine <tt>JFrame</tt>'s lineage, which is easy to 
+do from the interactive interpreter.</p>
+<p class="docText">Import <tt>JFrame</tt> from <span class="docEmphasis">
+javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame</pre>
+<p class="docText">Print out <tt>JFrame</tt>'s superclass, which is
+<span class="docEmphasis">java.awt.Frame.</span></p>
+<pre>&gt;&gt;&gt; print `JFrame.superclass`
+&lt;jclass java.awt.Frame at 227114466&gt;</pre>
+<p class="docText">This tells us that <tt>Frame</tt> is an AWT frame. (Follow 
+along.)</p>
+<pre>&gt;&gt;&gt; import java.awt.Frame
+&gt;&gt;&gt; JFrame.superclass is java.awt.Frame
+1</pre>
+<p class="docText">There are some differences between <tt>Frame</tt> and <tt>
+JFrame</tt>. For example, if you try to add a component to <tt>JFrame</tt> you 
+get an exception. That's because components can be added only to <tt>JFrame</tt>'s 
+content pane.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">JFrame's Design Flaw</h2>
+      <p class="docText">One of the key benefits of inheritance is polymorphism, 
+      so you might think we could replace <tt>Frame</tt> with <tt>JFrame</tt> 
+      whenever possible. That's not the case, however. According to the Java API 
+      Documentation, <tt>JFrame</tt> and <tt>java.awt.Frame</tt> are not fully 
+      compatible.</p>
+      <p class="docText">In my opinion, making <tt>JFrame</tt>'s <tt>add()</tt> 
+      method throw an exception is a design flaw. Its correct behavior should be 
+      to add the component to the content pane and then have separate methods 
+      for adding it directly to <tt>JFrame</tt>. Instead, by redefining the 
+      semantics and function of <tt>add()</tt>, the developers broke the 
+      contract of <tt>Frame</tt>'s interface.</p>
+      <p class="docText">The key to working with <tt>JFrame</tt> is not to do 
+      this:</p>
+      <pre>jframe.add(component)</pre>
+      <p class="docText">but to do this:</p>
+      <pre>frame.contentPane.add(child);</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch13lev1sec3">Handling Events with JFrame</h3>
+<p class="docText">Since <tt>Frame</tt> is a subclass of <tt>java.awt.Frame</tt>, 
+which is a subclass of <tt>java.awt.Window</tt>, you can listen for window 
+events with its event mechanism. Import the <tt>jinfo</tt> class to inspect the 
+event properties of <tt>Frame</tt> (<tt>JFrame</tt>'s superclass).</p>
+<pre>&gt;&gt;&gt; import jinfo
+&gt;&gt;&gt; from java.awt import Frame
+&gt;&gt;&gt; jinfo.getEventsInfo(Frame)
+[]</pre>
+<p class="docText">As you can see, <tt>Frame</tt> has no event properties, 
+because its events are defined from its base class, <tt>java.awt.Window</tt>.</p>
+<pre>&gt;&gt;&gt; Frame.superclass
+&lt;jclass java.awt.Window at 228949474&gt;</pre>
+<p class="docText">Therefore, we need to inspect <tt>Window</tt>'s event 
+properties.</p>
+<pre>&gt;&gt;&gt; jinfo.getEventsInfo(Window)
+[&lt;beanEventProperty windowIconified for event interface
+java.awt.event.WindowListener at 861240813&gt;, &lt;beanEventProperty
+WindowActivated for event interface java.awt.event.WindowListener at
+863600109&gt;, &lt;beanEventProperty windowClosing for event interface
+java.awt.event.WindowListener at 862551533&gt;, &lt;beanEventProperty windowClosed
+for event interface java.awt.event.WindowListener at 862813677&gt;,
+&lt;beanEventProperty windowDeiconified for event interface
+java.awt.event.WindowListener
+at 861502957&gt;, &lt;beanEventProperty windowOpened for event interface
+java.awt.event.WindowListener at 860978669&gt;, &lt;beanEventProperty
+windowDeactivated for event interface java.awt.event.WindowListener at
+862289389&gt;]</pre>
+<p class="docText">There's a lot of them. I've done a little formatting to make 
+them more readable.</p>
+<pre>[&lt;... windowIconified for event interface java.awt.event.WindowListener ...&gt;,
+&lt;... WindowActivated for event interface java.awt.event.WindowListener ...&gt;,
+&lt;... windowClosing for event interface java.awt.event.WindowListener ...&gt;,
+&lt;... windowClosed for event interface java.awt.event.WindowListener ...&gt;,
+&lt;... windowDeiconified for event interface java.awt.event.WindowListener ...&gt;,
+&lt;... windowOpened for event interface java.awt.event.WindowListener ...&gt;,
+&lt;... windowDeactivated for event interface java.awt.event.WindowListener
+...&gt;]</pre>
+<p class="docText">Notice that the <tt>getEventsInfo()</tt> function extracts 
+all of the information needed to work with event properties, but it's a little 
+hard to read. Here's an easier way.</p>
+<p class="docText">Import all of <tt>jinfo</tt> and import <tt>java.awt.Window</tt>.</p>
+<pre>&gt;&gt;&gt; from jinfo import *
+&gt;&gt;&gt; from java.awt import Window</pre>
+<p class="docText">Use <tt>getEventsInfo()</tt> to get the sequence of event 
+properties from <tt>Window</tt>.</p>
+<pre>&gt;&gt;&gt; eProps = getEventsInfo(Window)</pre>
+<p class="docText">Use <tt>len()</tt> to determine how many properties there 
+are.</p>
+<pre>&gt;&gt;&gt; print `len(eProps)`
+7</pre>
+<p class="docText">Once you know how many properties there are, invoke <tt>
+printEventProperty()</tt> to print out details about the event.</p>
+<pre>&gt;&gt;&gt; printEventProperty(eProps[0])
+Event Property:            windowOpened
+Defined in:                java.awt.event.WindowListener
+Event:                            java.awt.event.WindowEvent
+Event properties for java.awt.event.WindowEvent:
+    window              Type: org.python.core.PyBeanProperty
+Public Event fields for java.awt.event.WindowEvent:
+     static final WINDOW_FIRST          Type: int
+     static final WINDOW_LAST           Type: int
+     static final WINDOW_OPENED         Type: int
+     static final WINDOW_CLOSING        Type: int
+     static final WINDOW_CLOSED         Type: int
+     static final WINDOW_ICONIFIED      Type: int
+     static final WINDOW_DEICONIFIED    Type: int
+     static final WINDOW_ACTIVATED      Type: int</pre>
+<p class="docText"><tt>printEventProperty()</tt> tells you three important 
+things:</p>
+<ul>
+  <li>
+  <p class="docList">The name of the interface that defines the listener—<tt>java.awt.event.WindowListener</tt></li>
+  <li>
+  <p class="docList">The name of the class that defines the event object passed 
+  to the listener—<tt>java.awt.event.WindowEvent</tt></li>
+  <li>
+  <p class="docList">The properties and fields associated with the event object</li>
+</ul>
+<p class="docText">Let's look at <tt>windowDeactivated</tt>:</p>
+<pre>&gt;&gt;&gt; printEventProperty(eProps[6])
+Event Property:            windowDeactivated
+Defined in:                java.awt.event.WindowListener
+Event:                     java.awt.event.WindowEvent
+Event properties for java.awt.event.WindowEvent:
+     window             Type: org.python.core.PyBeanProperty
+Public Event fields for java.awt.event.WindowEvent:
+     static final WINDOW_FIRST          Type: int
+     static final WINDOW_LAST           Type: int
+     static final WINDOW_OPENED         Type: int
+     static final WINDOW_CLOSING        Type: int
+     static final WINDOW_CLOSED         Type: int
+     static final WINDOW_ICONIFIED      Type: int
+     static final WINDOW_DEICONIFIED    Type: int
+     static final WINDOW_ACTIVATED      Type: int
+     static final WINDOW_DEACTIVATED    Type: int</pre>
+<p class="docText">You might want to look up the rest of the event properties 
+and traverse <tt>Frame</tt>'s lineage until you reach a superclass called <tt>
+Object</tt>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Two Ways to Look Up Events with One Method</h2>
+      <p class="docText">This one works best on Windows 98 because it pauses 
+      after each event:</p>
+      <pre>&gt;&gt;&gt; import jinfo
+&gt;&gt;&gt; from java.awt import Window
+&gt;&gt;&gt; jinfo.getEventsInfo(Window, 1, 1)</pre>
+      <p class="docText">This one works best on Windows NT because you can 
+      scroll the DOS box to see the results:</p>
+      <pre>&gt;&gt;&gt; import jinfo
+&gt;&gt;&gt; from java.awt import Window
+&gt;&gt;&gt; jinfo.getEventsInfo(Window, 1)</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch13table01" class="docTableTitle">Table 13-1. Frame, JFrame, and Window Events</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    windowOpened(WindowEvent e)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The window is first 
+    opened. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    windowClosed(WindowEvent e)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The window is closed.
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    windowClosing(WindowEvent e)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The user is requesting to 
+    close the window—a good time to see if the user wants to save any unsaved 
+    data. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    windowActivated(WindowEvent e)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The window is the active 
+    window; the window or one of its contained components have the keyboard 
+    focus. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    windowDeactivated(WindowEvent e)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The window doesn't have 
+    keyboard focus. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    windowIconified(WindowEvent e)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Invoked when the window 
+    is minimized. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>
+    windowDeiconified(WindowEvent e)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The window has been 
+    restored to its size before it was iconified. </td>
+  </tr>
+</table>
+<p class="docText"><a class="docLink" href="#ch13table01">Table 13-1</a> lists 
+and describes the events supported by <tt>Frame</tt>, <tt>JFrame</tt>, and <tt>
+Window</tt>. All of the event properties have a one-to-one correspondence to a 
+method in their listener interface.</p>
+<h4 class="docSection2Title" id="ch13lev2sec4">Event Handling for Frame and JFrame</h4>
+<p class="docText">The following example demonstrates Java event handling for 
+both <tt>JFrame</tt> and <tt>Frame</tt>. It also shows how to treat the two 
+classes polymorphically.</p>
+<p class="docText">Create a <tt>Listener</tt> class by extending the <tt>
+java.awt.event.WindowListener</tt> interface.</p>
+<pre>from java.awt.event import WindowListener
+
+class Listener (WindowListener):
+     def windowOpened(self, windowEvent):
+          self.handleEvent(&quot;windowOpened&quot;,windowEvent)
+     def windowClosed(self, windowEvent):
+          self.handleEvent(&quot;windowClosed&quot;, windowEvent)
+     def windowClosing(self, windowEvent):
+          self.handleEvent(&quot;windowClosing&quot;,windowEvent)
+     def WindowActivated(self, windowEvent):
+          self.handleEvent(&quot;WindowActivated&quot;, windowEvent)
+     def windowDeactivated(self, windowEvent):
+          self.handleEvent(&quot;windowDeactivated&quot;, windowEvent)
+     def windowIconified(self, windowEvent):
+          self.handleEvent(&quot;windowIconified&quot;, windowEvent)
+     def windowDeiconified(self, windowEvent):
+          self.handleEvent(&quot;windowDeiconified&quot;, windowEvent)
+     def handleEvent(self, event_name, event):
+          print &quot;Event: &quot; + event_name
+          print &quot;Event info: &quot; + `event.class`
+          print &quot;Source: &quot; + `event.source.title`
+          print &quot;----------------—&quot;</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Adapters</h2>
+      <p class="docText">In the <tt>Listener</tt> code example, we were 
+      interested in all methods, so we used <tt>WindowListener</tt>. To save 
+      time you can derive the listener from <tt>WindowAdapter</tt> and only 
+      override the events that interest you.</p>
+      <p class="docText">All listener classes have corresponding adapter 
+      classes. The best way to know if a particular event listener interface has 
+      a corresponding event listener class is to check the Java API 
+      documentation.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Essentially we've created a class that implements <tt>
+java.awt.event.WindowListener</tt>. We handle every event by calling the <tt>
+handleEvent()</tt> method, which prints out the event name, a string denoting 
+which event occurred, the name of the event class that contains information 
+regarding the event, and the source's title property.</p>
+<p class="docText">Now we'll create two frames, <tt>javax.swing.JFrame</tt> and
+<tt>java.awt.Frame</tt>. Then we'll pass an instance of the listener class (<tt>listener</tt>) 
+with <tt>addWindowListener</tt> to register the event listener with the event 
+source. To create and set up the frames, I've created a function called <tt>
+createFrame()</tt>, which takes a class and a title as arguments. <tt>
+CreateFrame()</tt> uses the class to create an instance of <tt>Frame</tt> and 
+then sets its size, title, and visibility. The reason we can use <tt>createFrame()</tt> 
+is that, <tt>JFrame</tt> being derived from <tt>Frame</tt>, both implement the 
+same interface.</p>
+<p class="docText">Here's the <tt>createFrame()</tt> method (from
+<span class="docEmphasis">WindowEventListener.py</span>).</p>
+<pre>def createFrame(clazz, title, listener):
+     frame = clazz()
+     frame.addWindowListener(listener)
+     frame.setSize(200, 200)
+     frame.setTitle(title)
+     frame.setVisible(1)
+     return frame</pre>
+<p class="docText">Note that the call to <tt>addWindowListener</tt> registers an 
+instance of the <tt>Listener</tt> class with a frame.</p>
+<p class="docText">Now we'll use the <tt>createFrame()</tt> function to create 
+both a <tt>Frame</tt> and a <tt>JFrame</tt>.</p>
+<pre>from java.awt import Frame
+from javax.swing import JFrame
+...
+...
+     listener = Listener()
+
+     raw_input (&quot;Press Enter to create a JFC Frame&quot;)
+     jfc_frame = createFrame(JFrame, &quot;JFC Frame&quot;, listener)
+
+     raw_input (&quot;Press Enter to create an AWT Frame&quot;)
+     awt_frame = createFrame(Frame, &quot;AWT Frame&quot;, listener)</pre>
+<p class="docText">Since the same <tt>listener</tt> instance is registered with 
+both <tt>Frame</tt> and <tt>JFrame</tt>, it will get events from both.</p>
+<p class="docText">Run the <tt>WindowEventListener</tt> class and, when it asks 
+you to &quot;Press Enter to create a JFC Frame,&quot; do so. You should see the following 
+in the DOS box:</p>
+<pre>Event: WindowActivated
+Event info: &lt;jclass java.awt.event.WindowEvent at 1384027101&gt;
+Source: 'JFC Frame'
+----------------—
+Event: windowOpened
+Event info: &lt;jclass java.awt.event.WindowEvent at 1384027101&gt;
+Source: 'JFC Frame'
+----------------—</pre>
+<p class="docText">When the window is first created, it sends the <tt>
+WindowActivated</tt> and <tt>windowOpened</tt> events.</p>
+<p class="docText">Now return to where you ran the script; you should get the 
+following message:</p>
+<pre>Event info: &lt;jclass java.awt.event.WindowEvent at 1384027101&gt;
+Source: 'JFC Frame'
+----------------—</pre>
+<p class="docText">As you can see, the JFC frame is no longer active, so it 
+sends out a <tt>windowDeactivated</tt> event.</p>
+<p class="docText">Now that the DOS box is the active window, hit Return. You 
+should get the following messages:</p>
+<pre>Event: WindowActivated
+Event info: &lt;jclass java.awt.event.WindowEvent at 1408756942&gt;
+Source: 'AWT Frame'
+----------------—
+Event: windowOpened
+Event info: &lt;jclass java.awt.event.WindowEvent at 1408756942&gt;
+Source: 'AWT Frame'
+----------------—</pre>
+<p class="docText">Move the AWT frame so that you can see the JFC frame as well. 
+Select each a few times (by clicking once on their individual captions). As you 
+go from one to the other, you should get the following messages:</p>
+<pre>Event: windowDeactivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—
+Event: WindowActivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'AWT Frame'
+----------------—
+Event: windowDeactivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'AWT Frame'
+----------------—
+Event: WindowActivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—</pre>
+<p class="docText">If you minimize the JFC frame, you should get these messages 
+in the DOS box:</p>
+<pre>Event: windowIconified
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—
+Event: windowDeactivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—
+Event: WindowActivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'AWT Frame'
+----------------—</pre>
+<p class="docText">When the JFC frame is minimized, it sends out a <tt>
+windowIconified</tt> event followed by a <tt>windowDeactivated</tt> event. Since 
+the AWT frame was the last active window, it becomes the active window again and 
+sends out a <tt>WindowActivated</tt> event. If you can maximize the JFC frame, 
+you'll get the following messages:</p>
+<pre>Event: windowDeactivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'AWT Frame'
+----------------—
+Event: WindowActivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—
+Event: windowDeiconified
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—</pre>
+<p class="docText">First the AWT frame and then the JFC frame are deactivated; 
+then the JFC frame sends a <tt>windowDeactivated</tt> event. Close the JFC frame 
+by clicking on its close control (on Windows 95/98/NT, it's an X in the top 
+right corner next to the caption). You should get the following messages:</p>
+<pre>Event: windowClosing
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—
+Event: windowDeactivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'JFC Frame'
+----------------—
+Event: WindowActivated
+Event info: &lt;jclass java.awt.event.WindowEvent
+Source: 'AWT Frame'
+----------------—</pre>
+<p class="docText">Now try to close the AWT frame using the same technique. What 
+happens? Why?</p>
+<p class="docText">The JFC frame's default method of closing a window is hiding 
+the frame. Since the AWT frame doesn't handle the <tt>windowClosing</tt> event, 
+you have to add a handler and do it yourself.</p>
+<p class="docText">Unlike <tt>java.awt.Frame</tt>, <tt>javax.swing.JFrame</tt> 
+responds when a user attempts to close a window. You can change the default 
+behavior (hiding the frame) by invoking the <tt>setDefaultCloseOperation()</tt> 
+method to make the frame exit the application. Look this up, as well as other 
+default operation-closing methods, in the Java API documentation.</p>
+<h5 class="docSection3Title" id="ch13lev3sec2">The Complete Java Event-Handling Code</h5>
+<p class="docText">Here's the complete listing (<span class="docEmphasis">WindowEventListener.py</span>) 
+for the Java way of handling events:</p>
+<pre>from java.awt import Frame
+from javax.swing import JFrame
+from java.awt.event import WindowListener
+class Listener (WindowListener):
+     def windowOpened(self, windowEvent):
+          self.handleEvent(&quot;windowOpened&quot;,windowEvent)
+     def windowClosed(self, windowEvent):
+          self.handleEvent(&quot;windowClosed&quot;, windowEvent)
+     def windowClosing(self, windowEvent):
+          self.handleEvent(&quot;windowClosing&quot;,windowEvent)
+     def WindowActivated(self, windowEvent):
+          self.handleEvent(&quot;WindowActivated&quot;, windowEvent)
+     def windowDeactivated(self, windowEvent):
+          self.handleEvent(&quot;windowDeactivated&quot;, windowEvent)
+     def windowIconified(self, windowEvent):
+          self.handleEvent(&quot;windowIconified&quot;, windowEvent)
+     def windowDeiconified(self, windowEvent):
+          self.handleEvent(&quot;windowDeiconified&quot;, windowEvent)
+     def handleEvent(self, event_name, event):
+          print &quot;Event: &quot; + event_name
+          print &quot;Event info: &quot; + `event.class`
+          print &quot;Source: &quot; + `event.source.title`
+          #print &quot;Event Properties: &quot; + `dir(event)`
+          print &quot;----------------—&quot;
+
+     def createFrame(clazz, title, listener):
+          frame = clazz()
+          frame.addWindowListener(listener)
+          frame.setSize(200, 200)
+          frame.setTitle(title)
+          frame.setVisible(1)
+          return frame
+
+     def main():
+          listener = Listener()
+
+          raw_input (&quot;Press Enter to create a JFC Frame&quot;)
+          jfc_frame = createFrame(JFrame, &quot;JFC Frame&quot;, listener)
+          raw_input (&quot;Press Enter to create an AWT Frame&quot;)
+          awt_frame = createFrame(Frame, &quot;AWT Frame&quot;, listener)
+
+     if __name__ == &quot;__main__&quot;:
+          main()</pre>
+<h3 class="docSection1Title" id="ch13lev1sec4">The Python Way of Handling Events</h3>
+<p class="docText">The following brief interactive session highlights the Python 
+way of handling events:</p>
+<pre>&gt;&gt;&gt; def closing(event):
+...     print &quot;windowClosing&quot;
+...
+&gt;&gt;&gt; def closed(event):
+...     print &quot;windowClosed&quot;
+...
+&gt;&gt;&gt; def open(event):
+...     print &quot;windowOpened&quot;
+...</pre>
+<p class="docText">Import a <tt>JFrame</tt>, create an instance of it, and 
+configure the instance.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; frame = JFrame()
+&gt;&gt;&gt; frame.title = &quot;JFrame frame&quot;
+&gt;&gt;&gt; frame.size = 200,200</pre>
+<p class="docText">Set the event properties of the frame to the functions 
+created.</p>
+<pre>&gt;&gt;&gt; frame.windowClosing = closing
+&gt;&gt;&gt; frame.windowClosed = closed
+&gt;&gt;&gt; frame.windowOpened = open</pre>
+<p class="docText">Notice that the event properties <tt>windowClosing</tt>, <tt>
+windowClosed</tt>, and <tt>windowOpened</tt> correspond to the methods in the
+<tt>java.awt.WindowListener</tt> interface. Show the window for the first time 
+to get the <tt>windowOpened</tt> event.</p>
+<pre>&gt;&gt;&gt; frame.visible = 1
+windowOpened</pre>
+<p class="docText">Close the frame using the Close button in the upper right 
+corner to get the DOS box message.</p>
+<pre>windowClosing</pre>
+<p class="docText">Make the frame visible again. (You don't get another <tt>
+windowOpened</tt> event; that happens only when the frame becomes visible for 
+the first time.)</p>
+<pre>&gt;&gt;&gt; frame.visible = 1</pre>
+<p class="docText">Call the frame's <tt>dispose()</tt> method to actually close 
+the window. You'll get a <tt>windowClosed</tt> event.</p>
+<pre>&gt;&gt;&gt; frame.dispose()
+windowClosed</pre>
+<p class="docText">As you can see, for just a few events you can define just a 
+few event handlers and assign them to the event property of the <tt>frame</tt> 
+instance. The event properties always correspond to the event listener's 
+methods.</p>
+<h4 class="docSection2Title" id="ch13lev2sec5">Python's WindowEventListener</h4>
+<p class="docText">The following example illustrates the same functionality as 
+in the <span class="docEmphasis">WindowEventListener.py</span> module, except 
+that everything is written using Python event properties and handlers instead of 
+the more Java-centric way of doing things. Read the code, and see if you can 
+pick out the differences.</p>
+<pre>from java.awt import Frame
+from javax.swing import JFrame
+
+def windowOpened(windowEvent):
+     handleEvent(&quot;windowOpened&quot;,windowEvent)
+def windowClosed(windowEvent):
+     handleEvent(&quot;windowClosed&quot;, windowEvent)
+def windowClosing(windowEvent):
+     handleEvent(&quot;windowClosing&quot;,windowEvent)
+def WindowActivated(windowEvent):
+     handleEvent(&quot;WindowActivated&quot;, windowEvent)
+def windowDeactivated(windowEvent):
+     handleEvent(&quot;windowDeactivated&quot;, windowEvent)
+def windowIconified(windowEvent):
+     handleEvent(&quot;windowIconified&quot;, windowEvent)
+def windowDeiconified(windowEvent):
+     handleEvent(&quot;windowDeiconified&quot;, windowEvent)
+def handleEvent(event_name, event):
+     print &quot;Event: &quot; + event_name
+     print &quot;Event info: &quot; + `event.class`
+     print &quot;Source: &quot; + `event.source.title`
+     #print &quot;Event Properties: &quot; + `dir(event)`
+     print &quot;----------------—&quot;
+
+def createFrame(clazz, title):
+     frame = clazz()
+
+     frame.windowClosing = windowClosing
+     frame.windowOpened = windowOpened
+     frame.windowClosed = windowClosed
+     frame.windowIconified =    windowIconified
+     frame.windowDeiconified = windowDeiconified
+     frame.WindowActivated = WindowActivated
+     frame.windowDeactivated = windowDeactivated
+
+     frame.size = 200, 200
+     frame.title = title
+     frame.visible = 1
+     return frame
+
+def main():
+
+     raw_input (&quot;Press Enter to create a JFC Frame&quot;)
+     jfc_frame = createFrame(JFrame, &quot;JFC Frame&quot;)
+
+     raw_input (&quot;Press Enter to create an AWT Frame&quot;)
+     awt_frame = createFrame(Frame, &quot;AWT Frame&quot;)
+
+if __name__ == &quot;__main__&quot;:
+     main()</pre>
+<p class="docText">I find myself using the Python way more often than the Java 
+way, mainly because I have to import fewer classes and have to remember only the 
+name of the event handler, not every method in the listener.</p>
+<h3 class="docSection1Title" id="ch13lev1sec5">The Class Hierarchy for JFrame and Frame</h3>
+<p class="docText">For review, let's cover the class hierarchy of <tt>JFrame</tt> 
+and then <tt>Frame</tt>. Start up the interactive interpreter and follow along. 
+To get the superclass of <tt>JFrame</tt>, import <tt>JFrame</tt>, and then 
+inspect its superclass property.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; JFrame.superclass
+&lt;jclass java.awt.Frame at 214168159&gt;</pre>
+<p class="docText">To find out <tt>Frame</tt>'s superclass, append another 
+superclass to it. Since <tt>superclass</tt> is an instance of <tt>jclass</tt> 
+and <tt>jclass</tt> has the property <tt>superclass</tt>, we can get the 
+superclass of <tt>JFrame</tt>'s superclass like this:</p>
+<pre>&gt;&gt;&gt; JFrame.superclass.superclass
+&lt;jclass java.awt.Window at 217313887&gt;</pre>
+<p class="docText">We can continue to do this until we hit <tt>Object</tt>.</p>
+<pre>&gt;&gt;&gt; JFrame.superclass.superclass.superclass
+&lt;jclass java.awt.Container at 219411039&gt;
+
+&gt;&gt;&gt; JFrame.superclass.superclass.superclass.superclass
+&lt;jclass java.awt.Component at 221770335&gt;
+
+&gt;&gt;&gt; JFrame.superclass.superclass.superclass.superclass.superclass
+&lt;jclass java.lang.Object at -1247546800&gt;</pre>
+<p class="docText">Unlike Python classes, Java programming language classes can 
+only singly inherit from a superclass, so they have a narrow chain of 
+superclasses. <tt>JFrame</tt>'s class hierarchy looks like this:</p>
+<p class="docText"><tt>Object</tt> <img src="u2192.gif" border="0" width="25" height="13"><tt>Component</tt>
+<img src="u2192.gif" border="0" width="25" height="13"><tt>Container</tt>
+<img src="u2192.gif" border="0" width="25" height="13"><tt>Window</tt> <img src="u2192.gif" border="0" width="25" height="13"><tt>Frame</tt>
+<img src="u2192.gif" border="0" width="25" height="13"><tt>JFrame</tt></p>
+<p class="docText"><tt>Frame</tt>'s class hierarchy looks like this:</p>
+<p class="docText"><tt>Object</tt> <img src="u2192.gif" border="0" width="25" height="13"><tt>Component</tt>
+<img src="u2192.gif" border="0" width="25" height="13"><tt>Container</tt>
+<img src="u2192.gif" border="0" width="25" height="13"><tt>Window</tt> <img src="u2192.gif" border="0" width="25" height="13"><tt>Frame</tt></p>
+<p class="docText">What's revealed is that <tt>JFrame</tt> and <tt>Frame</tt> 
+inherit functionality from <tt>Container</tt>, <tt>Component</tt>, and <tt>
+Window</tt>. To find out more about these base classes and how they relate to
+<tt>JFrame</tt> and <tt>Frame</tt>, look them up in the Java API documentation.</p>
+<h4 class="docSection2Title" id="ch13lev2sec6">Component Functionality Inherited from JFrame and 
+Frame</h4>
+<p class="docText">Now let's look at some of the functionality that <tt>JFrame</tt> 
+and <tt>Frame</tt> get from <tt>Component</tt>. As always, follow along. Create 
+a frame.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; frame = JFrame()
+&gt;&gt;&gt; frame = JFrame(visible=1, size=(200,200))</pre>
+<p class="docText">From <tt>Component</tt> comes the ability to move the frame 
+around the screen.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; frame = JFrame()
+&gt;&gt;&gt; frame = JFrame(visible=1, size=(200,200))</pre>
+<p class="docText">The <tt>bounds()</tt> method takes four arguments: the x and 
+y positions of the upper left corner of the frame and the frame's width and 
+height. If you want to change the location of a frame without changing its width 
+and height, use <tt>setLocation()</tt>.</p>
+<pre>&gt;&gt;&gt; frame.setLocation(50,50)
+&gt;&gt;&gt; frame.setLocation(0,0)</pre>
+<p class="docText">The background property from <tt>Component</tt> allows you to 
+change the RGB (red-green-blue) value of the frame's background.</p>
+<pre>&gt;&gt;&gt; frame.background = (255, 0 , 0)
+
+&gt;&gt;&gt; frame.background = (0, 255, 0)
+
+&gt;&gt;&gt; frame.background = (0, 0, 255)
+
+&gt;&gt;&gt; frame.background = (255, 255, 0)</pre>
+<p class="docText">Here are some other familiar properties that come from <tt>
+Component</tt>:</p>
+<pre>&gt;&gt;&gt; frame.size = 150, 150
+&gt;&gt;&gt; frame.visible = 1
+&gt;&gt;&gt; frame.visible
+1</pre>
+<h3 class="docSection1Title" id="ch13lev1sec6">JPanel</h3>
+<p class="docText">Panels allow you to organize portions of a larger user 
+interface within a frame, a dialog, or a window. Like frames (<tt>java.awt.Frame</tt> 
+and <tt>javax.swing</tt>.<tt>JFrame</tt>), panels extend the <tt>
+java.awt.Container</tt> class, which means that they can contain other 
+components. However, they can't exist on their own but must be in the context of 
+a window, dialog, or frame, or in the context of another panel contained in a 
+top-level window (like <tt>Dialog</tt>, <tt>Frame</tt>, or <tt>Window</tt>).</p>
+<p class="docText">Here's a JFC/Swing example of adding components with <tt>
+JPanel</tt>, in which every time the Add button is pressed another button is 
+added to a panel. Import <tt>JPanel</tt> and <tt>JFrame</tt> from the
+<span class="docEmphasis">javax.swing</span> package.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JPanel, JFrame, JButton</pre>
+<p class="docText">Create a <tt>frame</tt> variable in the global space of the 
+main module. Also, create an instance of JPanel called <tt>pane</tt>, and 
+initialize the count to 0.</p>
+<pre>&gt;&gt;&gt; frame = None
+&gt;&gt;&gt; pane = JPanel()
+&gt;&gt;&gt; count = 0</pre>
+<p class="docText">Define an <tt>add()</tt> function that takes the global 
+variables <tt>pane</tt>, <tt>count</tt>, and <tt>frame</tt> into its local 
+namespace and adds a button to the panel called Pane. <tt>add()</tt> also 
+increments the <tt>count</tt> variable, which keeps track of how many buttons 
+are added.</p>
+<pre>&gt;&gt;&gt; def add(event):
+...     global pane
+...     global count
+...     global frame
+...     count = count + 1
+...     pane.add(JButton('Button' + `count`))
+...     frame.pack()
+...</pre>
+<p class="docText">Define a <tt>remove()</tt> function that removes the last 
+button. This method uses the <tt>count</tt> variable (which is in the module 
+namespace) to determine the last button removed.</p>
+<pre>&gt;&gt;&gt; def remove(event):
+...     global pane
+...     global count
+...     global frame
+...     pane.remove(count-1)
+...     count = count –1
+...     frame.pack()</pre>
+<p class="docText">Supply an Add button (<tt>addB</tt>) to add a button to the 
+pane and a Remove button (<tt>removeB</tt>) to remove a button. The event 
+handler for the Add button is set to the <tt>add()</tt> function.</p>
+<pre>&gt;&gt;&gt; addB = JButton (&quot;Add&quot;, actionPerformed = add)
+&gt;&gt;&gt; removeB = JButton(&quot;Remove&quot;, actionPerformed = remove)
+&gt;&gt;&gt; pane.add(addB); pane.add(removeB)
+&gt;&gt;&gt; count = 2</pre>
+<p class="docText">Create a frame, and set its title to &quot;Panel Demo.&quot; Set the 
+content pane to the <tt>pane</tt> instance defined earlier, and make the frame 
+visible.</p>
+<pre>&gt;&gt;&gt; frame=JFrame(title=&quot;Panel Demo&quot;, contentPane=pane, visible=1)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Hit the Add button twice to add a third and a fourth button 
+to the panel. Hit it two more times to add a fifth and a sixth button. Hit the 
+Remove button twice to remove the fifth and sixth buttons. Hit the Add button a 
+good 10 to 20 times, and then you can resize the frame with the mouse.</p>
+<h3 class="docSection1Title" id="ch13lev1sec7">JLabel</h3>
+<p class="docText">Labels are components for placing text in a container. From a 
+user perspective, they're read-only, although their text can be changed 
+programmatically. Let's have a short interactive session that demonstrates using
+<tt>javax.swing.JLabel</tt>.</p>
+<p class="docText">Import the classes needed.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JLabel, JFrame</pre>
+<p class="docText">Create a frame to hold the label.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(visible=1, title=&quot;Label Demo&quot;)</pre>
+<p class="docText">Create the label, and add it to the frame; then pack the 
+frame to make the label visible.</p>
+<pre>&gt;&gt;&gt; label = JLabel(&quot;Hello World&quot;)#Create a label
+&gt;&gt;&gt; frame.contentPane.add(label)	#add the label to the frame
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">For this next exercise we need to resize the window with the 
+mouse so we can read all of the text in the frame caption (sometimes referred to 
+as the titlebar). You can set the alignment of the label text for center, right, 
+or left.</p>
+<pre>&gt;&gt;&gt; label.horizontalAlignment = JLabel.CENTER
+&gt;&gt;&gt; label.horizontalAlignment = JLabel.RIGHT
+&gt;&gt;&gt; label.horizontalAlignment = JLabel.LEFT</pre>
+<h3 class="docSection1Title" id="ch13lev1sec8">JComponent</h3>
+<p class="docText"><tt>JLabel</tt> is derived from <tt>JComponent</tt>, which is 
+full of functionality such as the ability to set an icon or tooltip to a label. 
+The following example illustrates some of the things you can do. Import the <tt>
+JLabel</tt> and <tt>JFrame</tt> classes.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JLabel, JFrame</pre>
+<p class="docText">Create a frame and a label; put the label in the frame's 
+content pane.</p>
+<pre>&gt;&gt;&gt; frame = JFrame(visible=1, title=&quot;JComponent/JLabel Demo&quot;)
+&gt;&gt;&gt; label = JLabel(&quot;JComponent/JLabel demo&quot;)
+&gt;&gt;&gt; frame.contentPane.add(label); frame.pack()</pre>
+<p class="docText">We'll use the label just created for the following exercises 
+and examples.</p>
+<h4 class="docSection2Title" id="ch13lev2sec7">Working with Tooltips</h4>
+<p class="docText">The first <tt>JLabel</tt> we'll look at is <tt>toolTip</tt>, 
+which provides help text about what a component does.</p>
+<pre>&gt;&gt;&gt; label.toolTipText = &quot;Tooltips are cool&quot;</pre>
+<p class="docText">If you go to the frame and hover the mouse over the <tt>
+JLabel</tt> for a few seconds, a little window pops up with the message &quot;Tooltips 
+are cool.&quot;</p>
+<h4 class="docSection2Title" id="ch13lev2sec8">Color and the Opaque Property</h4>
+<p class="docText">The opaque property allows a component to set its own 
+background color rather than use the color of the container's background (the 
+default).</p>
+<pre>&gt;&gt;&gt; label.opaque
+0</pre>
+<p class="docText">The <tt>0</tt> (false) value tells us that the default is 
+set, so the code above will change if we change the background.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.background = (255,0,0)</pre>
+<p class="docText">However, just changing the label background won't do 
+anything. When we execute the following code setting the panel to green, the 
+label stays the same:</p>
+<pre>&gt;&gt;&gt; label.background = (0, 255, 0)</pre>
+<p class="docText">Instead, we have to set the opaque property to <tt>true</tt> 
+(<tt>1</tt>). Once we do that, we'll get the right label color when the label 
+background changes.</p>
+<pre>&gt;&gt;&gt; label.opaque = 1</pre>
+<p class="docText">You can also set the foreground of a component.</p>
+<pre>&gt;&gt;&gt; label.foreground = (255,255,255)</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">An Easier Way to Work with Colors</h2>
+      <p class="docText">You don't have to remember the RGB values for your 
+      common colors. The <tt>java.awt.Color</tt> class makes working with colors 
+      pretty simple by defining the following constants:</p>
+      <pre>Color.black
+Color.blue
+Color.cyan
+Color.darkGray
+Color.gray
+Color.green
+Color.lightGray
+Color.magenta
+Color.orange
+Color.pink
+Color.red
+Color.white
+Color.yellow</pre>
+      <p class="docText">Try this short exercise:</p>
+      <pre>&gt;&gt;&gt; from java.awt import Color     #import the color class
+&gt;&gt;&gt; label.background = Color.black     #set the background black
+&gt;&gt;&gt; label.foreground = Color.white     #set the foreground white</pre>
+      <p class="docText">Now take a look at the frame that contains your label.</p>
+      <pre>&gt;&gt;&gt; label.foreground = Color.black     #set the foreground black
+&gt;&gt;&gt; label.background = Color.white     #set the background white</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Unlike <tt>javax.swing</tt>.<tt>JLabel</tt>, <tt>
+java.awt.Label</tt> is pretty much always opaque and so has no opaque property. 
+However, the foreground and background properties work the same for both.</p>
+<h4 class="docSection2Title" id="ch13lev2sec9">Fonts</h4>
+<p class="docText"><tt>JComponent</tt> has a font property that allows you to 
+see what font the label is using. It works essentially the same in both <tt>
+java.awt.Label</tt> and <tt>javax.swing.JLabel</tt>.</p>
+<pre>&gt;&gt;&gt; label.font
+javax.swing.plaf.FontUIResource[family=dialog.bold,name=Dialog,style=bold,
+    size=12]</pre>
+<p class="docText"><tt>label.font</tt> also allows you to set the label font.</p>
+<pre>&gt;&gt;&gt; font = Font(&quot;Times New Roman&quot;, Font.BOLD, 12)
+&gt;&gt;&gt; label.font = font</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Finding Fonts</h2>
+      <p class="docText">Import <tt>GraphicsEnvironment</tt>.</p>
+      <pre>&gt;&gt;&gt; from java.awt import GraphicsEnvironment
+&gt;&gt;&gt; ge = GraphicsEnvironment.getLocalGraphicsEnvironment()</pre>
+      <p class="docText">Invoke <tt>len()</tt>.</p>
+      <pre>&gt;&gt;&gt; fontlist = ge.getAllFonts()
+&gt;&gt;&gt; len(fontlist)
+98
+&gt;&gt;&gt; for x in range (0, 10):
+...     print fontlist[x].name
+...</pre>
+      <p class="docText">Print the output.</p>
+      <pre>Abadi MT Condensed Light
+Arial
+Arial Black
+Arial Cursiva
+Arial Narrow
+Arial Narrow fed
+Arial Narrow fed kursiv
+Arial Narrow kursiv
+Arial Negreta
+Arial Negreta cursiva</pre>
+      <p class="docText">To save space only the first ten fonts appear. To deal 
+      with large font lists we can start with the font families, which group 
+      fonts that have similar characteristics.</p>
+      <pre>&gt;&gt;&gt; families = ge.getAvailableFontFamilyNames()
+&gt;&gt;&gt; len(families)
+62
+
+&gt;&gt;&gt; for x in range (0, 10):
+...     print families[x]
+...
+Abadi MT Condensed Light
+Arial
+Arial Black
+Arial Narrow
+Book Antiqua
+Bookman Old Style
+Calisto MT
+Century Gothic
+Comic Sans MS
+Copperplate Gothic Bold</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">To find out more about fonts, look up <tt>java.awt.Font</tt>; 
+then try to create an italicized font.</p>
+<h4 class="docSection2Title" id="ch13lev2sec10">Icons</h4>
+<p class="docText"><tt>JLabel</tt> has an icon property that you can use to set 
+an image in the label component.</p>
+<p class="docText">Import <tt>ImageIcon</tt> from <span class="docEmphasis">
+javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import ImageIcon</pre>
+<p class="docText">Create the image icon, and assign it to the icon property. 
+(In this example, I used one of the images that ships with the JDK. You may have 
+to adjust the file path if you installed the JDK somewhere else or if you're 
+using a different JDK version.)</p>
+<pre>&gt;&gt;&gt; label.icon = ImageIcon(&quot;c:\\jdk1.2.1\\demo\\jfc\\java2d\\images\\duke.gif&quot;)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Note that the <tt>ImageIcon</tt> constructor we're using 
+takes a file path to an image. You can use any gif or jpeg image. You also can 
+change the position of the text relative to the icon.</p>
+<pre>&gt;&gt;&gt; label.horizontalTextPosition = JLabel.RIGHT
+&gt;&gt;&gt; label.verticalTextPosition = JLabel.TOP</pre>
+<p class="docText">Look up <tt>setVerticalTextPosition</tt> and <tt>
+setHorizontalTextPosition</tt> for <tt>JLabel</tt> in the Java API 
+documentation; then move the label text to the bottom, to the right of the Duke 
+icon.</p>
+<p class="docText">Images make graphical user interfaces graphical. <tt>JLabel</tt> 
+can easily display images as icons, but for <tt>java.awt.Label</tt> image 
+display is not so simple.</p>
+<h4 class="docSection2Title" id="ch13lev2sec11">Mnemonics</h4>
+<p class="docText">Mnemonics allow users to select a component for input with 
+the keyboard and can be displayed with labels. However, since labels can't do 
+anything other than display text and images, they need the help of another 
+component to receive the input, such as a container or text field. Here's how to 
+set a mnemonic:</p>
+<pre>&gt;&gt;&gt; label.setDisplayedMnemonic('J')</pre>
+<p class="docText">The first <span class="docEmphasis">J</span> is underlined, 
+which signifies it as the mnemonic. <tt>JLabel</tt>'s <tt>labelFor</tt> property 
+allows you to set the component that will receive the input focus when the 
+mnemonic is pressed. On Windows, you activate the mnemonic by pressing Alt-J; on 
+most UNIX boxes, you press meta-J.</p>
+<p class="docText">Using <tt>labelFor</tt>, let's set up a few components and 
+associate one of them with the label's mnemonic. Add two buttons to the frame, 
+and set the layout so that the frame displays all of the components, that is, 
+the two buttons and the label.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JButton     #import the JButton class
+&gt;&gt;&gt; j = JButton (&quot;J button&quot;)            #create two buttons
+&gt;&gt;&gt; b2 = JButton (&quot;button 2&quot;)
+&gt;&gt;&gt; frame.contentPane.add(j)            #add the buttons to the frame
+&gt;&gt;&gt; frame.contentPane.add(b2)
+&gt;&gt;&gt; from java.awt import FlowLayout     #import the FlowLayout class
+&gt;&gt;&gt; frame.contentPane.layout = FlowLayout() #set the layout
+&gt;&gt;&gt; frame.pack()                        #layout the components</pre>
+<p class="docText">Associate the label with the <tt>j</tt> button.</p>
+<pre>&gt;&gt;&gt; label.labelFor = j</pre>
+<p class="docText">When you press Alt-J, the <tt>j</tt> button will receive the 
+input focus. You can tell because its text becomes outlined in light gray. Now 
+use the Tab key to put the focus on the <tt>b2</tt> button (the one with &quot;<tt>button 
+2</tt>&quot;). Most often, <tt>labelFor</tt> is assigned a text field or some other 
+component that is incapable of displaying a mnemonic.</p>
+<h3 class="docSection1Title" id="ch13lev1sec9">JButton</h3>
+<p class="docText">We touched on buttons in
+<a class="docLink" href="_chapter%2011.htm">Chapter 11</a>. They're 
+pretty simple, so we'll cover them here. Import the <tt>JFrame</tt>, <tt>JButton</tt>,
+<tt>Frame</tt>, and <tt>Button</tt> classes.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame, JButton
+&gt;&gt;&gt; button = JButton(&quot;J Button&quot;)
+&gt;&gt;&gt; frame = JFrame(visible=1)
+&gt;&gt;&gt; frame.title = &quot;JFC&quot;
+&gt;&gt;&gt; frame.contentPane.add(button)
+&gt;&gt;&gt; frame.pack()</pre>
+<h4 class="docSection2Title" id="ch13lev2sec12">Java Event Handling and JButton</h4>
+<p class="docText">To demonstrate Java event handling we'll create a class that 
+implements <tt>ActionListener</tt>. Then, using <tt>addActionListener</tt>, 
+we'll register an instance of the <tt>Listener</tt> class to the button.</p>
+<p class="docText">Define the <tt>Listener</tt> class.</p>
+<pre>&gt;&gt;&gt; from java.awt.event import ActionListener
+&gt;&gt;&gt; class ButtonListener(ActionListener):
+...     def actionPerformed(self, e):
+...             print e.getSource().getText() + &quot; was clicked&quot;
+...</pre>
+<p class="docText">Create an instance of <tt>Listener</tt>, and register it with 
+the button.</p>
+<pre>&gt;&gt;&gt; listen = ButtonListener()
+&gt;&gt;&gt; button.addActionListener(listen)</pre>
+<p class="docText">Click the J button a few times to see the following message 
+in the DOS box:</p>
+<pre>J button was clicked
+J button was clicked
+J button was clicked</pre>
+<h4 class="docSection2Title" id="ch13lev2sec13">Python Event Handling and JButton</h4>
+<p class="docText">Again, since we covered Java event handling in
+<a class="docLink" href="_chapter%2011.htm">Chapter 11</a>, we'll 
+just quickly review it here, continuing with the Java example. Define the event 
+handler, which is just a function with an argument.</p>
+<pre>&gt;&gt;&gt; def actionPerformed(e):
+&gt;&gt;&gt;   print &quot;The Python event handler&quot;
+&gt;&gt;&gt;   source = e.source
+&gt;&gt;&gt;   if source.class is JButton:
+&gt;&gt;&gt;          print source.text + &quot; was clicked&quot;</pre>
+<p class="docText">Assign the handler by setting the button's <tt>
+actionPerformed</tt> event property to the <tt>actionPerformed</tt> event.</p>
+<pre>&gt;&gt;&gt; button.actionPerformed = actionPerformed
+&gt;&gt;&gt; def actionPerformed(e):
+&gt;&gt;&gt;   print &quot;The Python event handler&quot;
+&gt;&gt;&gt;   source = e.source
+&gt;&gt;&gt;   if source.class is JButton:
+&gt;&gt;&gt;          print source.text + &quot; was clicked&quot;
+&gt;&gt;&gt; button.actionPerformed = actionPerformed</pre>
+<p class="docText">Try the event handler by pressing the button with the mouse 
+pointer. If you haven't been following along—as you should have been—read and 
+run <span class="docEmphasis">buttons.py</span> in
+<a class="docLink" href="_chapter%2012.htm">Chapter 12</a>.</p>
+<h4 class="docSection2Title" id="ch13lev2sec14">Button and JButton Shared Properties</h4>
+<p class="docText">Using the <tt>enabled(Boolean b)</tt> property, disable the 
+AWT and JFC buttons.</p>
+<pre>&gt;&gt;&gt; button.enabled = 0</pre>
+<p class="docText">You'll notice that the buttons' text is grayed out. If you 
+click on them, you won't get any action event. To enable the buttons again use:</p>
+<pre>&gt;&gt;&gt; button.enabled = 1</pre>
+<p class="docText">There are some things you can do with <tt>java.swing.JButton</tt> 
+that you can't do with <tt>java.awt.Button</tt>. For one, with the mnemonic (<tt>char 
+mnemonic</tt>) property you can set the button so that it receives input focus 
+when you press a shortcut key.</p>
+<p class="docText">You can set up the frame to show more than one component and 
+then add an extra component to it. Import <tt>FlowLayout</tt> (we'll get into 
+layout managers in <a class="docLink" href="_chapter%2014.htm">
+Chapter 14</a>).</p>
+<pre>&gt;&gt;&gt; from java.awt import FlowLayout</pre>
+<p class="docText">Add a second button to each of the frames.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(JButton(&quot;second button&quot;))</pre>
+<p class="docText">Set the layout to <tt>FlowLayout</tt> so that the extra 
+components are visible.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.layout = FlowLayout</pre>
+<p class="docText">Pack the frames so that the layout takes effect.</p>
+<pre>&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">To see how the mnemonic property works, set it with <tt>
+JButton</tt>.</p>
+<pre>&gt;&gt;&gt; button.setMnemonic('J')
+&gt;&gt;&gt; button.mnemonic = ord('J')   #Does the same as above</pre>
+<p class="docText">Go to the JFC frame, and use the Tab key to select the second 
+button. Now type in Alt-J (meta-J on UNIX or apple-J on Mac). The result is that
+<tt>JButton</tt> will have input focus.</p>
+<p class="docText">Want to try this with <tt>java.awt.Button</tt>? You can't. 
+Mnemonics are a JFC-only feature. Another JFC exclusive is associating an image 
+icon with a button. The icon property works just like its <tt>Jlabel</tt> 
+counterpart.</p>
+<pre>icon (Icon defaultIcon)</pre>
+<p class="docText">Here's how you set an image in a button:</p>
+<pre>&gt;&gt;&gt; from javax.swing import ImageIcon
+&gt;&gt;&gt; button.icon = ImageIcon(&quot;c:\\jdk1.2.1\\demo\\jfc\\java2d\\images\\duke.gif&quot;)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">You can also move the button's text in relation to its icon. 
+Again, this works just like it does in <tt>JLabel</tt>, as we saw in an earlier 
+example.</p>
+<p class="docText">As an exercise, look up the properties for the <tt>JButton</tt> 
+class; then create a button whose image changes when the mouse rolls over it.
+<span class="docEmphasis">Hint:</span> Check out <tt>javax.swing.AbstractButton</tt>, 
+the superclass of <tt>JButton</tt>, particularly its <tt>setRolloverEnabled()</tt> 
+and <tt>setRolloverIcon()</tt> methods. <tt>AbstractButton</tt> contains much of 
+the functionality for <tt>JButton</tt>. It's also a base class for <tt>JCheckBox</tt>,
+<tt>JRadioButton</tt>, <tt>JMenuItem</tt>, and <tt>JToggleButton</tt>, which 
+means that all of those classes can be used interchangeably (that is, 
+polymorphically). Many of the methods and properties we use with <tt>JButton</tt> 
+we can also use with any of <tt>AbstractButton</tt>'s subclasses.</p>
+<h3 class="docSection1Title" id="ch13lev1sec10">JTextField</h3>
+<p class="docText"><tt>JTextField</tt> allows you to edit text in text fields. 
+It's pretty basic and can be explained with a simple example. Import <tt>
+JTextField</tt> and <tt>JFrame</tt> from the <span class="docEmphasis">
+javax.swing</span> package.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JTextField</pre>
+<p class="docText">Create a frame and a text field, and add it to the frame. 
+We'll use this text field to demonstrate how to set and read text. Create the 
+frame.</p>
+<pre>&gt;&gt;&gt; frame = JFrame()</pre>
+<p class="docText">Create the <tt>TextField</tt> instance.</p>
+<pre>&gt;&gt;&gt; textField = JTextField(20)</pre>
+<p class="docText">Add the instance to the center of the frame.</p>
+<pre>&gt;&gt;&gt; from java.awt import BorderLayout
+&gt;&gt;&gt; frame.add(textField, BorderLayout.CENTER)</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Default Layout Manager</h2>
+      <p class="docText">The default layout manager for the frame is <tt>
+      BorderLayout</tt>, which essentially allows you to add components to a 
+      frame's north, south, east, and west borders and its center region. We'll 
+      cover it and the other layout managers in
+      <a class="docLink" href="_chapter%2014.htm">Chapter 14</a>.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Now we'll create a toolbar, using a panel and two buttons, 
+that will allow us to work with the text field's properties. Import <tt>Panel</tt>, 
+and create a panel for a toolbar.</p>
+<pre>&gt;&gt;&gt; from java.awt import Panel
+&gt;&gt;&gt; toolbar = Panel()</pre>
+<p class="docText">Create two buttons for setting and reading text field text.</p>
+<pre>&gt;&gt;&gt; readText = JButton(&quot;Read Text&quot;)
+&gt;&gt;&gt; setText = JButton(&quot;Set Text&quot;)</pre>
+<p class="docText">Add the buttons to the toolbar.</p>
+<pre>&gt;&gt;&gt; toolbar.add(readText)
+&gt;&gt;&gt; toolbar.add(setText)</pre>
+<p class="docText">Add the buttons to the north border of the frame.</p>
+<pre>&gt;&gt;&gt; frame.add(toolbar, BorderLayout.NORTH)</pre>
+<p class="docText">Pack the frame to make the component layout visible.</p>
+<pre>&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible = 1</pre>
+<p class="docText">Set up the button event handlers to manipulate the text 
+field. This one reads the text and prints it out to the console window:</p>
+<pre>&gt;&gt;&gt; def readTextClicked(e):
+...     print textField.text
+...</pre>
+<p class="docText">This one sets the text field text:</p>
+<pre>&gt;&gt;&gt; def setTextClicked(e):
+...     textField.text = &quot;I really like Java and Python&quot;
+...</pre>
+<p class="docText">Associate the handlers with the <tt>actionPerformed</tt> 
+event by assigning them to the button's <tt>actionPerformed</tt> property.</p>
+<pre>&gt;&gt;&gt; readText.actionPerformed = readTextClicked
+&gt;&gt;&gt; setText.actionPerformed = setTextClicked</pre>
+<p class="docText">Enter in some text in the text field, and hit the Read Text 
+button a few times</p>
+<pre>Hello how are you
+Hello how are you
+Hello how are you</pre>
+<p class="docText">Hit the Set Text, and then the Read Text button.</p>
+<pre>I really like Java and Python
+I really like Java and Python
+I really like Java and Python</pre>
+<p class="docText">Work with the buttons and the text field to verify that the 
+field is working like <tt>java.awt</tt>.<tt>TextField</tt>.</p>
+<p class="docText">Most of the functionality for <tt>JTextField</tt> is in <tt>
+JTextComponent</tt>. This is an abstract class and the superclass of <tt>
+JTextField</tt> and <tt>JTextArea</tt> (the latter represents a multi line text 
+field). <tt>JEditorPane</tt> and <tt>JTextPane</tt> are subclasses of <tt>
+JTextComponent</tt>; they add the ability to view HTML and RTF (Rich Text 
+Format) text and to display in-text components and icons.</p>
+<p class="docText">As an exercise, look up <tt>JTextField</tt> and <tt>
+JTextComponent</tt> in the Java API documentation. Try creating an application 
+that uses <tt>JEditorPane</tt> to view an HTML page.</p>
+<h3 class="docSection1Title" id="ch13lev1sec11">JCheckBox</h3>
+<p class="docText">Checkboxes represent a true or false condition. Let's 
+illustrate them with an example application for choosing pizza toppings (<span class="docEmphasis">jfc_checkbox.py</span>). 
+Import <tt>java.awt</tt>.<tt>Checkbox</tt>, and create checkboxes that represent 
+pizza toppings.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JCheckBox
+&gt;&gt;&gt; pepperoni = JCheckBox(&quot;pepperoni&quot;)
+&gt;&gt;&gt; peppers = JCheckBox(&quot;peppers&quot;)
+&gt;&gt;&gt; olives = JCheckBox(&quot;olives&quot;)
+&gt;&gt;&gt; anchovies = JCheckBox(&quot;anchovies&quot;)
+&gt;&gt;&gt; onions = JCheckBox (&quot;onions&quot;)
+&gt;&gt;&gt; sausage = JCheckBox (&quot;sausage&quot;)</pre>
+<p class="docText">Create a frame to put the checkboxes in.</p>
+<pre>&gt;&gt;&gt; from java.swing import JFrame
+&gt;&gt;&gt; frame = JFrame(title=&quot;Pick your topping&quot;, visible = 1)</pre>
+<p class="docText">Add the checkboxes to the frame.</p>
+<pre>&gt;&gt;&gt; frame.contentPane.add(pepperoni)
+&gt;&gt;&gt; frame.contentPane.add(peppers)
+&gt;&gt;&gt; frame.contentPane.add(olives)
+&gt;&gt;&gt; frame.contentPane.add(anchovies)
+&gt;&gt;&gt; frame.contentPane.add(onions)
+&gt;&gt;&gt; frame.contentPane.add(sausage)</pre>
+<p class="docText">Set pepperoni as the default.</p>
+<pre>&gt;&gt;&gt; pepperoni.selected = 1</pre>
+<p class="docText">Remember that the default layout for a frame is <tt>
+BorderLayout</tt>. If we want to show all of the checkboxes created, we need to 
+reset the layout manager to <tt>FlowLayout</tt>.</p>
+<pre>&gt;&gt;&gt; from java.awt import FlowLayout
+&gt;&gt;&gt; frame.contentPane.layout = FlowLayout()
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Set the event handler for closing the frame to inspect the 
+checkboxes' state.</p>
+<pre>&gt;&gt;&gt; def frameClosing(event):
+...     for checkbox in frame.components:
+...             if(checkbox.selected == 1): print checkbox.label
+...
+&gt;&gt;&gt; frame.windowClosing = frameClosing</pre>
+<p class="docText">Work with the checkboxes to select toppings; then press the 
+Close button on the frame's top left border (for Windows NT/9X).</p>
+<pre>pepperoni
+onions
+sausage</pre>
+<h4 class="docSection2Title" id="ch13lev2sec15">Putting Things Together with JCheck Box</h4>
+<p class="docText">Here's the pizza topping application we just wrote. Follow 
+along, and make sure to read the comments.</p>
+<pre>     # Import JCheckBox and create checkboxes that represent pizza toppings.
+from javax.swing import JCheckBox
+cb = JCheckBox
+
+#cb is the JCheckBox class. Remember classes are first class objects in Python.
+pepperoni = cb(&quot;pepperoni&quot;)
+checkboxes=(pepperoni,cb(&quot;peppers&quot;),cb(&quot;olives&quot;),cb(&quot;anchovies&quot;),cb(&quot;onions&quot;)
+           ,cb(&quot;sausage&quot;))
+
+     # Import JFrame and create a frame to hold our checkboxes.
+from javax.swing import JFrame
+frame = JFrame(title=&quot;Pick your topping&quot;, visible = 1)
+
+     # Import JPanel and set the frame's contentPane to a JPanel.
+from javax.swing import JPanel
+panel = JPanel()
+frame.contentPane = panel
+
+     # Now add the checkboxes to the Panel
+for a_checkbox in checkboxes:
+    panel.add(a_checkbox)
+
+     # Set the pepperoni's state to selected.
+pepperoni.<span class="docEmphStrong">selected</span> = 1
+
+     # Pack the frame
+frame.pack()
+def frameClosing(event):
+     for checkbox in checkboxes:
+          if(checkbox.<span class="docEmphStrong">selected</span> == 1): print checkbox.text
+
+frame.windowClosing = frameClosing</pre>
+<p class="docText">Now we want to offer a one-topping special, which means that 
+we have to change the program so that the customer can select only one checkbox. 
+(The changes are highlighted in bold.) Add each checkbox to a button group.</p>
+<pre>frame.title = &quot;Choose your one Topping&quot;
+
+     #Import the ButtonGroup
+from javax.swing import <span class="docEmphStrong">ButtonGroup</span>
+group = ButtonGroup()
+
+     #Add each check box to the group.
+for a_checkbox in checkboxes:
+<span class="docEmphStrong">group.add</span>(a_checkbox)
+
+     # Now let's assume that most people want pepperoni.
+pepperoni.<span class="docEmphStrong">selected</span> = 1</pre>
+<p class="docText">It doesn't work, does it? Read on.</p>
+<h3 class="docSection1Title" id="ch13lev1sec12">JRadioButton</h3>
+<p class="docText">With JFC, to make the buttons look and behave like radio 
+buttons, you have to use <tt>JRadioButton</tt>. Let's continue our one-topping 
+example, using <tt>JRadioButton</tt> in a button group to allow only one 
+checkbox to be selected.</p>
+<pre>for a_checkbox in checkboxes:
+     panel.remove(a_checkbox)
+
+group = ButtonGroup()
+
+from javax.swing import JRadioButton
+rb = JRadioButton   #rb is JRadioButton class.
+     #Remember classes are first class objects in Python.
+pepperoni = rb(&quot;pepperoni&quot;)
+
+radiobuttons=(pepperoni,rb(&quot;peppers&quot;),rb(&quot;olives&quot;),rb(&quot;anchovies&quot;),
+             rb(&quot;onions&quot;),rb(&quot;sausage&quot;))
+
+for a_radiobutton in radiobuttons:
+     group.add(a_radiobutton)
+     panel.add(a_radiobutton)
+
+pepperoni.selected = 1
+frame.pack()</pre>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Change the event handler to work with <tt>JRadioButton</tt>, 
+  and then look up <tt>AbstractButton</tt>, the superclass of <tt>JButton</tt>,
+  <tt>JCheckBox</tt>, and <tt>JRadioButton</tt>. You might also try adding 
+  picture icons to represent the different toppings.</li>
+  <li>
+  <p class="docList">With the technique we used to replace checkboxes with radio 
+  buttons, replace radio buttons with toggle buttons (<tt>javax.swing</tt>.<tt>JToggleButton</tt>). 
+  Can you think of ways to switch between all three? <span class="docEmphasis">
+  Hint:</span> <tt>JToggleButton</tt> has the same properties that <tt>JCheckBox</tt> 
+  and <tt>JRadioButton</tt> have. Remember that <tt>JButton</tt> gets much of 
+  its functionality from <tt>AbstractButton</tt>, so all of its properties—icon, 
+  text, mnemonics, and so forth—work for these classes as well. If you want to 
+  add icons or change text, you do it in the same way.</li>
+</ul>
+<h3 class="docSection1Title" id="ch13lev1sec13">List and JList</h3>
+<p class="docText">List components represent choices. They can be in 
+single-selection mode (one item) or multi-selection mode (more than one item). 
+Let's create an example list in the interactive interpreter.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JList
+&gt;&gt;&gt; list_items = [&quot;Bruce&quot;, &quot;Darrell&quot;, &quot;Tony&quot;, &quot;Debbie&quot;, &quot;Karen&quot;]
+&gt;&gt;&gt; list = JList(list_items)</pre>
+<p class="docText">Here's the interactive session to create a frame:</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; frame = JFrame(&quot;JList example&quot;)
+&gt;&gt;&gt; frame.contentPane.add(list)
+&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible=1</pre>
+<h4 class="docSection2Title" id="ch13lev2sec16">List Events</h4>
+<p class="docText">Now we want to do something with our list—that is, handle the 
+list events—so we need to inspect <tt>JList</tt>'s event properties (or look 
+them up in the Java API documentation).</p>
+<p class="docText">Here's the interactive session to inspect the list 
+properties, with the output formatted to make it a little more readable.</p>
+<pre>&gt;&gt;&gt; getEventsInfo(JList)
+[&lt;beanEventProperty valueChanged for event interface javax.swing.event.ListSelectionListener&gt;]</pre>
+<p class="docText">We can inspect the events more closely using <tt>
+getEventsInfo</tt> to print and pause.</p>
+<pre>&gt;&gt;&gt; getEventsInfo(JList, 1, 1)
+Event Property:         valueChanged
+Defined in:             javax.swing.event.ListSelectionListener
+Event:                  javax.swing.event.ListSelectionEvent
+
+Event properties for javax.swing.event.ListSelectionEvent:
+     lastIndex          Type: org.python.core.PyBeanProperty
+     valueIsAdjusting   Type: org.python.core.PyBeanProperty
+     firstIndex         Type: org.python.core.PyBeanProperty</pre>
+<p class="docText">If you look up the list properties in the Java API 
+documentation, these are the ones you'll find:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>LastIndex</tt>— last row that may have changed</li>
+  <li>
+  <p class="docText"><tt>ValueIsAdjusting</tt>— true if this is multiple change 
+  events</li>
+  <li>
+  <p class="docText"><tt>FirstIndex</tt>— first row that may have changed</li>
+</ul>
+<p class="docText"><tt>ListSelectionEvent</tt> allows handling of an item 
+selection event, either the Java way or the Python way. Here's the Python way:</p>
+<pre>&gt;&gt;&gt; def eventListener(event):
+...     list = event.source # get a reference to the list,
+...                            # the event's source
+...     index = event.firstIndex
+...     print list.model.getElementAt(index)
+...</pre>
+<p class="docText">Now try selecting some list items.</p>
+<p class="docText">I'm going to leave the Java way as an exercise. I'll give you 
+two hints to help you, but don't read them unless you get stuck.
+<span class="docEmphasis">Hint</span> <span class="docEmphasis">1:</span> Create 
+a class that subclasses <tt>java.awt</tt>.<tt>event.ItemListener</tt>; then 
+create an instance of that class, and pass it to the <tt>list.addItemListener()</tt> 
+method. <span class="docEmphasis">Hint</span> <span class="docEmphasis">2:</span> 
+The subclass should override the <tt>itemStateChanged()</tt> method with the 
+arguments <tt>self</tt> and <tt>event</tt>.</p>
+<h4 class="docSection2Title" id="ch13lev2sec17">JComboBox</h4>
+<p class="docText"><tt>JComboBox</tt> is a combination dropdown list and text 
+field that comes in handy when you have limited real estate on a panel. It's 
+something of a cross between <tt>java.swing.JList</tt> and <tt>javax.swing</tt>.<tt>JTextField</tt>. 
+In fact, <tt>JComboBox</tt> looks a lot like <tt>javax.swing</tt>.<tt>JList</tt>, 
+its only real difference being that it uses the <tt>addItem()</tt> method to add 
+items to the list.</p>
+<p class="docText">Here's the <tt>JComboBox</tt> code:</p>
+<pre># Import List, create a list instance and populate the list instance.
+from javax.swing import JComboBox
+list = JComboBox()
+list_items = (&quot;Bruce&quot;, &quot;Darrell&quot;, &quot;Tony&quot;, &quot;Satesh&quot;, &quot;Debbie&quot;, &quot;Karen&quot;)
+
+for item in list_items:
+     list.addItem()()(item)
+
+     # Create a frame and add the list to the frame.
+from javax.swing import JFrame
+frame = JFrame(&quot;Combobox Example&quot;)
+frame.contentPane.add(list); frame.visible=1; frame.pack()
+
+     # Handle item event.
+from java.awt.event import ItemEvent
+def eventListener(event):
+     list = event.itemSelectable
+     item = event.item
+     print &quot;Current item :&quot; + `item`
+     if (event.stateChange == ItemEvent.SELECTED):
+          print &quot; --selected items--&quot;
+          for item in list.selectedObjects:
+               print &quot; &quot; + `item`
+list.itemStateChanged = eventListener</pre>
+<p class="docText">It's a little different from the <tt>JList</tt> version, but 
+close enough.</p>
+<p class="docText">As an exercise, try changing the previous example to make the 
+combo box editable. <span class="docEmphasis">Hint:</span> Look up the <tt>
+JComboBox</tt> properties and methods, particularly <tt>setEditable</tt>.</p>
+<h4 class="docSection2Title" id="ch13lev2sec18">Working with JList</h4>
+<p class="docText">The Model View Controller (MVC) architecture splits the logic 
+for the model, view, and controller into different class sets. For example, the
+<tt>JList</tt> component constructor takes a reference to <tt>ListModel</tt>. 
+Here's an example of <tt>JList</tt> (<span class="docEmphasis">JList.py</span>) 
+that's similar to our <tt>JComboBox</tt> example:</p>
+<pre>     # Import List, create a list instance and populate the list instance.
+from javax.swing import JList
+
+list_items = (&quot;Bruce&quot;, &quot;Darrell&quot;, &quot;Tony&quot;, &quot;Debbie&quot;, &quot;Karen&quot;)
+
+     # Create a list with a default model that uses the above list items
+list = JList<span class="docEmphStrong">(list_items)</span>
+
+     # Create a frame and add the list to the frame.
+from javax.swing import JFrame
+frame = JFrame(&quot;JList Example&quot;)
+frame.contentPane.add(list); frame.visible=1; frame.pack()
+
+     # Import this for selection constants
+<span class="docEmphStrong">from javax.swing import ListSelectionModel</span>
+<span class="docEmphStrong">list.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION</span>
+
+     # Handle item event.
+from java.awt.event import ItemEvent
+def eventListener(event):
+     list = event.source
+     print &quot;Current item :&quot; + list.selected<span class="docEmphStrong">Value</span>
+     if (list.selectionMode == ListSelectionModel.MULTIPLE_INTERVAL_SELECTION):
+          print &quot; --selected items--&quot;
+          for item in list.selected<span class="docEmphStrong">Values:</span>
+               print &quot; &quot; + `item`
+
+list.valueChanged = eventListener</pre>
+<p class="docText">I said that <tt>JList</tt> was similar to <tt>JComboBox</tt>, 
+but there are differences (highlighted in bold). First, <tt>JList</tt> has no
+<tt>addItem()</tt> (or equivalent) method to add items to the list, so we have 
+to pass <tt>list_item</tt> to the constructor (we could have passed it to the
+<tt>java.awt</tt>.<tt>List</tt> constructor). Second, we have to import <tt>
+javax.swing</tt>.<tt>ListSelectionModel</tt> to get access to the constants to 
+set <tt>selectionMode</tt>. <tt>selectionMode</tt> allows three types of 
+selection: single (one item), single contiguous range (a set of items next to 
+each other), and multiple interval (multiple items).Third, the <tt>Jlist</tt> 
+and <tt>JComboBox</tt> event properties are different.</p>
+<p class="docText">As an exercise, look up <tt>javax.swing.ListSelectionModel</tt> 
+in the Java API documentation, and inspect the event properties of <tt>JList</tt> 
+with <tt>jinfo</tt>. Then look up the listener and event classes associated with 
+them. Change the last example to use Java event handling.</p>
+<p class="docText">The output for our <tt>JList</tt> example is as expected.</p>
+<pre>Current item :Karen
+  ----selected items----
+    'Karen'
+Current item :Tony
+  ----selected items----
+    'Tony'
+    'Karen'
+Current item :Bruce
+  ----selected items----
+    'Bruce'
+    'Tony'
+    'Karen'</pre>
+<p class="docText">Try to map the output to the code.</p>
+<p class="docText">Don't you think it's a little strange not to have an <tt>
+addItem()</tt>method? I do. Remember that <tt>JList</tt> uses the MVC 
+architecture, which keeps the data from view by putting it in the model (the M 
+in MVC). The view (the V in MVC) is the <tt>JList</tt> itself. If you pass a 
+vector (a sequence in Python) or an array, <tt>JList</tt> will create a model 
+based on <tt>AbstractListModel</tt>.</p>
+<p class="docText">If you want to create an easy-to-use list similar to <tt>
+java.awt</tt>.<tt>List</tt> (which is much easier than <tt>JList</tt>), you can 
+pass <tt>JList</tt> an instance of <tt>DefaultListModel</tt>. <tt>
+DefaultListModel</tt> is mutable, so you can add items to it that will show up 
+in the list.</p>
+<p class="docText">Here's an example (<tt>JList_Model</tt>) of creating a 
+mutable list based on our <tt>java.swing.JComboBox</tt> example. I've 
+highlighted the differences in bold and omitted the last part, which doesn't 
+change.</p>
+<pre>     # Import List, create a list instance and populate the list instance.
+from javax.swing import JList, DefaultListModel
+
+list_items = (&quot;Bruce&quot;, &quot;Darrell&quot;, &quot;Tony&quot;, &quot;Satesh&quot;, &quot;Debbie&quot;, &quot;Karen&quot;)
+
+     # Create a list with an empty default model
+list = JList(DefaultListModel)
+<span class="docEmphStrong">model = list.</span>getModel()
+
+for item in list_items:
+     <span class="docEmphStrong">model.</span>addElement(item)
+...
+...</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">An Easier Way with DefaultListModel</h2>
+      <p class="docText">Since <tt>model</tt> is a property of <tt>Jlist</tt>, 
+      an easier way to write the above would have been</p>
+      <pre>list = JList(DefaultListModel())
+
+for item in list_items:
+     list.model.addElement(item)</pre>
+      <p class="docText">I wrote it the way I did to highlight where the model 
+      was coming from.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">As an exercise try the <tt>JList_Model</tt> example again, 
+without an instance of <tt>DefaultListModel</tt>, and pass it to the <tt>JList</tt> 
+constructor. What happens? Why? <span class="docEmphasis">Hint:</span> Look up
+<tt>AbstractDefaultListModel</tt>, and inspect the class hierarchy returned from 
+the <tt>getModel()</tt> method.</p>
+<h4 class="docSection2Title" id="ch13lev2sec19">Advanced MVC and JList</h4>
+<p class="docText">The real advantage to using MVC is that you can have multiple 
+views of the same data model. When the data changes, the model notifies all of 
+the views so that they're updated.</p>
+<p class="docText">Remember our address book application? We can create a list 
+data model that uses it, so that when an address changes in the list we can 
+automatically display the change in all open views. To create a data model 
+that's compatible with <tt>JList</tt>, we need to implement the <tt>ListModel</tt> 
+interface.</p>
+<p class="docText">For brevity, we're going to create a very small subset of the
+<tt>Address</tt> and <tt>AddressBook</tt> classes that highlights the MVC list.</p>
+<p class="docText">What we'll do is define an address class that implements the
+<tt>toString()</tt> method from <tt>java.lang.Object</tt> so that it can be 
+displayed in the listbox. Next we'll define an <tt>AddressBook</tt> class that 
+contains instances of <tt>Address</tt> and acts as a data model. It will have to 
+extend <tt>ListModel</tt> to work with <tt>javax.swing.JList</tt>. Finally, 
+we'll populate an address book—the data model—with sample addresses.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">MVC in JTree and JTable</h2>
+      <p class="docText">The techniques I'm showing you in the MVC example are 
+      the same ones you use with <tt>JTree</tt> and <tt>JTable</tt>. You have to 
+      master them if you want to use advanced Swing components.</p>
+      <p class="docText">MVC, along with the related design patterns (e.g., 
+      Observer/Observable), is explained in <span class="docEmphasis">Design 
+      Patterns</span> (Gamma et al., 1995). Reading this book will make you 
+      appreciate why MVC was picked for <tt>JList</tt>, <tt>JTable</tt>, and <tt>
+      JTree</tt>.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch13lev2sec20">JList_AddressModel.py</h4>
+<p class="docText">Here's the complete code for <span class="docEmphasis">
+JList_AddressModel.py.</span></p>
+<pre>from string import *
+from javax.swing import JList, ListModel
+from javax.swing.event import ListDataEvent
+from java.lang import Object
+
+     # Define an address class to hold an address
+class Address(Object):
+     def __init__(self, name, phone):
+          self.name = name
+          self.phone = phone
+     def __str__(self):
+          return ljust(self.name,35) + &quot;: &quot; + self.phone
+     def toString(self):
+          return self.__str__()
+     def __repr__(self):
+          return self.__str__()
+
+     # Define an address book to hold addresses
+class AddressBook(ListModel):
+     def __init__(self):
+
+               # Fill in some initial data
+          self.list_items = [Address(&quot;Darrell&quot;, &quot;555-1212&quot;)]
+          self.list_items.append(Address(&quot;Bruce&quot;, &quot;555-1212&quot;))
+          self.list_items.append(Address(&quot;Karen&quot;, &quot;555-1212&quot;))
+          self.list_items.append(Address(&quot;Tony&quot;, &quot;555-1212&quot;))
+          self.list_items.append(Address(&quot;Chris&quot;, &quot;555-1212&quot;))
+
+          self.listeners = []     # To hold listeners
+
+          # public int getSize()
+          # Returns the length of the list.
+     def getSize(self):
+          return len(self.list_items)
+          #     public Object getElementAt(int index)
+          # Returns the value at the specified index.
+     def getElementAt(self, index):
+          return self.list_items[index]
+
+          # public void addListDataListener(ListDataListener l)
+          # Add a listener that gets notified when the list data
+          # model gets changed
+          # Parameters:
+          # l - the ListDataListener
+     def addListDataListener(self, listener):
+          print &quot;somebody is listening: &quot; + `listener.class`
+          self.listeners.append(listener)
+
+          # public void RemoveListDataListener(ListDataListener l)
+          # Removes a listener
+          # Parameters:
+          # l - the ListDataListener
+     def RemoveListDataListener(listener):
+          print &quot;somebody is ignoring: &quot; + `listener.class`
+          self.listeners.remove(listener)
+
+          # AddAddress()
+          # Adds an address to the address book
+     def AddAddress (self, name, number):
+          self.list_items.append(Address(name, number))
+
+               # Notify each listener that our data has changed.
+               # Being aware that our data changed, they can
+               # update their view to reflect the changes
+          for each_listener in self.listeners:
+               start = len(self.list_items)
+               end = len(self.list_items)
+               type = ListDataEvent.INTERVAL_ADDED
+               event = ListDataEvent(self, type, start, end)
+               each_listener.intervalAdded(event)
+
+AddressBook = AddressBook()
+
+     # Create 2 lists using our address book list model
+list = JList(AddressBook)
+list2 = JList(AddressBook)
+
+     # Create a frame and add the lists to the frame.
+from javax.swing import JFrame
+from java.awt import FlowLayout
+frame = JFrame(&quot;JList Custom Data Model Example&quot;)
+frame.contentPane.layout = FlowLayout() #Added to show both lists
+frame.contentPane.add(list); frame.contentPane.add(list2)
+frame.visible=1; frame.pack()
+
+     #Import this for selection constants
+from javax.swing import ListSelectionModel
+list.selectionMode = ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
+
+     #Handle item event.
+from java.awt.event import ItemEvent
+def eventListener(event):
+     list = event.source
+     print &quot;Current item :&quot; + `list.selectedValue`
+     if (list.selectionMode == ListSelectionModel.MULTIPLE_INTERVAL_SELECTION):
+          print &quot; --selected items--&quot;
+          for item in list.selectedValues:
+               print &quot; &quot; + `item`
+
+list.valueChanged = eventListener
+
+def addNames():
+     AddressBook.AddAddress(&quot;Geoff&quot;, &quot;555-1234&quot;)
+     AddressBook.AddAddress(&quot;Bill&quot;, &quot;555-1235&quot;)
+     AddressBook.AddAddress(&quot;Robert&quot;, &quot;555-1257&quot;)</pre>
+<p class="docText">Run the following in the interactive interpreter:</p>
+<pre>&gt;&gt;&gt; addNames()
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">First, we define the <tt>Address</tt> class.</p>
+<pre>     # Define an address class to hold an address
+class Address(Object):
+     def __init__(self, name, phone):
+          self.name = name
+          self.phone = phone
+     def __str__(self):
+          return ljust(self.name,35) + &quot;: &quot; + self.phone
+     def toString()(self):
+          return self.__str__()
+     def __repr__(self):
+          return self.__str__()</pre>
+<p class="docText"><tt>Address</tt> defines three methods: <tt>__str__</tt>, <tt>
+__repr__</tt>, and <tt>toString()</tt>. <tt>__str__</tt>creates the string 
+representation of <tt>Address</tt> for Python; <tt>toString()</tt> is its Java 
+equivalent. We need to make <tt>Address</tt> a string because the listbox uses
+<tt>toString()</tt> to display the method. <tt>__repr__</tt>displays the string 
+in Python when the object is referenced with back quotes. To override <tt>
+toString()</tt>, <tt>Address</tt> uses <tt>java.lang.Object</tt> as its base 
+class.</p>
+<p class="docText">Next we define the custom list model, which presents an 
+interesting opportunity to demonstrate events. In previous event examples, our 
+code was geared to listening for (handling) events. In this example, it 
+publishes events (<tt>AddressBook</tt> is an event source). To turn things 
+inside out, <tt>JList</tt> will be registering a listener with <tt>AddressBook</tt> 
+to listen for events that tell it that data has changed.</p>
+<p class="docText"><tt>AddressBook</tt> implements <tt>ListMode</tt>; <tt>
+AddressBook</tt> is thus a subclass (in Python speak) of <tt>ListModel</tt>.</p>
+<pre>     # Define an address book to hold addresses
+class AddressBook(ListModel):</pre>
+<p class="docText"><tt>AddressBook</tt> has to override all of <tt>ListModel</tt>'s 
+methods, which are</p>
+<ul>
+  <li>
+  <p class="docList"><tt>int getSize()</tt></li>
+  <li>
+  <p class="docList"><tt>Object getElementAt(int index)</tt></li>
+  <li>
+  <p class="docList"><tt>void addListDataListener(ListDataListener l)</tt></li>
+  <li>
+  <p class="docList"><tt>void RemoveListDataListener(ListDataListener l)</tt></li>
+</ul>
+<p class="docText">In the code that follows, be sure to read all of the comments 
+before each <tt>AddressBook</tt> method, since they show which <tt>ListModel</tt> 
+method is being overridden and what it does.</p>
+<pre>     # public int getSize()
+     # Returns the length of the list.
+def getSize(self):
+     return len(self.list_items)
+
+     # public Object getElementAt(int index)
+     # Returns the value at the specified index.
+def getElementAt(self, index):
+     return self.list_items[index]
+
+     # public void addListDataListener(ListDataListener l)
+     # Add a listener that gets notified when the list
+     # data model gets changed
+     # Parameters:
+     # l - the ListDataListener
+def addListDataListener(self, listener):
+     print &quot;somebody is listening: &quot; + `listener.class`
+     self.listeners.append(listener)
+
+     # public void RemoveListDataListener(ListDataListener l)
+     # Removes a listener
+     # Parameters:
+     # l - the ListDataListener
+def removeListDataListener(listener):
+     print &quot;somebody is ignoring: &quot; + `listener.class`
+     self.listeners.remove(listener)</pre>
+<p class="docText"><tt>addListDataListener</tt> and <tt>removeListDataListener</tt> 
+register and unregister listeners for <tt>ListDataEvent</tt>s from <tt>
+AddressBook</tt> (which, you'll remember, is an event source, which means that 
+it publishes events when they occur). <tt>addListDataListener</tt> prints out a 
+listener's registration. When you set a model, <tt>JList</tt> registers 
+listeners to it; when you remove a model, <tt>JList</tt> unregisters those 
+listeners.</p>
+<p class="docText">The <tt>AddressBook</tt> class has the <tt>AddAddress()</tt>method, 
+which adds a new address to <tt>list_items</tt> and then notifies each listener 
+by calling its <tt>intervalAdded()</tt> method. <tt>AddAddress()</tt> first 
+creates a <tt>ListDataEvent</tt> instance to pass to the listener's <tt>
+intervalAdded()</tt> method.</p>
+<pre>     Rest of 85, 86, top 87# AddAddress()
+     # Adds an address to the address book
+def AddAddress(self, name, number):
+     self.list_items.append(Address(name, number))
+
+     # Notify each listener that our data has changed.
+     # Being aware that our data changed, they can
+     # update their view to reflect the changes
+for each_listener in self.listeners:
+     start = len(self.list_items)
+     end = len(self.list_items)
+     type = ListDataEvent.INTERVAL_ADDED
+     event = ListDataEvent(self, type, start, end)
+     each_listener.intervalAdded()(event)</pre>
+<p class="docText">Now we'll create an instance of <tt>AddressBook</tt>. Then 
+we'll create two JFC lists, passing the instance to them. At this point, the <tt>
+JList</tt> instance will call <tt>addDataListener</tt> to register listeners 
+with the model. You can verify this with the console output.</p>
+<pre>AddressBook = AddressBook()
+     #Create 2 lists using our address book list model
+list = JList(AddressBook)
+list2 = JList(AddressBook)</pre>
+<p class="docText">The rest of the code for this example is pretty much the same 
+as that for the earlier ones. As a final step, we'll define a function called
+<tt>addNames()</tt> that adds three addresses to the <tt>AddressBook</tt> list 
+model.</p>
+<pre>def addNames():
+     AddressBook.AddAddress(&quot;Geoff&quot;, &quot;555-1234&quot;)
+     AddressBook.AddAddress(&quot;Bill&quot;, &quot;555-1235&quot;)
+     AddressBook.AddAddress(&quot;Robert&quot;, &quot;555-1257&quot;)</pre>
+<p class="docText"><tt>AddAddress()</tt>notifies all the listeners that an 
+address has been added. (The listeners are the two <tt>JList</tt> components.)</p>
+<p class="docText">To run this example from the interactive interpreter, start
+<span class="docEmphasis">JList_AddressModel.py</span> with the –i option. Then 
+call <tt>AddAddress()</tt> from the interactive interpreter.</p>
+<pre>&gt;&gt;&gt; addNames()
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Both of the lists are updated because they use the same 
+example. (You have to call the <tt>frame.pack()</tt> method to resize <tt>JList</tt> 
+so that all of the items appear. We'll fix this in the next example).</p>
+<p class="docText">As an exercise, look up <tt>javax.swing.ListModel</tt>, <tt>
+javax.ListDataEvent</tt>, and <tt>javax.ListDataListener</tt>.</p>
+<p class="docText">Essentially, <tt>JList</tt> registers for (that is, 
+subscribes to) events in <tt>ListModel</tt>. When the model data changes (that 
+is, when addresses are added to the address book), all registered views are 
+notified and thus updated.</p>
+<p class="docText">In the previous example, both views are <tt>JList</tt> 
+components; however, in a real MVC application the same model may have more than 
+one view type. For example, a spreadsheet application may have data mapped to a 
+spreadsheet view and a graph view, both of which change when the model for the 
+spreadsheet view changes.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">An Easier Way to Create the Address Book</h2>
+      <p class="docText">An easier way to create the address book is to use the
+      <tt>AbstractListModel</tt> class, which implements all of the methods for 
+      registering event listeners and notifying them of changes. Here's the 
+      changed <tt>JList</tt>_<tt>AddressModel</tt> (<span class="docEmphasis">JList_AddressModel2.py</span>), 
+      which uses <tt>AbstractListModel</tt> for the superclass of <tt>
+      AddressBook</tt>.</p>
+      <pre>class AddressBook(AbstractListModel):
+     def __init__(self):
+
+               # Fill in some sample data
+          self.list_items = [Address(&quot;Darrell&quot;, &quot;555-1212&quot;)]
+          ...
+          ...
+          self.list_items.append(Address(&quot;Chris&quot;, &quot;555-1212&quot;))
+
+          # public int getSize()
+          # Returns the length of the list.
+     def getSize(self):
+          return len(self.list_items)
+
+          # public Object getElementAt(int index)
+          # Returns the value at the specified index.
+     def getElementAt(self, index):
+          return self.list_items[index]
+
+     def AddAddress(self, name, number):
+          self.list_items.append(Address(name, number))
+          start = len(self.list_items)
+          end = len(self.list_items)
+          fireIntervalAdded(self, type, start, end)</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Notice that the code to implement <tt>AddressBook</tt> (<tt>ListModel</tt>) 
+is now significantly shorter. I recommend using the <tt>AbstractListModel</tt> 
+class instead of the <tt>ListModel</tt> interface, which I used simply to 
+explain MVC.</p>
+<h4 class="docSection2Title" id="ch13lev2sec21">Working with JScrollPane and the Decorator Design 
+Pattern</h4>
+<p class="docText">The <tt>JList</tt> class uses Gamma's Decorator design 
+pattern to add scrolling, which essentially adds a JFC frame to a scroll pane by 
+passing a <tt>JList</tt> instance to <tt>JScrollPane</tt>'s constructor. Thus, 
+the code changes from this:</p>
+<pre>list = JList(AddressBook)
+list2 = JList(AddressBook)</pre>
+<p class="docText">to this:</p>
+<pre>list = JScrollPane(JList(AddressBook))
+list2 = JScrollPane(JList(AddressBook)</pre>
+<p class="docText">That's all. The same technique works for adding scrolling to
+<tt>JTree</tt> and <tt>JTable</tt>. When you run this in the interactive 
+interpreter, you don't have to call <tt>frame.pack()</tt> after you call <tt>
+addNames()</tt>. The names show up automatically, and so do the scrollbars.</p>
+<p class="docText">Now start <span class="docEmphasis">JList_AddressModel2.py</span> 
+with the <tt>–i</tt> option. Then call the <tt>AddAddress()</tt> method from the 
+interactive interpreter.</p>
+<pre>&gt;&gt;&gt; addNames()
+&gt;&gt;&gt; frame.pack()</pre>
+<h3 class="docSection1Title" id="ch13lev1sec14">Summary</h3>
+<p class="docText">In this chapter, we covered the basics of AWT and JFC 
+components, some of which are polymorphically related. We also covered MVC, 
+which, although advanced, is essential for working with some of the more 
+interesting components of JFC. Learning MVC is good for learning about events, 
+since the architecture publishes events to views.</p>
+<p class="docText">There's a lot more to cover on JFC and AWT, but we've gleaned 
+enough information to get started. We'll learn more in coming chapters.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2012.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2014.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

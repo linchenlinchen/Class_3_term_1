@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>7. 输入(Input)与输出(Output)</title>
+  
+  <meta name="description" content="7. 输入(Input)与输出(Output)  ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node10.html">
+ 
+  <link rel="previous" href="node8.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node10.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node8.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node10.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node8.html">6.
+模组</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">Python
+教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node10.html">
+8. 程式错误与例外(Exceptions)情形</a> <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落 </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html324" href="node9.html#SECTION009100000000000000000">
+7.1 花俏的输出格式化 </a> </li>
+  <li><a name="tex2html325" href="node9.html#SECTION009200000000000000000">
+7.2 读写档案 </a> 
+    <ul>
+ 
+      <li><a name="tex2html326" href="node9.html#SECTION009210000000000000000">
+7.2.1 File物件的Methods(方法) </a> </li>
+      <li><a name="tex2html327" href="node9.html#SECTION009220000000000000000">
+7.2.2 <tt class="module">pickle</tt> 模组 </a> </li>
+    </ul>
+  </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 7. 输入(Input)与输出(Output)   </h1>
+  
+<p> 有很多的方式可以来表现一个程式的输出结果，可以印出来在一个可读的表格里面，也可以写入到档案里面供作未来使用。这一章里面将谈到一些可能的方法。
+  </p>
+<p>  </p>
+<h1> <br>
+ 7.1 花俏的输出格式化  </h1>
+  
+<p> 到现在为止我们谈到了两种写入值的方式：用expression的叙述( <i>expression statements</i> )，或是用
+<tt class="keyword">print</tt> 这个叙述。 (第三种方法是使用file物件的  <tt class="method">
+write()</tt> 方法(method)，这一个标准输出所指向的档案(standard output file)，可以用 <code>sys.stdout</code>
+ 来存取之。请参阅程式库参考手册上面对此的详细说明。)   </p>
+<p> 通常你会希望你对于输出的结果能够在格式上面稍有控制力，而不只是预设的用空白连结起来而已。有两种方法可以来控制输出的格式，第一种是自己动手来做字串的调整。你可以使用字串的切割(slicing)以及连结，做成任何你想要的效果。标准的
+ <tt class="module">string</tt> module里面有一些好用的东西，也可以帮助你填入适当的空白，使字串的宽度成为你想要的宽度，我们待会再来讨论如何做。另外一个控制输出格式的方法是使用
+<code>%</code> 这个运算元，配合上用字串成为左边的参数。这个运算元会翻译左边的这个字串参数，其功能类似于C里面的 <tt class="cfunction">
+sprintf()</tt> 的字串参数，然后把右边要控制的字串适当的填入，之后再传回这个格式化的结果。  </p>
+<p> 还有一个问题，如何把其他的值转换成洽当的字串呢？幸好Python里面的 <tt class="function">repr()</tt>
+函式可以转换任何的值成为一个字串，你以可以把这个值写在反撇号( <code>` `</code> )的中间也有同样的效果。请看一些例子：  </p>
+<p> </p>
+<dl>
+<dd><pre class="verbatim">&gt;&gt;&gt; x = 10 * 3.14<br>&gt;&gt;&gt; y = 200*200<br>&gt;&gt;&gt; s = 'The value of x is ' + `x` + ', and y is ' + `y` + '...'<br>&gt;&gt;&gt; print s<br>The value of x is 31.4, and y is 40000...<br>&gt;&gt;&gt; # Reverse quotes work on other types besides numbers:<br>... p = [x, y]<br>&gt;&gt;&gt; ps = repr(p)<br>&gt;&gt;&gt; ps<br>'[31.4, 40000]'<br>&gt;&gt;&gt; # Converting a string adds string quotes and backslashes:<br>... hello = 'hello, world\n'<br>&gt;&gt;&gt; hellos = `hello`<br>&gt;&gt;&gt; print hellos<br>'hello, world\012'<br>&gt;&gt;&gt; # The argument of reverse quotes may be a tuple:<br>... `x, y, ('spam', 'eggs')`<br>"(31.4, 40000, ('spam', 'eggs'))"<br></pre>
+  </dd>
+  </dl>
+  
+  <p> 底下我们示范两种格式化的方法，这例子是写入平方及立方值：   </p>
+  <p> </p>
+  <dl>
+  <dd><pre class="verbatim">&gt;&gt;&gt; import string<br>&gt;&gt;&gt; for x in range(1, 11):<br>...     print string.rjust(`x`, 2), string.rjust(`x*x`, 3),<br>...     # Note trailing comma on previous line<br>...     print string.rjust(`x*x*x`, 4)<br>...<br> 1   1    1<br> 2   4    8<br> 3   9   27<br> 4  16   64<br> 5  25  125<br> 6  36  216<br> 7  49  343<br> 8  64  512<br> 9  81  729<br>10 100 1000<br>&gt;&gt;&gt; for x in range(1,11):<br>...     print '%2d %3d %4d' % (x, x*x, x*x*x)<br>... <br> 1   1    1<br> 2   4    8<br> 3   9   27<br> 4  16   64<br> 5  25  125<br> 6  36  216<br> 7  49  343<br> 8  64  512<br> 9  81  729<br>10 100 1000<br></pre>
+    </dd>
+    </dl>
+  
+    <p> (值得注意的是在数目字中间的空白是使用  <tt class="keyword">print</tt> 的结果，<tt class="keyword">
+print</tt> 总是会在每一个参数中间加入空白。)   </p>
+    <p> 这个例子示范了使用 <tt class="function">string.rjust()</tt> 的方法，这个函式会使的一个字串在指定的宽度里左边加入空白来向右边靠拢。另外两个相类似的函式是
+ <tt class="function">string.ljust()</tt> 以及 <tt class="function">string.center()</tt>
+ 。这些函式本身并没有印出什么东西来，他们只是传回一个新的字串。如果传回的字串太长了，他们也不会截断它，他们只是单纯的传回这个新的字串。这有可能会使你的一栏一栏的格式变成乱七八糟，但是这样做通常比其他的可能要好很多(可能会造成不正确的结果)。(如果你真想把多余的部分截掉，你可以使用一个切割的动作，例如
+ "<tt class="samp">string.ljust(x,&nbsp;n)[0:n]</tt>" ) 。  </p>
+    <p> 另外有一个函式叫做 <tt class="function">string.zfill()</tt> 这个函式会使的数目字的字串加入前头的0。该加入正负号的时候它也会自动加入：
+  </p>
+    <p> </p>
+    <dl>
+    <dd><pre class="verbatim">&gt;&gt;&gt; import string<br>&gt;&gt;&gt; string.zfill('12', 5)<br>'00012'<br>&gt;&gt;&gt; string.zfill('-3.14', 7)<br>'-003.14'<br>&gt;&gt;&gt; string.zfill('3.14159265359', 5)<br>'3.14159265359'<br></pre>
+      </dd>
+      </dl>
+  
+      <p> 你如果使用  <code>%</code> 运算元的话结果会看起来像这样：   </p>
+      <p> </p>
+      <dl>
+      <dd><pre class="verbatim">&gt;&gt;&gt; import math<br>&gt;&gt;&gt; print 'The value of PI is approximately %5.3f.' % math.pi<br>The value of PI is approximately 3.142.<br></pre>
+        </dd>
+        </dl>
+  
+        <p> 如果在你的格式化字串(format string)中有超过一个以上的格式存在，你要在    <code>%</code>
+ 的右边传入一个tuple。例如这个例子：   </p>
+        <p> </p>
+        <dl>
+        <dd><pre class="verbatim">&gt;&gt;&gt; table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}<br>&gt;&gt;&gt; for name, phone in table.items():<br>...     print '%-10s ==&gt; %10d' % (name, phone)<br>... <br>Jack       ==&gt;       4098<br>Dcab       ==&gt;       7678<br>Sjoerd     ==&gt;       4127<br></pre>
+          </dd>
+          </dl>
+  
+          <p> 大部分的格式(format)其效果都与你在C里面所用的一样，你必须要在右边传入适当型态的资料。如果你没有正确的如此做时，你会得到一个例外的状况(exception)，而不是得到一个系统核心倾倒出来的记忆体资料(dump)。其中
+          <code>%s</code> 这个格式最为自由，你可以使用字串或非字串，如果你使用非字串的资料时，资料会自动用内建的  <tt class="function">
+str()</tt> 函式转换成字串资料。你也可以使用  <code>*</code> 来传入一个独立的(整数)参数来决定宽度或是精确度(precision)的大小。但是，C里面的
+          <code>%n</code> 以及  <code>%p</code> 在Python里面却没有支援。  </p>
+          <p> 如果你有一个很长的格式化字串，而你又不想分开他们的话，你可以使用名称而非位置来使用这些变数。其方法是使用C格式的延伸形式：
+ <code>%(name)format</code> ，举例如下：   </p>
+          <p> </p>
+          <dl>
+          <dd><pre class="verbatim">&gt;&gt;&gt; table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 8637678}<br>&gt;&gt;&gt; print 'Jack: %(Jack)d; Sjoerd: %(Sjoerd)d; Dcab: %(Dcab)d' % table<br>Jack: 4098; Sjoerd: 4127; Dcab: 8637678<br></pre>
+            </dd>
+            </dl>
+  
+            <p> 这个功能当与新的内建函式 <tt class="function">vars()</tt> 一起使用时特别有用，这个内建函式会传回一个含有所有local变数名称及值的dictionary。 
+ </p>
+            <p>  </p>
+            <h1> <br>
+ 7.2 读写档案  </h1>
+  
+            <p> <tt class="function">open()</tt> 这个函式会传回一个file物件。通常其用法是传入两个参数如：
+ "<tt class="samp">open(<var>filename</var>, <var>mode</var>)</tt>".  </p>
+            <p> </p>
+            <dl>
+            <dd><pre class="verbatim">&gt;&gt;&gt; f=open('/tmp/workfile', 'w')<br>&gt;&gt;&gt; print f<br>&lt;open file '/tmp/workfile', mode 'w' at 80a0960&gt;<br></pre>
+              </dd>
+              </dl>
+  
+              <p> 第一个参数是一个包含档案名称的字串，第二个参数是另外一个字串，其内容是一些用来描述你要怎么使用这个档案的字元。
+ <var>mode</var> 可以是 <code>'r'</code> ，如果你想要这个档为唯读的话，也可以使用 <code>'w'</code>
+ 如果你只想要写入的话(如果该档本来就存在的话，你会杀掉原来的档案)，你也可以用  <code>'a'</code> 表示你要在档案的尾端加入东西，
+  <code>'r+'</code> 则会让这个档可以读也可以写。你也可以不传入第二个参数，如果没有传入 <var>mode</var> 参数的话，会使用预设的
+ <code>'r'</code> 模式。   </p>
+              <p> 在Windows以及Macintosh系统上，你可以在mode里面加入 <code>'b'</code> 表示要以二元模式(binary
+mode)开启这个档案，所以你也可以使用  <code>'rb'</code>, <code>'wb'</code>, 以及   <code>'r+b'</code>
+ 。在Windows里面文字档及二元档是有区别的，在文字档里面行终止字元(end-of-line)在档案的读写时是自动会被稍稍修改的。这个自动修改的动作对于一般的ASCII文字档没有什么影响，但是会使得像是
+JPEGs 或是  <span class="file">.EXE</span> 之类的二元档被损害。所以当你在处理这些档案时特别注意要使用二元的模式。(值得注意的是，在Macintosh里面文字模式的精确的语意是会随着其背后所用的C程式库而有不同的。)
+  </p>
+              <p>  </p>
+              <h2> <br>
+ 7.2.1 File物件的Methods(方法)   </h2>
+  
+              <p> 底下的例子都假设你已经建立了一个叫做 <code>f</code> 的file物件。  </p>
+              <p> 如果你想读一个档案的内容你需要呼叫 <code>f.read(<var>size</var>)</code>
+这个方法(method)。这个method会读入某个数量的资料，然后将资料以字串的形式传回。你也可以不传入 <var>size</var> 这个数值参数，如果你没有传入或是传入负值的话，就会将整个档案都传回。如果你的档案比你的记忆体的两倍还大的话，这是你自己要处理的问题。其他的情况下，都会读入并传回最多是
+ <var>size</var> 数量的位元组(byte)的资料。如果已经到了档案的最尾端你还呼叫 <code>f.read()</code> 的话，回传值就会是一个空字串
+(<code>""</code>) 。  </p>
+              <dl>
+              <dd><pre class="verbatim">&gt;&gt;&gt; f.read()<br>'This is the entire file.\012'<br>&gt;&gt;&gt; f.read()<br>''<br></pre>
+                </dd>
+                </dl>
+  
+                <p> <code>f.readline()</code> 会一次只读入一行，换行符号 (<code>\n</code>
+) 仍然会被留在字串的最尾端，并且当档案不是以换行符号结束时，最后一行的换行符号就会被忽略。这会使得传回的结果不至于有混淆，当传回值是空字串时，我们可以很有信心这已经是档案的最尾端，因为空白的行还是会有
+                <code>'\n'</code> 单独存在的。   </p>
+                <p> </p>
+                <dl>
+                <dd><pre class="verbatim">&gt;&gt;&gt; f.readline()<br>'This is the first line of the file.\012'<br>&gt;&gt;&gt; f.readline()<br>'Second line of the file\012'<br>&gt;&gt;&gt; f.readline()<br>''<br></pre>
+                  </dd>
+                  </dl>
+  
+                  <p> <code>f.readlines()</code> 会传回一个 list ，其内容是所有在档案内的各个行的资料。如果你传入第二个可有可无的
+                  <var>sizehint</var> 参数时，会从档案内读入这个参数所代表的byte数目，并且把最后所在的那一整行也一并读完。这一个方法通常用在一行一行的读很大档案时，如此可以增进读的效率，并避免在记忆体中放置大量的资料。只有完整的行才会被传回来。
+  </p>
+                  <p> </p>
+                  <dl>
+                  <dd><pre class="verbatim">&gt;&gt;&gt; f.readlines()<br>['This is the first line of the file.\012', 'Second line of the file\012']<br></pre>
+                    </dd>
+                    </dl>
+  
+                    <p> <code>f.write(<var>string</var>)</code> 会在档案内写入字串参数
+                    <var>string</var> 所代表的内容，其传回值是 <code>None</code> 。  </p>
+                    <p> </p>
+                    <dl>
+                    <dd><pre class="verbatim">&gt;&gt;&gt; f.write('This is a test\n')<br></pre>
+                      </dd>
+                      </dl>
+  
+                      <p> <code>f.tell()</code> 会传回一个整数，代表目前这个file物件在这个档案内的所在位置，其单元是从档案开始处有多少个byte。你可以用
+"<tt class="samp">f.seek(<var>offset</var>, <var>from_what</var>)</tt>" 来改变file物件的所在位置，
+                      <var>from_what</var> 参数代表从哪里算起，0代表档案的最开头，1代表目前位置，2代表档案的结尾处。呼叫这个函式file物件会跳到从
+ <var>from_what</var> 参数代表的位置算起  <var>offset</var> 个byte的距离的地方。如果   <var>
+from_what</var> 没有传入的话，会使用预设的 0，代表从档案的最开头算起。   </p>
+                      <p> </p>
+                      <dl>
+                      <dd><pre class="verbatim">&gt;&gt;&gt; f=open('/tmp/workfile', 'r+')<br>&gt;&gt;&gt; f.write('0123456789abcdef')<br>&gt;&gt;&gt; f.seek(5)     # Go to the 5th byte in the file<br>&gt;&gt;&gt; f.read(1)        <br>'5'<br>&gt;&gt;&gt; f.seek(-3, 2) # Go to the 3rd byte before the end<br>&gt;&gt;&gt; f.read(1)<br>'d'<br></pre>
+                        </dd>
+                        </dl>
+  
+                        <p> 当你已经使用完毕这个file物件时，要记得呼叫 <code>f.close()</code>
+ 把所有因为开档所使用的系统资源都释放掉。一但你呼叫了  <code>f.close()</code> 之后，任何的对file物件的动作都会自动的失败。
+  </p>
+                        <p> </p>
+                        <dl>
+                        <dd><pre class="verbatim">&gt;&gt;&gt; f.close()<br>&gt;&gt;&gt; f.read()<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1, in ?<br>ValueError: I/O operation on closed file<br></pre>
+                          </dd>
+                          </dl>
+  
+                          <p> File 物件有一些其他的method可以用，例如  <tt class="method">
+isatty()</tt> 以及  <tt class="method">truncate()</tt> ，这些比较少用的method可以参考在程式库参考手册里面有关file物件的说明。
+  </p>
+                          <p>  </p>
+                          <h2> <br>
+ 7.2.2 <tt class="module">pickle</tt> Module(模组)   </h2>
+   
+                          <p> 从档案写入及读出字串资料都没有太大问题，但是数值资料则会比较麻烦。因为 <tt class="method">
+read()</tt> 这个method 只传回字串，你还得要将这个字串传给类似  <tt class="function">string.atoi()</tt>
+ 这样的函式来将代表数值的字串 <code>'123'</code> 转成数值123。如果你要在档案内储存较复杂的资料型态例如lists、dictionaries、或是某个类别的物件时，那就更加复杂了。
+  </p>
+                          <p> 为使使用者不需要自己写程式来处理储存这些复杂的资料型态，Python提供了一个标准的module叫做
+ <tt class="module">pickle</tt> 。这个令人惊讶的module可以处理几乎所有的Python物件(甚至是某些形式的Python程式码！)，并将之转换成一个字串的表现方式。这个过程也叫做
+                          <i class="dfn">pickling</i>.   R。从这个字串重新组合成我们所要的物件的过程则叫做
+ <i class="dfn">unpickling</i> 。在这两个过程之间，我们可以将这个代表物件的字串储存成档案或资料，或是在网路上传给另一台机器。
+  </p>
+                          <p> 如果你有一个 <code>x</code> 物件及一个可以写入的file物件 <code>
+f</code> ，要pickle一个物件最简单的方式只要一行程式就可以了：   </p>
+                          <p> </p>
+                          <dl>
+                          <dd><pre class="verbatim">pickle.dump(x, f)<br></pre>
+                            </dd>
+                            </dl>
+  
+                            <p> 如果file物件 <code>f</code> 是可读的话，要unpickle这个物件只要这样做：
+  </p>
+                            <p> </p>
+                            <dl>
+                            <dd><pre class="verbatim">x = pickle.load(f)<br></pre>
+                              </dd>
+                              </dl>
+  
+                              <p> (这个module还有其他的用法可以pickling多个物件，或是你不想将这个pickled的资料写入档案。请参考在程式库参考手册内有关
+                              <tt class="module">pickle</tt> 完整的说明。)   </p>
+                              <p> <tt class="module">pickle</tt> 也是一个标准的方法，可以将Python的物件储存起来给其他程式语言使用，或是等待下一次启动Python再用。技术上来说这叫做
+ <i class="dfn">persistent</i> 的物件。因为  <tt class="module">pickle</tt> 的运用如此广泛，许多的程式设计师专门写一些Python的延伸功能来处理诸如matrices这些新资料型态的pickle
+以及 unpickle的过程。   </p>
+                              <p>  </p>
+                              <div class="navigation">
+                              <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                                  <tr>
+ <td><a href="node8.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node10.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                                </tbody>
+                              </table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node8.html">6.
+模组</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">Python
+教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node10.html">
+8. 程式错误与例外(Exceptions)情形</a> <br>
+                              <hr></div>
+ <!--End of Navigation Panel--> 
+                              <address> </address>
+                              <hr>请看<i><a href="about.html">关于此文件&hellip;</a></i>
+ 里面有关如何给我们建议的说明。  
+                              </body>
+                              </html>

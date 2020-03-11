@@ -1,0 +1,1266 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 18</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 18.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 18.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 18.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2017.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20a.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 18. Applets</h2><ul><li>&nbsp;<a class="docLink" href="#ch18lev1sec1">What Are Applets?</a></li>
+<li>&nbsp;<a class="docLink" href="#ch18lev1sec2">Working with Applets</a></li>
+<li>&nbsp;<a class="docLink" href="#ch18lev1sec3">Using an Applet as a Container</a></li>
+<li>&nbsp;<a class="docLink" href="#ch18lev1sec4">Transforming the Address Book Application into an Applet</a></li>
+<li>&nbsp;<a class="docLink" href="#ch18lev1sec5">Advanced Topic: AppletContext and AppletStub</a></li>
+<li>&nbsp;<a class="docLink" href="#ch18lev1sec6">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Applet</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Batch file</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Browser</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Browser simulator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Code base</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Context</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">HTTP/FTP protocol</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">JAR/zip file</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Lifecycle management</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Sandbox</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Stub</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Tag</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Once upon a time, there was a relatively new company named 
+Netscape that became king of the Internet. It was Netscape's acceptance of Java 
+applets that put Java on the map.</p>
+<p class="docText">If you follow Java, you know that, ironically, it's had a lot 
+more impact on the server side (J2EE, servlets, JMS, RMI, JAVA IDL, EJB, etc.) 
+than on the client side (applets, Swing). However, change is under way. With 
+later Java releases, Sun Microsystems has introduced a plug-in for browsers that 
+addresses many of the shortcomings of applets by allowing them to be cached.</p>
+<h3 class="docSection1Title" id="ch18lev1sec1">What Are Applets?</h3>
+<p class="docText">Applets represent a way to deliver safe code for producing 
+lively Internet GUIs. They execute within a browser and are associated with 
+(i.e., embedded in) an HTML page, so they must be inherently portable to run in 
+a variety of browsers on a variety of platforms.</p>
+<p class="docText">Let's rewind a bit. Applets execute within a browser, which 
+means that code that somebody else wrote is running on your computer. That may 
+sound dangerous, but applets can run only inside a security &quot;sandbox,&quot; which 
+won't allow them to do things like read or write to files, read environment 
+variables, or open network connections to any host except the one on which they 
+originated. With current releases of Java, you can tweak the sandbox to give 
+applets more privileges, but they'll never be allowed to do anything that would 
+harm you. What's more, they're virus-resistant.</p>
+<p class="docText">All applets derive from <tt>java.applet.Applet</tt>, and so, 
+since Jython compiles to Java bytecode and can subclass a Java class, all we 
+have to do is subclass <tt>java.applet.Applet</tt> and compile. Sounds easy 
+enough, doesn't it? In fact, if you've worked with applets, most of this chapter 
+will be a review, except for compiling Jython code to an applet.</p>
+<h3 class="docSection1Title" id="ch18lev1sec2">Working with Applets</h3>
+<p class="docText">Let's start off with an interactive session. Import <tt>
+Applet</tt> from the <span class="docEmphasis">java.applet</span> package.</p>
+<pre>&gt;&gt;&gt; from java.applet import Applet
+&gt;&gt;&gt; applet = Applet()</pre>
+<p class="docText">An applet is a panel (<tt>java.awt.Panel</tt>), and, as we 
+learned earlier, a panel is also a component.</p>
+<pre>&gt;&gt;&gt; applet.class.superclass
+&lt;jclass java.awt.Panel at -731859681&gt;</pre>
+<p class="docText">So, if an applet is a panel, and a panel is a component, an 
+applet is also a component (and thus a component container). That means that 
+everything you've learned about components and panels applies to applets as 
+well.</p>
+<h4 class="docSection2Title" id="ch18lev2sec1">Surveying the Applet Landscape</h4>
+<p class="docText"><tt>Applet</tt> inherits all of class <tt>java.applet.Applet</tt>'s 
+functionality. What's more, the <tt>Applet</tt> class employs the Façade design 
+pattern, which facilitates the use of many utilities in
+<span class="docEmphasis">java.net</span>, <span class="docEmphasis">java.io</span>, 
+and so forth, so it makes tasks such as Web image downloading as easy as 
+possible.</p>
+<p class="docText">To see the amount of functionality applets provide, take a 
+look at <tt>Applet</tt>'s methods. Here are just the first fifteen:</p>
+<pre>&gt;&gt;&gt; for i in range (0, 15):
+...      print methods[i]
+...
+public void java.applet.Applet.destroy()
+public java.applet.AppletContext java.applet.Applet.getAppletContext()
+public java.lang.String java.applet.Applet.getAppletInfo()
+public java.applet.AudioClip java.applet.Applet.getAudioClip(java.net.URL)
+public java.applet.AudioClip java.applet.Applet.getAudioClip(java.net.URL,java.lang.String)
+public java.net.URL java.applet.Applet.getCodeBase()
+public java.net.URL java.applet.Applet.getDocumentBase()
+public java.awt.Image java.applet.Applet.getImage(java.net.URL)
+public java.awt.Image java.applet.Applet.getImage(java.net.URL,java.lang.String)
+public java.util.Locale java.applet.Applet.getLocale()
+public java.lang.String java.applet.Applet.getParameter(java.lang.String)
+public java.lang.String[][] java.applet.Applet.getParameterInfo()
+public void java.applet.Applet.init()
+public boolean java.applet.Applet.isActive()
+public static final java.applet.AudioClip
+java.applet.Applet.newAudioClip(java.net.URL)</pre>
+<p class="docText">Here are the rest:</p>
+<pre>&gt;&gt;&gt; for i in range (15, 23):
+...     print methods[i]
+...
+public void java.applet.Applet.play(java.net.URL)
+public void java.applet.Applet.play(java.net.URL,java.lang.String)
+public void java.applet.Applet.resize(int,int)
+public void java.applet.Applet.resize(java.awt.Dimension)
+public final void java.applet.Applet.setStub(java.applet.AppletStub)
+public void java.applet.Applet.showStatus(java.lang.String)
+public void java.applet.Applet.start()
+public void java.applet.Applet.stop()</pre>
+<p class="docText">That's a lot of methods to learn, and this is just the tip of 
+the iceberg since we're not considering any methods that <tt>Applet</tt> 
+inherits from its superclasses. (We covered those methods earlier in this book.)</p>
+<h3 class="docSection1Title" id="ch18lev1sec3">Using an Applet as a Container</h3>
+<p class="docText">Because you can use applets interchangeably with panels 
+they're easy to test and debug. Debugging is even easier if the applet runs as a 
+standalone application rather than within a browser. Let's run one from the 
+interactive interpreter.</p>
+<p class="docText">Import <tt>Applet</tt>, <tt>List</tt>, and <tt>Frame</tt>.</p>
+<pre>&gt;&gt;&gt; from java.applet import Applet
+&gt;&gt;&gt; from java.awt import List, Frame</pre>
+<p class="docText">Create an instance of <tt>Applet</tt> and <tt>List</tt>; add 
+the <tt>List</tt> instance to the <tt>applet</tt> instance.</p>
+<pre>&gt;&gt;&gt; applet = Applet()
+&gt;&gt;&gt; list = List()
+&gt;&gt;&gt; applet.add(list)
+java.awt.List[list0,0,0,0x0,invalid,selected=null]</pre>
+<p class="docText">Create an instance of <tt>Frame</tt>; add <tt>applet</tt> to 
+it.</p>
+<pre>&gt;&gt;&gt; frame = Frame(&quot;Frame that contains the Applet&quot;)
+&gt;&gt;&gt; frame.add(applet)
+    java.applet.Applet[panel0,0,0,0x0,invalid,layout=java.awt.FlowLayout]</pre>
+<p class="docText">Pack and show <tt>frame</tt>.</p>
+<pre>&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible=1</pre>
+<p class="docText">Add some items to <tt>list</tt>.</p>
+<pre>&gt;&gt;&gt; list.add(&quot;Hello&quot;)
+&gt;&gt;&gt; list.add(&quot;Goodbye&quot;)</pre>
+<p class="docText"><a class="docLink" href="#ch18fig01">Figure 18-1</a> shows 
+our first applet. (It may be a stretch to call it an applet since we're using it 
+like a panel.) You can see that working with an applet is much like working with 
+a panel, except that there's a lot more to it.</p>
+<center>
+<h5 id="ch18fig01" class="docFigureTitle">Figure 18-1. Our First So-Called Applet</h5>
+<p class="docText"><img alt="graphics/18fig01.gif" src="18fig01.gif" border="0" width="150" height="107"></p>
+</center>
+<h4 class="docSection2Title" id="ch18lev2sec2">Applet Lifecycle Management</h4>
+<p class="docText">The browser lets applets know when they're no longer active 
+or in view. It also tells them when they're created and when they're about to be 
+destroyed so they can create or free resources. Such notification is called 
+lifecycle management. An applet is created and executes within a browser. The 
+browser determines when resources should be created or restored and notifies the 
+applet accordingly.</p>
+<p class="docText">Here are the browser's methods for notifying an applet of a 
+lifecycle event:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>init()</tt>— creates the applet</li>
+  <li>
+  <p class="docText"><tt>destroy()</tt>— destroys the applet</li>
+  <li>
+  <p class="docText"><tt>start()—</tt> makes the applet visible or active</li>
+  <li>
+  <p class="docText"><tt>stop()—</tt> makes the applet invisible or inactive</li>
+</ul>
+<p class="docText">To implement these methods, we have to subclass the <tt>
+Applet</tt> class.</p>
+<p class="docText">Import the <tt>Applet</tt> class and the needed <tt>java.awt</tt> 
+classes.</p>
+<pre>&gt;&gt;&gt; from java.applet import Applet
+&gt;&gt;&gt; from java.awt import Frame, List, Button, Panel, BorderLayout</pre>
+<p class="docText">Define a Python class that subclasses <tt>Applet</tt> (<tt>java.applet.Applet</tt>).</p>
+<pre>&gt;&gt;&gt; class MyApplet (Applet):
+...     def __init__(self):
+...             self.list = List()
+...             self.add(self.list)
+...     def init(self):
+...             self.list.add(&quot;Init called&quot;)
+...     def destroy(self):
+...             self.list.add(&quot;Destroy called&quot;)
+...     def start(self):
+...             self.list.add(&quot;Start called&quot;)
+...     def stop(self):
+...             self.list.add(&quot;Stop called&quot;)
+...</pre>
+<p class="docText">We can also add a browser simulator (a &quot;fake browser&quot;). A 
+simulator allows us to activate the lifecycle notifications, and thus simulate 
+events, by hitting the corresponding buttons.</p>
+<p class="docText">Create a frame and a <tt>MyApplet</tt> instance. Add the 
+instance to the frame.</p>
+<pre>&gt;&gt;&gt; fakeBrowser = Frame(&quot;Fake Browser&quot;)
+&gt;&gt;&gt; applet = MyApplet()
+&gt;&gt;&gt; fakeBrowser.add(applet, BorderLayout.CENTER)</pre>
+<p class="docText">Create four buttons, and add them to the toolbar. The buttons 
+correspond to the individual lifecycle notifications the applet receives from 
+the browser.</p>
+<pre>&gt;&gt;&gt; b = Button      #Shortcut for Button class
+&gt;&gt;&gt; start, stop, init, destroy = b(&quot;start&quot;), b(&quot;stop&quot;), b(&quot;init&quot;),
+                                 b(&quot;destroy&quot;)
+&gt;&gt;&gt; buttons = (start, stop, init, destroy)
+&gt;&gt;&gt; toolbar = Panel()
+&gt;&gt;&gt; for button in buttons:
+...     toolbar.add(button)
+...
+java.awt.Button[button0,0,0,0x0,invalid,label=start]
+java.awt.Button[button1,0,0,0x0,invalid,label=stop]
+java.awt.Button[button2,0,0,0x0,invalid,label=init]
+java.awt.Button[button3,0,0,0x0,invalid,label=destroy]</pre>
+<p class="docText">Add the toolbar to the frame in the north region, and make 
+the frame visible.</p>
+<pre>&gt;&gt;&gt; fakeBrowser.add(toolbar, BorderLayout.NORTH)
+&gt;&gt;&gt; fakeBrowser.pack()
+&gt;&gt;&gt; fakeBrowser.visible=1</pre>
+<p class="docText">Create handlers for the buttons that call the lifecycle 
+methods when pressed.</p>
+<pre>&gt;&gt;&gt; def __init(event):applet.init()
+...
+&gt;&gt;&gt; def __destroy(event):applet.destroy()
+...
+&gt;&gt;&gt; def __start(event):applet.start()
+...
+&gt;&gt;&gt; def __stop(event):applet.stop()
+...</pre>
+<p class="docText">Register the handlers to the buttons.</p>
+<pre>&gt;&gt;&gt; handlers=(__start,__stop,__init,__destroy)
+&gt;&gt;&gt; for i in range(0,4):
+...     buttons[i].actionPerformed=handlers[i]
+...</pre>
+<p class="docText">Test the applet by hitting the buttons. Your browser 
+simulator should look like <a class="docLink" href="#ch18fig02">Figure 18-2</a>.</p>
+<center>
+<h5 id="ch18fig02" class="docFigureTitle">Figure 18-2. Simulated Lifecycle Event Notification</h5>
+<p class="docText"><img alt="graphics/18fig02.gif" src="18fig02.gif" border="0" width="200" height="139"></p>
+</center>
+<h4 class="docSection2Title" id="ch18lev2sec3">Compiling an Applet</h4>
+<p class="docText">To compile a Jython class as a Java class, you have to put it 
+in a module of the same name. Thus, <span class="docEmphasis">MyApplet.py</span> 
+contains the <tt>MyApplet</tt> class. Here's the code:</p>
+<pre>from java.applet import Applet
+from java.awt import List
+       # Define a Python class that subclasses the Applet class.
+       # (java.applet.Applet)
+
+class MyApplet (Applet):
+       def __init__(self):
+             self.list = List()
+             self.add(self.list)
+       def init(self):
+             self.list.add(&quot;Init called&quot;)
+       def destroy(self):
+             self.list.add(&quot;Destroy called&quot;)
+       def start(self):
+             self.list.add(&quot;Start called&quot;)
+       def stop(self):
+             self.list.add(&quot;Stop called&quot;)
+
+if __name__ == &quot;__main__&quot;:
+       from FakeBrowser import FakeBrowser
+       fakeBrowser = FakeBrowser()
+       fakeBrowser.addApplet(MyApplet())</pre>
+<p class="docText">Notice that the main block imports the <tt>FakeBrowser</tt> 
+class, which is based on the browser simulator we created in the last 
+interactive session. (<tt>FakeBrowser</tt> isn't listed, but you can look it up 
+in <span class="docEmphasis">FakeBrowser.py.</span> Running
+<span class="docEmphasis">MyApplet.py</span> yields the same output as before.)</p>
+<p class="docText">To compile <tt>MyApplet</tt>, use <tt>jythonc</tt> at the 
+command prompt.</p>
+<pre>jythonc —deep --package com.awl.jython_book --jar myapplet.jar MyApplet.py</pre>
+<p class="docText">We saw how to use <tt>Jythonc</tt> in
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>. Note 
+that the package is specified as <span class="docEmphasis">com.awl.Jython_book</span> 
+and that the classes are put in a JAR file called <span class="docEmphasis">
+my.applet.jar.</span> (A Java archive file is a zip file but with a manifest 
+denoting that <tt>MyApplet</tt> is an applet.)</p>
+<p class="docText">Because we added <tt>FakeBrowser</tt> to the main block, we 
+can run <tt>MyApplet</tt> as a standalone application (<span class="docEmphasis">com.awl.Jython_book.MyApplet</span>) 
+simply by entering the following at the command line:</p>
+<pre>java -classpath %CLASSPATH%;myapplet.jar com.awl.jython_book.MyApplet</pre>
+<p class="docText">which puts <span class="docEmphasis">Jython.jar</span> and
+<span class="docEmphasis">myapplet.jar</span> in the classpath. <tt>MyApplet</tt> 
+needs <span class="docEmphasis">Jython.jar</span> in order to run.</p>
+<p class="docText">We're not done yet. We want to run this applet &quot;embedded&quot; in 
+an HTML file inside a browser, so we have to configure the <tt>Applet</tt> tag 
+for applets.</p>
+<p class="docText">First, some exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Add a Clear button to the applet that clears the list in
+  <tt>MyApplet</tt>.</li>
+  <li>
+  <p class="docList">Recompile the applet. <span class="docEmphasis">Hint:</span> 
+  You can use a batch file called <span class="docEmphasis">compile.bat</span> 
+  for this, but be sure to open and study it first.</li>
+  <li>
+  <p class="docList">Run the applet in <tt>FakeBrowser</tt> with the Java 
+  interpreter. <span class="docEmphasis">Hint:</span> Use a batch file called
+  <span class="docEmphasis">run.bat,</span> but open and study it first.</li>
+</ul>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">No Archive Tag</h2>
+      <p class="docText">If your browser doesn't support the <tt>archive</tt> 
+      tag, or if you're having problems compiling your applet, try using the <tt>
+      all</tt> or <tt>core</tt> arguments to <tt>jythonc</tt>. These arguments 
+      instruct <tt>jythonc</tt> to include <span class="docEmphasis">JythonC.jar</span> 
+      in the applet's jar file.</p>
+      <pre>jythonc –core --package com.awl.Jython_book --jar myapplet.jar MyApplet.py</pre>
+      <p class="docText">or</p>
+      <pre>jythonc –all --package com.awl.Jython_book --jar myapplet.jar MyApplet.py</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch18lev2sec4">Embedding an Applet in an HTML Page</h4>
+<p class="docText">To embed <tt>MyApplet</tt> in a Web page, we need the <tt>
+applet</tt> tag, which takes the following form:</p>
+<pre>&lt;applet
+  code=&quot;com.awl.jython_book.MyApplet&quot;
+  codebase=&quot;.\jpywork&quot;
+  archive=&quot;..\..\lib\jython.jar&quot;
+  width=400
+  height=400
+&gt;
+  &lt;param name=&quot;hello&quot; value=&quot;hello&quot;&gt;
+If you don't have a Java-enabled browser, you need to get one!
+&lt;/applet&gt;</pre>
+<p class="docText">Each parameter takes a name/value pair, and each has a 
+purpose:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>Code</tt> holds the name of the applet class (in our 
+  case, <tt>com.awl.Jython_book.MyApplet.class</tt>).</li>
+  <li>
+  <p class="docList"><tt>Codebase</tt> holds the relative path of the code 
+  base—the root directory from which the browser loads the Java classes and 
+  resources it needs. It's equivalent to the document base, from which the 
+  browser loads the document form. In other words, if an applet is loaded from
+  <span class="docEmphasis">www.jython.org\demo\applet.html</span>, the document 
+  base is loaded from <span class="docEmphasis">www.jython.org\demo</span>. 
+  (Remember, the default operation for <tt>jythonc</tt> is to put the class 
+  files in the <span class="docEmphasis">jpywork</span> subdirectory of the 
+  current directory.)</li>
+  <li>
+  <p class="docList"><tt>archive</tt> holds the name of any zip or jar files 
+  this applet uses-in our case, <span class="docEmphasis">\</span>
+  <span class="docEmphasis">lib\jython.jar,</span> which holds all of the 
+  classes that Jython needs. Make sure you have the same version of
+  <span class="docEmphasis">Jython.jar</span> as the one you compile with. You 
+  can get the right version for whatever Python version you're working with from
+  <span class="docEmphasis">c:\Jython;</span> copy it into
+  <span class="docEmphasis">c:\Jython_book\scripts\lib.</span></li>
+  <li>
+  <p class="docList"><tt>width</tt>/<tt>height</tt> holds the width and height 
+  of the applet in pixels.</li>
+  <li>
+  <p class="docList"><tt>&lt;param name=value=&gt;</tt> specifies the applet-defined 
+  (application-specific) name/value parameters.</li>
+</ul>
+<h5 class="docSection3Title" id="ch18lev3sec1">The applet Tag and Browsers</h5>
+<p class="docText">The <tt>applet</tt> tag works in the applet viewer (<tt>AppletViewer</tt>), 
+but to run other browsers you have to expand it to include the
+<span class="docEmphasis">myapplet.jar</span> file in the <tt>archive</tt> 
+parameter and take out <tt>codebase</tt> (or set it to a period <tt>[.]</tt>). 
+The following code, from <span class="docEmphasis">MyAppletJar.html,</span> 
+works with Internet Explorer and Netscape:</p>
+<pre>&lt;html&gt;
+&lt;body&gt;
+&lt;center&gt;
+&lt;applet
+  code=&quot;com.awl.jython_book.MyApplet&quot;
+  archive=&quot;..\lib\jython.jar,myapplet.jar&quot;
+  width=400
+  height=400
+&gt;
+  &lt;param name=&quot;hello&quot; value=&quot;hello&quot;&gt;
+If you don't have a Java-enabled browser, you need to get one!
+&lt;/applet&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p class="docText">Putting the class files in a jar file speeds downloading. 
+Unfortunately, however, <tt>AppletViewer</tt> doesn't recognize the <tt>archive</tt> 
+parameter. This code (from <span class="docEmphasis">MyApplet.html</span>) does 
+work with <tt>AppletViewer</tt> as well as Internet Explorer and Netscape, 
+although its download time is longer than that of jar files.</p>
+<pre>&lt;html&gt;
+&lt;body&gt;
+&lt;center&gt;
+&lt;applet
+  code=&quot;com.awl.jython_book.MyApplet&quot;
+  codebase=&quot;.\jpywork&quot;
+  archive=&quot;..\..\lib\jython.jar&quot;
+  width=400
+  height=400
+&gt;
+  &lt;param name=&quot;hello&quot; value=&quot;hello&quot;&gt;
+If you don't have a Java-enabled browser, you need to get one!
+&lt;/applet&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<h5 class="docSection3Title" id="ch18lev3sec2">Running MyApplet with AppletViewer</h5>
+<p class="docText">The <tt>AppletViewer</tt> utility, which ships with the JDK, 
+allows developers to run applets without a browser. It supports a subset of the 
+Netscape and Internet Explorer HTML tags that are associated with a Java applet.</p>
+<p class="docText">To run <tt>AppletViewer</tt> from the command line do this:</p>
+<pre>appletviewer MyApplet.html</pre>
+<p class="docText">In Netscape or Internet Explorer, open the file from the 
+File\Open menu item. You can use the applet with either
+<span class="docEmphasis">MyApplet.html</span> or <span class="docEmphasis">
+MyApplet.Jar.html.</span></p>
+<h4 class="docSection2Title" id="ch18lev2sec5">Configuring Applet Behavior</h4>
+<p class="docText">An applet can be customized. The following HTML, for example, 
+defines two applet-specific parameters, <tt>&quot;color&quot;</tt> and <tt>&quot;hello&quot;</tt>:</p>
+<pre>&lt;html&gt;
+&lt;body&gt;
+&lt;center&gt;
+&lt;applet
+  code=&quot;com.awl.jython_book.MyApplet&quot;
+  codebase=&quot;.\jpywork&quot;
+  archive=&quot;..\..\lib\jython.jar&quot;
+  width=400
+  height=400
+&gt;
+  &lt;param name=&quot;hello&quot; value=&quot;hi mom&quot;&gt;
+  &lt;param name=&quot;color&quot; value=&quot;blue&quot;&gt;
+If you don't have a Java-enabled browser, you need to get one!
+&lt;/applet&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p class="docText">Call the <tt>getParameter()</tt> method of <tt>
+java.applet.Applet</tt> to read the applet's parameters. This method in turn 
+gets the parameters from the applet stub (<tt>AppletStub</tt>).</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The Applet Stub</h2>
+      <p class="docText">The applet gets the parameter information from <tt>
+      AppletStub</tt>, which is passed to the <tt>Applet</tt> class via the <tt>
+      setStub()</tt> method by <tt>AppletContext</tt>. <tt>Java.applet. Applet</tt> 
+      implements <tt>setStub()</tt>, so you don't have to.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch18lev2sec6">AppletBrowser</h4>
+<p class="docText">I've created a fully functioning <tt>AppletViewer</tt>-like 
+application, called <tt>AppletBrowser</tt> (which we'll cover later in detail).
+<tt>AppletBrowser</tt> implements the needed stub and context. We're going to 
+use it in our interactive sessions.</p>
+<p class="docText">Import <tt>JApplet</tt>, and create an instance of it.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JApplet
+&gt;&gt;&gt; applet = JApplet()</pre>
+<p class="docText">Import <tt>AppletBrowser</tt>, and create an instance of it.</p>
+<pre>&gt;&gt;&gt; from AppletBrowser import AppletBrowser
+&gt;&gt;&gt; browser = AppletBrowser()</pre>
+<p class="docText">Add the <tt>applet</tt> instance to <tt>AppletBrowser</tt> to 
+simulate its loading into <tt>AppletViewer</tt> or another Java-enabled browser.</p>
+<pre>&gt;&gt;&gt; browser.addApplet(applet)</pre>
+<p class="docText">Get the <tt>color</tt> parameter from the applet.</p>
+<pre>&gt;&gt;&gt; color = applet.getParameter(&quot;color&quot;)
+&gt;&gt;&gt; print color
+&quot;blue&quot;</pre>
+<p class="docText">Get the <tt>hello</tt> parameter from the applet</p>
+<pre>&gt;&gt;&gt; hello = applet.getParameter(&quot;hello&quot;)
+&gt;&gt;&gt; print hello
+&quot;hi mom&quot;</pre>
+<p class="docText">The other parameters—<tt>codebase</tt>, <tt>code</tt>, <tt>
+archive</tt>, and so forth—which aren't defined by the <tt>param</tt> keyword, 
+are accessible through <tt>applet.getParameter()</tt>.</p>
+<p class="docText">Get <tt>archive</tt>, <tt>code</tt>, and <tt>codebase</tt> 
+from the applet, and print them out.</p>
+<pre>&gt;&gt;&gt; code = applet.getParameter(&quot;code&quot;)
+&gt;&gt;&gt; codebase = applet.getParameter(&quot;codebase&quot;)
+&gt;&gt;&gt; archive = applet.getParameter(&quot;archive&quot;)
+&gt;&gt;&gt; print (code, codebase, archive)
+('com.awl.java_book.MyApplet', './jpywork/', '..\..\lib\jython.jar')</pre>
+<p class="docText">Try to get a parameter that doesn't exist. <tt>getParameter()</tt> 
+will return <tt>None</tt>.</p>
+<pre>&gt;&gt;&gt; print applet.getParameter(&quot;my_param&quot;)
+None</pre>
+<p class="docText">Use parameters to pass information, such as the URL and 
+driver name of the database to which the applet connects, or the COS naming 
+service where it looks for its stubs. Basically, the applet's parameters 
+customize its behavior.</p>
+<h4 class="docSection2Title" id="ch18lev2sec7">An Applet Example</h4>
+<p class="docText">The following code (from <span class="docEmphasis">context\MyApplet.py</span>) 
+shows an applet that does what the applet in the previous session does, but in a 
+module that you can compile and use in a browser or in <tt>AppletViewer</tt>. 
+(Pay special attention to the <tt>showParameters()</tt> method.)</p>
+<pre>from javax.swing import JApplet
+from javax.swing import JList, DefaultListModel, JScrollPane
+
+       # Define a Python class that subclasses the JApplet class
+       # (javax.swing.JApplet)
+class MyApplet (JApplet):
+       def __init__(self):
+              self.list = DefaultListModel()
+              _list = JList(self.list)
+              self.contentPane.add(JScrollPane(_list))
+
+       def print(self, str):
+              self.list.addElement(str)
+
+       def init(self):
+              self.print(&quot;Init called&quot;)
+              self.showParameters()
+
+       def destroy(self):
+              self.print(&quot;Destroy called&quot;)
+
+       def start(self):
+              self.print(&quot;Start called&quot;)
+
+       def stop(self):
+              self.print(&quot;Stop called&quot;)
+
+       def showParameters(self):
+                    # Get the color parameter.
+              color = &quot;color&quot;, self.getParameter(&quot;color&quot;)
+                    # Get the hello parameter.
+              hello = &quot;hello&quot;, self.getParameter(&quot;hello&quot;)
+                    # Get the myparam parameter.
+              myparam = &quot;myparam&quot;, self.getParameter(&quot;myparam&quot;)
+              codebase = &quot;codebase&quot;, self.getParameter(&quot;codebase&quot;)
+              params = (color, hello, myparam, codebase)
+              for param in params:
+               self.print(&quot;%s equals %s&quot; % param)
+
+if __name__ == &quot;__main__&quot;:
+       from AppletBrowser import AppletBrowser
+       fakeBrowser = AppletBrowser()
+       fakeBrowser.addApplet(MyApplet())</pre>
+<p class="docText">This version of <tt>AppletViewer</tt>, which derives from <tt>
+JApplet</tt>, uses <tt>showParameters()</tt> to call the <tt>__init__</tt> 
+method. <tt>ShowParameters()</tt> shows the parameters in a listbox in much the 
+same way as in the interactive session.</p>
+<p class="docText">As an exercise, compile and run <span class="docEmphasis">
+context\MyApplet.py</span> in the applet viewer or Netscape Navigator. (You'll 
+have trouble running it in Internet Explorer because it uses Swing classes. To 
+get it right you'll have to do some extra configuring and download a version of 
+Swing that's compatible with JVM v.1.1.4.)</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Assume Nothing with Browsers</h2>
+      <p class="docText">With applet development you can make very few 
+      assumptions about the browser. For example, J2ME and older browsers 
+      support only AWT.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch18lev2sec8">Reading Applet Files</h4>
+<p class="docText">For security reasons, you can't read files from an applet if 
+they're on the client's hard drive (unless you configure Java security to allow 
+this). However, you can read them from the Web server that serves the applet to 
+the client. We won't cover Java security here, but I do recommend that you read 
+the online security documentation at the Javasoft Web site.</p>
+<p class="docText">The way to read applet files is with a URL. We'll see how 
+with a sample file located on the Jython Web server. (If you have your own Web 
+server, you can skip this next section.)</p>
+<h5 class="docSection3Title" id="ch18lev3sec3">The Python Web Server</h5>
+<p class="docText">Python's Web server can be found in the
+<span class="docEmphasis">SimpleHTTPServer</span> module. Here's what to do to 
+get it up and running:</p>
+<pre>&gt;&gt;&gt; from SimpleHTTPServer import test
+&gt;&gt;&gt; test()
+Serving HTTP on port 8000 ...</pre>
+<p class="docText"><span class="docEmphasis">SimpleHTTPServer</span> delivers 
+HTML pages from the current working directory, so to run the Web server for our 
+HTML page we have to start a DOS prompt and run the module in the
+<span class="docEmphasis">.\scripts\chap18\context</span> subdirectory. Then we 
+can access the applet with Netscape Navigator by entering the URL
+<span class="docEmphasis">http://your_ip_address:8000/MyAppletJar.html</span>, 
+replacing &quot;<tt>your_ip_address</tt>&quot; with your server's address. On Windows 
+NT/98, you can find that address via the <tt>ipconfig</tt> command.</p>
+<pre>C:\&gt;ipconfig
+
+Windows 98 IP Configuration
+
+0 Ethernet adapter :
+
+        IP Address. . . . . . . . . : 0.0.0.0
+        Subnet Mask . . . . . . . . : 0.0.0.0
+        Default Gateway . . . . . . :</pre>
+<p class="docText">(To use Internet Explorer you need the Java plug-in or the 
+JFC Swing package. See the Javasoft Web site for more information.)</p>
+<p class="docText">If you're running the Python Web server and the browser on 
+the same machine, use the URL <span class="docEmphasis">http://local_host_:8000/MyAppletJar.html</span>. 
+However, you'll be better off using the IP address or the domain name service 
+(DNS) entry. On Windows NT/98, the DNS entry usually corresponds to the name of 
+your machine, which replaces &quot;localhost&quot; in the URL.</p>
+<p class="docText">If you use another Web server, you may have to adjust the 
+port setting to match it. The default port for HTTP is 80. Also, if you don't 
+have a network card, you can use the applet browser (<tt>AppletBrowser</tt>), 
+which simulates a browser talking to a Web server. (<tt>AppletBrowser</tt> can 
+do this even on a separate machine.) Lastly, you can use the File/Open menu item 
+in Netscape Navigator to open the HTML containing the &quot;embedded&quot; applet.</p>
+<h5 class="docSection3Title" id="ch18lev3sec4">Working with URLs in an Interactive Session</h5>
+<p class="docText">To read a file from the server you need the <tt>URL</tt> 
+class, which you can find in the <span class="docEmphasis">java.net</span> 
+package. The <tt>Applet</tt> class has methods that return both the document 
+base URL and its code base counterpart. <tt>URL</tt>'s <tt>openStream()</tt> 
+method returns an input stream, which means that if you have a file called
+<span class="docEmphasis">data.dat</span> you can append it to one of <tt>URL</tt>'s 
+methods.</p>
+<p class="docText">Import <tt>JApplet</tt> from <span class="docEmphasis">
+javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JApplet
+&gt;&gt;&gt; applet = JApplet()</pre>
+<p class="docText">Use <tt>AppletBrowser</tt> to give the applet a context and a 
+stub (to simulate the applet's environment).</p>
+<pre>&gt;&gt;&gt; from AppletBrowser import AppletBrowser
+&gt;&gt;&gt; browser = AppletBrowser()
+&gt;&gt;&gt; browser.addApplet(applet)</pre>
+<p class="docText">Show the code base (using Java and Jython).</p>
+<pre>&gt;&gt;&gt; applet.getCodeBase()
+file:/C:/book/scripts/chap18/context/jpywork/
+&gt;&gt;&gt; applet.codeBase
+file:/C:/book/scripts/chap18/context/jpywork/</pre>
+<p class="docText">Show the document base (using Java and Jython).</p>
+<pre>&gt;&gt;&gt; applet.getDocumentBase()
+file:/C:/book/scripts/chap18/context/
+&gt;&gt;&gt; applet.documentBase
+file:/C:/book/scripts/chap18/context/</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Java.net.URL</h2>
+      <p class="docText">The Java API documentation will tell you what you want 
+      to know about <tt>java.net.URL</tt>. I'll just show you its form:</p>
+      <pre>&gt;&gt;&gt; url = applet.documentBase
+&gt;&gt;&gt; url.class
+&lt;jclass java.net.URL at 960293886&gt;
+&gt;&gt;&gt; dir (url.class)
+['ref', 'file', '__init__', 'toExternalForm', 
+'setURLStreamHandlerFactory', 'content', 'getFile', 'sameFile',
+'getProtocol', 'openStream', 'getContent', 'protocol', 'getHost', 'port',
+'openConnection', 'host', 'getRef', 'getPort']</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">There are two files in the context directory with the name
+<span class="docEmphasis">data.dat.</span> One is the context itself and is 
+associated with the document base URL; the other is in the
+<span class="docEmphasis">jpywork</span> subdirectory and is associated with the 
+code base URL.</p>
+<p class="docText">Import <tt>URL</tt> from <span class="docEmphasis">java.net</span>.</p>
+<pre>&gt;&gt;&gt; from java.net import URL</pre>
+<p class="docText">Get <tt>documentBaseURL</tt> from the applet.</p>
+<pre>&gt;&gt;&gt; documentBaseURL = applet.documentBase</pre>
+<p class="docText">Create a <tt>URL</tt> instance based on <tt>documentBaseURL</tt>'s 
+context.</p>
+<pre>&gt;&gt;&gt; data_dat = URL(documentBaseURL, &quot;data.dat&quot;)
+&gt;&gt;&gt; data_dat
+file:/C:/book/scripts/chap18/context/data.dat</pre>
+<p class="docText">Get the associated input stream.</p>
+<pre>&gt;&gt;&gt; instream = data_dat.openStream()</pre>
+<p class="docText">Import the classes needed to read the
+<span class="docEmphasis">data.dat</span> text file.</p>
+<pre>&gt;&gt;&gt; from java.io import BufferedReader, InputStreamReader</pre>
+<p class="docText">Create a <tt>BufferedReader</tt> stream by chaining an <tt>
+InputStreamReader</tt> instance to <tt>instream</tt>. (See the Java API online 
+documentation for more information about these classes.)</p>
+<pre>&gt;&gt;&gt; data_reader = BufferedReader(InputStreamReader(instream))</pre>
+<p class="docText">Show the contents of the file.</p>
+<pre>&gt;&gt;&gt; data_reader.readLine()
+'Hello from the Document base!'</pre>
+<p class="docText">As an exercise, read <span class="docEmphasis">data.dat</span> 
+in the code base URL.</p>
+<p class="docText">The great thing about <tt>URL</tt> is that it works with the 
+HTTP and FTP protocols. This means that you can download file data from anywhere 
+on the Internet. The question is, why do this?</p>
+<p class="docText">The answer is that an application that doesn't get data from 
+somewhere is pretty useless. Consider the advantages of adding applet 
+capabilities to the address book application. With them, a user could access her 
+address book from any location on the Internet. We'll see how in the next 
+section.</p>
+<h3 class="docSection1Title" id="ch18lev1sec4">Transforming the Address Book Application into an 
+Applet</h3>
+<p class="docText">What we're going to do is convert <tt>AddressMain</tt>, which 
+is currently a form, into an applet. Later we'll make changes to <tt>
+AddressModel</tt> so that it can deal with URLs instead of files. This means 
+that it will be able to read and write to any files to which it refers, 
+including any file transmitted over the HTTP protocol.</p>
+<h4 class="docSection2Title" id="ch18lev2sec9">Changes to AddressMain</h4>
+<p class="docText">First let's make it so <tt>AddressMain</tt> derives from an 
+applet instead of a frame.</p>
+<pre>class AddressMain(JApplet):</pre>
+<p class="docText">Now let's add the <tt>__init__</tt> and <tt>__destroy__</tt> 
+methods. <tt>__init__</tt> gives us access to the database, which we need to 
+initialize <tt>AddressModel</tt>. <tt>__destroy__</tt> calls <tt>AddressModel</tt>'s
+<tt>writeAddress()</tt> function, which writes addresses out to a file (if the 
+protocol supports this).</p>
+<pre>def init(self):
+
+      url=None       # To hold the document base url.
+
+      try:
+            url = self.getDocumentBase()
+      except:
+           print &quot;Unable to get document base URL&quot;
+
+def init(self):
+
+      url=None       # To hold the document base url.
+
+      try:
+            url = self.getDocumentBase()
+      except:
+            print &quot;Unable to get document base URL&quot;</pre>
+<p class="docText">Now, because we have to move some of the code out of <tt>
+__init__</tt>, we need to create another method to initialize the GUI components 
+based on <tt>AddressModel</tt>.</p>
+<pre>Def initGUI(self):
+             # Move to the first address in
+             # the list and table.
+      If self.model.getSize() &gt; 0:
+             Self.addresses.setSelectIndex(0)
+             Address = self.model.getAddressAt(0)
+             Self.form.set(address)</pre>
+<h4 class="docSection2Title" id="ch18lev2sec10">Changes to AddressModel</h4>
+<p class="docText">We've made our address book application fairly modular, so 
+it's easy to add support for reading from a URL. In fact, it takes just three 
+lines of code. We now have a class, <tt>AddressURL</tt> (from
+<span class="docEmphasis">AddressBook\AddressModel.py</span>), that has its own
+<tt>readAddresses()</tt> and <tt>writeAddresses()</tt> methods, which means that 
+we no longer have to import them from <span class="docEmphasis">AddressUtils.p</span>y.</p>
+<p class="docText">Here's the modified <span class="docEmphasis">AddressBook\AddressModel.py</span> 
+module:</p>
+<pre>from address import Address
+...
+...
+from AddressURL import AddressURL
+
+class AddressModel(AbstractTableModel, ListModel):
+       &quot;&quot;&quot;The AddressModel is both a ListModel and a
+         TableModel.&quot;&quot;&quot;
+
+       def __init__(self, url):
+             &quot;&quot;&quot;Initialize the Address model.
+             Read the dictionary from the file.&quot;&quot;&quot;
+
+             self.dict = None    # holds the dictionary of addresses.
+             self.list = None    # holds the sorted list of names,
+                                 # which are keys
+                                 # into the dictionary.
+
+             self.listeners = [] # to hold list of
+                                 # ListModelListeners
+
+             self.io = AddressURL(url)
+                    # Read the addresses from the AddressURL class.
+             self.dict = self.io.readAddresses()
+
+          ...
+          ...
+     def writeAddresses(self):
+             &quot;&quot;&quot;Write the address data to the file.&quot;&quot;&quot;
+             self.io.writeAddresses(self.dict)</pre>
+<h5 class="docSection3Title" id="ch18lev3sec5">AddressURL</h5>
+<p class="docText"><tt>AddressURL</tt> uses the <tt>openStream()</tt> method to 
+read a file from a URL. It writes to the file as well if its underlying protocol 
+(HTTP, FTP, file, etc.) provides the necessary support. Using <tt>
+getOutputStream()</tt> (from <tt>java.net.URLConnection</tt>), <tt>AddressURL</tt> 
+gets the file's associated output stream.</p>
+<p class="docText">Take a look at <span class="docEmphasis">AddressBook\AddressURL.py.</span> 
+Be sure to read the comments.</p>
+<pre>from java.io import ObjectInputStream, IOException
+from java.io import ObjectOutputStream, File, FileOutputStream
+from java.net import URL, UnknownServiceException
+from string import split, join
+class AddressURL:
+       def __init__(self, url, filename=&quot;./addr.dat&quot;):
+
+                    # Set the url. If the url does not exist,
+                    # create one based on the current
+                    # directory and filename.
+             if(url):
+                    self.url = URL(url, filename)
+             else:
+                    file = File(filename)
+                    self.url = file.toURL()
+
+       def readAddresses(self):
+
+             &quot;&quot;&quot;
+             Read in a dictionary of addresses.
+             Uses URL.openStream()
+             &quot;&quot;&quot;
+             file = None # to hold the file input stream
+
+                    # Use try/finally to work with the file.
+                    # If the file does not work for any
+                    # reason then close it.
+             try:
+                           # Try to read in the addresses from the
+                           # file. If you can't read the addresses
+                           # then print an error message.
+                    try:
+                           file = self.url.openStream()
+                           in_stream= ObjectInputStream(file)
+                           dict = in_stream.readObject()
+                           return dict
+                    except IOException, error:
+                           print &quot;ERROR reading url: &quot; + self.url
+                           print error.class.name
+                           print error.message
+                           return {}
+             finally:
+                    if not (file is None): file.close()
+
+       def writeAddresses(self, dict):
+             &quot;&quot;&quot;
+             Write the addresses instances
+             in the dictionary to a
+             file.
+
+             The writeAddresses method uses
+             URL.openConnection().getOutputStream(), and
+             attempts to write the dictionary of
+             addresses to a file.
+
+             If the writing fails because the protocol
+             does not support writing, then
+             writeAddresses checks to see if
+             the protocol is file protocol. If it is file
+             protocol, writeAddresses calls
+             writeAsFile, which
+             opens a file using FileOutputStream.
+
+             &quot;&quot;&quot;
+                    # to hold the output file output stream.
+             file=None
+                    # Use try/finally to write the instances
+                    # to a file.
+                    # If all else fails then close
+                    # the file object.
+             try:
+                           # Write the address instances in dict
+                           # to a file specified by filename.
+                           # If there are any errors then
+                           # print an error message.
+                    try:
+                           urlConnection = self.url.openConnection()
+                           file = urlConnection.getOutputStream()
+                           out_stream = ObjectOutputStream(file)
+                           out_stream.writeObject(dict)
+                           # If the protocol does not support
+                           # writing, do this....
+                    except UnknownServiceException, noservice:
+                                 # If the protocol is file,
+                                 # then write it as a file.
+                           if self.url.protocol=='file':
+                                 filename=self.url.toString()
+                                 self.writeAsFile(filename, dict)
+                           else:
+                                 print noservice.message + self.url
+                    except IOException, error:
+                           print &quot;ERR: writing addresses&quot;+ self.url
+                           print error.class.name
+                           print error.message
+             finally:
+                    if(file):file.close()
+       def writeAsFile(self, filename, dict):
+             &quot;&quot;&quot;
+             Writes out a dictionary of addresses by
+             using
+             FileOutputStream.
+             &quot;&quot;&quot;
+                    # Extract the filename from the URL
+                    # string.
+             filename = filename[5:]
+             filename = File(filename)
+             file = None #to hold the file output stream.
+
+             try:
+                           # Write the address instances
+                           # in dict to the file.
+                           # If there are any errors
+                           # then print an error message.
+                    try:
+                           file = FileOutputStream(filename)
+                           out_stream = ObjectOutputStream(file)
+                           out_stream.writeObject(dict)
+
+                   except IOException, error:
+                           print &quot;ERROR writing: &quot; + filename
+                           print error.class.name
+                           print error.message
+             finally:
+                    if(file):file.close()</pre>
+<h4 class="docSection2Title" id="ch18lev2sec11">Running the Address Book Application</h4>
+<p class="docText">Our address book application can be run as an application or 
+as an applet. Its main block creates an instance of <tt>JFrame</tt> and adds an 
+instance of <tt>AddressMain</tt> to it. Here's part of the code (from
+<span class="docEmphasis">AddressBook\AddressMain.py</span>):</p>
+<pre>def __windowClosing(event):
+       event.source.dispose()
+       from java.lang import System
+       System.exit(0)
+
+if __name__ == &quot;__main__&quot;:
+       mainWindow = Frame(&quot;Address book application&quot;)
+       applet = AddressMain()
+       applet.init()
+       mainWindow.contentPane.add(applet)
+       mainWindow.windowClosing = __windowClosing
+             # Pack the frame and make it visible.
+       mainWindow.pack()
+       mainWindow.setSize(600, 300)
+       mainWindow.visible=1</pre>
+<p class="docText">Run the application with <tt>AppletBrowser</tt> so you can 
+debug and test it as you do the exercises. (The code is from
+<span class="docEmphasis">run.py.</span>)</p>
+<pre>from AppletBrowser import AppletBrowser
+from AddressMain import AddressMain
+
+applet = AddressMain()
+browser = AppletBrowser()
+
+browser.addApplet(applet)</pre>
+<p class="docText">The applet browser provides <tt>AppletContext</tt> and <tt>
+AppletStub</tt>, which make available the <tt>getDocumentBase()</tt>, <tt>
+resize()</tt>, and <tt>getParameter()</tt> methods, among others.</p>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Add an applet parameter that specifies the address book 
+  application file name. The name should be relative to the document base, and 
+  it should correspond to a specific address book. Reviewing the section on <tt>
+  AppletBrowser</tt> should help you here.</li>
+  <li>
+  <p class="docList">Get a type-4 JDBC driver so you can get the application to 
+  work with an RDBMS system.</li>
+  <li>
+  <p class="docList">Compile and run <tt>AddressBook</tt> in a browser.</li>
+</ul>
+<h4 class="docSection2Title" id="ch18lev2sec12">Using AppletBrowser to Develop Applets</h4>
+<p class="docText">To use <tt>AppletBrowser</tt>, configure the file
+<span class="docEmphasis">applet.props</span> in the current working directory.
+<span class="docEmphasis">applet.props</span> is a Java properties file that 
+specifies the applet's parameters (<tt>codebase</tt>, <tt>code</tt>, <tt>archive</tt>, 
+etc.). If you want, include a toolbar for invoking the applet's <tt>__stop__</tt>,
+<tt>__init__</tt>, and <tt>__destroy__</tt> methods.</p>
+<p class="docText"><tt>AppletBrowser</tt> takes the following command-line 
+arguments:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>-w</tt>— writes out a sample <span class="docEmphasis">
+  applet.props</span> file</li>
+  <li>
+  <p class="docText"><tt>-t—</tt> runs the browser; includes a toolbar</li>
+  <li>
+  <p class="docText"><tt>-v—</tt> runs the browser in verbose mode</li>
+  <li>
+  <p class="docText"><tt>-r—</tt> runs the browser</li>
+  <li>
+  <p class="docText"><tt>-?—</tt> shows help text</li>
+  <li>
+  <p class="docText"><tt>-prop—</tt> writes a single parameter to the property 
+  file (-<tt>propNAME:VALUE</tt>)</li>
+  <li>
+  <p class="docText"><tt>-HTML—</tt> converts <span class="docEmphasis">
+  applet.props</span> to an HTML page (-<tt>HTMLFileName</tt>)</li>
+</ul>
+<p class="docText">To use the browser in a new directory, you have to execute it 
+with the <tt>–w</tt> option. This creates an <span class="docEmphasis">
+applet.props</span> file with a code base that corresponds to the current 
+working directory.</p>
+<p class="docText">Here's the code to create an HTML file called
+<span class="docEmphasis">AddressBook.html:</span></p>
+<pre>C:\jython_book\scripts\chap18\AddressBook&gt;jython AppletBrowser.
+     py–HTMLAddressBook</pre>
+<p class="docText">Here's <span class="docEmphasis">AddressBook.html'</span>s 
+code:</p>
+<pre>&lt;html&gt;
+&lt;body&gt;
+&lt;center&gt;
+
+&lt;applet
+    code=com.awl.jython_book.MyApplet
+    codebase=.\jpywork
+    width=400
+    height=400
+    archive=..\..\lib\jython.jar
+&gt;
+&lt;param name=&quot;color&quot; value=&quot;blue&quot;&gt;
+&lt;param name=&quot;hello&quot; value=&quot;hi mom&quot;&gt;
+If you don't have a Java-enabled browser, you need to get one!
+&lt;/applet&gt;&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p class="docText">Here's how to specify additional applet parameters:</p>
+<pre>C:\jython_book\scripts\chap18\AddressBook&gt;jython AppletBrowser.
+     py-propFileName:RicksAddrBook</pre>
+<p class="docText">Once you add a parameter, it will be available the next time 
+you create an HTML file or use <tt>AppletBrowser</tt>.</p>
+<h3 class="docSection1Title" id="ch18lev1sec5">Advanced Topic: AppletContext and AppletStub</h3>
+<p class="docText">When an applet is created, it's given a stub via its <tt>
+setStub()</tt> method. The stub is the interface between the applet and the 
+browser. You don't have to deal directly with the stub because the <tt>Applet</tt> 
+class implements methods that use it.</p>
+<p class="docText">Here are <tt>AppletStub</tt>'s methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>appletResize(width, height)</tt>— resizes the applet</li>
+  <li>
+  <p class="docText"><tt>getAppletContext()—</tt> gets the applet's context</li>
+  <li>
+  <p class="docText"><tt>getCodeBase()—</tt> gets the code base URL</li>
+  <li>
+  <p class="docText"><tt>getDocumentBase()—</tt> gets the document base URL</li>
+  <li>
+  <p class="docText"><tt>getParameterName()—</tt> gets an applet parameter</li>
+  <li>
+  <p class="docText"><tt>isActive()—</tt> determines if the applet is active</li>
+</ul>
+<p class="docText">The applet context corresponds to the applet's environment 
+and it can be used to show status, to load other documents, and to get access to 
+other applets. The <tt>AppletContext</tt>'s methods are</p>
+<ul>
+  <li>
+  <p class="docText"><tt>getApplet(name)—</tt> gets the applet corresponding to 
+  a given name</li>
+  <li>
+  <p class="docText"><tt>getApplets()—</tt> gets a collection of specific 
+  applets</li>
+  <li>
+  <p class="docText"><tt>getImage(url)—</tt> returns an image object 
+  corresponding to the specified URL</li>
+  <li>
+  <p class="docText"><tt>showDocument(url)—</tt> shows a Web page other than the 
+  current page and replaces the current page with it</li>
+  <li>
+  <p class="docText"><tt>showDocument(url, target)—</tt> same as above, but 
+  specifies the frame target</li>
+  <li>
+  <p class="docText"><tt>showStatus(status)—</tt> shows the status text in the 
+  browser</li>
+</ul>
+<p class="docText"><tt>AppletBrowser</tt> subclasses <tt>AppletContext</tt> and
+<tt>AppletStub</tt> via the classes <tt>URL</tt> and <tt>URLClassLoader</tt>.</p>
+<h4 class="docSection2Title" id="ch18lev2sec13">AppletBrowser.py</h4>
+<p class="docText">Here's some of the code for <span class="docEmphasis">
+AppletBrowser.py:</span></p>
+<pre>from java.applet import AppletContext, AppletStub
+from javax.swing import JFrame, JButton, JPanel, JLabel
+from javax.swing import JTextField, ImageIcon
+...
+...</pre>
+<p class="docText">When you use the <tt>addApplet()</tt> method, <tt>
+AppletBrowser</tt> passes a context and calls the applet's <tt>__init__</tt> 
+method.</p>
+<pre>def addApplet(self, applet):
+
+     ...
+     ...
+     # Set the applet as the applet in this instance.
+     # Pass this instance as the AppletStub (stub).
+     # Add this applet to the frame. Then pack this frame.
+     self.applet = applet
+     if debug:
+           print &quot;Set the stub, and add the applet to the container&quot;
+     applet.setStub(self)
+     self.contentPane.add(self.applet, BorderLayout.CENTER)
+
+     ...
+     applet.init()
+     applet.start()
+
+     self.pack()</pre>
+<p class="docText">As you can see,
+<a class="docLink" href="#ch18lev2sec6">
+AppletBrowser</a> passes itself as the stub and in this way implements all of
+<tt>AppletStub</tt>'s parameters.</p>
+<pre>...
+...
+def appletResize(self, width, height):
+                self.setSize(width, height)
+                self.doLayout()
+
+def getAppletContext(self):
+                return self
+
+def isActive(self):
+                return 1
+
+def getCodeBase(self):
+                codebase=self.props.getProperty(&quot;codebase&quot;)
+                if not codebase:
+                        return URL(self.docbase, &quot;.&quot;)
+                else:
+                        return URL(self.docbase, codebase)
+
+def getDocumentBase(self):
+                return self.docbase
+
+def getParameter(self, name):
+               return self.props.getProperty(name)</pre>
+<p class="docText"><tt>getAppleContext()</tt> returns <tt>self</tt>, that is, 
+the <tt>AppletBrowser</tt> instance, which means that <tt>AppletBrowser</tt> 
+implements <tt>AppletContext</tt>'s methods.</p>
+<pre>...
+...
+def getApplet(self, name):
+       return self.applet #Should return an applet
+
+def getApplets(self):
+       v = Vector()
+       v.add(self.applet)
+       return v.elements()
+
+def getImage(self, url):
+       icon = ImageIcon(url)
+       return icon.getImage()
+
+def showDocument(self, url):
+       pass
+
+def showDocument(self, url, target):
+       pass
+
+def showStatus(self, status):
+       self.status.text = status</pre>
+<p class="docText">To implement <tt>getImage()</tt>, <tt>AppletBrowser</tt> uses
+<tt>javax.swing.ImageIcon</tt>. The <tt>getApplet()</tt> and <tt>getApplets()</tt> 
+methods return the currently loaded applet; the <tt>showStatus()</tt> method 
+shows the status in a text field called <tt>status</tt>.</p>
+<p class="docText"><tt>AppletBrowser</tt> loads the applet specified by the <tt>
+code</tt> parameter, as well as all of the jar files specified in the <tt>
+archive</tt> tag, into the <tt>URLClassLoader</tt> class.</p>
+<pre>     ...
+     ...
+
+def loadApplet(self):
+
+             # Create the class loader and get
+             # the class name.
+     class_loader=self.createClassLoader()
+     class_name = self.props.getProperty(&quot;code&quot;)
+
+          # Load the class, create an instance
+          # of it, and add it with addApplet.
+     if class_name and class_loader:
+          try:
+             if debug: print &quot;Loading: &quot;+ class_name
+                    clazz=class_loader.loadClass(class_name)
+             if debug: print clazz
+
+                    applet = clazz.newInstance()
+             self.addApplet(applet)
+          except Exception, exception:
+             global error
+             error = exception
+             print &quot;Unable to load the class &quot;+class_name
+
+def getJars(self):
+     urls=[]
+          #Parse the list of jarfiles in the archive tag.
+     jarfiles = self.props.getProperty(&quot;archive&quot;)
+     jarfiles = split(jarfiles, &quot;,&quot;)
+
+          # Iterate through the list of jarfiles, and add
+          # each jarfile as a URL to the urls list.
+     for jar in jarfiles:
+     url = URL(self.docbase, jar)
+     urls.append(url)
+          if debug: print &quot;Adding jar file &quot; + `url`
+
+     return urls
+
+def createClassLoader(self):
+     try:
+                    # Get list of URLS for each jar in the
+                    # archive tag. Get the codebase URL, and
+                    # add it to the list of URLS.
+                    # Create a URL jarray to pass to the
+                    # URLClassLoader constructor.
+                    # Get the system class loader to pass to the
+                    # URLClassLoader constructor.
+                    # Create an instance of URLClassLoader
+                    # passing the urls and the system class
+                    # loader.
+             urls = self.getJars()
+          codebase=self.getCodeBase()
+          urls.append(codebase)
+          urls = array(urls, URL)
+          loader = ClassLoader.getSystemClassLoader()
+          url_loader = URLClassLoader(urls, loader)
+          return url_loader
+
+     except Exception, exception:
+     global error
+          error = exception
+          print &quot;Unable to create class loader&quot;</pre>
+<h3 class="docSection1Title" id="ch18lev1sec6">Summary</h3>
+<p class="docText">In this chapter, we covered applets, which are components 
+that execute within a browser. To run Jython code as an applet, you have to 
+compile it to a Java class. You should also put it in a jar file to make 
+downloading easier.</p>
+<p class="docText">We extended our address book application to work as an 
+applet. We also covered the inner workings of <tt>AppletBrowser</tt>, which 
+creates Jython applets through a context (<tt>AppletContext</tt>) and a stub (<tt>AppletStub</tt>).</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2017.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20a.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

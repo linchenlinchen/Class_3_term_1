@@ -1,0 +1,2633 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 17</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 17.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 17.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 17.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2016.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2018.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 17. SQL and JDBC</h2><ul><li>&nbsp;<a class="docLink" href="#ch17lev1sec1">A Quick and Dirty JDBC Session</a></li>
+<li>&nbsp;<a class="docLink" href="#ch17lev1sec2">Programming with JDBC and SQL</a></li>
+<li>&nbsp;<a class="docLink" href="#ch17lev1sec3">SQL Data Definition Language</a></li>
+<li>&nbsp;<a class="docLink" href="#ch17lev1sec4">SQL Data Manipulation Language</a></li>
+<li>&nbsp;<a class="docLink" href="#ch17lev1sec5">Putting It All Together—Adding Database Support to the Address Book Application</a></li>
+<li>&nbsp;<a class="docLink" href="#ch17lev1sec6">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">ANSI SQL</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">autoexec.bat file</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class path</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Database</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Database-aware dictionary</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Data Definition Language</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Data Manipulation Language</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Dirty flag</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Foreign key</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Garbage collector</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Java Virtual Machine</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">JDBC</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Main block</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Primary key</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">RDBMS</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Referential integrity</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Setter method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Structured Query Language</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">try…except/try…finally block</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">WinZip</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">One of the advantages of storing data in a database is that 
+other applications can readily access it. Another advantage is that the database 
+takes care of indexing files and such, making data access easier and faster.</p>
+<p class="docText">Databases are a huge topic, one that we can barely scratch 
+the surface of. That said, let me tell you what this chapter
+<span class="docEmphasis">won't</span> cover: data normalization theory or any 
+other database-specific topic. What it <span class="docEmphasis">will</span> 
+cover is the following, which should be enough SQL for you to use JDBC with a 
+database:</p>
+<ul>
+  <li>
+  <p class="docList">Basic Structured Query Language (SQL)</li>
+  <li>
+  <p class="docList">Rudimentary Data Definition Language (DDL)</li>
+  <li>
+  <p class="docList">Connecting to a database with Java Database Connectivity (JDBC)</li>
+  <li>
+  <p class="docList">Inserting, accessing, deleting, and updating data with JDBC</li>
+</ul>
+<p class="docText">To get you up and running with the JDBC API, we'll do a quick 
+interactive session. Then we'll get into SQL and DDL and finally add database 
+support to our address book application.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For More Information</h2>
+      <p class="docText">A good book on JDBC is <span class="docEmphasis">JDBC™ 
+      Database Access with Java™: A Tutorial and Annotated Reference</span> 
+      (Hamilton, Cattell, and Fisher, 1997—Addison-Wesley). Also good is the 
+      free online documentation at the Javasoft Web site,
+      <a class="docLink" href="http://java.sun.com" target="_blank">java.sun.com</a>.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch17lev1sec1">A Quick and Dirty JDBC Session</h3>
+<p class="docText">Naturally I don't know what database you have access to, so 
+on this book's Web site I'm using two standards: Microsoft Access and Java 
+InstantDB. The exercises should work with any SQL database, as long as it has 
+JDBC support. You may have to tweak the statements a little, but after this 
+chapter you should feel comfortable with that.</p>
+<p class="docText">For Microsoft Access we're going to use the JDBC–ODBC bridge, 
+which integrates ODBC-compliant databases with Java applications. (ODBC stands 
+for Open Database Connectivity.) Keep in mind that there are different levels of 
+compliance. These levels range from bridges to native client support to pure 
+Java. I picked Access because it's ODBC compliant and because you're likely to 
+have at least one such database on your computer.</p>
+<h4 class="docSection2Title" id="ch17lev2sec1">Setting Up the ODBC Driver</h4>
+<p class="docText">If you're using Windows and ODBC, follow the instructions 
+below. If you're using a non-Windows OS or a pure Java JDBC driver, follow its 
+documentation.</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Open the Windows' control panel, and double-click the ODBC 
+  icon.</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Select the system DSN tab, and hit the Add button.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Select Microsoft Access from the list, or any database you 
+  want to use (see <a class="docLink" href="#ch17fig01">Figure 17-1</a>), and 
+  hit the Finish button.</p>
+  <center>
+  <h5 id="ch17fig01" class="docFigureTitle">Figure 17-1. The Database List</h5>
+  <p class="docText">
+  <img alt="graphics/17fig01.gif" src="17fig01.gif" border="0" width="500" height="317"></p>
+  </center></span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Type <tt>db_dev</tt> for the data source (see
+  <a class="docLink" href="#ch17fig02">Figure 17-2</a>).</p>
+  <center>
+  <h5 id="ch17fig02" class="docFigureTitle">Figure 17-2. Microsoft Access Setup</h5>
+  <p class="docText">
+  <img alt="graphics/17fig02.gif" src="17fig02.gif" border="0" width="500" height="332"></p>
+  </center></span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Hit the Create button, and create a database as
+  <span class="docEmphasis">c:\db_dev\db_dev.mdb</span> (see
+  <a class="docLink" href="#ch17fig03">Figure 17-3</a>).</p>
+  <center>
+  <h5 id="ch17fig03" class="docFigureTitle">Figure 17-3. Creating a New Database</h5>
+  <p class="docText">
+  <img alt="graphics/17fig03.gif" src="17fig03.gif" border="0" width="400" height="250"></p>
+  </center></span></li>
+</ol>
+</span>
+<p class="docText">If you're using another database that's compliant with ODBC, 
+the steps and the screen shots may vary, but the ideas are the same. If my 
+instructions don't work, get some online help for the database you've chosen. 
+Also, if you have problems with the system DSN, try creating a user DSN.</p>
+<h4 class="docSection2Title" id="ch17lev2sec2">Setting up InstantDB</h4>
+<p class="docText">Whatever database you use, I recommend installing and using 
+InstantDB, the one I use for all of the chapter examples. It's extremely easy, 
+and it's open source (that means free). Here's how to set it up:</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Create a directory on your hard drive, and name it
+  <span class="docEmphasis">C:\InstantDB.</span></span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Go to the Web site and navigate to the
+  <span class="docEmphasis">Resources\InstantDB</span> folder.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Unzip the file <span class="docEmphasis">idb.zip</span> 
+  into the new directory using WinZip or an equivalent (get a copy of WinZip at 
+  the WinZip Web site).</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Open <span class="docEmphasis">C:\InstantDB\DOC\index.html.</span></span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">On the left side (the left frame), select the Basic link.</span></li>
+  <li><span style="font-weight: normal" value="6">
+  <p class="docList">Select Installation under the Basic link.</span></li>
+  <li><span style="font-weight: normal" value="7">
+  <p class="docList">Follow the installation instructions, which tell you to add 
+  the <span class="docEmphasis">Classes/idb.jar,</span>
+  <span class="docEmphasis">Classes/idbf.jar,</span> and
+  <span class="docEmphasis">Classes/idbexmpl.jar</span> files to your class 
+  path. An easy way to do this, if you're using Windows, is to add the following 
+  lines to your autoexec.bat file:</p>
+  <pre>SET CLASSPATH=%CLASSPATH%;C:\InstantDB\Classes\idb.jar
+SET CLASSPATH=%CLASSPATH%;C:\InstantDB\Classes\idbf.jar
+SET CLASSPATH=%CLASSPATH%;C:\InstantDB\Classes\idbexmpl.jar</pre>
+  </span></li>
+  <li><span style="font-weight: normal" value="8">
+  <p class="docList">Configure the environment variable.</span></li>
+  <li><span style="font-weight: normal" value="9">
+  <p class="docList">Run the sample application by navigating to
+  <span class="docEmphasis">C:\InstantDB\Examples&gt;</span> and entering <tt>javac 
+  sample.java</tt> at the prompt and then <tt>java sample</tt>. The DOS prompt 
+  session may look like this:</p>
+  <pre>C:\InstantDB\Examples&gt;c:\autoexec.bat
+C:\InstantDB\Examples&gt;javac sample.java
+C:\InstantDB\Examples&gt;java sample</pre>
+  </span></li>
+</ol>
+</span>
+<p class="docText">If you're going to use InstantDB for the first interactive 
+session, be sure you have a copy of <span class="docEmphasis">db_dev.prp</span> 
+in your working directory. If you don't, copy it from the
+<span class="docEmphasis">scripts\chap17\InstantDB</span> folder into the 
+working directory.</p>
+<h3 class="docSection1Title" id="ch17lev1sec2">Programming with JDBC and SQL</h3>
+<p class="docText">To start things off, we're going to create a table, insert 
+some values, and query them.</p>
+<p class="docText">Import the <tt>DriverManager</tt> and <tt>Class</tt> classes 
+to load the JDBC driver.</p>
+<pre>&gt;&gt;&gt; from java.sql import DriverManager
+&gt;&gt;&gt; from java.lang import Class</pre>
+<p class="docText">Load the driver using <tt>Class.forName</tt>, which 
+dynamically loads a class into the Java Virtual Machine (JVM). (See the Java API 
+documentation for more details.) For Microsoft Access via ODBC (or any ODBC 
+database):</p>
+<pre>&gt;&gt;&gt; Class.forName(&quot;sun.jdbc.odbc.JdbcOdbcDriver&quot;)
+&lt;jclass sun.jdbc.odbc.JdbcOdbcDriver at -416861389&gt;</pre>
+<p class="docText">For InstantDB:</p>
+<pre>&gt;&gt;&gt; Class.forName(&quot;jdbc.idbDriver&quot;)
+&lt;jclass jdbc.idbDriver at -282805662&gt;</pre>
+<p class="docText">Just as an HTML page has an HTTP URL, so a database has a 
+JDBC URL. The last part of the URL for <tt>JdbcOdbcDriver</tt> refers to the DSN 
+that we set up with the ODBC data source administrator in the last section. 
+Enter this:</p>
+<pre>&gt;&gt;&gt; url = &quot;jdbc:odbc:db_dev&quot;</pre>
+<p class="docText">The last part of the URL for InstantDB refers to the database 
+properties file. Enter this:</p>
+<pre>&gt;&gt;&gt; url = &quot;jdbc:idb=db_dev.prp&quot;</pre>
+<p class="docText">Now we can pass the URL to <tt>DriverManager</tt>'s <tt>
+getConnection()</tt> method and pass the user name and password (both of which 
+are blank, i.e., <tt>&quot; &quot;</tt>). Once we have a connection, we can create a 
+table. Ours will have two columns, Name and Age, and we'll call it PERSON.</p>
+<p class="docText">Create the JDBC connection object.</p>
+<pre>&gt;&gt;&gt; connection = DriverManager.getConnection(url, &quot;&quot;,&quot;&quot;)</pre>
+<p class="docText">Create the JDBC statement object.</p>
+<pre>&gt;&gt;&gt; statement = connection.createStatement()</pre>
+<p class="docText">Create an SQL DDL statement that defines a database table.</p>
+<pre>&gt;&gt;&gt; create_table = &quot;&quot;&quot;CREATE TABLE PERSON (name VARCHAR(50), age INT)&quot;&quot;&quot;</pre>
+<p class="docText">Execute the SQL DDL statement.</p>
+<pre>&gt;&gt;&gt; statement.executeUpdate(create_table)
+-1</pre>
+<p class="docText">Close the connection. (Leave it open if you're going on to 
+the next section.)</p>
+<pre>&gt;&gt;&gt; connection.close()</pre>
+<p class="docText">Go to the database tools, and see that the table was created. 
+The Microsoft Access version is shown in <a class="docLink" href="#ch17fig04">
+Figure 17-4</a>. (For the InstantDB version, use SQLBuilder, which comes in the 
+InstantDB examples directory.)</p>
+<center>
+<h5 id="ch17fig04" class="docFigureTitle">Figure 17-4. The PERSON Table—MS Access Version</h5>
+<p class="docText"><img alt="graphics/17fig04.gif" src="17fig04.gif" border="0" width="400" height="415"></p>
+</center>
+<h4 class="docSection2Title" id="ch17lev2sec3">Inserting Data</h4>
+<p class="docText">Now we can start adding data to our table. If you've 
+disconnected or restarted your JPython interactive session, you'll have to 
+reconnect first.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Reconnecting Your JPython Session</h2>
+      <p class="docText">Import <tt>DriverManager</tt> and <tt>Class</tt>.</p>
+      <pre>&gt;&gt;&gt; from java.sql import DriverManager
+&gt;&gt;&gt; from java.lang import Class</pre>
+      <p class="docText">For ODBC:</p>
+      <pre>&gt;&gt;&gt; Class.forName('sun.jdbc.odbc.JdbcOdbcDriver')
+&lt;jclass sun.jdbc.odbc.JdbcOdbcDriver ...&gt;
+&gt;&gt;&gt; url=&quot;jdbc:odbc:db_dev&quot;</pre>
+      <p class="docText">For InstantDB:</p>
+      <pre>&gt;&gt;&gt; Class.forName(&quot;jdbc.idbDriver&quot;)
+&lt;jclass jdbc.idbDriver at -282805662&gt;
+&gt;&gt;&gt; url = &quot;jdbc:idb=db_dev.prp&quot;</pre>
+      <p class="docText">Get the connection, and create the statement.</p>
+      <pre>&gt;&gt;&gt; connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+&gt;&gt;&gt; statement = connection.createStatement()</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Once you have a JDBC statement object, you have to create an
+<tt>insert</tt> format string in order to insert data. (Notice the single quotes 
+around <tt>%s</tt>. They're important for proper SQL syntax.)</p>
+<pre>&gt;&gt;&gt; insert = &quot;insert into Person (name, age) values ('%s', %d)&quot;</pre>
+<p class="docText">Pass a tuple containing <tt>name</tt> and <tt>age</tt> to the 
+string format.</p>
+<pre>&gt;&gt;&gt; insert % (&quot;Whitney&quot;, 3)
+&quot;insert into Person (name, age) values ('Whitney', 3)&quot;</pre>
+<p class="docText">Add Whitney to the database.</p>
+<pre>&gt;&gt;&gt; statement.executeUpdate(insert % (&quot;Whitney&quot;, 3))
+1</pre>
+<p class="docText">Add Kiley.</p>
+<pre>&gt;&gt;&gt; statement.executeUpdate(insert % (&quot;Kiley&quot;, 23))
+1</pre>
+<p class="docText">Add Scott and Nick.</p>
+<pre>&gt;&gt;&gt; statement.executeUpdate(insert % (&quot;Scott&quot;, 34))
+1
+
+&gt;&gt;&gt; statement.executeUpdate(insert % (&quot;Nick&quot;, 3))
+1</pre>
+<p class="docText">Add Mary and Adam.</p>
+<pre>&gt;&gt;&gt; statement.executeUpdate(insert % (&quot;Mary&quot;, 2))
+1
+
+&gt;&gt;&gt; statement.executeUpdate(insert % (&quot;Adam&quot;, 23))
+1</pre>
+<p class="docText">Notice that after each addition the <tt>executeUpdate()</tt> 
+method returns the number of rows affected.</p>
+<p class="docText">Go to your database management tools, and view PERSON.
+<a class="docLink" href="#ch17fig05">Figure 17-5</a> shows its Microsoft Access 
+version; use SQLBuilder to see the InstantDB version.</p>
+<center>
+<h5 id="ch17fig05" class="docFigureTitle">Figure 17-5. The PERSON Table with Data Added</h5>
+<p class="docText"><img alt="graphics/17fig05.gif" src="17fig05.gif" border="0" width="375" height="358"></p>
+</center>
+<p class="docText">By the way, keep your connection open. If you've already 
+closed it, see the sidebar on reconnecting.</p>
+<h4 class="docSection2Title" id="ch17lev2sec4">Accessing Data</h4>
+<p class="docText">To access the names and ages in our table we query the 
+results object (an instance of <tt>java.sql.ResultSet</tt>), which uses the 
+following methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>next()</tt>— iterates through the table; returns <tt>1</tt> 
+  if there are more rows</li>
+  <li>
+  <p class="docText"><tt>getString()</tt>— gets the name specified in the <tt>
+  name</tt> string passed to it</li>
+  <li>
+  <p class="docText"><tt>getInt()</tt>— gets the age specified in the <tt>age</tt> 
+  string passed to it</li>
+</ul>
+<pre>&gt;&gt;&gt; results = statement.executeQuery(&quot;select name, age from Person&quot;)</pre>
+<p class="docText">Let's see how these methods work interactively.</p>
+<p class="docText">Move to the first row.</p>
+<pre>&gt;&gt;&gt; results.next()
+1</pre>
+<p class="docText">Get the name.</p>
+<pre>&gt;&gt;&gt; results.getString(&quot;name&quot;)
+'Whitney'</pre>
+<p class="docText">Get the age.</p>
+<pre>&gt;&gt;&gt; print results.getInt(&quot;age&quot;)
+3</pre>
+<p class="docText">Define a function that can be used repeatedly to get the rest 
+of the results.</p>
+<pre>&gt;&gt;&gt; def showResults(results):
+...     while(results.next()):
+...             name = results.getString(&quot;name&quot;)
+...             age = results.getInt(&quot;age&quot;)
+...             print name + &quot; is &quot; + `age` + &quot; years old.&quot;
+...</pre>
+<p class="docText">Print the results.</p>
+<pre>&gt;&gt;&gt; showResults(results)
+Kiley is 23 years old.
+Scott is 34 years old.
+Nick is 3 years old.
+Mary is 2 years old.
+Adam is 23 years old.</pre>
+<p class="docText">Here's how we filter our results to get, say, only persons 
+under the age of four:</p>
+<pre>&gt;&gt;&gt; select = &quot;select name, age from Person where age &lt; 4&quot;
+&gt;&gt;&gt; showResults(statement.executeQuery(select))
+Whitney is 3 years old.
+Nick is 3 years old.
+Mary is 2 years old.</pre>
+<p class="docText">or persons over the age of twenty:</p>
+<pre>&gt;&gt;&gt; select = &quot;select name, age from Person where age &gt; 20&quot;
+&gt;&gt;&gt; showResults(statement.executeQuery(select))
+Kiley is 23 years old.
+Scott is 34 years old.
+Adam is 23 years old.</pre>
+<p class="docText">Functions like <tt>count()</tt>, <tt>sum()</tt>, and <tt>
+stdev()</tt> allow us to get aggregate data, such as the count of persons in the 
+table.</p>
+<pre>&gt;&gt;&gt; results = statement.executeQuery(&quot;select count(name) as total from Person&quot;)
+&gt;&gt;&gt; results.next()
+1
+&gt;&gt;&gt; print results.getString(&quot;total&quot;)
+6</pre>
+<p class="docText">See if you can figure out what the next two interactive 
+sessions are doing. (They won't work with InstantDB as of v.3.12.)</p>
+<pre>&gt;&gt;&gt; r = statement.executeQuery(&quot;select stdev(age) as st from Person&quot;)
+&gt;&gt;&gt; r.next()
+1
+&gt;&gt;&gt; print &quot;Standard deviation&quot; + r.getString(&quot;st&quot;)
+Standard deviation=13.7501515143167
+&gt;&gt;&gt; r = statement.executeQuery(&quot;select sum(age) as [sum] from Person&quot;)
+&gt;&gt;&gt; r.next()
+1
+&gt;&gt;&gt; print &quot;Sum of ages &quot; + r.getString(&quot;sum&quot;)
+Sum of ages 88.</pre>
+<h4 class="docSection2Title" id="ch17lev2sec5">Removing and Changing Data</h4>
+<p class="docText">The first thing you want to do is import the
+<span class="docEmphasis">JdbcTour.py</span> module from the InstantDB and 
+Access directories so you can use its <tt>showResults()</tt> function in the 
+next interactive sessions. (If you disconnected, refer to the sidebar on 
+reconnecting.)</p>
+<p class="docText">Let's remove everyone over twenty. (Leave out the asterisk (<tt>*</tt>) 
+in the method arguments if you're using InstantDB.)</p>
+<pre>&gt;&gt;&gt; statement.executeUpdate(&quot;delete * from Person where age &gt; 20&quot;)
+3</pre>
+<p class="docText">The <tt>executeUpdate()</tt> method returns <tt>3</tt>, which 
+means that three records were deleted.</p>
+<p class="docText">Now let's do some modifying. In this next session we'll show 
+Whitney's current age and then change it. In other words, we'll update her 
+record. Show Whitney's current age.</p>
+<pre>&gt;&gt;&gt; select = &quot;select name, age from Person where name = 'Whitney'&quot;
+&gt;&gt;&gt; results = statement.executeQuery(select)
+&gt;&gt;&gt; showResults(results)
+Whitney is 3 years old.</pre>
+<p class="docText">Change it to four.</p>
+<pre>&gt;&gt;&gt; statement.executeUpdate(&quot;update Person set age = 4 where name = 'Whitney'&quot;)
+1</pre>
+<p class="docText">Show Whitney's new age.</p>
+<pre>&gt;&gt;&gt; results = statement.executeQuery(select)
+&gt;&gt;&gt; showResults(results)
+Whitney is 4 years old.</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">SQL Subsets in InstantDB versus Microsoft 
+      Access</h2>
+      <p class="docText">InstantDB is a lightweight database that supports only 
+      a subset of the SQL syntax. Microsoft Access supports only a subset as 
+      well, but a larger one. The real problem is that the two databases don't 
+      always support the <span class="docEmphasis">same</span> subset.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch17lev1sec3">SQL Data Definition Language</h3>
+<p class="docText">SQL's Data Definition Language (DDL) is for working with 
+tables and indexes. A table defines a set of columns for different fields of 
+data and is similar to a class in Python. Columns are like class properties or 
+variables; rows are like class instances.</p>
+<p class="docText">DDL has five statements, which we'll look at in turn in the 
+following sections.</p>
+<h4 class="docSection2Title" id="ch17lev2sec6">Create Table</h4>
+<p class="docText">The <tt>CREATE TABLE</tt> statement defines the table. It has 
+the following form:</p>
+<pre>CREATE TABLE table
+(field_name sql_type [(size)] [NOT NULL] [index1] , ...)</pre>
+<p class="docText">where</p>
+<ul>
+  <li>
+  <p class="docList"><tt>field_name</tt> is the name of the field being defined</li>
+  <li>
+  <p class="docList"><tt>sql_type</tt> is a valid SQL type</li>
+  <li>
+  <p class="docList"><tt>size</tt> is the size of the field</li>
+  <li>
+  <p class="docList"><tt>NOT NULL</tt> specifies that the column can't be empty 
+  or equal to <tt>None</tt></li>
+</ul>
+<p class="docText">The brackets in the statement denote optional parameters.</p>
+<p class="docText">Here's how to create a table named Employee:</p>
+<pre>CREATE TABLE Employee (
+       EmpID        INT    NOT NULL,
+       Name         CHAR(20),
+       DeptID       INT    NOT NULL,</pre>
+<p class="docText"><tt>CHAR</tt> denotes a character, so <tt>CHAR(20)</tt>denotes 
+a 20-character field.</p>
+<h4 class="docSection2Title" id="ch17lev2sec7">Create Index</h4>
+<p class="docText">Indexing a table speeds data access. You create a table index 
+with the <tt>CREATE INDEX</tt> statement, which has the form</p>
+<pre>CREATE INDEX index
+ON table (field, field, ...)</pre>
+<p class="docText">This is how to add an index to our Employee table:</p>
+<pre>CREATE INDEX SalaryIndex ON Employee (Salary)</pre>
+<h4 class="docSection2Title" id="ch17lev2sec8">Alter Table</h4>
+<p class="docText">You modify a table with the <tt>ALTER TABLE</tt> statement, 
+which has the form</p>
+<pre>ALTER TABLE table
+ADD COLUMN field type[(size)] [NOT NULL]</pre>
+<p class="docText">To add an extra column to the Employee table, do this:</p>
+<pre>ALTER TABLE  Employee
+ADD COLUMN   Phone  CHAR(20)     NOT NULL</pre>
+<p class="docText">To drop a column do this:</p>
+<pre>ALTER TABLE table
+DROP COLUMN field</pre>
+<p class="docText">To drop a field in the column just added do this:</p>
+<pre>ALTER TABLE table
+DROP COLUMN field</pre>
+<h4 class="docSection2Title" id="ch17lev2sec9">Constraint</h4>
+<p class="docText">With the <tt>CONSTRAINT</tt> clause you can mark the <tt>
+EmpID</tt> column as the primary key. A primary key is a unique identifier that 
+indexes the table and defines inter-table relationships. <tt>CONSTRAINT</tt> has 
+the form</p>
+<pre>CREATE TABLE Employee (
+       EmpID       INT    NOT NULL,
+       Name        CHAR(20),
+       DeptID      INT    NOT NULL,
+       Salary      INT,
+       CONSTRAINT EMP_PK_KEY     PRIMARY KEY (EmpID)
+)</pre>
+<p class="docText">Here's another, probably more common, way to define a primary 
+key (the only method supported by InstantDB v.3.12):</p>
+<pre>CREATE TABLE Employee (
+       EmpID       INT    PRIMARY KEY,
+       Name        CHAR(20),
+       DeptID      INT    NOT NULL,
+       Salary      INT,
+       Phone CHAR(20)     NOT NULL
+)</pre>
+<p class="docText">To create a table that's linked to another table, you create 
+a foreign key (the reference to another table) in one to point to a primary key 
+in the other. As an example, we'll define a foreign key in the Employee table to 
+point to the primary key in a table called Department.</p>
+<p class="docText">Define the Department table.</p>
+<pre>CREATE TABLE Department (
+       DeptID      INT    NOT NULL,
+       Name        CHAR(20),
+       CONSTRAINT DEPT_PK_KEY PRIMARY KEY (DeptID)
+)</pre>
+<p class="docText">Create the Employee table with a foreign key constraint that 
+refers to the Department table's <tt>DeptID</tt>.</p>
+<pre>CREATE TABLE Employee (
+       EmpID       INT         NOT NULL,
+       Name        CHAR(20),
+       DeptID      INT         NOT NULL,
+       Salary      INT,
+       CONSTRAINT  EMP_PK_KEY  PRIMARY KEY (EmpID),
+       CONSTRAINT  DEPT_FK_KEY FOREIGN KEY (DeptID)
+                   REFERENCES Department (DeptID)
+)</pre>
+<p class="docText">The relationship created by the linking shows that each 
+employee must be in a department.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">No Foreign Keys or Referential Integrity in 
+      InstantDB</h2>
+      <p class="docText">InstantDB doesn't support foreign keys or referential 
+      integrity. Microsoft Access does support these concepts, as do most SQL 
+      databases you're likely to run into.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch17lev2sec10">Drop</h4>
+<p class="docText">The <tt>DROP</tt> statement has the form</p>
+<pre>DROP table_name
+DROP index on table</pre>
+<p class="docText">Here's how to use it to drop the Employee table, that is, 
+delete it from the database:</p>
+<pre>DROP Employee</pre>
+<p class="docText">Obviously, the use of <tt>DROP</tt> requires caution.</p>
+<h4 class="docSection2Title" id="ch17lev2sec11">Putting It All Together</h4>
+<p class="docText">Let's show DDL in action by running the
+<span class="docEmphasis">Access/ddl.py</span> module, which defines four DDL 
+statement strings and then executes each one with the JDBC statement object's
+<tt>executeUpdate()</tt> method.</p>
+<pre>from java.sql import DriverManager
+from java.lang import Class
+
+Class.forName('sun.jdbc.odbc.JdbcOdbcDriver')
+url=&quot;jdbc:odbc:db_dev&quot;
+connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+statement = connection.createStatement()
+
+create_department = &quot;&quot;&quot;
+      CREATE TABLE Department (
+            DeptID     INT   NOT NULL,
+            Name       CHAR(20),
+            CONSTRAINT DEPT_PK_KEY PRIMARY KEY (DeptID)
+      )
+&quot;&quot;&quot;
+create_employee = &quot;&quot;&quot;
+      CREATE TABLE Employee (
+            EmpID       INT   NOT NULL,
+            Name        CHAR(20),
+            DeptID      INT   NOT NULL,
+            Salary      INT,
+            CONSTRAINT EMP_PK_KEY   PRIMARY KEY (EmpID),
+            CONSTRAINT DEPT_FK_KEY FOREIGN KEY (DeptID)
+                       REFERENCES Department (DeptID)
+      )
+&quot;&quot;&quot;
+
+alter_table = &quot;&quot;&quot;
+      ALTER TABLE     Employee
+      ADD COLUMN  Phone     CHAR(20)     NOT NULL
+&quot;&quot;&quot;
+
+add_index = &quot;&quot;&quot;
+      CREATE INDEX SalaryIndex ON Employee (Salary)
+&quot;&quot;&quot;
+
+statement.executeUpdate(create_department)
+raw_input(&quot;Department Table Defined — hit enter to continue&quot;)
+
+statement.executeUpdate(create_employee)
+raw_input(&quot;Employee Table Defined — hit enter to continue&quot;)
+
+statement.executeUpdate(alter_table)
+raw_input(&quot;Employee table altered by adding a Phone column.&quot;)
+
+statement.executeUpdate(add_index)
+raw_input(&quot;Adding a salary index to the Employee table.&quot;)
+
+connection.close()</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">InstantDB: A Little Different</h2>
+      <p class="docText">InstantDB v.3.12 doesn't support the <tt>CONSTRAINT</tt> 
+      clause or foreign keys, nor can it handle the <tt>ALTER TABLE</tt> 
+      statement, even though the documentation says otherwise. Here's its 
+      version of <span class="docEmphasis">ddl.py</span> (<span class="docEmphasis">InstantDB/ddl.py</span>):</p>
+      <pre>from java.sql import DriverManager
+from java.lang import Class
+
+Class.forName(&quot;jdbc.idbDriver&quot;)
+url = &quot;jdbc:idb=db_dev.prp&quot;
+connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+statement = connection.createStatement()
+
+create_department = &quot;&quot;&quot;
+       CREATE TABLE Department (
+              DeptID       INT    PRIMARY KEY,
+              Name         CHAR(20),
+       )
+&quot;&quot;&quot;
+create_employee = &quot;&quot;&quot;
+       CREATE TABLE Employee (
+              EmpID        INT    PRIMARY KEY,
+              Name         CHAR(20),
+              DeptID       INT    NOT NULL,
+              Salary       INT,
+              Phone CHAR(20)      NOT NULL
+       )
+&quot;&quot;&quot;
+
+#Note that InstantDB does not understand foreign keys...
+# &quot;No understanding of foreign keys or referential integrity checking &quot;
+##    REMOVED:      CONSTRAINT DEPT_FK_KEY FOREIGN KEY (DeptID)
+##                        REFERENCES Department (DeptID)
+add_index = &quot;&quot;&quot;
+       CREATE INDEX SalaryIndex ON Employee (Salary)
+&quot;&quot;&quot;
+statement.executeUpdate(create_department)
+raw_input(&quot;Department Table Defined — hit enter to continue&quot;)
+
+statement.executeUpdate(create_employee)
+raw_input(&quot;Employee Table Defined — hit enter to continue&quot;)
+
+#We are not able to alter the table once created log bug with InstantDB folks.
+#statement.executeUpdate(alter_table)
+#raw_input(&quot;Employee table altered by adding a Phone column — hit enter to continue&quot;)
+
+statement.executeUpdate(add_index)
+raw_input(&quot;Adding a salary index to the Employee table - hit enter to
+   continue&quot;)
+connection.close()</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Run <span class="docEmphasis">ddl.py</span> in both the 
+  Access and InstantDB directories. Note the differences.</li>
+  <li>
+  <p class="docList">Run <span class="docEmphasis">ddl.py</span> with your RDBMS 
+  system and JDBC driver, and note the differences.</li>
+</ul>
+<h4 class="docSection2Title" id="ch17lev2sec12">SQL Data Types</h4>
+<p class="docText">We've defined a few simple tables with the
+<span class="docEmphasis">ddl.py</span> module. Now let's look at the different 
+fields that can show up in a table. Until now, we've been using only two SQL 
+data types, <tt>CHAR</tt> and <tt>INT</tt>.
+<a class="docLink" href="#ch17table01">Table 17-1</a> lists many more, most of 
+which are similar to those in Java and Python. If you want to know what each 
+type holds, an SQL reference can tell you.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch17table01" class="docTableTitle">Table 17-1. JDBC, Java, and Python Types</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">JDBC</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Java</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Python</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>CHAR</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>VARCHAR</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>LONGVARCHAR</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>String</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>NUMERIC</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.math.BigDecimal</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.math.BigDecimal</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>DECIMAL</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.math.BigDecimal</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.math.BigDecimal</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>BIT</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>boolean</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>TINYINT</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>SMALLINT</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>short</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>INTEGER</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>int</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>BIGINT</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>long</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Integer</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>REAL</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>float</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>FLOAT</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>double</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>DOUBLE</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>double</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>Float</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>BINARY</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte[]</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>jarray as 
+    byte[](sequence)</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>VARBINARY</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte[]</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>jarray as 
+    byte[](sequence)</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>LONGVARBINARY</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>byte[]</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>jarray as 
+    byte[](sequence)</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>DATE</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.sql.Date</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.sql.Date</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>TIME</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.sql.Time</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.sql.Time</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>TIMESTAMP</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.sql.Timestamp</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>java.sql.Timestamp</tt>
+    </td>
+  </tr>
+</table>
+<p class="docText">Notice that the left column in the table is headed JDBC, not 
+SQL. One reason for this is that SQL doesn't have a <tt>LONGVARCHAR</tt>. In 
+fact, each database vendor seems to have its own name for this type, so there's 
+no one-to-one mapping between JDBC and SQL (but what there is is close enough).</p>
+<h4 class="docSection2Title" id="ch17lev2sec13">Creating Fields with DDL</h4>
+<p class="docText">Let's illustrate how DDL creates fields of each type first in 
+Microsoft Access (<span class="docEmphasis">Access\DDL2.py</span>).</p>
+<pre>from java.sql import DriverManager
+from java.lang import Class
+Class.forName('sun.jdbc.odbc.JdbcOdbcDriver')
+
+url=&quot;jdbc:odbc:db_dev&quot;
+connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+statement = connection.createStatement()
+
+create_type_table1 = &quot;&quot;&quot;
+      CREATE TABLE TypeTable1 (
+
+             _bit         BIT,
+             _int         INT,
+             _smallint    SMALLINT,
+             _integer     INTEGER,
+             _numeric     NUMERIC,
+
+             _char        CHAR(200),
+             _varchar     VARCHAR(200),
+             _real        REAL,
+             _float       FLOAT,
+             _double      DOUBLE,
+
+             _binary      BINARY(200),
+             _varbinary   VARBINARY(200),
+
+             _date        DATE,
+             _time        TIME,
+             _timestamp   TIMESTAMP
+      )
+&quot;&quot;&quot;
+statement.executeUpdate(create_type_table1)
+</pre>
+<p class="docText">The statement defined here creates every SQL type that 
+MSAccess supports:</p>
+<pre>create_type_table1 = &quot;&quot;&quot;
+      CREATE TABLE TypeTable1 (
+
+             _bit         BIT,
+             _int         INT,
+             _smallint    SMALLINT,
+             _integer     INTEGER,
+             _numeric     NUMERIC,
+
+             _char        CHAR(200),
+             _varchar     VARCHAR(200),
+
+             _real        REAL,
+             _float       FLOAT,
+             _double      DOUBLE,
+
+             _binary      BINARY(200),
+             _varbinary   VARBINARY(200),
+
+             _date        DATE,
+             _time        TIME,
+             _timestamp   TIMESTAMP
+      )
+&quot;&quot;&quot;</pre>
+<p class="docText">JDBC's <tt>LONGVARCHAR</tt> and <tt>LONGVARBINARY</tt> aren't 
+supported by standard SQL. Again, each vendor has its own names for these types. 
+MSAccess supports them under the names <tt>LONGCHAR</tt> and <tt>LONGBINARY</tt> 
+and creates tables with them.</p>
+<pre>create_type_table2 = &quot;&quot;&quot;
+      CREATE TABLE TypeTable2 (
+             _longvarbinary     LONGBINARY,
+             _longvarchar LONGCHAR
+      )
+&quot;&quot;&quot;
+statement.executeUpdate(create_type_table2)
+raw_input(&quot;Create a type table 2&quot;)
+</pre>
+<p class="docText">There are three standard types not supported by MSAccess. In 
+fact, if you try to run any code with them, JDBC will throw an exception. Here's 
+an example (from <span class="docEmphasis">ddl2.py</span>):</p>
+<pre>create_type_table3 = &quot;&quot;&quot;
+      CREATE TABLE TypeTable2 (
+             _decimal     DECIMAL,
+             _tinyint            TINYINT,
+             _bigint             BIGINT
+      )
+&quot;&quot;&quot;
+statement.executeUpdate(create_type_table3)</pre>
+<p class="docText">Notice that the third table, <tt>type_table3</tt>, isn't 
+created. Here's <span class="docEmphasis">Access/ddl2.py</span> in its entirety:</p>
+<pre>from java.sql import DriverManager
+from java.lang import Class
+
+Class.forName('sun.jdbc.odbc.JdbcOdbcDriver')
+
+url=&quot;jdbc:odbc:db_dev&quot;
+connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+statement = connection.createStatement()
+
+create_type_table1 = &quot;&quot;&quot;
+      CREATE TABLE TypeTable1 (
+
+             _bit         BIT,
+             _int         INT,
+             _smallint    SMALLINT,
+             _integer     INTEGER,
+             _numeric     NUMERIC,
+
+             _char        CHAR(200),
+             _varchar     VARCHAR(200),
+
+             _real        REAL,
+             _float       FLOAT,
+             _double      DOUBLE,
+             _binary      BINARY(200),
+             _varbinary   VARBINARY(200),
+             _date        DATE,
+             _time        TIME,
+             _timestamp   TIMESTAMP
+      )
+&quot;&quot;&quot;
+
+create_type_table2 = &quot;&quot;&quot;
+      CREATE TABLE TypeTable2 (
+             _longvarbinary     LONGBINARY,
+             _longvarchar LONGCHAR
+     )
+&quot;&quot;&quot;
+
+create_type_table3 = &quot;&quot;&quot;
+      CREATE TABLE TypeTable2 (
+             _decimal     DECIMAL,
+             _tinyint     TINYINT,
+             _bigint      BIGINT
+      )
+&quot;&quot;&quot;
+
+statement.executeUpdate(create_type_table1)
+raw_input(&quot;Create a type table 1&quot;)
+
+statement.executeUpdate(create_type_table2)
+raw_input(&quot;Create a type table 2&quot;)
+
+statement.executeUpdate(create_type_table3)
+raw_input(&quot;Create a type table 3&quot;)
+
+connection.close()</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">InstantDB Type Support</h2>
+      <p class="docText">InstantDB supports fewer types than MSAccess does. In 
+      the following code (<span class="docEmphasis">InstantDB/ddl2.py</span>), 
+      the types it does support are shown in <tt>type_table1</tt>. Those it 
+      supports but for which it has no standard SQL names are shown in <tt>
+      type_table2</tt>.</p>
+      <pre>from java.sql import DriverManager
+from java.lang import Class
+
+Class.forName(&quot;jdbc.idbDriver&quot;)
+url = &quot;jdbc:idb=db_dev.prp&quot;
+
+connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+statement = connection.createStatement()
+
+create_type_table1 = &quot;&quot;&quot;
+       CREATE TABLE TypeTable1 (
+
+              _tinyint     TINYINT,
+              _smallint    SMALLINT,
+              _integer     INTEGER,
+              _int         INT,
+              _numeric     NUMERIC,
+              _decimal     DECIMAL,
+
+              _char        CHAR(200),
+              _varchar     VARCHAR(200),
+
+              _float       FLOAT,
+              _double      DOUBLE,
+              _binary      BINARY(200),
+              _varbinary   VARBINARY(200),
+
+              _date        DATE,
+       )
+&quot;&quot;&quot;
+create_type_table2 = &quot;&quot;&quot;
+       CREATE TABLE TypeTable2 (
+              _longvarbinary     LONGVARBINARY,
+       )
+&quot;&quot;&quot;
+
+create_type_table3 = &quot;&quot;&quot;
+       CREATE TABLE TypeTable2 (
+              _real        REAL,
+              _bit         BIT,
+              _time        TIME,
+              _timestamp   TIMESTAMP,
+              _bigint      BIGINT,
+              _longvarchar LONGVARCHAR
+       )
+&quot;&quot;&quot;
+
+statement.executeUpdate(create_type_table1)
+raw_input(&quot;Create a type table 1&quot;)
+statement.executeUpdate(create_type_table2)
+raw_input(&quot;Create a type table 2&quot;)
+
+statement.executeUpdate(create_type_table3)
+raw_input(&quot;Create a type table 3&quot;)
+
+connection.close()</pre>
+      <p class="docText">Strangely, the types not supported by InstantDB aren't 
+      the ones not supported by MSAccess. In other words, one unsupported list 
+      isn't a subset of another unsupported list. Fortunately, the most common 
+      SQL types <span class="docEmphasis">are</span> supported by both.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Study and run either the MSAccess or the InstantDB version 
+  of <span class="docEmphasis">ddl2.py,</span> depending on the database type 
+  you're working with. Note the differences and similarities.</li>
+  <li>
+  <p class="docList">Locate the JDBC drivers to the RDBMS system you use 
+  regularly. Create a database, run the <span class="docEmphasis">dml2.sql</span> 
+  scripts against it, and make changes as necessary. Note the differences and 
+  similarities. Let me know your results via email. I'd like a comparison for 
+  each type of database (DBw, DBASE, Paradox, Oracle, MySQL, etc.). State the 
+  version number and complete product name along with the JDBC driver 
+  information.</li>
+</ul>
+<h3 class="docSection1Title" id="ch17lev1sec4">SQL Data Manipulation Language</h3>
+<p class="docText">SQL's Data Manipulation Language (DML) defines the format of 
+data by insertion, selection, updating, and deletion. The four primary DML 
+statements are <tt>INSERT</tt>, <tt>SELECT</tt>, <tt>UPDATE</tt>, and <tt>DELETE</tt>, 
+which we'll look at individually in the following sections.</p>
+<p class="docText">The very first exercise in this chapter illustrated all of 
+these statements. Here we'll see them at work in a little more advanced database 
+structure, continuing with our Employee and Department table examples.</p>
+<h4 class="docSection2Title" id="ch17lev2sec14">Insert</h4>
+<p class="docText">If tables are like classes in Python, then rows are like 
+instances. Since the <tt>INSERT</tt> statement inserts values into a table, we 
+can think of it as analogous to calling a constructor, that is, creating an 
+instance of a record.</p>
+<p class="docText"><tt>INSERT</tt> takes the following form:</p>
+<pre>INSERT INTO table_name
+        (field_name1, field_name2, ...)
+VALUES
+        (value1, value2, ...)</pre>
+<p class="docText">Here it's adding values to the Employee table:</p>
+<pre>INSERT INTO
+        Employee
+        (EmpID, Name, DeptID, Salary)
+VALUES
+        (10507, 'Bob Jones', '1', 10)</pre>
+<h4 class="docSection2Title" id="ch17lev2sec15">Select</h4>
+<p class="docText">The <tt>SELECT</tt> statement selects rows from a table. 
+We've already used it, so I won't belabor it at this point. Here's its form:</p>
+<pre>SELECT
+      table.field [as alias]
+FROM
+      table [as alias]
+[WHERE. criteria]
+[GROUP BY table.field, ...] [HAVING criteria]
+[ORDER BY table.field, ...]</pre>
+<p class="docText">The <tt>ORDER BY</tt> clause sorts the query results. The <tt>
+GROUP BY</tt> and <tt>HAVING</tt> clauses group items for aggregate functions, 
+such as <tt>sum</tt>.</p>
+<p class="docText">Here's a <tt>SELECT</tt> example:</p>
+<pre>SELECT
+      Name, Salary
+FROM Employee
+WHERE
+      (Salary &gt; 10 )
+      and
+      (DeptID = 10)
+ORDER BY Name</pre>
+<p class="docText">which can be rewritten as</p>
+<pre>SELECT Name, Salary FROM Employee WHERE (Salary &gt; 10 ) and (DeptID == 10)
+ORDER BY Name</pre>
+<p class="docText">With <tt>SELECT</tt> you can join tables to get columns from 
+more than one table at a time. When you do this, you'll probably want to use an 
+alias because the tables to be joined may have the same fields; aliasing allows 
+such fields to be used in the <tt>WHERE</tt> clause.</p>
+<p class="docText">The next example gets the employee's name, salary, and 
+department. Since the department name is stored in the Department table, we have 
+to join Department and Employee for the statement to work.</p>
+<pre>SELECT
+      e.Name as emp_name,
+      e.Salary as salary,
+      d.Name as dept_name
+FROM
+      Employee as e,
+      Department as d
+WHERE
+      (e.DeptID = d.DeptID) and
+      (e.Salary &gt; 10 )     and
+      (e.DeptID = 10)</pre>
+<p class="docText">The first part of the <tt>WHERE</tt> clause specifies how the 
+tables are to be joined. It defines our Employee and Department tables with the 
+respective aliases <tt>e</tt> and <tt>d</tt> because both tables have <tt>DeptID</tt> 
+and <tt>Name</tt> fields.</p>
+<pre>WHERE
+      (e.DeptID = d.DeptID) and</pre>
+<p class="docText">Without the aliases, we can't differentiate a department name 
+and an employee name. Three field aliases are also defined: <tt>emp_name</tt>,
+<tt>salary</tt>, and <tt>dept_name</tt>. If we were to run this query via JDBC, 
+we'd have to use the aliases for the columns returned, not their names, in order 
+to access the results.</p>
+<p class="docText">Notice the <tt>as</tt> in the first line of the <tt>SELECT</tt> 
+statement (<tt>e.Name as emp_name</tt>). It's nice to have this syntax, although 
+many programmers don't use it. Because it's optional, the following statement is 
+equivalent to the preceeding one:</p>
+<pre>SELECT
+      e.Name              emp_name,
+      e.Salary    salary,
+      d.Name      dept_name
+FROM
+      Employee    e,
+      Department  d
+WHERE
+     (e.DeptID = d.DeptID) and
+     (e.Salary &gt; 10 )     and
+     (e.DeptID = 10)</pre>
+<p class="docText">I like using <tt>as</tt>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The ANSI SQL JOIN Clause</h2>
+      <p class="docText">If the database has a later version of ANSI SQL 
+      installed, you can use the <tt>JOIN</tt> clause to join tables.</p>
+      <pre>SELECT
+      e.Name as emp_name,
+      e.Salary as salary,
+      d.Name as dept_name
+FROM
+      Employee as e
+JOIN
+      Department as d
+             on e.DeptID = d.DeptID
+WHERE
+      (e.Salary &gt; 10 )  and
+      (e.DeptID == 10)</pre>
+      <p class="docText">Because it makes the syntax is more modular and easier 
+      to read (it separates the <tt>WHERE</tt> clause from the rest of the 
+      statement), I suggest you use <tt>JOIN</tt> if you have the choice.</p>
+      <p class="docText">Here's the last statement with the <tt>as</tt> syntax:</p>
+      <pre>SELECT
+      e.Name            emp_name,
+      e.Salary    salary,
+      d.Name      dept_name
+FROM
+      Employee    e
+JOIN
+      Department  d
+             on e.DeptID = d.DeptID
+WHERE
+       (e.Salary &gt; 10 )  and
+      (e.DeptID = 10)</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">INNER Join</h2>
+      <p class="docText">Most databases assume an <tt>INNER</tt> <tt>JOIN</tt> 
+      if the <tt>JOIN</tt> clause is left by itself. However, MSAccess makes no 
+      such assumption and expects you to specify an <tt>INNER</tt> <tt>JOIN</tt> 
+      like this:</p>
+      <pre>SELECT
+      e.Name              as emp_name,
+      e.Salary     as salary,
+      d.Name       as dept_name
+FROM
+      Employee     as e
+INNER JOIN
+      Department   as d
+            on e.DeptID = d.DeptID
+WHERE
+      (e.Salary &gt; 10 )  and
+     (e.DeptID = 100)</pre>
+      <p class="docText">The four types of <tt>JOIN</tt> are <tt>INNER</tt>, <tt>
+      OUTER</tt>, <tt>LEFT</tt>, and <tt>RIGHT</tt>. We're going to cover only
+      <tt>INNER</tt> <tt>JOIN</tt>s, which are probably the most common.</p>
+      <p class="docText">By the way, you can join more than one table at a time 
+      by adding extra <tt>JOIN</tt> clauses. You can find the exact syntax in a 
+      good SQL reference.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch17lev2sec16">Update</h4>
+<p class="docText">The <tt>UPDATE</tt> statement modifies the fields in a row. 
+Its Python equivalent is setting an attribute of a class instance. <tt>UPDATE</tt> 
+takes the form</p>
+<pre>UPDATE
+      table_name
+SET
+      field1=value1, field2=value2, ...
+[WHERE clause]</pre>
+<p class="docText">Here's an example of using <tt>UPDATE</tt> to give an 
+employee a raise:</p>
+<pre>UPDATE
+      Employee
+SET
+      Salary=11
+WHERE
+      EmpID = 10507</pre>
+<h4 class="docSection2Title" id="ch17lev2sec17">Delete</h4>
+<p class="docText">The <tt>DELETE</tt> statement removes records from a table. 
+Deleting a record is like setting all object references to <tt>None</tt> 
+(forcing the garbage collector to delete the object). <tt>DELETE</tt> takes the 
+form</p>
+<pre>DELETE
+FROM
+      table_name
+[WHERE clause]</pre>
+<p class="docText">Deleting an employee record looks like this:</p>
+<pre>DELETE FROM
+      Employee
+WHERE
+      EmpID = 10507</pre>
+<p class="docText">Laying off an entire department looks like this:</p>
+<pre>DELETE FROM
+      Employee
+WHERE
+      DeptID = 100</pre>
+<h4 class="docSection2Title" id="ch17lev2sec18">Using DML</h4>
+<p class="docText">To show how DML works, we'll use it to insert some 
+departments into our Department table. Define a Python format string.</p>
+<pre>d_insert = &quot;&quot;&quot;
+      INSERT INTO
+            Department
+            (DeptID, Name)
+      VALUES
+            (%d, '%s')
+&quot;&quot;&quot;</pre>
+<p class="docText">Define a set of tuples, <tt>department</tt>s, for sample 
+departments.</p>
+<pre>departments = (
+       (100, &quot;Engineering&quot;),
+       (200, &quot;Marketing&quot;),
+       (300, &quot;Human Resources&quot;),
+       (400, &quot;Manufacturing&quot;)
+) #End of departments</pre>
+<p class="docText">Iterate through <tt>departments</tt>, and create rows in the 
+Department table.</p>
+<pre>for dept in departments:
+      insert = d_insert % dept
+      print insert
+      statement.executeUpdate(insert)</pre>
+<p class="docText">Now we'll add employees to the Employee table. Define an 
+insert format string.</p>
+<pre>e_insert = &quot;&quot;&quot;
+      INSERT INTO
+      Employee
+             (EmpID, Name, DeptID, Salary, Phone)
+      VALUES
+             (%d, '%s', %d, %d, '%s')
+&quot;&quot;&quot;</pre>
+<p class="docText">Define a tuple with some <tt>employees</tt> row data.</p>
+<pre>employees = (
+       (1000, &quot;Rick Hightower&quot;, 100, 5, &quot;555-1212&quot;),
+       (1001, &quot;Ricky Martin&quot;,   200, 10, &quot;555-1213&quot;),
+       (1002, &quot;Adam Carr&quot;,      100, 6, &quot;555-1214&quot;),
+       (1003, &quot;Bob Deanna&quot;,     100, 15, &quot;555-1215&quot;),
+       (1004, &quot;Tim Simeonov&quot;,   100, 16, &quot;555-1216&quot;),
+       (1005, &quot;Scott Faurbach&quot;, 100, 14, &quot;555-1217&quot;),
+       (1006, &quot;Mary Basset&quot;,    300, 5, &quot;555-1218&quot;),
+       (1007, &quot;Missy Carr&quot;,     400, 5, &quot;555-1219&quot;),
+       (1008, &quot;Paul Ganz&quot;,      400, 5, &quot;555-1220&quot;),
+       (1009, &quot;Tom Jones&quot;,      400, 5, &quot;555-1221&quot;),
+       (1010, &quot;Martha Pena&quot;,    200, 25, &quot;555-1222&quot;),
+       (1011, &quot;John Souza&quot;,     200, 15, &quot;555-1223&quot;)
+) #End of employees</pre>
+<p class="docText">Add the data in the <tt>employees</tt> tuple to the Employee 
+table.</p>
+<pre>for emp in employees:
+      insert = e_insert % emp
+      print insert
+      statement.executeUpdate(insert)</pre>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Study the code in <span class="docEmphasis">access\dml_insert.py</span> 
+  and <span class="docEmphasis">access\connect.py;</span> run
+  <span class="docEmphasis">access\dml_insert.py.</span></li>
+  <li>
+  <p class="docList">Study the code in <span class="docEmphasis">instantDB\dml_insert.py</span> 
+  and <span class="docEmphasis">instantDB\connect.py;</span> run
+  <span class="docEmphasis">InstantDB\dml_insert.py.</span></li>
+</ul>
+<p class="docText">The <span class="docEmphasis">connect.py</span> file varies 
+depending on whether you connect to an ODBC database (such as MSAccess) or a 
+pure Java database such as InstantDB. Here are both versions:</p>
+<p class="docText"><span class="docEmphasis">Access\connect.py:</span></p>
+<pre>from java.sql import DriverManager
+from java.lang import Class
+
+Class.forName(&quot;sun.jdbc.odbc.JdbcOdbcDriver&quot;)
+url = &quot;jdbc:odbc:db_dev&quot;
+
+connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+statement = connection.createStatement()</pre>
+<p class="docText"><span class="docEmphasis">InstantDB\connect.py:</span></p>
+<pre>from java.sql import DriverManager
+from java.lang import Class
+
+Class.forName(&quot;jdbc.idbDriver&quot;)
+url = &quot;jdbc:idb=db_dev.prp&quot;
+connection=DriverManager.getConnection(url, &quot;&quot;, &quot;&quot;)
+statement = connection.createStatement()</pre>
+<p class="docText">Inserting data is the same in InstantDB and MSAccess, so the 
+following code (<span class="docEmphasis">dml_insert.py</span>) applies to both. 
+(The JDBC-specific code is highlighted in bold.)</p>
+<pre>from connect import *      # imports connection and statement object
+d_insert = &quot;&quot;&quot;
+
+      INSERT INTO
+             Department
+             (DeptID, Name)
+      VALUES
+          (%d, '%s')
+&quot;&quot;&quot;
+
+e_insert = &quot;&quot;&quot;
+      INSERT INTO
+             Employee
+             (EmpID, Name, DeptID, Salary, Phone)
+      VALUES
+             (%d, '%s', %d, %d, '%s')
+&quot;&quot;&quot;
+
+departments = (
+      (100, &quot;Engineering&quot;),
+      (200, &quot;Marketing&quot;),
+      (300, &quot;Human Resources&quot;),
+      (400, &quot;Manufacturing&quot;)
+) #End of departments
+
+employees = (
+      (1000, &quot;Rick Hightower&quot;, 100, 5, &quot;555-1212&quot;),
+      (1001, &quot;Ricky Martin&quot;,   200, 10, &quot;555-1213&quot;),
+      (1002, &quot;Adam Carr&quot;,      100, 6, &quot;555-1214&quot;),
+      (1003, &quot;Bob Deanna&quot;,     100, 15, &quot;555-1215&quot;),
+      (1004, &quot;Tim Sieonov&quot;,    100, 16, &quot;555-1216&quot;),
+      (1005, &quot;Scott Faurbach&quot;, 100, 14, &quot;555-1217&quot;),
+      (1006, &quot;Mary Basset&quot;,    300, 5, &quot;555-1218&quot;),
+      (1007, &quot;Missy Carr&quot;,     400, 5, &quot;555-1219&quot;),
+      (1008, &quot;Paul Ganz&quot;,      400, 5, &quot;555-1220&quot;),
+      (1009, &quot;Tom Jones&quot;,      400, 5, &quot;555-1221&quot;),
+      (1010, &quot;Martha Pena&quot;,    200, 25, &quot;555-1222&quot;),
+      (1011, &quot;John Souza&quot;,     200, 15, &quot;555-1223&quot;)
+) #End of employees
+
+hit = &quot; —- hit enter to continue —- &quot;
+raw_input (&quot;testing inserts&quot; + hit)
+
+raw_input(&quot;Adding departments&quot; + hit)
+
+for dept in departments:
+      insert = d_insert % dept
+      print insert
+      <span class="docEmphStrong">statement.executeUpdate(insert)</span>
+
+raw_input(&quot;Adding employees&quot; + hit)
+
+for emp in employees:
+      insert = e_insert % emp
+      print insert
+      <span class="docEmphStrong">statement.executeUpdate(insert)</span>
+
+raw_input(&quot;testing select&quot; + hit)
+
+<span class="docEmphStrong">connection.close()</span></pre>
+<p class="docText">Notice that the first statement imports all of the objects 
+from the <span class="docEmphasis">connect.py</span> module. This is so the 
+module will hold all of the code needed for connecting. To connect to another 
+database, just modify <span class="docEmphasis">connect.py</span> accordingly.</p>
+<h5 class="docSection3Title" id="ch17lev3sec1">Using SELECT (with Multiple JOIN Statements)</h5>
+<p class="docText">Let's use a <tt>SELECT</tt> statement to join tables. The 
+code that follows (<span class="docEmphasis">Access\dml_select.py</span>) shows 
+a multi-table join with MSAccess.</p>
+<pre>from connect import *
+
+select = &quot;&quot;&quot;
+       SELECT
+              e.Name        as emp_name,
+              e.Salary      as salary,
+              d.Name        as dept_name
+       FROM
+              Employee      as e
+       INNER JOIN
+              Department    as d
+                    on e.DeptID = d.DeptID
+       WHERE
+              (e.Salary &gt; 10 )  and
+              (e.DeptID = 100)
+&quot;&quot;&quot;
+
+results = statement.executeQuery(select)
+
+emp_name=&quot;emp_name&quot;
+salary=&quot;salary&quot;
+dept_name=&quot;dept_name&quot;
+
+format = &quot;%(emp_name)s,\t\t%(dept_name)s,\t\t%(salary)3.2f&quot;
+
+while results.next():
+       dict = {}
+       dict[emp_name]       =     results.getString(emp_name)
+       dict[salary]         =     results.getInt(salary)
+       dict[dept_name]      =     results.getString(dept_name)
+       print format % dict
+
+connection.close()</pre>
+<p class="docText">Here's the InstantDB version of a multi-table <tt>SELECT</tt>:</p>
+<pre>from connect import *
+select = &quot;&quot;&quot;
+       SELECT
+              e.Name        as emp_name,
+              e.Salary      as salary,
+              d.Name        as dept_name
+       FROM
+              Employee      as e
+       JOIN
+              Department    as d
+                    on e.DeptID = d.DeptID
+       WHERE
+              (e.Salary &gt; 10 ) and
+              (e.DeptID = 100)
+&quot;&quot;&quot;
+
+results = statement.executeQuery(select)
+...
+... (The rest is the same as before)</pre>
+<p class="docText">The two versions are nearly identical except that the <tt>
+JOIN</tt>'s <tt>INNER</tt> modifier has been left off in the InstantDB code 
+because it's assumed. (According to the documentation, <tt>JOIN</tt> should work 
+when the modifier is supplied.) Also, I used the <tt>executeQuery()</tt> method 
+of the statement object for the <tt>SELECT</tt> statement, whereas I used the
+<tt>executeUpdate()</tt> method for the <tt>INSERT</tt> statement. Always use 
+the former for <tt>SELECT</tt>s and the latter for just about everything 
+else—updates, inserts, deletes, and any DDL operations. <tt>executeQuery()</tt> 
+returns a result set for the query, and <tt>executeUpdate()</tt> returns the 
+number of rows affected by any table modifications.</p>
+<p class="docText">As an exercise, run the <span class="docEmphasis">dml_select</span> 
+module for one or both of the databases (ODBC or pure Java). Try each of the 
+following <tt>SELECT</tt> statements. Determine which ones work as expected and 
+which ones don't.</p>
+<p class="docText"><span class="docEmphasis">No</span> <tt>INNER</tt>
+<span class="docEmphasis">modifer:</span></p>
+<pre>SELECT
+       e.Name       as emp_name,
+       e.Salary     as salary,
+       d.Name       as dept_name
+FROM
+       Employee     as e
+JOIN
+       Department   as d
+             on e.DeptID = d.DeptID
+WHERE
+       (e.Salary &gt; 10 ) and
+       (e.DeptID = 100)</pre>
+<p class="docText"><tt>INNER</tt> <span class="docEmphasis">modifier with</span>
+<tt>as</tt> <span class="docEmphasis">syntax for aliases:</span></p>
+<pre>SELECT
+       e.Name       emp_name,
+       e.Salary     salary,
+       d.Name       dept_name
+FROM
+       Employee     e
+INNER JOIN
+       Department   d
+             on e.DeptID = d.DeptID
+WHERE
+       (e.Salary &gt; 10 ) and
+       (e.DeptID = 100)</pre>
+<p class="docText"><tt>INNER</tt> <span class="docEmphasis">modifier without</span>
+<tt>as</tt> <span class="docEmphasis">syntax:</span></p>
+<pre>SELECT
+       e.Name       emp_name,
+       e.Salary     salary,
+       d.Name       dept_name
+FROM
+       Employee     e
+INNER JOIN
+       Department   d
+             on e.DeptID = d.DeptID
+WHERE
+       (e.Salary &gt; 10 ) and
+(e.DeptID = 100)</pre>
+<p class="docText"><span class="docEmphasis">Old-style</span> <tt>JOIN</tt>
+<span class="docEmphasis">(no</span> <tt>JOIN</tt> <span class="docEmphasis">
+clause):</span></p>
+<pre>SELECT
+       e.Name       emp_name,
+       e.Salary     salary,
+       d.Name       dept_name
+FROM
+       Employee     e,
+       Department   d
+WHERE
+       (e.DeptID = d.DeptID)   and
+       (e.Salary &gt; 10 )        and
+       (e.DeptID = 100)</pre>
+<p class="docText">See if you can run these forms on both MSAccess and InstantDB. 
+Then run them against your own database/JDBC driver pair.</p>
+<h5 class="docSection3Title" id="ch17lev3sec2">Using DELETE</h5>
+<p class="docText">The following code (<span class="docEmphasis">dml_delete.py</span>) 
+deletes the marketing department from the Department table. It's the same for 
+MSAccess and InstantDB.</p>
+<pre>from connect import *     #import statement and connection objects.
+from java.lang import Exception
+
+marketingID = 200
+delete = &quot;delete from Department where DeptID = %d&quot; % marketingID
+
+       # Try to delete the record.
+       # Close connection no matter what!
+try:
+
+              # Try to delete the record.
+              # If an exception occurs
+              # print out the exception's message.
+       try:
+              statement.executeUpdate(delete)
+
+       except Exception, e:
+              print &quot;Unable to delete marketing&quot;+e.message
+
+finally:
+
+       connection.close()</pre>
+<p class="docText">Notice the <tt>try...except</tt> and <tt>try...finally</tt> 
+blocks. <tt>try...finally</tt> makes sure the connection is closed if there's an 
+exception. <tt>try...except</tt> prints out the exception message. It's a good 
+idea to wrap database calls in a <tt>try...finally</tt> block to ensure a closed 
+connection.</p>
+<h4 class="docSection2Title" id="ch17lev2sec19">Referential Integrity</h4>
+<p class="docText">As an exercise, see if you can run <span class="docEmphasis">
+dml_delete.py</span> against both InstantDB and MSAccess. You'll notice that it 
+doesn't work with MSAccess but does work with InstantDB. MSAccess's behavior is 
+preferred. Why?</p>
+<p class="docText">Because the operation should <span class="docEmphasis">fail</span> 
+to preserve referential integrity. Essentially, if you delete the department 
+record and there are still employees in that department, your multiple <tt>JOIN</tt>
+<tt>SELECT</tt> statements will stop working. If that happens, you'll get this 
+message:</p>
+<pre><span class="docEmphStrong">Unable to delete marketing [Microsoft][ODBC Microsoft Access 97 Driver]. The</span>
+<span class="docEmphStrong">record cannot be deleted or changed because table 'Employee' includes related</span>
+<span class="docEmphStrong">records.</span></pre>
+<p class="docText">which means that, as long as the Employee table contains 
+records for marketing employees, you can't delete the marketing record in the 
+Department table. This is how MSAccess maintains its referential integrity.</p>
+<p class="docText">If you're a little confused, the following exercises should 
+clear things up:</p>
+<ul>
+  <li>
+  <p class="docList">Study and run <span class="docEmphasis">dml_delete.py</span> 
+  in both the MSAccess and InstantDB directories.</li>
+  <li>
+  <p class="docList">Study and run <span class="docEmphasis">dml_select2.py</span> 
+  in both. This module selects a group of employees who are in the marketing 
+  department, i.e., whose <tt>DeptID</tt> is equal to 200. What happens when you 
+  run this query against the InstantDB database? Against the MSAccess database? 
+  Which of the two exhibits the correct behavior?</li>
+  <li>
+  <p class="docList">Write a query or a set of queries that will work with 
+  either MSAccess or InstantDB after <span class="docEmphasis">dml_delete</span> 
+  is run on both.</li>
+</ul>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">InstantDB/MSAccess Support for Referential 
+      Integrity</h2>
+      <p class="docText">Because it's a lightweight, InstantDB makes no claim of 
+      supporting referential integrity. I don't consider MSAccess a heavyweight, 
+      but it does provide some referential integrity support, as we've just 
+      seen.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">For the <tt>DELETE</tt> statement to work, we need to move 
+every employee in marketing to a new department—that is, change their <tt>DeptID</tt> 
+to one for an existing department. An alternative is to delete them from the 
+Employee table first (that is, lay them all off).</p>
+<h5 class="docSection3Title" id="ch17lev3sec3">Achieving Referential Integrity with UPDATE and 
+DELETE</h5>
+<p class="docText">What follows is an example that lays off some workers and 
+moves others to a different department via the <tt>UPDATE</tt> and <tt>DELETE</tt> 
+statements The code, <span class="docEmphasis">dml_delete2.py,</span> is the 
+same for both MSAccess and InstantDB. (Be sure to read the comments. They tell 
+the whole story.)</p>
+<pre>from connect import *
+from java.lang import Exception
+
+marketingID = 200
+mfgID = 400
+engID = 100
+
+      # Move employees whose salary is less
+      # than 10 and greater than 8
+      # to manufacturing.
+update1 = &quot;&quot;&quot;
+      update
+            Employee
+      set
+            DeptID=%d
+      where
+            salary &gt; 8 and salary &lt;= 10
+&quot;&quot;&quot; % mfgID
+
+      # Layoff employees whose salary
+      # is greater than 16.
+      #
+delete1 = &quot;&quot;&quot;
+      delete from
+            Employee
+      where
+            salary &gt; 16
+&quot;&quot;&quot;
+
+      # Move employees whose salary is less
+      # than 16 and greater than 10
+      # to engineering. Also adjust their salary to 10.
+update2 = &quot;&quot;&quot;
+      update
+            Employee
+      set
+            DeptID=%d, salary=10
+      where
+            salary &lt; 16 and salary &gt; 10
+&quot;&quot;&quot; % engID
+
+      # Remove the Marketing department
+      # from the Department table.
+      # It should work this time!
+delete2 = &quot;delete from Department where DeptID = %d&quot; % marketingID
+
+      #Try to delete the record.
+      #Close connection no matter what!
+
+try:
+
+            # Try to delete the record.
+            # If an exception occurs
+            # print out the exception's message.
+      try:
+            statement.executeUpdate(update1)
+            statement.executeUpdate(update2)
+            statement.executeUpdate(delete1)
+            statement.executeUpdate(delete2)
+
+      except Exception, e:
+
+            print &quot;Unable to delete marketing&quot; + e.getMessage()
+finally:
+
+      connection.close()
+</pre>
+<p class="docText">As an exercise, run <span class="docEmphasis">dml_delete2.py</span> 
+in both MSAccess and InstantDB. Use either the Microsoft Access GUI or the 
+SQLBuilder GUI to look at the data. (For SQLBuilder, read the InstantDB 
+documentation; also read the following sidebar.)</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Working with SQLBuilder</h2>
+      <p class="docText">Here's how to work with SQLBuilder:</p>
+      <span style="font-weight: bold">
+      <ol class="docList">
+        <li><span style="font-weight: normal" value="1">
+        <p class="docList">Compile it.</p>
+        <pre>C:\InstantDB\Examples\SQLBuilder&gt;javac *.java</pre>
+        </span></li>
+        <li><span style="font-weight: normal" value="2">
+        <p class="docList">Run it.</p>
+        <pre>C:\InstantDB\Examples\SQLBuilder&gt;java SQLBuilder</pre>
+        </span></li>
+        <li><span style="font-weight: normal" value="3">
+        <p class="docList">Hit the Browse button, and select the appropriate 
+        database property file—for example: <span class="docEmphasis">C:\JPython_book\scripts\chap17\InstantDB\db_dev.prp.</span></span></li>
+        <li><span style="font-weight: normal" value="4">
+        <p class="docList">Hit the Connect button.</span></li>
+        <li><span style="font-weight: normal" value="5">
+        <p class="docList">Go to the Query tab.</span></li>
+        <li><span style="font-weight: normal" value="6">
+        <p class="docList">Select the Employee table from the Tables dropdown 
+        list.</span></li>
+        <li><span style="font-weight: normal" value="7">
+        <p class="docList">Hit the Submit button.</span></li>
+        <li><span style="font-weight: normal" value="8">
+        <p class="docList">Repeat steps 6 and 7 for the Department table.</span></li>
+      </ol>
+      </span></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch17lev1sec5">Putting It All Together—Adding Database Support to 
+the Address Book Application</h3>
+<p class="docText">Now we're ready to add database support to our address book 
+application. First, though, let's review the application's main modules.</p>
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Address.py</span> contains the
+  <tt>Address</tt> class, which represents an address entry, and the <tt>
+  readAddresses()and</tt> <tt>writeAddresses()</tt> functions, which read and 
+  write a dictionary of <tt>Address</tt> class instances (the actual addresses).</li>
+  <li>
+  <p class="docList"><span class="docEmphasis">AddressModel.py</span> contains 
+  the <tt>AddressModel</tt> class, which is both a list model and a table model 
+  for the user interface. <tt>AddressModel</tt> calls <tt>readAddresses()</tt> 
+  to read in a dictionary of <tt>Address</tt> class instances and maps the 
+  dictionary to the list and table models.</li>
+  <li>
+  <p class="docList"><span class="docEmphasis">AddressFormPane.py</span> 
+  contains the <tt>AddressFormPane</tt> class, a user interface for editing 
+  address entries.</li>
+  <li>
+  <p class="docList"><span class="docEmphasis">AddressMain.py</span> contains 
+  the <tt>AddressMain</tt> class—the main frame. <tt>AddressMain</tt> manages 
+  the interaction of <tt>AddressModel</tt>'s components and holds an instance of
+  <tt>JTable</tt>, an instance of <tt>JList</tt>, and an instance of <tt>
+  JTabbedPane</tt> (all of which are from <span class="docEmphasis">javax.swing</span>).</li>
+</ul>
+<h4 class="docSection2Title" id="ch17lev2sec20">Making the Application More Modular</h4>
+<p class="docText">We've done a good job of keeping the application modular, but 
+we can do better. First, we're going to abstract out the differences between a 
+flat-file model and a database model. Then we're going to add database support 
+with as few changes as possible to <span class="docEmphasis">AddressModel.py.</span></p>
+<p class="docText">What we'll do is move the file-specific dependencies from <tt>
+AddressModel</tt>'s constructor and put <tt>readAddresses()</tt> and <tt>
+writeAddresses()</tt> in a module called <span class="docEmphasis">
+AddressFileUtils.py.</span> All modified and new files will be in a directory 
+called <span class="docEmphasis">AddressBook.2.</span> Here's the original <tt>
+AddressModel</tt> constructor:</p>
+<pre>class AddressModel(AbstractTableModel, ListModel):
+       &quot;&quot;&quot;The AddressModel is both a ListModel
+          and a TableModel.&quot;&quot;&quot;
+
+       def __init__(self):
+             &quot;&quot;&quot;Initialize the Address model.
+             Read the dictionary from the file.&quot;&quot;&quot;
+                    # holds the dictionary of addresses.
+             self.dict = None
+                    # holds the sorted list of names,
+                    # which are keys into the dictionary.
+             self.list = None
+                    # to hold list of ListModelListeners
+                    self.listeners = []
+                    # Read the addresses from the file.
+                    # holds the file name that
+                    # holds the addresses
+             self.fname=&quot;.\\addr.dat&quot;
+       self.dict = readAddresses(self.fname)
+
+                    # Store the sorted list of names.
+             self.list = self.dict.keys()
+             self.list.sort()
+
+...
+...
+
+def writeAddresses(self):
+       &quot;&quot;&quot;Write the address data to the file.&quot;&quot;&quot;
+       writeAddresses(self.fname, self.dict)</pre>
+<p class="docText">Here is the constructor as modified:</p>
+<pre>       ...
+
+class AddressModel(AbstractTableModel, ListModel):
+       &quot;&quot;&quot;The AddressModel is both a ListModel
+          and a TableModel.&quot;&quot;&quot;
+
+       def __init__(self):
+             &quot;&quot;&quot;Initialize the Address model.
+             Read the dictionary from the file.&quot;&quot;&quot;
+
+                    #holds the dictionary of addresses.
+             self.dict = None
+                    #holds the sorted list of names,
+                    # which are keys into the dictionary
+             self.list = None
+
+                    #to hold list of ListModelListeners
+             self.listeners = []
+
+                    # Read the addresses
+                    # from the Address utility.
+             self.dict = readAddresses()
+
+       ...
+       ...
+
+def writeAddresses(self):
+             &quot;&quot;&quot;Write the address data to the file.&quot;&quot;&quot;
+             writeAddresses(self.dict)</pre>
+<p class="docText">The following are the changes we made to <tt>readAddresses()</tt> 
+and <tt>writeAddresses()</tt>, which are now in their own module,
+<span class="docEmphasis">AddressFileUtils.py.</span> Notice that both functions 
+have a default value for <tt>filename</tt> that they didn't have before.</p>
+<pre>...
+def readAddresses(filename=&quot;.\\addr.dat&quot;):
+      ...
+def writeAddresses(dict, filename=&quot;.\\addr.dat&quot;, bin=0):
+      ...</pre>
+<p class="docText">The result, essentially, is that all file-based functionality 
+has been encapsulated out of <tt>AddressModel</tt>. The next step is testing.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">How Modular Is Modular Enough?</h2>
+      <p class="docText">The sad fact is that we don't have all the time in the 
+      world to tinker with our address book application. In the real world, 
+      customers want a working product as quickly as possible, even if it's less 
+      than perfect. If we strive for perfection we'll never get it.</p>
+      <p class="docText">That said, I think our code at this point is modular 
+      enough.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">As an exercise, review the changes in the address book 
+application and then run the new version. Remember that
+<span class="docEmphasis">AddressMain.py</span> is the main module, so to open 
+the application you have to type <tt>JPython AddressMain</tt> at the system 
+prompt. As a first step, we need to create a utility module,
+<span class="docEmphasis">AddressDBUtil.py,</span> which will</p>
+<ul START>
+  <li>
+  <p class="docList">Allow configuration of JDBC drivers and URLs</li>
+  <li>
+  <p class="docList">Create the necessary tables</li>
+  <li>
+  <p class="docList">Copy data from the flat file to the database</li>
+  <li>
+  <p class="docList">Hold the <tt>readAddresses()</tt> and <tt>writeAddresses()</tt> 
+  functions</li>
+</ul>
+<p class="docText">As a second step, we have to modify <tt>AddressModel</tt> to 
+work with <tt>AddressDBUtils</tt>.</p>
+<h4 class="docSection2Title" id="ch17lev2sec21">Working with Java Properties</h4>
+<p class="docText">In order to configure the necessary JDBC drivers and URLs, we 
+have to use <tt>java.utils.Properties</tt>. This class writes properties out to 
+a text file so that a user can manually edit text with a text editor. Here's an 
+example.</p>
+<p class="docText">Import the necessary classes.</p>
+<pre>&gt;&gt;&gt; from java.util import Properties
+&gt;&gt;&gt; from java.io import FileOutputStream, FileInputStream</pre>
+<p class="docText">Create a file output stream.</p>
+<pre>&gt;&gt;&gt; file = &quot;addr_db.props&quot;
+&gt;&gt;&gt; file = FileOutputStream(file)</pre>
+<p class="docText">Create an instance of <tt>Properties</tt>.</p>
+<pre>&gt;&gt;&gt; props = Properties()</pre>
+<p class="docText">Set the <tt>JdbcUrl</tt> and <tt>JdbcDriver</tt> properties.</p>
+<pre>&gt;&gt;&gt; props.setProperty(&quot;JdbcUrl&quot;, &quot;jdbc:idb=db_dev.prp&quot;)
+&gt;&gt;&gt; props.setProperty(&quot;JdbcDriver&quot;, &quot;jdbc.idbDriver&quot;)</pre>
+<p class="docText">Store the properties in a file (<span class="docEmphasis">addr_db.props</span>).</p>
+<pre>&gt;&gt;&gt; props.store(file, &quot;Database properties&quot;)</pre>
+<p class="docText">Look at the file.</p>
+<pre>#Database properties
+#Tue Dec 28 14:46:27 PST 1999
+JdbcUrl=jdbc\:idb\=db_dev.prp
+JdbcDriver=jdbc.idbDriver</pre>
+<p class="docText">Notice the file format, which uses <tt>#</tt> for comments 
+(as Python does). The properties are stored in name/value pairs, with each 
+property occupying one line. This makes reading the properties as easy as 
+writing them.</p>
+<p class="docText">Now we have to neaten up the property and file objects.</p>
+<pre>&gt;&gt;&gt; file.close()
+&gt;&gt;&gt; file = None
+&gt;&gt;&gt; props = None</pre>
+<p class="docText">Notice that <tt>props</tt> has been set to <tt>None</tt> to 
+show that the properties aren't in memory anymore.</p>
+<p class="docText">Next we read the properties from a file. Open a file input 
+stream.</p>
+<pre>&gt;&gt;&gt; file = &quot;addr_db.props&quot;
+&gt;&gt;&gt; file = FileInputStream(file)</pre>
+<p class="docText">Create a <tt>Properties</tt> instance, and load the 
+properties with the file input stream.</p>
+<pre>&gt;&gt;&gt; props = Properties()
+&gt;&gt;&gt; props.load(file)</pre>
+<p class="docText">Show the values of the <tt>JdbcUrl</tt> and <tt>JdbcDriver</tt> 
+properties.</p>
+<pre>&gt;&gt;&gt; print props.getProperty(&quot;JdbcUrl&quot;)
+<span class="docEmphStrong">jdbc:idb=db_dev.prp</span>
+
+&gt;&gt;&gt; print props.getProperty(&quot;JdbcDriver&quot;)
+<span class="docEmphStrong">jdbc.idbDriver</span></pre>
+<h4 class="docSection2Title" id="ch17lev2sec22">Adding Property File Support</h4>
+<p class="docText">Let's add a function to <span class="docEmphasis">
+AddressDBUtils.py</span> that uses <tt>java.utils.Properties</tt> to read the 
+JDBC properties. Let's also add some error recovery and some bullet-proof 
+functionality to check if the file exists and to create one if not.</p>
+<p class="docText">As an exercise, try editing the property file from
+<span class="docEmphasis">AddressDBUtils.py.</span> Also try deleting the file 
+and then running the module (don't forget to back up the file first). What 
+happens?</p>
+<p class="docText">Here's the latest version of <span class="docEmphasis">
+AddressDBUtils.py:</span></p>
+<pre>from java.util import Properties
+from java.io import FileOutputStream, FileInputStream, IOException, File
+
+PROP_FILE = &quot;addr_db.props&quot;      # holds the property file for the db
+                                   connection info.
+__jdbc_url = None                # holds the JDBC URL
+__jdbc_driver = None             # holds the JDBC Driver
+
+      #Set some default values.
+__jdbc_url=&quot;jdbc\:idb\=db_dev.prp&quot;
+__jdbc_driver=&quot;jdbc.idbDriver&quot;
+
+      def __loadProps():
+            global PROP_FILE
+            stream = None     #holds file input stream
+            props = None      #holds Properties
+            file = None       #Hold file associated
+                              #with the PROP_FILE filename.
+
+                   #See if the file exists. If not create it.
+            file = File(PROP_FILE)
+            if not file.exists():
+                   setProps()
+
+            props = Properties()
+
+                   #Try to load the properties.
+                   # Create a file input stream.
+                   # Load the properties with input stream.
+            try:
+                   try:
+
+                      stream = FileInputStream(PROP_FILE)
+                      props.load(stream)
+
+                   except IOException, e:
+
+                      print &quot;Problem loading db properties file=&quot; + PROP_FILE
+                      print e.message
+                      e.printStackTrace()
+
+            finally:
+                      stream.close()
+
+            return props
+
+      def __storeProps(props):
+            global PROP_FILE
+            file = None #to hold the file input stream
+            file = FileOutputStream(PROP_FILE)
+
+                   # Try to create a file output stream,
+                   # and store the properties.
+            try:
+                   try:
+
+                      props.store(file, &quot;Database properties&quot;)
+
+                   except IOException, e:
+                      print &quot;Problem storing db properties. file=&quot; + PROP_FILE
+                      print e.message
+                      e.printStackTrace()
+            finally:
+                   file.close()
+
+      def getProps():
+            global __jdbc_url, __jdbc_driver
+
+                   #Load the properties
+            props = __loadProps()
+            jdbc_url = props.getProperty(&quot;JdbcUrl&quot;, &quot;None&quot;)
+            jdbc_driver = props.getProperty(&quot;JdbcDriver&quot;)
+
+                   # If the prop file did not have
+                   # values then set some default values.
+            if jdbc_url == &quot;None&quot;:
+                   setProps()
+      else:
+                   __jdbc_url = jdbc_url
+                   __jdbc_driver = jdbc_driver
+
+      def setProps():
+            global __jdbc_url, __jdbc_driver
+
+                   #Create properties and then store them.
+            props = Properties()
+            props.setProperty(&quot;JdbcUrl&quot;, __jdbc_url)
+            props.setProperty(&quot;JdbcDriver&quot;, __jdbc_driver)
+            __storeProps(props)
+
+      def getJdbcDriver():
+            return __jdbc_driver
+
+      def getJdbcUrl():
+            return __jdbc_url
+
+      getProps()</pre>
+<h4 class="docSection2Title" id="ch17lev2sec23">Adding DDL Support</h4>
+<p class="docText">We need DDL support in order to create the table for our 
+address book application. To get it we first import class <tt>Class</tt> to load 
+the driver and class <tt>DriverManager</tt> to create a connection object.</p>
+<pre>from java.lang import Class
+from java.sql import DriverManager</pre>
+<p class="docText">Then we execute the <tt>CREATE TABLE</tt> statement, which is 
+held in the <tt>create_table</tt> variable.</p>
+<pre>create_table = &quot;&quot;&quot;
+      CREATE TABLE Address (
+             AddrID       INT     PRIMARY KEY,
+             Name         VARCHAR(40),
+             Phone        VARCHAR(15),
+             Email        VARCHAR(50)
+      )
+&quot;&quot;&quot;</pre>
+<p class="docText">The <tt>createTable()</tt> method uses the <tt>create_table</tt> 
+string to create the Address table.</p>
+<pre>def createTable():
+      &quot;&quot;&quot;
+       Creates the Address table.
+      &quot;&quot;&quot;
+       global create_table
+       executeUpdate(create_table)</pre>
+<p class="docText">It can't load the driver or create the connection or 
+statement object without the assistance of helper methods.</p>
+<h4 class="docSection2Title" id="ch17lev2sec24">JDBC Helper Methods</h4>
+<p class="docText">Helper methods do common things such as execute an update, 
+load a driver, and create connection and statement objects. They also do error 
+checking and cleanup. The following code illustrates some helpers. (Pay 
+particular attention to the document strings.)</p>
+<pre>def loadDriver():
+      &quot;&quot;&quot;
+      Loads the driver class into the JVM.
+      Checks to see if the class is already loaded.
+
+      &quot;&quot;&quot;
+      global __loaded_driver
+      jdbc = getJdbcDriver()
+      try:
+            if not __loaded_driver:
+                  Class.forName(jdbc)
+                  __loaded_driver=1
+      except:
+            error = &quot;Unable to load the driver &quot;+jdbc
+            print error
+            raise DBException(error)
+
+def createConnection():
+      &quot;&quot;&quot;
+      Creates a database connection and returns it.
+      Loads the Database driver with loadDriver().
+
+      returns a JDBC Connection object.
+      &quot;&quot;&quot;
+
+      connection = None
+
+      try:
+            loadDriver()
+            jdbc=getJdbcUrl()
+            connection=DriverManager.getConnection(jdbc)
+
+      except Exception, e:
+            print e.message
+            error = &quot;Problem creating connection, exception.&quot;
+            print error
+            raise DBException(error)
+
+      if connection == None:
+                  error = &quot;Problem creating connection was None&quot;
+                  print error
+                  raise DBException(error)
+      return connection
+
+def createStatement():
+      &quot;&quot;&quot;
+      Creates a statement object.
+
+      Returns a tuple containing a JDBC statement
+      and connection object.
+      &quot;&quot;&quot;
+      connection = createConnection()
+      return connection.createStatement(), connection
+
+def executeUpdate(str):
+      &quot;&quot;&quot;
+      Executes an update statement.
+
+      Returns the number of rows involved.
+      &quot;&quot;&quot;
+      statement, connection = None, None
+      num_rows=-1
+      try:
+            try:
+                  statement,connection=createStatement()
+                  num_rows = statement.executeUpdate(str)
+
+            except Exception, e:
+                  e.printStackTrace()
+                  print e.message
+                  print &quot;Problem executing update\n&quot;+str
+
+      finally:
+            if(connection):connection.close()
+
+      return num_rows</pre>
+<p class="docText">Notice all of the error checking and recovery going on. Since 
+we plan to execute more statements, it's good to have all such tasks handled in 
+one place.</p>
+<h4 class="docSection2Title" id="ch17lev2sec25">Creating the Address Table</h4>
+<p class="docText">All the preliminaries are out of the way, leaving only the 
+execution of the <tt>CREATE</tt> <tt>TABLE</tt> statement. This is going to be 
+easy. All it takes is one call to <tt>executeUpdate()</tt>.</p>
+<pre>def createTable():
+      &quot;&quot;&quot;
+      Creates the Address table.
+      &quot;&quot;&quot;
+      global create_table
+      executeUpdate(create_table)</pre>
+<p class="docText">We want to run <tt>createTable()</tt> from the command line, 
+so we need to add command-line parameter parsing in the main block (<tt>if__name__==</tt>&quot;<tt>__main__</tt>&quot;
+<tt>block</tt>), which checks to see if &quot;<tt>c</tt>&quot; is passed to the command 
+line and, if so, creates the table. (Passing &quot;<tt>p</tt>&quot; creates the properties 
+file.)</p>
+<pre>if __name__ == &quot;__main__&quot;:
+      from sys import argv
+
+            #Process the command line arguments.
+      for arg in argv:
+            if arg == &quot;c&quot;:
+                  getProps()
+                  str = &quot;Creating the table using &quot;
+                  str = str+getJdbcDriver()+&quot; at &quot;+ getJdbcUrl()
+                  print str
+                  <span class="docEmphStrong">createTable()</span>
+
+            if arg == &quot;p&quot;:
+                  print &quot;Creating the properties file: &quot;+PROP_FILE
+                  getProps()
+                  print getJdbcDriver()
+                  print getJdbcUrl()</pre>
+<p class="docText">Now we have our <span class="docEmphasis">AddressDBUtils.py</span> 
+module. Here's how to create it in DOS:</p>
+<pre>C:\JPython_book\scripts\chap17\AddressBook3&gt;JPython AddressDBUtils.py c</pre>
+<p class="docText">Try creating the Address table yourself as an exercise.</p>
+<h4 class="docSection2Title" id="ch17lev2sec26">Inserting Address Records into the Address Table</h4>
+<p class="docText">To get addresses into the database, we have to transform an 
+instance of the <tt>Address</tt> class into a record. Define the format string 
+for the <tt>insert</tt> entries.</p>
+<pre>params = &quot;&quot;&quot;AddrID, Name, Phone, Email&quot;&quot;&quot;
+insert = &quot;&quot;&quot;
+
+       INSERT INTO
+             Address
+             (&quot;&quot;&quot; + params + &quot;&quot;&quot;)
+
+       VALUES
+             (%s)
+       &quot;&quot;&quot;</pre>
+<p class="docText">Define functions to create an <tt>INSERT</tt> statement.</p>
+<pre>def insertAddress(address, statement=None):
+       &quot;&quot;&quot;
+       Inserts the AddrID, Name, Phone,
+       Email into a row.
+       &quot;&quot;&quot;
+       id = getID()
+       a = address
+       tup = (
+             str(id),
+             formatSQLStr(a.name()),
+             formatSQLStr(a.phoneNumber()),
+             formatSQLStr(a.email())
+       )
+       values = join(tup, &quot;,&quot;)
+       if statement:
+             executeUpdate(insert % values, statement)
+       else:
+             print insert % values</pre>
+<p class="docText">Invoke the helper function <tt>formatSQLStr()</tt> to 
+transform the address information into a string that SQL understands.</p>
+<pre>def formatSQLStr(str):
+       &quot;&quot;&quot;Formats a string into a SQL string&quot;&quot;&quot;
+       str = &quot;'%s'&quot; % str
+       return str</pre>
+<p class="docText">Now we'll add all of our address book data to the database 
+(users like you to do this for them). For this we need the <tt>loadFromFile()</tt> 
+function, which reads the <span class="docEmphasis">address.dat</span> file and 
+stores a given address in the Address table.</p>
+<pre>def loadFromFile():
+       &quot;&quot;&quot;
+       Loads the flat file of addresses into
+       the Address table.
+       &quot;&quot;&quot;
+       from AddressFileUtils import readAddresses
+       dict = readAddresses()
+
+             # Create a statement for the database.
+             # Add all of the addresses to the table.
+       try:
+             statement, connection = createStatement()
+
+             # Iterate through the collection
+             # of addresses. Add each address to the
+             # database.
+       for address in dict.values():
+             insertAddress(address, statement)
+
+       finally:
+             connection.close()</pre>
+<p class="docText">Next we add the following statements to the main block so we 
+can read <tt>loadFromFile()</tt> from the command line.</p>
+<pre>if __name__ == &quot;__main__&quot;:
+       from sys import argv
+
+             #Process the command line arguments.
+             for arg in argv:
+...
+...
+
+             if arg == &quot;l&quot;:
+                    loadFromFile()</pre>
+<p class="docText">To load the data from the file, we run
+<span class="docEmphasis">AddressDBUtils.py</span> from the command line with 
+the <tt>&quot;1&quot;</tt> option. Here's the DOS prompt:</p>
+<pre>C:\JPython_book\scripts\chap17\AddressBook3&gt;JPython AddressDBUtils.py l</pre>
+<h4 class="docSection2Title" id="ch17lev2sec27">Reading Addresses from the Address Table</h4>
+<p class="docText">Now we need to implement the <tt>readAddresses()</tt> and <tt>
+writeAddresses()</tt> functions. <tt>readAddresses()</tt> is easy—we just select 
+all of the records and put them in a dictionary. <tt>writeAddresses()</tt> is 
+more difficult. What if someone removes an address from the dictionary—how will 
+we know without changing <tt>AddressModel</tt>? We'll skip writing addresses for 
+now and instead integrate <span class="docEmphasis">AddressDBUtils.py</span> 
+into the application.</p>
+<p class="docText">Here's the code for <tt>readAddresses()</tt> and <tt>
+writeAddresses()</tt>:</p>
+<pre>def readAddresses():
+       &quot;&quot;&quot;
+       Read the Address data
+              AddrID, Name, Phone, Email
+       returns a dictionary full of addresses
+       &quot;&quot;&quot;
+       dict = None
+
+       try:
+              statement, connection = createStatement()
+
+              dict = {}
+              results = statement.executeQuery(select_all)
+
+              while results.next():
+                    id = results.getString(&quot;AddrID&quot;)
+                    name = results.getString(&quot;Name&quot;)
+                    phone = results.getString(&quot;Phone&quot;)
+                    email = results.getString(&quot;Email&quot;)
+                    dict[name]=Address(name, phone, email)
+
+       finally:
+              connection.close()
+
+       return dict
+
+def writeAddresses(dict):
+       pass</pre>
+<p class="docText">As you probably noticed, <tt>writeAddresses()</tt> isn't 
+doing anything yet.</p>
+<h4 class="docSection2Title" id="ch17lev2sec28">Integrating AddressModel with the Database</h4>
+<p class="docText">Instead of replacing the flat file, let's see how to 
+polymorphically add the database as an option. Via the <tt>__import__</tt> 
+function, <tt>AddressModel</tt> imports functions from <tt>AddressIO</tt> that 
+dynamically load the I/O utility module (<span class="docEmphasis">AddressBook3\</span> 
+Ad<span class="docEmphasis">dressIO.py</span>).</p>
+<pre>from java.util import Properties
+from java.io import FileInputStream, FileOutputStream, IOException
+
+       #holds property file for the db connection info.
+PROP_FILE = &quot;addr.props&quot;
+def readAddresses():
+       pass
+def writeAddresses(dict):
+       pass
+...
+...
+
+def getModuleName():
+             #Load the properties.
+       props = __loadProps()
+       return props.getProperty(&quot;module_name&quot;, &quot;AddressDBUtils&quot;)
+...
+...
+<span class="docEmphStrong">module = __import__(getModuleName())</span>
+readAddresses = module.readAddresses
+writeAddresses = module.writeAddresses</pre>
+<p class="docText">To switch back to the flat file, all we have to do is edit
+<span class="docEmphasis">addr.props.</span></p>
+<pre>#Database properties
+#Wed Dec 29 20:24:54 PST 1999
+#module_name=AddressDBUtils
+module_name=AddressFileUtils</pre>
+<p class="docText">As an exercise, run the application in both modes, switching 
+back and forth between them.</p>
+<h5 class="docSection3Title" id="ch17lev3sec4">A Database-Aware Dictionary</h5>
+<p class="docText">How do we know which addresses need to be written out of the 
+database? One way is to set a dirty flag, which will tell us when one of the 
+instance variables has changed. But what about adding new addresses—how much 
+code will we have to modify?</p>
+<p class="docText">In fact, we can add the functionality that will answer these 
+questions without changing <tt>AddressModel</tt> or any of the GUI. All we need 
+to do is define a database-aware dictionary that replaces the dictionary that
+<tt>AddressModel</tt> is presently using.</p>
+<p class="docText">Recall the dictionary class that we created in
+<a class="docLink" href="_chapter%206.htm">Chapter 6</a>. We can 
+use what we learned from it to create a dictionary class that adds and removes 
+rows in the Address table. We'll call it <tt>AddressDBDict</tt> and put it in 
+the <span class="docEmphasis">AddressBook4.py</span> module.</p>
+<pre>class AddressDBDict:
+...
+...
+
+      def __setitem__(self, key, value):
+             statement, connection = createStatement()
+             try:
+                    addr = AddressDB()
+                    addr.fromAddress(value, statement)
+                    self.dict[key]=addr
+             finally:
+                    connection.close()
+
+      def __delitem__(self, key):
+             statement, connection = createStatement()
+             try:
+                    addr = self.dict[key]
+                    addr.remove(statement)
+                    del(self.dict[key])
+             finally:
+                    connection.close()</pre>
+<p class="docText">As you can see, the &quot;overridden&quot; <tt>__setitem__</tt> and <tt>
+__delitem__</tt> methods create a JDBC statement object and interact with <tt>
+AddressDBDict</tt>.</p>
+<p class="docText"><tt>__setitem__</tt> takes a regular <tt>address</tt> 
+instance as an argument to create an instance of <tt>AddressDBDict</tt>. It then 
+calls the <tt>fromAddress()</tt> method, passing it a JDBC statement object. <tt>
+fromAddress()</tt> is where the Address record is inserted into the Address 
+table.</p>
+<p class="docText"><tt>__delitem__</tt> calls the <tt>AddressDBDict</tt> 
+instance it retrieves from <tt>AddressModel</tt> and invokes its <tt>remove()</tt> 
+method, passing it a JDBC statement object. <tt>remove()</tt> deletes the 
+Address record from the Address table.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">How Many Connections Are Opened and Closed?</h2>
+      <p class="docText">It may look like <tt>AddressDBDict</tt> creates and 
+      closes a connection every time it adds or deletes a record, but that would 
+      be awfully expensive as well as inefficient. Actually, only one connection 
+      to the database is created. Take a look at the <tt>createStatement()</tt> 
+      function and the <tt>Connect</tt> class in the <span class="docEmphasis">
+      AddressBook4.py</span> module to see how this is done.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 class="docSection3Title" id="ch17lev3sec5">A Database-Aware Address Class: AddressDB</h5>
+<p class="docText"><tt>AddressDB</tt> is a subclass of <tt>Address</tt>, which 
+notifies it, via the <tt>markDirty()</tt> method, when its member variables 
+change. <tt>Address</tt> defines <tt>markDirty()</tt> and calls it in its 
+constructor. <tt>AddressDB</tt> overrides <tt>markDirty()</tt> and adds the 
+ability to update the corresponding record in the Address table when changes are 
+made.</p>
+<p class="docText">Recall that the <tt>Address</tt> class has no setter methods 
+for its variables but sets them through <tt>__init__</tt>. The first time <tt>
+__init__</tt> is called, the dirty flag is set to <tt>0</tt> (false); at all 
+subsequent calls, it's set to <tt>1</tt> (true).</p>
+<p class="docText">Here's some of the code for <tt>Address</tt> and <tt>
+AddressDB</tt> showing the interaction between <tt>markDirty()</tt>, <tt>dirty</tt>, 
+and <tt>isDirty()</tt>:</p>
+<pre>class Address:
+
+             ...
+         __dirty = -1
+
+     def __init__(self, name=&quot;&quot;, phone_number=&quot;&quot;, email=&quot;&quot;,           address_lines=None):
+                  ...
+                  ...
+                  self.markDirty()
+             ...
+     ...
+     def markDirty(self):
+             ...
+             self.__dirty = self.__dirty + 1
+
+     def isDirty(self):
+             ...
+             return self.__dirty
+
+     class AddressDB(Address):
+     ...
+     ...
+
+             def markDirty(self):
+                  ...
+                  Address.markDirty(self)
+                  if(self.isDirty()):
+                  self.__update()
+
+     def __update(self):
+             ...
+             statement, connection = createStatement()
+
+             try:
+                  self.update(statement)
+             finally:
+                  connection.close()</pre>
+<p class="docText"><tt>markDirty()</tt> calls the <tt>Address</tt> of the class; 
+then it calls its <tt>isDirty()</tt> method to determine if the data is dirty. 
+If so, <tt>AddressDB</tt>'s __<tt>update()</tt> method is called by its <tt>
+markDirty()</tt> method in order to create a JDBC statement object and to update 
+the record in the database.</p>
+<p class="docText">In this way the base class and the subclass interact to 
+determine the state of the address instance. If the data is dirty, it's written 
+out to the database and made clean again.</p>
+<p class="docText">AddressDB's <tt>update()</tt> method updates the record; its
+<tt>remove()</tt> method deletes the record; and its <tt>fromAddress()</tt> 
+method inserts a new one. The following code shows how these methods work:</p>
+<pre>where = &quot;&quot;&quot;
+       WHERE
+             AddrID = %(_AddressDB__id)s
+       &quot;&quot;&quot;
+
+select = &quot;&quot;&quot;
+       UPDATE
+             Address
+       SET
+             Name = '%(_Address__name)s',
+             Phone = '%(_Address__phone_number)s',
+             Email = '%(_Address__email)s'
+       &quot;&quot;&quot; + where
+delete = &quot;&quot;&quot;
+       DELETE FROM
+             Address
+       &quot;&quot;&quot; + where
+insert = &quot;&quot;&quot;
+
+      INSERT INTO
+             Address
+             (AddrID, Name, Phone, Email)
+
+       VALUES
+             (
+             %(_AddressDB__id)s,
+             '%(_Address__name)s',
+             '%(_Address__phone_number)s',
+             '%(_Address__email)s'
+             )
+       &quot;&quot;&quot;
+
+class AddressDB(Address):
+       ...
+       ...
+       def update(self, statement=None):
+             ...
+             if(statement):
+                    ...
+                    statement.executeUpdate(select % self.__dict__)
+                    self.__dict__[&quot;_Address__dirty&quot;] = 0
+...
+
+       def remove(self, statement=None):
+             ...
+             if(statement):
+                    statement.executeUpdate(delete % self.__dict__)
+...
+
+       def fromAddress(self, addr, statement=None):
+                    # Copy the address.
+       name = addr.name()
+       phone_number=addr.phoneNumber()
+       email=addr.email()
+       self.__dict__[&quot;_Address__dirty&quot;] = -1
+       Address.__init__(self,name, phone_number, email, address_lines=None)
+
+                    # Insert the record into the database.
+       self.__id = getID()
+       str = insert % self.__dict__
+       if statement:
+                    statement.executeUpdate(str)
+       ...</pre>
+<p class="docText"><tt>AddressDB</tt> knows how to deal with the database, and, 
+since it has the same interface as <tt>Address</tt>, the GUI knows how to work 
+with either without knowing which is which. <tt>AddressDBDict</tt>, too, knows 
+how to deal with the database. What's more, it has the same interface as a 
+Python dictionary object, which means that, like a dictionary object, it can 
+work with <tt>AddressModel</tt>, <tt>AddressMain</tt>, <tt>AddressFormPane</tt>, 
+and so forth, without these classes having to be changed. This is polymorphism 
+at its deceptive best.</p>
+<p class="docText">To make the deception complete, <tt>AddressDBUtil</tt>'s <tt>
+readAddresses()</tt> function has to get in on the action. Instead of a 
+dictionary full of address instances, it now has to return <tt>AddressDBDict</tt>, 
+which holds <tt>AddressDB</tt> instances. Here's its code (from
+<span class="docEmphasis">AddressBook4\AddressDBUtils.py</span>) with the 
+interesting parts highlighted in bold:</p>
+<pre>def readAddresses():
+      ...
+      ...
+      try:
+             statement, connection = createStatement()
+      ...
+
+             dict = <span class="docEmphStrong">AddressDBDict()</span>
+             results = statement.executeQuery(select_all)
+
+             while results.next():
+                   id = results.getString(&quot;AddrID&quot;)
+                   name = results.getString(&quot;Name&quot;)
+                   phone = results.getString(&quot;Phone&quot;)
+                   email = results.getString(&quot;Email&quot;)
+                   <span class="docEmphStrong">addr=AddressDB(name, phone, email)</span>
+                   <span class="docEmphStrong">dict.dict[name] = addr</span>
+                   addr.setID(id)
+      finally:
+             #connection.close()
+             pass
+      return dict</pre>
+<h4 class="docSection2Title" id="ch17lev2sec29">Using the Database-Supported Address Book 
+Application</h4>
+<p class="docText">Now our address book application has database support. To get 
+that support, and to keep the application backward-compatible with the flat-file 
+format, we tapped into the power of Python and polymorphism. Try these 
+exercises:</p>
+<ul START>
+  <li>
+  <p class="docList">Deploy the address book application in a different database 
+  than the one you've been using.</li>
+  <li>
+  <p class="docList">Add the ability to track a phone conversation—that is, take 
+  notes while you're talking—and pull up a list of notes for a given address 
+  entry. To accomplish this you'll need a database table called Phone Log with a 
+  notes field, an identity field, and a foreign key field that references <tt>
+  AddrID</tt> in the Address table. You'll also need GUI components to view, 
+  edit, and delete notes.</li>
+  <li>
+  <p class="docList">Make it possible to travel with the address book 
+  application, working with a laptop and a database server.</li>
+  <li>
+  <p class="docList">Add the ability to copy Address records from a database 
+  format to a flat-file format.</li>
+  <li>
+  <p class="docList">Add a dialog box that allows a user to copy data to the 
+  flat-file format and work with the application in mobile mode—that is, a mode 
+  that reads from the flat file instead of from the database server.</li>
+  <li>
+  <p class="docList">Enable the user to reconnect to the database.</li>
+</ul>
+<h3 class="docSection1Title" id="ch17lev1sec6">Summary</h3>
+<p class="docText">In this chapter we covered SQL/JDBC programming. We used what 
+we learned to provide database support for our address book application. We took 
+a brief tour of SQL fundamentals, including the SQL sublanguages, DDL and DML.</p>
+<p class="docText">The exercises showed how to connect and use two different 
+databases: a JDBC–ODBC bridge (Microsoft Access) and a pure JDBC connection (InstantDB). 
+We saw some of the difficulties in porting to and running on multiple databases.</p>
+<p class="docText">We also saw the importance of modular design when we grafted 
+database support onto the address book application. In addition, we used <tt>
+java.Utils.Properties</tt> to make changing properties easier. We also 
+discovered the dynamic capabilities of Python's <tt>__import__</tt> statement, 
+which uses the module name in a property file to load an I/O utility module. The 
+dynamism of Python and polymorphism was reinforced when we added database 
+support to the <tt>AddressModel</tt> class by creating a database-aware subclass 
+and a database-aware dictionary.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2016.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2018.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

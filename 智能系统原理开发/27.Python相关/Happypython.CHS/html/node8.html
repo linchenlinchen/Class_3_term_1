@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>6. 模组</title>
+  
+  <meta name="description" content="6. 模组 ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node9.html">
+ 
+  <link rel="previous" href="node7.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node9.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node7.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node9.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node7.html">5.
+资料结构</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">Python
+教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node9.html">
+7. 输入与输出</a> <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落 </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html305" href="node8.html#SECTION008100000000000000000">
+6.1 模组(续) </a> 
+    <ul>
+ 
+      <li><a name="tex2html306" href="node8.html#SECTION008110000000000000000">
+6.1.1 寻找模组的路径 </a> </li>
+      <li><a name="tex2html307" href="node8.html#SECTION008120000000000000000">
+6.1.2 &ldquo;编译过的&rdquo; Python档案</a> </li>
+    </ul>
+ </li>
+  <li><a name="tex2html308" href="node8.html#SECTION008200000000000000000">
+6.2 标准模组 </a> </li>
+  <li><a name="tex2html309" href="node8.html#SECTION008300000000000000000">
+6.3 <tt class="function">dir()</tt> 函式 </a> </li>
+  <li><a name="tex2html310" href="node8.html#SECTION008400000000000000000">
+6.4 Packages(套件) </a> 
+    <ul>
+ 
+      <li><a name="tex2html311" href="node8.html#SECTION008410000000000000000">
+6.4.1 从一个Package中Import * </a> </li>
+      <li><a name="tex2html312" href="node8.html#SECTION008420000000000000000">
+6.4.2 Package内的References(参考) </a> </li>
+    </ul>
+  </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 6. 模组  </h1>
+  
+<p> 如果你离开Python直译器然后又再打开Python直译器的话，你会发现你刚才定义的一些东西(函式或变数)都不再存在了。所以说，如果你真的想写一些比较大型的程式的话，你可能需要有一个文字编辑器来编辑一个档案，然后再让Python直译器来将这个档案当作输入(input)来处理。这个过程就是写脚本(
+ <i>script</i> )的过程。如果你的程式继续的越来越长的话，你也许会想要把你的程式分成几个小的档案，这样比较方便来维护你的程式。你也许也会希望有一些方便的函式可以让你自由的用在好几个程式之中，你又不想要copy这些函式的定义在每个程式之中。
+  </p>
+<p> 要达到以上的这些目的，Python有一个将定义放在档案中的方法，你可以之后再在你的script或是互动模式的程式下使用这些存好的定义。这样的档案就叫做模组(
+<i>module</i> )。存在于module之中的定义可以用  <i>imported</i> 放入在其他的module或是主要的 <i>main</i>
+ module之中。(main module是一组你可以在script的最高一级 (top level)部分使用，或是在互动模式中使用的变数)。  
+</p>
+<p> 一个module就是一个包含有Python的定义及叙述的档案，档案的名称就是module的名称加上延伸档名 <span class="file">
+.py</span>  在后面。在一个module里面，module的名字(是一个字串)会存在 <code>__name__</code> 这个变数里面并当作全域变数(global
+variable)使用。举例来说，你可以用你喜欢的文字编辑器打入以下的内容，并将这个档案存在目前的目录，并取名为 <span class="file">
+fibo.py</span> ：  </p>
+<p> </p>
+<dl>
+<dd><pre class="verbatim"># Fibonacci numbers module<br><br>def fib(n):    # write Fibonacci series up to n<br>    a, b = 0, 1<br>    while b &lt; n:<br>        print b,<br>        a, b = b, a+b<br><br>def fib2(n): # return Fibonacci series up to n<br>    result = []<br>    a, b = 0, 1<br>    while b &lt; n:<br>        result.append(b)<br>        a, b = b, a+b<br>    return result<br></pre>
+  </dd>
+  </dl>
+  
+  <p> 现在你可以进入Python的直译器里面并且import 你刚刚建立的module，其方法如下：   </p>
+  <p> </p>
+  <dl>
+  <dd><pre class="verbatim">&gt;&gt;&gt; import fibo<br></pre>
+    </dd>
+    </dl>
+  
+    <p> 这个命令并不会使得所有的 <code>fibo</code> 里面的函式名称都写入目前的符号表(symbol table)里面，但是会把
+ <code>fibo</code> 这个module的名字写在symbol table里面。 所以，我们现在就可以使用module的名字来呼叫这些我们之前所定义的函式了：
+  </p>
+    <p> </p>
+    <dl>
+    <dd><pre class="verbatim">&gt;&gt;&gt; fibo.fib(1000)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987<br>&gt;&gt;&gt; fibo.fib2(100)<br>[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]<br>&gt;&gt;&gt; fibo.__name__<br>'fibo'<br></pre>
+      </dd>
+      </dl>
+  
+      <p> 如果你真的想要只用函式名称的话，你可以把这些函式名称设定到另一个local变数去(可以就是函式的名称)：  </p>
+      <p> </p>
+      <dl>
+      <dd><pre class="verbatim">&gt;&gt;&gt; fib = fibo.fib<br>&gt;&gt;&gt; fib(500)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br></pre>
+        </dd>
+        </dl>
+  
+        <p>  </p>
+        <h1> <br>
+ 6.1 模组(续)   </h1>
+  
+        <p> 一个module里面除了放函式的定义之外也可以放可执行的叙述(statement)。这些statement的功用在于初始化(initialize)这个module。这些statement也只有在module
+ <i>第一次</i> 被import的时候才会被执行。 <a name="tex2html4" href="#foot628"><sup>6.1</sup></a>
+ </p>
+        <p> 每一个模组都有其自己的符号表(symbol table)，这个symbol table也就成为在module里面所定义的函式的全域变数(global
+variables)。所以说，写module的人就可以自由的使用这些global variable而不需要担心会跟module的使用者的global
+variable有所冲突。从另一方面来说，如果你知道自己在做什么的话，你也可以跟使用函式一样的使用module里面的global variable。其语法为
+        <code>modname.itemname</code>.  </p>
+        <p> Module可以被import到其他的module里面。习惯上(并非一定)，我们会把所有的 <tt class="keyword">
+import</tt> 的叙述都放在module(或者是script)的最开头。这样的话这个被import的module的名称就会被放在目前这个module的global
+symbol table里面了。   </p>
+        <p> 有一个变形的方式可以直接import module里面的变数或函式的名称进入symbol table里面。举例如下：  </p>
+        <p> </p>
+        <dl>
+        <dd><pre class="verbatim">&gt;&gt;&gt; from fibo import fib, fib2<br>&gt;&gt;&gt; fib(500)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br></pre>
+          </dd>
+          </dl>
+  
+          <p> 这样做的话并不会使得module的名字被放在目前的symbol table里面。(所以在上面的例子里 <code>fibo</code>
+ 是没有被定义的)。   </p>
+          <p> 我们甚至可以一次将所有的在module里面所定义的名称都import进来：   </p>
+          <p> </p>
+          <dl>
+          <dd><pre class="verbatim">&gt;&gt;&gt; from fibo import *<br>&gt;&gt;&gt; fib(500)<br>1 1 2 3 5 8 13 21 34 55 89 144 233 377<br></pre>
+            </dd>
+            </dl>
+  
+            <p> 这一个写法会import所有的定义的名称，除了以底线  ( <code>_</code> ) 开头的之外。   </p>
+            <p>  </p>
+            <h2> <br>
+ 6.1.1 寻找模组的路径  </h2>
+  
+            <p> 当你import一个叫做 <tt class="module">spam</tt> 的module时，直译器会先在目前的目录寻找一个叫做
+            <span class="file">spam.py</span> 的档案，如果没找到，会再依据定义在 <a class="envvar" name="l2h-10">
+$PYTHONPATH</a> (一个环境变数)里面的所有路径来找。 <a class="envvar" name="l2h-10">$PYTHONPATH</a>
+ 的语法与设定方法与 <a class="envvar" name="l2h-11">$PATH</a> 是一样的，也就是一连串的目录路径的名称。如果你没有设定
+            <a class="envvar" name="l2h-12">$PYTHONPATH</a> ，或是在这些目录当中也找不到的话，直译器会继续在一个安装时预设的目录来找，在Unix的机器上，通常这个目录是
+            <span class="file">.:/usr/local/lib/python</span> 。  </p>
+            <p> 事实上，module的搜寻路径是依照存在 <code>sys.path</code> 这一个变数中的一个许多路径名称组成的list。这个变数当在Python直译器启动时，会从输入的script(或目前的目录)、
+ <a class="envvar" name="l2h-13">$PYTHONPATH</a> 、以及安装时设定的预设目录来读取所有的目录。如果你知道自己在做什么的话，你可以修改这个变数来改变直译器寻找module的路径。请参阅之后的标准模组(standard
+module)一段。   </p>
+            <p>  </p>
+            <h2><a name="SECTION008120000000000000000"> 6.1.2 &ldquo;编译过的&rdquo;(
+``Compiled'') Python档案 </a> </h2>
+  
+            <p> 对于一些小的程式来说，如果使用很多标准的module，而又想加速启动的过程，你就可以用编译过的Python档案。比如你要找
+            <span class="file">spam.py</span> ，如果在你找到这个档案的目录里ey4又有一个叫做  <span class="file">
+spam.pyc</span> 的档案的话，这就表示 <tt class="module">spam</tt> 这个module有一个已经二元编译过的(``byte-compiled'')的版本可以使用。在
+            <span class="file">spam.pyc</span> 里面也会记录用来创造它的spam.py上一次被修改的时间，如果
+ <span class="file">.pyc</span> 里面所储存的时间与最新版本的 <span class="file">.py</span>
+ 的修改时间不符合的话， <span class="file">.pyc</span> 档案就不会被使用。  </p>
+            <p> 一般来说，你不需要做任何事来创造一个  <span class="file">spam.pyc</span> 档案。当你成功的编译一个
+            <span class="file">spam.py</span> 档时，自动的  <span class="file">
+spam.pyc</span> 档就会写入在同一个目录里。如果这个过程里有问题的话，系统不会当这是个错误情况(error)。相反的，如果写入的档案没有完全成功的写入的话，这个档案只会被认为是不正确的而忽视其存在。
+ <span class="file">spam.pyc</span> 档案的内容是独立于作业系统平台的，所以一个 Python module 的目录是可以被在各种不同架构下的多台机器所共享的。 
+ </p>
+            <p> 这里有一些给专家们的秘诀：   </p>
+            <p>  </p>
+            <ul>
+ 
+              <li>当使用 <b class="programopt">-O</b> 这个选项启动Python直译器时，直译器产生会最佳化程式码(optimized
+code)，并存在 <span class="file">.pyo</span> 档案里。这个最佳化程式码目前并没有太多功能，它只是简单的拿掉所有的
+ <tt class="keyword">assert</tt> 叙述以及 <code>SET_LINENO</code> 指令。当你使用 <b class="programopt">
+-O</b> 这个选项时， <i>所有的</i> 二元码(bytecode)都会被最佳化，所有的  <code>.pyc</code> 档都会被忽略，所有的
+                <code>.py</code> 档案都会被编译成最佳化的二元码。  
+                <p>  </p>
+              </li>
+              <li>如果你传入两个 <b class="programopt">-O</b> 选项给Python直译器的话  (<b class="programopt">
+-OO</b>) ，在有些很少见的情况下会使得编译器的最佳化过程使得程式无法正常执行。目前这个选项会使得 <code>__doc__</code>
+ 字串从二元码中被拿掉，进而使得 <span class="file">.pyo</span> 档案可以更精简。但是有些程式会使用到这些字串，所以你应该只有在你很确定时才使用这个选项。 
+ 
+                <p>  </p>
+              </li>
+              <li>读 <span class="file">.pyc</span> 以及  <span class="file">
+.pyo</span> 档案并不会比读 <span class="file">.py</span> file; the only thing that's
+faster about <span class="file">.pyc</span> or <span class="file">.pyo</span>
+ 档还要快，唯一的差距是在当被导入(load)时的速度有差别。  
+                <p>  </p>
+              </li>
+              <li>当你在命令列(command line)使用script的名称来执行它的话，并不会造成二元码被写到 <span class="file">
+.pyc</span> 或是  <span class="file">.pyo</span> 所以，你可以把这个script写成一个module，然后再用一个小的启动的script来import这个module。这样可以减少启动的时间。事实上，你也可以直接从命令列启动
+ <span class="file">.pyc</span> 或是  <span class="file">.pyo</span> 档案。  
+                <p>  </p>
+              </li>
+              <li>你也可以把 <span class="file">spam.pyc</span> (或是  <span class="file">
+spam.pyo</span> ，如果你用了  <b class="programopt">-O</b> 的话) 放在没有  <span class="file">
+spam.py</span> 的目录里。这样子，当你给别人你的程式库时，你可以给他们比较难用逆向工程(reverse engineer)破解的程式。 
+ 
+                <p>  </p>
+              </li>
+              <li>你可以用 <tt class="module">compileall</tt> 这个module来将某个目录里面的所有module都便成
+ <span class="file">.pyc</span> 档案(或者是  <span class="file">.pyo</span> 档案，如果你用了
+ <b class="programopt">-O</b> )。   
+                <p>  </p>
+              </li>
+            </ul>
+  
+            <p>  </p>
+            <h1> <br>
+ 6.2 标准模组  </h1>
+  
+            <p> Python包含有一个 标准模组的程式库，这个程式库在另一个文件 <em class="citetitle"><a href="../lib/lib.html" title="Python Library Reference">
+Python Library Reference</a></em> (Python程式库参考手册)中有更多的描述。有些标准模组已经内建在直译器里面，这些模组让我们可以使用那些不在Python语言本身的一些功能，不管是为了效率或是要使用作业系统的资源(例如system
+call)。有些module是在设定时的选项，比如说， <tt class="module">amoeba</tt> 这个module就只有在你的系统里面有Amoeba相关的资源时才会出现。有一个module特别值得我们好好注意：
+            <tt class="module">sys</tt> 。这个module在每一个Python直译器里面都有，其中有两个变数
+            <code>sys.ps1</code> 以及 <code>sys.ps2</code> 是用来设定primary prompt
+以及secondary prompt的：   </p>
+            <p> </p>
+            <dl>
+            <dd><pre class="verbatim">&gt;&gt;&gt; import sys<br>&gt;&gt;&gt; sys.ps1<br>'&gt;&gt;&gt; '<br>&gt;&gt;&gt; sys.ps2<br>'... '<br>&gt;&gt;&gt; sys.ps1 = 'C&gt; '<br>C&gt; print 'Yuck!'<br>Yuck!<br>C&gt;<br></pre>
+              </dd>
+              </dl>
+  
+              <p> 这两个变数只有在当你在互动模式下启动直译器时才有定义。   </p>
+              <p> <code>sys.path</code> 这个变数是一个许多目录路径组成的list，里面的目录路径就是直译器寻找module的路径。这个变数里面的路径都是从环境变数
+              <a class="envvar" name="l2h-16">$PYTHONPATH</a> 里面复制的，或者当 <a class="envvar" name="l2h-17">
+$PYTHONPATH</a> 没有设定时，就会使用预设值。你也可以用一般使用list的方法来修改之。例如：   </p>
+              <p> </p>
+              <dl>
+              <dd><pre class="verbatim">&gt;&gt;&gt; import sys<br>&gt;&gt;&gt; sys.path.append('/ufs/guido/lib/python')<br></pre>
+                </dd>
+                </dl>
+  
+                <p>  </p>
+                <h1> <br>
+ 6.3 <tt class="function">dir()</tt> 函式   </h1>
+  
+                <p> 内建的 <tt class="function">dir()</tt> 函式主要是用来找出某个module里面所定义的所有名称。其传回值是一串经过排序了的字串list： 
+ </p>
+                <p> </p>
+                <dl>
+                <dd><pre class="verbatim">&gt;&gt;&gt; import fibo, sys<br>&gt;&gt;&gt; dir(fibo)<br>['__name__', 'fib', 'fib2']<br>&gt;&gt;&gt; dir(sys)<br>['__name__', 'argv', 'builtin_module_names', 'copyright', 'exit',<br>'maxint', 'modules', 'path', 'ps1', 'ps2', 'setprofile', 'settrace',<br>'stderr', 'stdin', 'stdout', 'version']<br></pre>
+                  </dd>
+                  </dl>
+  
+                  <p> 如果没有传入参数的话，  <tt class="function">dir()</tt> 会列出所有你目前已经定义的名称：
+  </p>
+                  <p> </p>
+                  <dl>
+                  <dd><pre class="verbatim">&gt;&gt;&gt; a = [1, 2, 3, 4, 5]<br>&gt;&gt;&gt; import fibo, sys<br>&gt;&gt;&gt; fib = fibo.fib<br>&gt;&gt;&gt; dir()<br>['__name__', 'a', 'fib', 'fibo', 'sys']<br></pre>
+                    </dd>
+                    </dl>
+  
+                    <p> 注意这里的名称是指所有类型的名称：包括变数，函式，以及module等等。   </p>
+                    <p> <tt class="function">dir()</tt> 并没有列出所有内建的函式及变数的名称。如果你真想要列出来的话，它们都定义在
+                    <tt class="module">__builtin__</tt> 这个标准module里面：   </p>
+                    <p> </p>
+                    <dl>
+                    <dd><pre class="verbatim">&gt;&gt;&gt; import __builtin__<br>&gt;&gt;&gt; dir(__builtin__)<br>['AccessError', 'AttributeError', 'ConflictError', 'EOFError', 'IOError',<br>'ImportError', 'IndexError', 'KeyError', 'KeyboardInterrupt',<br>'MemoryError', 'NameError', 'None', 'OverflowError', 'RuntimeError',<br>'SyntaxError', 'SystemError', 'SystemExit', 'TypeError', 'ValueError',<br>'ZeroDivisionError', '__name__', 'abs', 'apply', 'chr', 'cmp', 'coerce',<br>'compile', 'dir', 'divmod', 'eval', 'execfile', 'filter', 'float',<br>'getattr', 'hasattr', 'hash', 'hex', 'id', 'input', 'int', 'len', 'long',<br>'map', 'max', 'min', 'oct', 'open', 'ord', 'pow', 'range', 'raw_input',<br>'reduce', 'reload', 'repr', 'round', 'setattr', 'str', 'type', 'xrange']<br></pre>
+                      </dd>
+                      </dl>
+  
+                      <p>  </p>
+                      <h1> <br>
+ 6.4 Packages(包装)   </h1>
+  
+                      <p> Package是一种用点号表示模组名称(``dotted module names'')的组织Python
+模组(module)命名空间的方法。举例来说：如果module的名称是  <tt class="module">A.B</tt> 表示是在 "<tt class="samp">
+B</tt>" 这个package里面的一个名称为  "<tt class="samp">A</tt>" 的module。就如同使用module使得其他写module的不用担心别人的global
+variable命名的问题，使用这种带点号的module名称也使得写多个module的package的人不用担心所用的module名称会和别人有所重复。
+  </p>
+                      <p> 现在假设你要设计一组的module(就是设计一个package)，这个package是用来标准化的处理声音档案以及声音的资料的。由于声音档的格式有很多(通常是由其延伸档名来辨别，例如
+                      <span class="file">.wav</span>, <span class="file">
+.aiff</span>, <span class="file">.au</span>) 等格式)，你也许需要一个随时会增加新module的package来处理新的声音档格式。由于你可能想对声音资料做各种不同的处理(例如混音、加回声、加入平衡方程式，加入人工音响效果等等)，所以你还需要写一些module来专门做这些处理。底下这个架构可能是你的package所需要的(用档案阶层系统来表示)： 
+ </p>
+                      <p> </p>
+                      <dl>
+                      <dd><pre class="verbatim">Sound/                          Top-level package<br>      __init__.py               Initialize the sound package<br>      Formats/                  Subpackage for file format conversions<br>              __init__.py<br>              wavread.py<br>              wavwrite.py<br>              aiffread.py<br>              aiffwrite.py<br>              auread.py<br>              auwrite.py<br>              ...<br>      Effects/                  Subpackage for sound effects<br>              __init__.py<br>              echo.py<br>              surround.py<br>              reverse.py<br>              ...<br>      Filters/                  Subpackage for filters<br>              __init__.py<br>              equalizer.py<br>              vocoder.py<br>              karaoke.py<br>              ...<br></pre>
+                        </dd>
+                        </dl>
+  
+                        <p> 为使Python能把这个目录架构当作是一个package，上面的  <span class="file">
+__init__.py</span> 这个档是必须要的。这是为了要避免有些档案目录的名字是很普通的名字(例如 "<tt class="samp">
+string</tt>" )，这会让直译器误认正确的module名称而找不到在搜寻路径中的module。在最简单的例子里， <span class="file">
+__init__.py</span> 可以是一个空的档案。但是你也可以让这个档来做一些package初始化的动作，或者设定 <code>__all__</code>
+ 这个变数(稍后会再提)。   </p>
+                        <p> 使用package的人可以从package里使用(import)某一个module，例如：
+  </p>
+                        <p> </p>
+                        <dl>
+                        <dd><pre class="verbatim">import Sound.Effects.echo<br></pre>
+                          </dd>
+                          </dl>
+  
+                          <p> 上面的程式码会导入(load)  <tt class="module">Sound.Effects.echo</tt>
+ 这个module。如果你要使用这个module，你必须使用完整的名称，例如：   </p>
+                          <p> </p>
+                          <dl>
+                          <dd><pre class="verbatim">Sound.Effects.echo.echofilter(input, output, delay=0.7, atten=4)<br></pre>
+                            </dd>
+                            </dl>
+  
+                            <p> 另外一个导入在package中的某个module的方法是：   </p>
+                            <p> </p>
+                            <dl>
+                            <dd><pre class="verbatim">from Sound.Effects import echo<br></pre>
+                              </dd>
+                              </dl>
+  
+                              <p> 同样的，这会导入 <tt class="module">echo</tt> 这个moduel。不同的是，当你使用这个module的时候你就不用在写前面package的名称了。请看以下使用这个module的例子：
+  </p>
+                              <p> </p>
+                              <dl>
+                              <dd><pre class="verbatim">echo.echofilter(input, output, delay=0.7, atten=4)<br></pre>
+                                </dd>
+                                </dl>
+  
+                                <p> 你也可以直接的import某一个在module里面的函式或变数，如下例：
+  </p>
+                                <p> </p>
+                                <dl>
+                                <dd><pre class="verbatim">from Sound.Effects.echo import echofilter<br></pre>
+                                  </dd>
+                                  </dl>
+  
+                                  <p> 同样的，这会导入 <tt class="module">echo</tt>
+ 这个module，不同的是你现在可以直接的使用 <tt class="function">echofilter()</tt> 这个函式了：   </p>
+                                  <p> </p>
+                                  <dl>
+                                  <dd><pre class="verbatim">echofilter(input, output, delay=0.7, atten=4)<br></pre>
+                                    </dd>
+                                    </dl>
+  
+                                    <p> 值得注意的是当你使用 <code>from <var>package</var>
+ import <var>item</var></code> 这样的叙述时，你所import的东西可以是一个package中的module(或者是subpackage)，或者是在module里面所定义的名称，例如变数、类别或是函式等等。
+                                    <code>import</code>  叙述会先测试是否这个东西真的存在于这个package，如果没有的话，会假设这是一个module然后试着导入(load)之。如果还失败的话，就会引发一个
+ <tt class="exception">ImportError</tt> 的例外状况(exception)。   </p>
+                                    <p> 相反的是，当你使用 <code>import <var>item.subitem.subsubitem</var></code>
+ 这样的叙述时，除了最后一个东西(item)以外，其余的都必须是package。最后一个可以是 module 或是 package ，但是不能是一个定义在module里面的类别、成员或函式。
+  </p>
+                                    <p>  </p>
+                                    <h2> <br>
+ 6.4.1 从一个Package中Import *   </h2>
+  
+                                    <p> 那如果使用者写了 <code>from Sound.Effects
+import *</code> ，会造成什么结果呢？理想状况下，我们可能会期望会搜寻整个package目录，然后找出所有的module并且一一的import这些module。不幸的是，在Mac
+以及 Windows 平台下，档案的名称大小写并不统一。所以在这些平台之上，我们并无法保证  <span class="file">ECHO.PY</span>
+ 这个档案应该被import成 <tt class="module">echo</tt>, <tt class="module">Echo</tt>
+ 或  <tt class="module">ECHO</tt> (例如，Windows 95 有一个恼人的特点，就是会自动把所有的档案名称第一个字元大写)。DOS的
+8+3 档名限制对长的module名称来说，也是另一个有趣的问题。  </p>
+                                    <p> 所以唯一的解决方法就是package的作者要提供一个明显的index给用package的人。如果遵守这个习惯的话，当用package的人在import的时候使用
+                                    <code>from Sound.Effects import *</code>
+ 的话，就会去找这个package的 <span class="file">__init__.py</span> 档案里面的 <code>__all__</code>
+ 这个list变数，这个list里面就会包含所有应该被import进来的module名称了。身为Package的作者有责任要保持 <code>from
+                                    <var>package</var> import *</code> 这个档案的更新，但是如果package的作者确信没有人会用
+                                    <code>from Sound.Effects import *</code>
+ 这种写法的话，也可以不使用这个档案。举例来说   <span class="file">Sounds/Effects/__init__.py</span>
+ 这个档案就可以有下面这样的程式码：   </p>
+                                    <p> </p>
+                                    <dl>
+                                    <dd><pre class="verbatim">__all__ = ["echo", "surround", "reverse"]<br></pre>
+                                      </dd>
+                                      </dl>
+  
+                                      <p> 这就表示 <code>from Sound.Effects import
+*</code> 会从 <tt class="module">Sound</tt> 这个package 里面import 这三个module。   
+                                      </p>
+                                      <p> 如果没有定义  <code>__all__</code> 的话，
+                                      <code>from Sound.Effects import *</code>
+ 这个叙述就 <i>不会</i> 从  <tt class="module">Sound.Effects</tt> 这个package里面import所有的module进入目前的命名空间(namespace)。唯一能保证的是
+                                      <tt class="module">Sound.Effects</tt>
+ 这个package有被imported 进来(可能会执行 <span class="file">__init__.py</span> 里面的初始化程式码)，并且这个package里面所定义的名称会被import进来。Package里所定义的名称包含了在
+                                      <span class="file">__init__.py</span>
+ 里面所定义的名称(以及所import的module)。当然也包含了在之前用import引进来的module名称，例如：   </p>
+                                      <p> </p>
+                                      <dl>
+                                      <dd><pre class="verbatim">import Sound.Effects.echo<br>import Sound.Effects.surround<br>from Sound.Effects import *<br></pre>
+                                        </dd>
+                                        </dl>
+  
+                                        <p> 在这个例子里，echo以及 surround 这两个modules
+都会被 import进来目前的命名空间(namespace)里。这是因为当 <code>from...import</code> 这个叙述执行的时候，这两个module都已经在这个package中有定义了(你也可以用
+                                        <code>__all__</code> 来定义)。  </p>
+                                        <p> 值得注意的是使用import * 这样的写法常常是不被鼓励的，因为这通常会使得你的程式的可读性降低。无论如何，在互动模式下这样做的确会使你减少打太多字的机会，而且有些的module在设计的时候就故意只让某些特别的名称可以被使用。
+  </p>
+                                        <p> 记住，使用 <code>from Package import
+specific_submodule</code> 没有任何不对的地方。事实上，除非你的module的名字会和其他的名称冲突，否则这是常被推荐使用的形式。
+  </p>
+                                        <p>  </p>
+                                        <h2><a name="SECTION008420000000000000000">
+ 6.4.2 Package内的References(参考) </a> </h2>
+  
+                                        <p> 在package之中的module常常需要彼此互相使用。例如说，
+ <tt class="module">surround</tt> 这个module就有可能会使用到 <tt class="module">echo</tt>
+ 这个module里的东西。事实上，由于这是最常见的，所以import的时候总是会先找自己这的package里面的module，然后再依照搜寻的路径来寻找。因此
+                                        <tt class="module">surround</tt>
+ 这个module可以使用 <code>import echo</code> 或是  <code>from echo import echofilter</code>
+ 就可以了。如果在自己所处的这个package里面找不到这个要import的module的话，  <code>import</code> 指令就会在第一级(top-level)的module里找所指定的名称。 
+ </p>
+                                        <p> 当一个subpackage是在另一个package里的话(例如前面的
+ <tt class="module">Sound</tt> )，没有其他捷径可以让你使用其他在同一个外围的package里面的subpackage里的module，你必须使用完整的名称来指称你所要用的package。例如说，如果在
+ <tt class="module">Sound.Filters.vocoder</tt> 这个module里面你想要使用在 <tt class="module">
+Sound.Effects</tt> 这个package里的  <tt class="module">echo</tt> 这个module的话，你就要使用
+                                        <code>from Sound.Effects import echo</code>
+ 这个叙述。   </p>
+                                        <p> <br>
+                                        </p>
+                                        <hr>
+                                        <h4>注脚</h4>
+ 
+                                        <dl>
+                                        <dt><a name="foot628">... 才会被执行。
+                                          </a><a name="foot628" href="node8.html#tex2html4"><sup>
+6.1</sup></a> </dt>
+                                          <dd>         事实上，函式的定义也是&rdquo;被执行&rdquo;的叙述，这个执行的结果是把函式的名称写入module的global
+symbol table里面。   </dd>
+                                            </dl>
+ 
+                                            <div class="navigation">
+                                            <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                                                <tr>
+ <td><a href="node7.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node9.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                                              </tbody>
+                                            </table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node7.html">5.
+资料结构</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">Python
+教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node9.html">
+7. 输入与输出</a> <br>
+                                            <hr></div>
+ <!--End of Navigation Panel--> 
+                                            <address> </address>
+                                            <hr>请看<i><a href="about.html">
+关于此文件&hellip;</a></i> 里面有关如何给我们建议的说明。  
+                                            </body>
+                                            </html>

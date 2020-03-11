@@ -1,0 +1,2316 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 16</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 16.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 16.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 16.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2015.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2017.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 16. Advanced Swing</h2><ul><li>&nbsp;<a class="docLink" href="#ch16lev1sec1">JTable</a></li>
+<li>&nbsp;<a class="docLink" href="#ch16lev1sec2">Working with Table Models</a></li>
+<li>&nbsp;<a class="docLink" href="#ch16lev1sec3">Putting Things Together—Adding a Table Model to the Address Book Application</a></li>
+<li>&nbsp;<a class="docLink" href="#ch16lev1sec4">JTree</a></li>
+<li>&nbsp;<a class="docLink" href="#ch16lev1sec5">JToolBar and Actions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch16lev1sec6">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Abstract method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Array</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Data model</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Design pattern</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Event listening</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Functional decomposition</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Hashtable</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Helper method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Key/value pair</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Main module</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Object wrapper</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Self-documentation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Tree model/node</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Our coverage of Swing so far has focused on its differences 
+from, and advantages over, AWT. But Swing is more than that. For example, it has 
+some powerful GUI components, particularly <tt>JTable</tt> and <tt>JTree</tt>.
+<tt>JTable</tt> shows data in a table view, as in a spreadsheet; <tt>JTree</tt> 
+displays data in a hierarchical view, as in Microsoft Windows Explorer.</p>
+<p class="docText">In this chapter, we'll update the address book program, 
+making it a JFC application that uses <tt>JTable</tt>. As we do this, we'll 
+introduce other Swing components.</p>
+<h3 class="docSection1Title" id="ch16lev1sec1">JTable</h3>
+<p class="docText">To start out, we'll create a prototype that introduces the 
+key features of <tt>JTable</tt>. Then we'll add <tt>JTable</tt> support to the 
+address application. This time the application will use the MVC architecture—the
+<tt>AddressBook</tt> class instance will be a model for the table.</p>
+<p class="docText">We'll begin by creating a 4-by-4 grid, but first let's learn 
+to use the <tt>JTable</tt> component. As always, follow along in the interactive 
+interpreter.</p>
+<p class="docText">Import the <tt>JFrame</tt> and <tt>JTable</tt> classes from 
+the <span class="docEmphasis">javax.swing</span> package.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame, JTable</pre>
+<p class="docText">Create an instance of <tt>JFrame</tt> to hold the table.</p>
+<pre>&gt;&gt;&gt; frame = JFrame('JTable example')</pre>
+<p class="docText">Create an instance of <tt>JTable</tt>, passing the number of 
+rows and columns to its constructor. Then add the table to the frame.</p>
+<pre>&gt;&gt;&gt; table = JTable(4,4)
+&gt;&gt;&gt; frame.contentPane.add(table)
+javax.swing.JTable[,0,0,0x0,invalid,alignmentX=null,alignmentY=null,border=,flag
+s=32,maximumSize=,minimumSize=,preferredSize=,autoCreateColumnsFromModel=true,
+autoResizeMode=AUTO_RESIZE_SUBSEQUENT_COLUMNS,cellSelectionEnabled=false,
+editing...
+...</pre>
+<p class="docText">Pack the table in the frame, and show the frame.</p>
+<pre>&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible = 1</pre>
+<p class="docText">Select a cell, and start typing if you want to. The typed 
+text will show up in the cell, as illustrated in
+<a class="docLink" href="#ch16fig01">Figure 16-1</a>.</p>
+<center>
+<h5 id="ch16fig01" class="docFigureTitle">Figure 16-1. Cells with Text Entered</h5>
+<p class="docText"><img alt="graphics/16fig01.gif" src="16fig01.gif" border="0" width="175" height="86"></p>
+</center>
+<h4 class="docSection2Title" id="ch16lev2sec1">The Default Table Model</h4>
+<p class="docText">We didn't specify a model, so a default was provided in which 
+the actual table data is kept. Here's how to access that data.</p>
+<p class="docText">Get the first row.</p>
+<pre>&gt;&gt;&gt; table.model.dataVector[0]
+[Hello, World, Its, good]</pre>
+<p class="docText">Get the first row, second column.</p>
+<pre>&gt;&gt;&gt; table.model.dataVector[0][1]
+'World'</pre>
+<p class="docText">Get the first row, first column.</p>
+<pre>&gt;&gt;&gt; table.model.dataVector[0][0]
+'Hello'</pre>
+<p class="docText">This method is only guaranteed to work for the default. I use 
+it to acclimate you to the model concepts first introduced in
+<a class="docLink" href="_chapter%2014.htm">Chapter 14</a>, on <tt>
+JList</tt>.</p>
+<p class="docText">Other forms of the <tt>JTable</tt> constructor allow you to 
+pass in the initial values, that is, the row and column data. Here's an example.</p>
+<p class="docText">Create the row data.</p>
+<pre>&gt;&gt;&gt; rowData = [ ['Marhta','Pena'],['Missy','Car'], ['Miguel','TorreAlto'] ]</pre>
+<p class="docText">Create the column headers.</p>
+<pre>&gt;&gt;&gt; columnNames = ['First name', 'Last name']</pre>
+<p class="docText">Create a table with the row data and column headers.</p>
+<pre>&gt;&gt;&gt; table = JTable(rowData,columnNames)
+&gt;&gt;&gt; frame.contentPane.add(table)
+javax.swing.JTable[,0,0,0x0,invalid,alignmentX=null,alignmentY=null,border=,
+flags=32,maximumSize=,minimumSize=,preferredSize=,autoCreateColumnsFromModel=true,
+autoResizeMode=AUTO_RESIZE_SUBSEQUENT_COLUMNS,cellSelectionEnabled=false,editing
+Column=-1,editingRow=1,gridColor=javax.swing.plaf.ColorUIResource[r=153,g=153,b=1
+...</pre>
+<p class="docText">Pack the table, and display it.</p>
+<pre>&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible=1</pre>
+<p class="docText">There are other ways to set the initial data. Later we'll 
+cover the ones that are substantially different, as well as a special method of 
+populating a table with data using MVC.</p>
+<h4 class="docSection2Title" id="ch16lev2sec2">Getting and Setting Table Values</h4>
+<p class="docText">With the interface provided by <tt>JTable</tt>, you can get 
+and set table values. Once the data is set, you can modify it with the <tt>
+setValueAt()</tt>method.</p>
+<pre>&gt;&gt;&gt; table.setValueAt('Hightower', 0, 1)
+&gt;&gt;&gt; table.setValueAt('Hightower', 1, 1)
+&gt;&gt;&gt; table.setValueAt('Pena', 2, 1)</pre>
+<p class="docText">However, the more correct way of accessing data is with <tt>
+getValueAt()</tt>.</p>
+<pre>&gt;&gt;&gt; table.getValueAt(0,0)
+'Marhta'</pre>
+<p class="docText">Tables can work with object wrappers of primitive 
+types—Boolean, integer, float, and so forth. Here we set the second column's 
+values to Boolean so that they look like <a class="docLink" href="#ch16fig02">
+Figure 16-2</a>.</p>
+<center>
+<h5 id="ch16fig02" class="docFigureTitle">Figure 16-2. Example Table with the Second Column Set 
+to Boolean Values</h5>
+<p class="docText"><img alt="graphics/16fig02.gif" src="16fig02.gif" border="0" width="175" height="86"></p>
+</center>
+<pre>&gt;&gt;&gt; from java.lang import Boolean
+&gt;&gt;&gt; table.setValueAt(Boolean(1), 0, 1)
+&gt;&gt;&gt; table.setValueAt(Boolean(0), 1, 1)
+&gt;&gt;&gt; table.setValueAt(Boolean(1), 2, 1)</pre>
+<p class="docText">You may have noticed that our demo table doesn't show 
+headers. I don't know why, but I suspect it's a bug in JDK v.1.2.1. As a 
+workaround, we can put the table in a scroll pane (<tt>JScrollPane</tt>). You 
+usually do this anyway, so there should be no problem. It wasn't necessary in 
+earlier Swing versions.</p>
+<p class="docText"><tt>JList</tt> makes much use of <tt>JScrollPane</tt>, which 
+adds scrolling to a list or table via the Decorator design pattern (see
+<span class="docEmphasis">Design Patterns</span>, Gamma et al., 1995). Here's 
+the last example (from <span class="docEmphasis">JTable2.py</span>) with the 
+missing headers restored.</p>
+<pre>from javax.swing import JFrame, JTable, JScrollPane
+
+frame = JFrame('JTable example')
+      #Create row data.
+rowData = [ ['Marhta','Pena'],['Missy','Car'], ['Miguel','TorreAlto'] ]
+
+      #Create column headers.
+columnNames = ['First name', 'Last name']
+
+      #Create a table with the row data and the column headers.
+table = JTable(rowData,columnNames)
+frame.contentPane.add(JScrollPane(table))
+
+frame.pack()
+frame.visible = 1</pre>
+<p class="docText">Now the table should look like
+<a class="docLink" href="#ch16fig03">Figure 16-3</a>.</p>
+<center>
+<h5 id="ch16fig03" class="docFigureTitle">Figure 16-3. Table with the Column Headers Restored</h5>
+<p class="docText"><img alt="graphics/16fig03.gif" src="16fig03.gif" border="0" width="500" height="112"></p>
+</center>
+<h3 class="docSection1Title" id="ch16lev1sec2">Working with Table Models</h3>
+<p class="docText">The most common way to create tables is to supply the data 
+model first. <tt>JTable</tt> works with any class instance that inherits from 
+the <tt>TableModel</tt> interface (recall that a Java interface is like a Python 
+class with all abstract methods). Let's first see what the <tt>TableModel</tt> 
+methods do and then create a short example that uses our old address book 
+application.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Data Model Review</h2>
+      <p class="docText">We've covered <tt>TableModel</tt> and <tt>JList</tt>, 
+      so I won't go into the same level of detail because I'm assuming that you 
+      did your reading and your exercises and now have a basic understanding of 
+      them. If you don't, you may want to do a little review. You'll need it to 
+      understand the <tt>JTable</tt> and <tt>JTree</tt> controls, which will be 
+      covered later on.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch16lev2sec3">The TableModel Interface</h4>
+<p class="docText">The <tt>TableModel</tt> interface is contained in <tt>
+javax.swing.table</tt> and specifies how table model data will be treated. Any 
+class that implements <tt>TableModel</tt> can act as a data model for <tt>JTable</tt>.</p>
+<p class="docText">Here are <tt>TableModel</tt>'s methods:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>getRowCount()</tt></li>
+  <li>
+  <p class="docList"><tt>getColumnCount()</tt></li>
+  <li>
+  <p class="docList"><tt>getColumnName(columnIndex)</tt></li>
+  <li>
+  <p class="docList"><tt>getColumnClass(columnIndex)</tt></li>
+  <li>
+  <p class="docList"><tt>isCellEditable(rowIndex, columnIndex)</tt></li>
+  <li>
+  <p class="docList"><tt>getValueAt(rowIndex, columnIndex)</tt></li>
+  <li>
+  <p class="docList"><tt>setValueAt(rowIndex, columnIndex)</tt></li>
+  <li>
+  <p class="docList"><tt>addTableModelListener(l)</tt></li>
+  <li>
+  <p class="docList"><tt>removeTableModelListener(l)</tt></li>
+</ul>
+<p class="docText"><tt>TableModel</tt> represents a tabular object just like a 
+spreadsheet. Thus, <tt>getRowCount()</tt> and <tt>getColumnCount()</tt> return 
+the number of rows and columns, from which the total number of cells can be 
+calculated (row count * column count). You can access the row and column counts 
+as the properties <tt>instance.columnCount</tt> and <tt>instance.rowCount</tt>, 
+respectively.</p>
+<p class="docText"><tt>setValueAt()</tt> and <tt>getValueAt()</tt> set and get 
+cell data by specifying the cell's row and column indexes. The <tt>
+isCellEditable()</tt> method determines if the cell is read-only or read/write. 
+Many times when using a table, you're likely showing a report or some other type 
+of static data, in which case <tt>isCellEditable()</tt> returns false. If you're 
+changing the cell data, it returns true.</p>
+<p class="docText"><tt>getColumnName()</tt>, obviously, returns the name of a 
+column. <tt>getColumnClass()</tt> returns the class that the column deals with, 
+which helps in displaying and editing the column's cells, as we'll see later.</p>
+<p class="docText"><tt>addTableModelListener()</tt> and <tt>
+removeTableModelListener()</tt> allow components like <tt>JTable</tt> instances 
+to register for <tt>TableModel</tt> events.</p>
+<h4 class="docSection2Title" id="ch16lev2sec4">The AbstractDataModel Class</h4>
+<p class="docText">Firing events and tracking event listeners can be real but 
+necessary annoyances. Wouldn't it be nice, though, if all of their functionality 
+was in a common, extensible class? This is where object-oriented programming 
+comes in. Our friends at JavaSoft have combined event firing and listener 
+tracking in a class called <tt>AbstractDataModel</tt>.</p>
+<p class="docText"><tt>AbstractDataModel</tt> is, obviously, abstract, so you 
+have to instantiate it in a subclass (i.e., extend it). It makes no assumption 
+about how you supply or define your data, so you don't get the <tt>getRowCount()</tt>,
+<tt>getColumnCount()</tt>, or <tt>getValueAt()</tt> methods with it. That's 
+okay, because <tt>DefaultDataModel</tt>, which does have them, extends <tt>
+AbstractDataModel</tt>.</p>
+<p class="docText">Remember when we initialized a <tt>JTable</tt> with no model, 
+just data? <tt>JTable</tt> took that data and passed it to an instance of <tt>
+DefaultDataModel</tt>. In other words, even when we don't pass <tt>JTable</tt> a 
+model, it still uses one, or rather it uses an instance of a class that 
+implements the <tt>TableModel</tt> interface.</p>
+<p class="docText">To show how <tt>AbstractDataModel</tt> works, we'll go back 
+to our pizza topping application, but this time we'll add editable columns and 
+Boolean values. The first column will list the toppings; the second will hold 
+checkboxes that are set when the customer makes a selection.</p>
+<p class="docText">Here's the complete topping code (<span class="docEmphasis">model.py</span>):</p>
+<pre>from javax.swing.table import AbstractTableModel
+from java.lang import Boolean, String
+
+class PizzaTableModel(AbstractTableModel):
+
+      def __init__(self):
+            self.data = [ ['Pepperoni', Boolean(0)],
+                         ['Sausage', Boolean(0)],
+                         ['Onions', Boolean(0)],
+                         ['Olives', Boolean(0)],
+                         ['Mushrooms', Boolean(0)],
+                         ['Peppers', Boolean(0)] ]
+            self.columnNames = ['Topping', 'Add?']
+            self.columnClasses = [String, Boolean]
+            self.Add=1
+
+      def getRowCount(self):
+            return len(self.data)
+
+      def getColumnCount(self):
+            return len(self.data[0])
+
+      def getValueAt(self, rowIndex, columnIndex):
+            return self.data[rowIndex][columnIndex]
+
+      def getColumnName(self, columnIndex):
+            return self.columnNames[columnIndex]
+      def getColumnClass(self, columnIndex):
+            return self.columnClasses[columnIndex]
+
+      def isCellEditable(self, rowIndex, columnIndex):
+            return columnIndex == self.Add
+
+      def setValueAt (self, value, rowIndex, columnIndex):
+            if(columnIndex == self.Add):
+                   value = Boolean(value)
+                   self.data[rowIndex][columnIndex] = value
+                   self.fireTableCellUpdated(rowIndex, columnIndex)</pre>
+<h4 class="docSection2Title" id="ch16lev2sec5">A Table Model for the Pizza Topping 
+Application—Step by Step</h4>
+<p class="docText">First we import the classes we need: <tt>AbstractTableModel</tt> 
+and <tt>PizzaTableModel</tt> (which extends <tt>AbstractTableModel</tt>). <tt>
+PizzaTableModel</tt> provides the user interface. It also imports the <tt>
+Boolean</tt> and <tt>String</tt> classes, which it uses for the <tt>
+getColumnClass()</tt> method (more on this later).</p>
+<pre>from javax.swing.table import AbstractTableModel
+from java.lang import Boolean, String
+
+class PizzaTableModel(AbstractTableModel):</pre>
+<p class="docText">Next the <tt>PizzaTableModel</tt> constructor defines three 
+variables: <tt>data</tt>, which holds the cell data in a list of lists; <tt>
+columnNames</tt>, which holds the column headers in a list of strings; and <tt>
+columnClasses</tt>, which holds the classes in a list of classes. It also 
+defines a variable—a constant that defines the location of the Add? column. Add? 
+consists of Boolean values that determine whether or not a customer selects a 
+particular topping.</p>
+<pre>def __init__(self):
+      self.data = [ ['Pepperoni', Boolean(0)],
+                   ['Sausage', Boolean(0)],
+                   ['Onions', Boolean(0)],
+                   ['Olives', Boolean(0)],
+                   ['Mushrooms', Boolean(0)],
+                   ['Peppers', Boolean(0)] ]
+      self.columnNames = ['Topping', 'Add?']
+      self.columnClasses = [String, Boolean]
+      self.Add=1</pre>
+<p class="docText"><tt>PizzaTableModel</tt> implements <tt>getRowCount()</tt> by 
+returning the length of the data list.</p>
+<pre>def getRowCount(self):
+      return len(self.data)</pre>
+<p class="docText">It also implements <tt>getColumnCount()</tt> by returning the 
+length of the first list in the <tt>data</tt> variable. Recall that <tt>data</tt> 
+is a list of lists and that all of the lists contain two items.</p>
+<pre>def getColumnCount(self):
+      return len(self.data[0])</pre>
+<p class="docText"><tt>getValueAt()</tt> indexes the rows and columns of <tt>
+data</tt>'s list of lists and returns</p>
+<pre>def getValueAt(self, rowIndex, columnIndex):
+      return self.data[rowIndex][columnIndex]</pre>
+<p class="docText"><tt>getColumnNames()</tt> indexes the <tt>columnNames</tt> 
+list with the <tt>columnIndex</tt> argument and returns</p>
+<pre>def getColumnName(self, columnIndex):
+      return self.columnNames[columnIndex]</pre>
+<p class="docText"><tt>getColumnClass()</tt> returns the value that results from 
+indexing <tt>columnClasses</tt>. The class it returns determines the cell editor
+<tt>JTable</tt> will use. Setting the second column to Boolean values converts 
+it to checkboxes.</p>
+<pre>def getColumnClass(self, columnIndex):
+      return self.columnClasses[columnIndex]</pre>
+<p class="docText"><tt>isCellEditable()</tt> helps <tt>JTable</tt> determine if 
+the cell can be modified. Every cell in Add? is editable, so for that column a 
+true value is returned. Remember, the <tt>Add</tt> attribute is a constant that 
+denotes the Add? column.</p>
+<pre>def isCellEditable(self, rowIndex, columnIndex):
+      return columnIndex == self.Add</pre>
+<p class="docText"><tt>setValueAt()</tt> sets the value of the Add? column only. 
+It should never be called for the Toppings column unless the <tt>JTable</tt> 
+instance has determined, through <tt>isCellEditable()</tt>, that it can be 
+modified. For this reason, <tt>setValueAt()</tt> checks if the column index is 
+Add? If so, it converts the set value to Boolean.</p>
+<p class="docText">Remember that Python treats Boolean primitives as integers, 
+so we convert the set value to Boolean. Then we index <tt>data</tt> with the <tt>
+rowIndex</tt> and <tt>columnIndex</tt> arguments, set the data's value, and 
+notify all event listeners of the change via <tt>fireTableCell()</tt>.</p>
+<p class="docText"><tt>AbstractTableModel</tt> implements <tt>fireTableCell()</tt> 
+along with other helper methods like <tt>addTableModelListener()</tt> and <tt>
+removeTableModelListener()</tt>.</p>
+<pre>def setValueAt (self, value, rowIndex, columnIndex):
+       if(columnIndex == self.Add):
+              value = Boolean(value)
+              self.data[rowIndex][columnIndex] = value
+              self.fireTableCellUpdated(rowIndex, columnIndex)</pre>
+<p class="docText">To test the model at this point we add the following code, 
+but only if <span class="docEmphasis">model.py</span> is run as the main module.</p>
+<pre>if __name__ == '__main__':
+      from javax.swing import JTable, JFrame, JScrollPane
+      pizza_model = PizzaTableModel()
+      table = JTable(pizza_model)
+      frame = JFrame('Select your toppings')
+      frame.contentPane.add(JScrollPane(table))
+      frame.pack()
+      frame.visible = 1</pre>
+<p class="docText">The first part of the code imports <tt>JTable</tt>, <tt>
+JFrame</tt>, and <tt>JScrollPane</tt>. Then it creates a table and a frame and 
+passes the table to a <tt>JScrollPane</tt> constructor, adding the <tt>
+JScrollPane</tt> instance to the frame's content pane. Finally it packs the 
+frame and makes it visible.</p>
+<p class="docText">Run <span class="docEmphasis">model.py.</span> What you get 
+should look like <a class="docLink" href="#ch16fig04">Figure 16-4</a>. Then try 
+these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Add five more toppings.</li>
+  <li>
+  <p class="docList">Add a column called Extra for the customer to choose an 
+  extra amount of a particular topping. Make it so the cells can be edited only 
+  if the corresponding cell in the Add? column is selected.</li>
+</ul>
+<center>
+<h5 id="ch16fig04" class="docFigureTitle">Figure 16-4. The Topping Table</h5>
+<p class="docText"><img alt="graphics/16fig04.gif" src="16fig04.gif" border="0" width="500" height="187"></p>
+</center>
+<h3 class="docSection1Title" id="ch16lev1sec3">Putting Things Together—Adding a Table Model to the 
+Address Book Application</h3>
+<p class="docText">In this section, we'll add a table model to the address book 
+application and &quot;swingify&quot; some of the application's AWT ways.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">AWT to JFC</h2>
+      <p class="docText">The first time I wrote the address book application, I 
+      used all of the old AWT components (<tt>java.awt.Frame</tt>, <tt>
+      java.awt.Panel</tt>, etc.). When I modified it, only 12 lines out of 114 
+      had to be changed, and 9 of those dealt with <tt>JList</tt>.</p>
+      <p class="docText">The point is that the move from <tt>List</tt> to <tt>
+      JList</tt> changed a lot, although most of the changes weren't needed. 
+      Other JFC/AWT components map nicely even though they're not closely 
+      related on the class hierarchy. Luckily, <tt>JList</tt> is the exception, 
+      not the rule.</p>
+      <p class="docText">Up to now what we've seen of JFC/Swing is pretty much 
+      the same as AWT. Most developers have migrated to Swing by now, in spite 
+      of the fact that the first few Swing versions were well short of perfect. 
+      Since then, Swing has proven its worth.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch16lev2sec6">Adding a Table and Moving the Address Data to a 
+View</h4>
+<p class="docText">Now it's time to start tinkering with our &quot;swingified&quot; 
+address book application, first adding support for a table. To do this we'll 
+move the address data to a model, which will be a combination table and list. 
+The purpose is to show how, with MVC, many views can be updated from a single 
+data source.</p>
+<p class="docText">Recall from prior examples that the address data was loaded 
+into a dictionary (<tt>dict</tt>) from a file. We'll use this dictionary to hold 
+the addresses, as always, but instead of making <tt>dict</tt> an aggregate 
+member of <tt>AddressMain</tt>, we'll create a new class called <tt>AddressModel</tt> 
+that acts as both a list model and a table model and put <tt>dict</tt> in there. 
+Then we'll add a JFC table to the class so that both the <tt>JList</tt> and <tt>
+JTable</tt> instances reference the same model—that is, an <tt>AddressMain</tt> 
+instance.</p>
+<p class="docText">The tricky part of <tt>AddressMain</tt> is mapping the 
+address data (stored in a dictionary) to both the list and table models. We'll 
+accomplish this by creating a Python list to contain the sorted dictionary keys, 
+which we'll use to sort the addresses by name into table rows. This will make it 
+easier to get the <tt>address</tt> instance at a given row index.</p>
+<p class="docText">For <tt>AddressModel</tt> to act as a model for both a list 
+and a table, it needs to implement the <tt>ListModel</tt> and <tt>TableModel</tt> 
+interfaces. As I said earlier, JFC provides <tt>AbstractListModel</tt> and <tt>
+AbstractTableModel</tt> classes that hold a good part of the functionality 
+needed to implement their respective models. We want to use them, but we can't 
+just inherit their functionality. In Java you can't extend two base classes, but 
+you can implement many interfaces. In Jython you can't extend two Java base 
+classes, but you can extend two Python base classes. To overcome this obstacle, 
+what we have to do is extend from <tt>AbstractTableModel</tt> and implement <tt>
+AbstractListModel</tt>'s interface.</p>
+<h4 class="docSection2Title" id="ch16lev2sec7">AddressModel</h4>
+<p class="docText">The following code (from <span class="docEmphasis">Two/AddressModel.py</span>) 
+shows <tt>AddressModel</tt>'s definition and constructor. Notice that <tt>
+AddressModel</tt> implements <tt>TableModel</tt> (through <tt>AbstractTableModel</tt>) 
+and <tt>ListModel</tt>.</p>
+<pre>class AddressModel(AbstractTableModel, ListModel):
+       &quot;&quot;&quot;The AddressModel is both a ListModel and a TableModel.&quot;&quot;&quot;
+       def __init__(self):
+             &quot;&quot;&quot;Initialize the Address model.
+             Read the dictionary from the file.&quot;&quot;&quot;
+
+             self.dict = None    # holds the dictionary of addresses.
+             self.list = None    # holds the sorted list of names,
+                                 # which are keys
+                                 # into the dictionary.
+
+             self.listeners = [] #to hold list of ListModelListeners
+
+                   # Read the addresses from the file.
+             self.fname=&quot;.\\addr.dat&quot;       # holds the file name
+                                            # that holds the addresses
+             self.dict = readAddresses(self.fname)
+
+                   # Store the sorted list of names.
+             self.list = self.dict.keys()
+             self.list.sort()
+
+                   # Define the column names and locations in the table.
+             self.columnNames=['Name', 'Phone #', 'Email']
+             self.NAME = 0   # To hold the location of the name column
+             self.PHONE = 1 # To hold the location of the phone number column
+             self.EMAIL = 2  # To hold the location of the email column</pre>
+<p class="docText">We can see that the list is sorted and that the rows in the 
+table correspond to the index values of the sorted names. Thus, a given address 
+is stored in the table based on the index of the name in the list. For the 
+columns, we need to be more creative. The constants defined in the constructor 
+correspond to the placement of the <tt>address</tt> instance fields in the rows 
+relative to the columns.</p>
+<h4 class="docSection2Title" id="ch16lev2sec8">AddressModel's Helper Methods</h4>
+<p class="docText">To map the address dictionary (<tt>self.dict</tt>) in the <tt>
+AddressModel</tt> interface to a table, we need to define some helper methods, 
+as shown in the following code (<span class="docEmphasis">Two\AddressModel.py</span>). 
+The method names are self-explanatory, and the comments should fill in any 
+blanks. (Make sure to read the comments and document strings; think of them as 
+integral to the concepts in this chapter.)</p>
+<pre>def __getAddressAtRow(self, rowIndex):
+         &quot;&quot;&quot;Get the address at the specified row.
+              (Private methods begin with __)&quot;&quot;&quot;
+
+                  # Get the row name out of the list.
+                  # Use the name to index the dictionary of addresses.
+                  # Get the address associated with this row.
+         name = self.list[rowIndex]
+         address = self.dict[name]
+         return address
+def __getAddressAttributeAtColumn(self, address, columnIndex):
+         &quot;&quot;&quot;Get the attribute of the address at the
+              specified column index. Maps column indexes to
+              attributes of the address class instances.&quot;&quot;&quot;
+
+         value = None # Holds the value we are going to return
+
+                  # Set the value based on the column index.
+         if(columnIndex == self.NAME):
+                  value = address.name()</pre>
+<h5 class="docSection3Title" id="ch16lev3sec1">Mapping to ListModel and TableModel</h5>
+<p class="docText">The first two helper methods map the <tt>list</tt> and <tt>
+name</tt> attributes to <tt>ListModel</tt> and the <tt>dict</tt> and <tt>address</tt> 
+instances to <tt>TableModel</tt>. <tt>getAddressAtRow()</tt> gets the address at 
+the specified row. <tt>getAddressAttributeAtColumn()</tt> gets the <tt>address</tt> 
+attribute at the specified column index; that is, it maps column indexes to 
+attributes of the <tt>address</tt> instances. Since the <tt>name</tt> attribute 
+is used to determine the row index, <tt>__changeDictKey()</tt> and <tt>__changeList()</tt> 
+keep the list and dictionary in sync with each address whose name attribute is 
+changed.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Comments: More Is More</h2>
+      <p class="docText">Sometimes I comment the obvious in my code, but when it 
+      comes to comments I don't believe that less is more. In fact, when things 
+      aren't obvious, such as mapping a dictionary to a table model, I prefer to 
+      go overboard.</p>
+      <p class="docText">Don't be chintzy with your comments. For every minute 
+      saved by not writing them, you'll waste a hundred minutes in code 
+      maintenance.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Stupid Methods</h2>
+      <p class="docText">Most of the time you break methods into many other 
+      methods so that the same code isn't repeated in different places. This is 
+      an idea borrowed from functional decomposition. In object-oriented 
+      programming, there's another reason to do this. It's called stupid, and 
+      that's a good thing.</p>
+      <p class="docText">Keep your methods short and stupid. Long methods are 
+      hard to understand and hard to change, so you have to divide to conquer.
+      <tt>__setAddressAttributeAtColumn()</tt> is a stupid method because it's 
+      called by only one other method, leaving functional decomposition out of 
+      the picture.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 class="docSection3Title" id="ch16lev3sec2">Implementing the ListModel Interface</h5>
+<p class="docText"><tt>AddressModel</tt>'s next four methods implement the <tt>
+ListModel</tt> interface.</p>
+<pre>def getSize(self):
+      &quot;&quot;&quot;Returns the length of the items in the list.&quot;&quot;&quot;
+      return len(self.list)
+
+def getElementAt(self, index):
+      &quot;&quot;&quot; Returns the value at index. &quot;&quot;&quot;
+      return self.list[index]
+
+def addListDataListener(self, l):
+      &quot;&quot;&quot;Add a listener that's notified when the model changes.&quot;&quot;&quot;
+      self.listeners.append(l)
+
+def removeListDataListener(self, l):
+      &quot;&quot;&quot;Remove a listener.&quot;&quot;&quot;
+      self.listeners.remove(l)</pre>
+<p class="docText"><tt>getSize()</tt> returns the length of the <tt>list</tt> 
+attribute. (Remember that <tt>list</tt> consists of the sorted keys of the <tt>
+dict</tt> attribute, and <tt>name</tt> corresponds to the address stored at the 
+location indicated by the key.) <tt>getElementAt()</tt> returns the element at 
+the index from the list. <tt>addListDataListener()</tt> and <tt>
+removeListDataListener()</tt> keep track of the listeners that subscribe to 
+events from <tt>AddressModel</tt> instances.</p>
+<h5 class="docSection3Title" id="ch16lev3sec3">ListModel Event Notification</h5>
+<p class="docText">Every time a <tt>ListModel</tt> event occurs, <tt>
+AddressModel</tt> notifies the listeners that have subscribed to it using the 
+following methods:</p>
+<pre>def __fireContentsChanged(self, index, index1):
+       &quot;&quot;&quot;Fire contents changed, notify viewers
+           that the list changed.&quot;&quot;&quot;
+       event = ListDataEvent(self, ListDataEvent.CONTENTS_CHANGED, index,
+               index1)
+
+           for listener in self.listeners:
+               listener.contentsChanged(event)
+
+def __fireIntervalAdded(self, index, index1):
+       &quot;&quot;&quot;Fire interval added, notify viewers
+          that the items were added to the list.&quot;&quot;&quot;
+       event = ListDataEvent(self, ListDataEvent.INTERVAL_ADDED, index,
+               index1)
+
+           for listener in self.listeners:
+               listener.intervalAdded(event)
+
+def __fireIntervalRemoved(self, index, index1):
+       &quot;&quot;&quot;Fire interval removed from the list,
+           notify viewers.&quot;&quot;&quot;
+
+           event = ListDataEvent(self, ListDataEvent.INTERVAL_REMOVED, index,
+                   index1)
+           for listener in self.listeners:
+               listener.intervalRemoved(event)</pre>
+<h5 class="docSection3Title" id="ch16lev3sec4">Implementing the TableModel Interface</h5>
+<p class="docText">The next set of methods help implement the <tt>TableModel</tt> 
+interface, partly by extending the <tt>AbstractTableModel</tt> class and partly 
+by mapping the addresses stored in the dictionary to the rows and columns in the 
+table model.</p>
+<pre>## The following methods implement the TableModel interface. ————— ##
+
+        def addTableModelListener(self, l):
+               &quot;&quot;&quot;Add a listener that gets notified when the data model
+                 changes. Since all we are doing is calling the super,
+                 we don't need this method.&quot;&quot;&quot;
+               AbstractTableModel.addTableModelListener(self, l)
+
+        def removeTableModelListener(self, l):
+               &quot;&quot;&quot;Remove a listener. Since all we are doing is
+                   calling the super, we don't need this method.
+                   It's here for example.&quot;&quot;&quot;
+               AbstractTableModel.removeTableModelListener(self, l)
+
+        def getColumnClass(self, columnIndex):
+               &quot;&quot;&quot;Returns the common base Class for the column.&quot;&quot;&quot;
+               return String
+        def getColumnCount(self):
+               &quot;&quot;&quot;Returns the number of columns in the data model.&quot;&quot;&quot;
+               return len(self.columnNames)
+
+        def getColumnName(self, columnIndex):
+               &quot;&quot;&quot;Returns the name of the given column by columnIndex.&quot;&quot;&quot;
+               return self.columnNames[columnIndex]
+
+        def getRowCount(self):
+               &quot;&quot;&quot;Returns the number of rows in the table model.&quot;&quot;&quot;
+               return len(self.list)
+
+        def getValueAt(self, rowIndex, columnIndex):
+               &quot;&quot;&quot;Returns the cell value at location specified
+                   by columnIndex and rowIndex.&quot;&quot;&quot;
+
+                       # Get the address object corresponding to this row.
+               address = self.__getAddressAtRow(rowIndex)
+
+                       # Get the address attribute corresponding
+                       # to this column.
+               value = self.__getAddressAttributeAtColumn(address, columnIndex)
+
+               return value
+
+        def isCellEditable(self, rowIndex, columnIndex):
+               &quot;&quot;&quot;Returns if the cell is editable at the given
+                   rowIndex and columnIndex.&quot;&quot;&quot;
+
+                   #All cells are editable
+               return 1
+
+        def setValueAt(self, aValue, rowIndex, columnIndex):
+               &quot;&quot;&quot;Sets the value for the cell at the given
+                   columnIndex and rowIndex.&quot;&quot;&quot;
+
+                       # Get the address object corresponding to this row.
+               address = self.__getAddressAtRow(rowIndex)
+               self.__setAddressAttributeAtColumn(aValue, address, columnIndex)
+               self.fireTableCellUpdated(rowIndex, columnIndex)</pre>
+<p class="docText"><tt>addTableModelListener()</tt> and <tt>
+removeTableModelListener()</tt> are in the code for illustration only, because
+<tt>AbstractTableModel</tt> already implements them. This means that the 
+following code is unnecessary:</p>
+<pre>def addTableModelListener(self, l):
+     ...
+     ...
+     AbstractTableModel.addTableModelListener(self, l)
+
+def removeTableModelListener(self, l):
+     ...
+     ...
+     AbstractTableModel.removeTableModelListener(self, l)</pre>
+<h5 class="docSection3Title" id="ch16lev3sec5">Columns and Rows</h5>
+<p class="docText"><tt>AddressModel</tt> inherits functionality from <tt>
+AbstractTableModel</tt>, so we can leave out <tt>addTableModelListener()</tt> 
+and <tt>removeTableModelListener()</tt> (that's what we'll do in the third 
+iteration of this example), and it will still function.</p>
+<p class="docText">Here are three methods that work with columns:</p>
+<pre>def getColumnClass(self, columnIndex):
+        &quot;&quot;&quot;Returns the common base Class for the column.&quot;&quot;&quot;
+        return String
+
+def getColumnCount(self):
+        &quot;&quot;&quot;Returns the number of columns in the data model.&quot;&quot;&quot;
+        return len(self.columnNames)
+
+def getColumnName(self, columnIndex):
+        &quot;&quot;&quot;Returns the name of the given column
+            by columnIndex.&quot;&quot;&quot;
+        return self.columnNames[columnIndex]</pre>
+<p class="docText"><tt>getColumnClass()</tt> always returns a string because 
+every attribute we expose in the <tt>AddressModel</tt> class is a string. <tt>
+getColumnCount()</tt> uses the length of the <tt>columnNames</tt> attribute 
+(defined in <tt>AddressModel</tt>'s constructor), which is a list of strings 
+that contain column names for the table model. It also uses the column index (<tt>columnIndex</tt>) 
+as an index into <tt>columnNames</tt> to get the name that corresponds to a 
+given column.</p>
+<p class="docText">Only one method deals with rows specifically, <tt>getRowCount()</tt>, 
+which returns the length of the items in <tt>columnNames</tt>. Every item in <tt>
+columnNames</tt> corresponds to a key that specifies a row in the table. This 
+means that the length of <tt>columnNames</tt> is equal to the number of rows in
+<tt>TableModel</tt>.</p>
+<h5 class="docSection3Title" id="ch16lev3sec6">Cell Values</h5>
+<p class="docText">The next three methods get and edit cells in the table.</p>
+<pre>def getValueAt(self, rowIndex, columnIndex):
+           &quot;&quot;&quot;Returns the cell value at location specified by
+                columnIndex and rowIndex.&quot;&quot;&quot;
+
+                   # Get the address object corresponding to this row.
+           address = self.__getAddressAtRow(rowIndex)
+
+                   # Get the address attribute
+                   # corresponding to this column.
+           value = self.__getAddressAttributeAtColumn(address, columnIndex)
+
+           return value
+
+def isCellEditable(self, rowIndex, columnIndex):
+           &quot;&quot;&quot;Returns if the cell is editable at the given
+                rowIndex and columnIndex.&quot;&quot;&quot;
+                   # All cells are editable
+           return 1
+def setValueAt(self, aValue, rowIndex, columnIndex):
+           &quot;&quot;&quot;Sets the value for the cell at the given
+                columnIndex and rowIndex.&quot;&quot;&quot;
+
+                   # Get the address object corresponding to this row.
+           address = self.__getAddressAtRow(rowIndex)
+           self.__setAddressAttributeAtColumn(aValue, address, columnIndex)
+           self.fireTableCellUpdated(rowIndex, columnIndex)</pre>
+<p class="docText"><tt>getValueAt()</tt> uses <tt>__getAddressAtRow()</tt> to 
+get the address at the current row; then it uses <tt>__getAddressAttributeAtColumn()</tt> 
+to get the value of the attribute corresponding to the given column index, and 
+returns the value received. (<tt>__getAddressAttributeAtColumn()</tt> is an 
+example of a stupid method: Its name describes what it does, which makes it 
+almost completely self-documenting.)</p>
+<p class="docText"><tt>IsCellEditable()</tt> assumes that all cells are editable 
+and returns true (<tt>1</tt>) no matter what the row index and column index are 
+equal to.</p>
+<p class="docText">Like <tt>getValueAt()</tt>, <tt>setValueAt()</tt> uses <tt>__getAddressAtRow()</tt> 
+to retrieve the address at the given row index (making <tt>getAddressAtRow()</tt> 
+a good example of functional decomposition). Next it uses <tt>__setAddressAttribute()</tt> 
+to set the value of the <tt>address</tt> attribute corresponding to the column 
+index and, finally, notifies every <tt>JTable</tt> view of the change. This way, 
+if multiple views are listening (or using the same model), they'll all be 
+updated.</p>
+<h5 class="docSection3Title" id="ch16lev3sec7">__setAddressAttribute()</h5>
+<p class="docText">Because it does so much, let's take a closer look at <tt>__setAddressAttribute()</tt>. 
+Examine the code closely. If you understand it, you understand <tt>AddressModel</tt>.</p>
+<pre>def __setAddressAttributeAtColumn(self, value, address, columnIndex):
+         &quot;&quot;&quot;Sets the address attribute at the corresponding
+             column index. Maps the Address instance attributes
+             to the column in the table(s) for editing&quot;&quot;&quot;
+
+             # Get the email, phone and name from the address object.
+         email, phone = address.email(), address.phoneNumber()
+         name = address.name()
+
+                # Set the value based on the column
+                # The columnIndex is the name so set the name
+                # in the address object.
+                # Since the name is used for the list and keys in the
+                # dictionary, we must change both list item and the
+                # dictionary key associated with name.
+         if(columnIndex == self.NAME):
+                address.__init__(value, phone, email)
+                self.__changeList(value, name)
+                self.__changeDictKey(value, name)
+
+         elif(columnIndex == self.PHONE):
+                address.__init__(name, value, email)
+
+         elif(columnIndex == self.EMAIL):
+                address.__init__(name, phone, value)</pre>
+<p class="docText"><tt>columnIndex</tt> maps to a particular attribute in the 
+class instance. It's compared against three constants (<tt>name</tt>, <tt>phone</tt>, 
+and <tt>email</tt>) to determine the attribute to set.</p>
+<h5 class="docSection3Title" id="ch16lev3sec8">__init__ and Its Stupid Methods</h5>
+<p class="docText">The <tt>__init__</tt>method of the <tt>address</tt> argument 
+sets the attribute. However, if that attribute is <tt>name</tt> (i.e., <tt>
+columnIndex ==self.name</tt>), several things have to occur. This part of the 
+code was tricky to write because the name of the address is a key into the 
+dictionary and is used by the list to sort the keys. That means that if the name 
+changes, so do the dictionary keys and list values. The best way I could think 
+of to keep <tt>__init__</tt> from becoming an unruly mess was to break it down 
+into several stupid methods.</p>
+<p class="docText">The first stupid method, <tt>__changeList()</tt>, removes the 
+old value from the list and inserts the new value in its place.</p>
+<pre>def __changeList(self, newValue, oldValue):
+                &quot;&quot;&quot;Change the old value in the list to the new value.
+                     Keeps the JList views in sync with this
+                     Python list by firing an event.&quot;&quot;&quot;
+
+                       # Get the index of the oldValue in the list.
+                       # Use the index to index the list,
+                       # and change the list location to the new value.
+                       # Notify the JList views subscribed to this model.
+                index=self.list.index(oldValue)
+                self.list[index]=newValue
+                self.__fireContentsChanged(self, index, index)</pre>
+<p class="docText">Then it notifies the list views (<tt>JList</tt> instances) of 
+the replacement.</p>
+<p class="docText">The next stupid method, <tt>__changeDictKey()</tt>, removes 
+the key/value pair in the dictionary corresponding to the name. (Recall that the 
+name is the key into the dictionary and the value is the <tt>address</tt> 
+instance with that name.) It's a lot like <tt>__changeList()</tt> in that it 
+manages a collection of model data affected by a name change in an <tt>address</tt> 
+instance.</p>
+<pre>def __changeDictKey(self, newKey, oldKey):
+     &quot;&quot;&quot;Change the old key in the dictionary
+          to the new key.&quot;&quot;&quot;
+
+             # Get the address stored at the oldKey location.
+             # Delete the old key value from the dictionary.
+             # Use the new key to create a new location
+             # for the address.
+     address = self.dict[oldKey]
+     del self.dict[oldKey]
+     self.dict[newKey]=address</pre>
+<p class="docText">Using the old key (<tt>oldKey</tt>), <tt>__changeDictKey()</tt> 
+gets the address at the old location and deletes it. Then it uses the new key (<tt>newKey</tt>) 
+to set a new location for the address, which was extracted on the first line.</p>
+<h4 class="docSection2Title" id="ch16lev2sec9">Testing</h4>
+<p class="docText">We're not ready to put <tt>AddressModel</tt> in our address 
+book application yet. Before we can integrate a fairly large piece of code like 
+this, we have to test it with scaffolding code.</p>
+<p class="docText">The <tt>AddressModel</tt> class has to fit well in the MVC 
+architecture, so we want it to handle multiple views that work with <tt>
+ListModel</tt> and <tt>TableModel</tt>. To test for this we'll use <tt>JList</tt> 
+and <tt>JTable</tt>, and we'll throw in <tt>JTabbedPane</tt> because it can hold 
+several components, each in its own tab.</p>
+<p class="docText">Here's our scaffolding code. Read the comments to get an idea 
+of the flow.</p>
+<pre>if __name__ == '__main__':
+      from javax.swing import JTable, JList, JFrame, JTabbedPane, JScrollPane
+
+           # Create an instance of JFrame, JTabbedPane, AddressModel, JTable,
+           # and JList. Pass the same instance of AddressModel to the table
+           # and the list constructor.
+      frame = JFrame('Test AddressModel')
+      pane = JTabbedPane()
+      model = AddressModel()
+
+      list = JList(model)
+      table = JTable(model)
+
+           # Add the table and the list to the tabbed pane.
+      pane.addTab('table 1', JScrollPane(table))
+      pane.addTab('list 1', JScrollPane(list))
+
+           # Create another table and list.
+      table = JTable(model)
+      list = JList(model)
+
+           # Add the other table and list to the tabbed pane.
+           # Now we have four views that share the same model.
+      pane.addTab('table 2', JScrollPane(table))
+      pane.addTab('list 2', JScrollPane(list))
+
+           # Add the pane to the frame.
+           # Smack it, pack it, and show it off.
+      frame.contentPane.add(pane)
+      frame.pack()
+      frame.visible=1</pre>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Run <span class="docEmphasis">AddressModel.py</span> from 
+  the command line (<tt>jython AddressModel.py</tt>). You should get a frame 
+  that looks like <a class="docLink" href="#ch16fig05">Figure 16-5</a>.</p>
+  <center>
+  <h5 id="ch16fig05" class="docFigureTitle">Figure 16-5. The Initial Test <tt>AddressModel</tt> 
+  Frame</h5>
+  <p class="docText">
+  <img alt="graphics/16fig05.gif" src="16fig05.gif" border="0" width="500" height="166"></p>
+  </center></li>
+  <li>
+  <p class="docList">Change &quot;Andy Grove&quot; to someone else, and change his phone 
+  number and email address. What happens to the other views (<tt>list1</tt>, <tt>
+  list2</tt>, and <tt>table2</tt>)?</li>
+  <li>
+  <p class="docList">Use the code for <tt>AddressModel</tt> to create another 
+  column in the table called Cell Phone. Edit the code for <tt>Address</tt> and
+  <tt>AddressModel</tt> to accommodate it.</li>
+</ul>
+<h4 class="docSection2Title" id="ch16lev2sec10">Integrating AddressModel with AddressMain</h4>
+<p class="docText">Now that <tt>AddressModel</tt> has been defined and tested, 
+let's put it in our address book application. To integrate it with <tt>
+AddressMain</tt>, we're going to need methods that will load the form with an 
+address, add and remove an address from the model, and save an address to disk. 
+Before this functionality was in <tt>AddressMain</tt>; now it's in the following 
+methods in <tt>AddressModel</tt>:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>getAddressAt()</tt>— gets the address instance at a 
+  given row index</li>
+  <li>
+  <p class="docText"><tt>getAddressByName()</tt>— gets the address by a given 
+  name</li>
+  <li>
+  <p class="docText"><tt>addAddress()</tt>— adds an address to the model</li>
+  <li>
+  <p class="docText"><tt>removeAddressByName()</tt>— removes an address from the 
+  model when given the name of the address</li>
+  <li>
+  <p class="docText"><tt>writeAddress()</tt>— saves the address to disk</li>
+</ul>
+<p class="docText">Here's the code for these methods:</p>
+<pre>def getAddressAt(self, rowIndex):
+         &quot;&quot;&quot;Get an Address by rowIndex&quot;&quot;&quot;
+         return self.__getAddressAtRow(rowIndex)
+
+def getAddressByName(self, name):
+         &quot;&quot;&quot;Get an Address by the name property of the address.&quot;&quot;&quot;
+         return self.dict[name]
+
+def addAddress(self, address):
+         &quot;&quot;&quot;Add an address to the model, and notify the
+             views of the change.&quot;&quot;&quot;
+
+                 # Add the address to the dictionary,
+                 # and get the keys as the list.
+         self.dict[address.name()] = address
+         self.list = self.dict.keys()
+
+                 # Sort the addresses, and find the index of
+                 # the new address in the list.
+                 # Then notify the list and table views.
+
+         self.list.sort()
+         index = self.list.index(address.name())
+         self.__fireIntervalAdded(index, index)
+         self.fireTableDataChanged()
+
+def removeAddressByName(self, name):
+         &quot;&quot;&quot;Removes the address from the model and
+            notifies views of change.&quot;&quot;&quot;
+
+                 # Remove the address from the dictionary.
+         del self.dict[name]
+
+                 # Remove the name from the list.
+         index = self.list.index(name)
+         del self.list[index]
+
+                 # Notify the table and list views that the data changed.
+         self.fireTableDataChanged()
+         self.__fireIntervalRemoved(index, index)
+
+def writeAddresses(self):
+         &quot;&quot;&quot;Write the address data to the file.&quot;&quot;&quot;
+         writeAddresses(self.fname, self.dict)</pre>
+<p class="docText">Whenever addresses are added or removed from the model, all 
+table and list views—the listeners—must be notified via the <tt>__fireIntervalAdded()</tt>,
+<tt>__fireIntervalRemoved()</tt>, and <tt>__fireTableDataChanged()</tt> methods.</p>
+<h4 class="docSection2Title" id="ch16lev2sec11">The AddressModel Code</h4>
+<p class="docText">Now that we've covered each part of <tt>AddressModel</tt>, we 
+can look at its complete code (from <span class="docEmphasis">Two\AddressModel.py</span>).</p>
+<pre>from address import *
+from javax.swing import AbstractListModel, ListModel
+from javax.swing.table import AbstractTableModel, TableModel
+from javax.swing.event import ListDataEvent
+from java.lang import String
+
+class AddressModel(AbstractTableModel, ListModel):
+       &quot;&quot;&quot;The AddressModel is both a ListModel and a TableModel.&quot;&quot;&quot;
+
+       def __init__(self):
+             &quot;&quot;&quot;Initialize the Address model.
+             Read the dictionary from the file.&quot;&quot;&quot;
+
+             self.dict = None    # holds the dictionary of addresses.
+             self.list = None    # holds the sorted list of names,
+                                 # which are keys into the dictionary.
+
+             self.listeners = [] #to hold list of ListModelListeners
+
+                    # Read the addresses from the file.
+             self.fname=&quot;.\\addr.dat&quot; # holds the file name that
+                                      # holds the addresses
+             self.dict = readAddresses(self.fname)
+
+                    # Store the sorted list of names.
+             self.list = self.dict.keys()
+             self.list.sort()
+
+                   # Define the column names and locations in the table.
+             self.columnNames=['Name', 'Phone #', 'Email']
+             self.NAME = 0  # To hold the location of the name column
+             self.PHONE = 1 # To hold the location of the phone number column
+             self.EMAIL = 2     # To hold the location of the email column
+
+       def __getAddressAtRow(self, rowIndex):
+             &quot;&quot;&quot;Get the address at the specifed row. (Private method)&quot;&quot;&quot;
+
+                   # Get the row name out of the list.
+                   # Use the name to index the dictionary of addresses.
+                   # Get the address associated with this row.
+             name = self.list[rowIndex]
+             address = self.dict[name]
+             return address
+
+       def __getAddressAttributeAtColumn(self, address, columnIndex):
+             &quot;&quot;&quot;Get the attribute of the address at the
+                 specified column index.&quot;&quot;&quot;
+
+             value = None # Holds the value we are going to return
+
+                   # Set the value based on the column index.
+             if(columnIndex == self.NAME):
+                   value = address.name()
+
+             elif(columnIndex == self.PHONE):
+                   value = address.phoneNumber()
+
+             elif(columnIndex == self.EMAIL):
+                   value = address.email()
+                   return value
+
+       def __changeList(self, newValue, oldValue):
+             &quot;&quot;&quot;Change the old value in the list to the new value.&quot;&quot;&quot;
+
+                   # Get the index of the oldValue in the list.
+                   # Use the index to index the list,
+                   # and change the list location to the new value.
+                   # Notify the world.
+             index=self.list.index(oldValue)
+             self.list[index]=newValue
+             self.__fireContentsChanged(index, index)
+
+       def __changeDictKey(self, newKey, oldKey):
+             &quot;&quot;&quot;Change the old key in the dictionary to the new key.&quot;&quot;&quot;
+
+                   # Get the address stored at the oldKey location.
+                   # Delete the old key value from the dictionary.
+                   # Use the new key to create a new location
+                   # for the address.
+             address = self.dict[oldKey]
+             del self.dict[oldKey]
+             self.dict[newKey]=address
+
+       def __setAddressAttributeAtColumn(self, value, address, columnIndex):
+             &quot;&quot;&quot;Sets the address attribute at the
+                   corresponding column index.&quot;&quot;&quot;
+
+                   # Get the email, phone and name from the address object.
+             email, phone = address.email(), address.phoneNumber()
+             name = address.name()
+                   # Set the value based on the column.
+                   # The columnIndex is the name so set the name
+                   # in the address object.
+                   # Since the name is used for the list and keys in the
+                   # dictionary, we must change both list item and the
+                   # dictionary key associated with name.
+             if(columnIndex == self.NAME):
+                   address.__init__(value, phone, email)
+                   self.__changeList(value, name)
+                   self.__changeDictKey(value, name)
+
+             elif(columnIndex == self.PHONE):
+                   address.__init__(name, value, email)
+
+             elif(columnIndex == self.EMAIL):
+                   address.__init__(name, phone, value)
+
+## The following methods implement the ListModel interface. ————— ##
+
+       def getSize(self):
+             &quot;&quot;&quot;Returns the length of the items in the list.&quot;&quot;&quot;
+             return len(self.list)
+
+       def getElementAt(self, index):
+             &quot;&quot;&quot; Returns the value at index. &quot;&quot;&quot;
+             return self.list[index]
+
+       def addListDataListener(self, l):
+             &quot;&quot;&quot;Add a listener that's notified when the model changes.&quot;&quot;&quot;
+             self.listeners.append(l)
+
+       def removeListDataListener(self, l):
+             &quot;&quot;&quot;Remove a listener.&quot;&quot;&quot;
+             self.listeners.remove(l)
+
+       def __fireContentsChanged(self, index, index1):
+             &quot;&quot;&quot;Fire contents changed. Notify viewers
+                 that the list changed.&quot;&quot;&quot;
+             event = ListDataEvent(self, ListDataEvent.CONTENTS_CHANGED,
+                     index, index1)
+             for listener in self.listeners:
+                     listener.contentsChanged(event)
+
+       def __fireIntervalAdded(self, index, index1):
+             &quot;&quot;&quot;Fire interval added. Notify viewers that
+                 the items were added to the list.&quot;&quot;&quot;
+             event = ListDataEvent(self, ListDataEvent.INTERVAL_ADDED, index,
+                     index1)
+             for listener in self.listeners:
+                     listener.intervalAdded(event)
+
+       def __fireIntervalRemoved(self, index, index1):
+             &quot;&quot;&quot;Fire interval removed from the list. Notify viewers.&quot;&quot;&quot;
+             event = ListDataEvent(self, ListDataEvent.INTERVAL_REMOVED,
+                     index, index1)
+             for listener in self.listeners:
+                     listener.intervalRemoved(event)
+
+## The following methods implement the TableModel interface. ————— ##
+
+       def addTableModelListener(self, l):
+             &quot;&quot;&quot;Add a listener that gets notified when the
+             data model changes. Since all we are doing is
+             calling the super, we don't need this method.&quot;&quot;&quot;
+             AbstractTableModel.addTableModelListener(self, l)
+
+       def removeTableModelListener(self, l):
+             &quot;&quot;&quot;Remove a listener. Since all we are doing is calling the
+                 super, we don't need this method. It's here for example.&quot;&quot;&quot;
+             AbstractTableModel.removeTableModelListener(self, l)
+
+       def getColumnClass(self, columnIndex):
+             &quot;&quot;&quot;Returns the common base Class for the column.&quot;&quot;&quot;
+             return String
+
+       def getColumnCount(self):
+             &quot;&quot;&quot;Returns the number of columns in the data model.&quot;&quot;&quot;
+             return len(self.columnNames)
+
+       def getColumnName(self, columnIndex):
+             &quot;&quot;&quot;Returns the name of the given column by columnIndex.&quot;&quot;&quot;
+             return self.columnNames[columnIndex]
+
+       def getRowCount(self):
+             &quot;&quot;&quot;Returns the number of rows in the table model.&quot;&quot;&quot;
+             return len(self.list)
+
+       def getValueAt(self, rowIndex, columnIndex):
+             &quot;&quot;&quot;Returns the cell value at location specified
+                 by columnIndex and rowIndex.&quot;&quot;&quot;
+
+                     # Get the address object corresponding to this row.
+             address = self.__getAddressAtRow(rowIndex)
+
+                     # Get the address attribute
+                     # corresponding to this column.
+             value = self.__getAddressAttributeAtColumn(address, columnIndex)
+
+             return value
+
+       def isCellEditable(self, rowIndex, columnIndex):
+             &quot;&quot;&quot;Returns if the cell is editable at the given
+                 rowIndex and columnIndex.&quot;&quot;&quot;
+
+                     #All cells are editable
+             return 1
+
+       def setValueAt(self, aValue, rowIndex, columnIndex):
+             &quot;&quot;&quot;Sets the value for the cell at the given
+                 columnIndex and rowIndex.&quot;&quot;&quot;
+
+                     # Get the address object corresponding to this row.
+             address = self.__getAddressAtRow(rowIndex)
+             self.__getAddressAttributeAtColumn(aValue, address, columnIndex)
+                 # Notify that we changed this value so other
+                 # views can adjust.
+             self.fireTableCellUpdated(rowIndex, columnIndex)
+
+       def getAddressAt(self, rowIndex):
+             &quot;&quot;&quot;Get an Address by rowIndex&quot;&quot;&quot;
+             return self.__getAddressAtRow(rowIndex)
+
+       def getAddressByName(self, name):
+             &quot;&quot;&quot;Get an Address by the name property of the address.&quot;&quot;&quot;
+             return self.dict[name]
+
+       def addAddress(self, address):
+             &quot;&quot;&quot;Add an address to the model,
+             and notify the views of the change.&quot;&quot;&quot;
+
+                     # Add the address to the dictionary,
+                     # and get the keys as the list.
+             self.dict[address.name()] = address
+             self.list = self.dict.keys()
+
+                     # Sort the addresses, and find the index of
+                     # the new address in the list.
+                     # Then notify the list and table views.
+             self.list.sort()
+             index = self.list.index(address.name())
+             self.__fireIntervalAdded(index, index)
+             self.fireTableDataChanged()
+
+       def removeAddressByName(self, name):
+             &quot;&quot;&quot;Removes the address from the model
+                 and notifies views of change.&quot;&quot;&quot;
+
+                     # Remove the address from the dictionary.
+             del self.dict[name]
+                     # Remove the name from the list.
+             index = self.list.index(name)
+             del self.list[index]
+
+                     # Notify the table and list views that the data changed.
+             self.fireTableDataChanged()
+             self.__fireIntervalRemoved(index, index)
+
+       def writeAddresses(self):
+             &quot;&quot;&quot;Write the address data to the file.&quot;&quot;&quot;
+             writeAddresses(self.fname, self.dict)
+
+if __name__ == '__main__':
+       from javax.swing import JTable, JList, JFrame, JTabbedPane, JScrollPane
+       from javax.swing.event import ListDataListener
+       class listenertest (ListDataListener):
+               def intervalAdded(self, e):
+                       print 'Interval Added: ' + `e`
+               def intervalRemoved(self, e):
+                       print 'Interval Removed: ' + `e`
+               def contentsChanged(self, e):
+                       print 'Content Changed: ' + `e`
+
+             # Create an instance of JFrame, JTabbedPane, AddressModel,
+             # JTable, and JList.
+             # Pass the same instance of AddressModel to the table
+             # and the list constructor.
+       frame = JFrame('Test AddressModel')
+       pane = JTabbedPane()
+       model = AddressModel()
+       model.addListDataListener(listenertest())
+
+       list = JList(model)
+       table = JTable(model)
+
+             # Add the table and the list to the tabbed pane.
+       pane.addTab('table 1', JScrollPane(table))
+       pane.addTab('list 1', JScrollPane(list))
+
+             # Create another table and list.
+       table = JTable(model)
+       list = JList(model)
+
+             # Add the other table and list to the tabbed pane.
+             # Now we have four views that share the same model.
+       pane.addTab('table 2', JScrollPane(table))
+       pane.addTab('list 2', JScrollPane(list))
+
+             # Add the pane to the frame.
+             # Smack it, pack it, and show it off.
+       frame.contentPane.add(pane)
+       frame.pack()
+       frame.visible=1
+
+       addr = Address('aaaaa','aaaaaa','aaaaaa')
+       model.addAddress(addr)
+       raw_input('Hit Enter to continue')
+       model.removeAddressByName(addr.name())</pre>
+<p class="docText">The actual code for implementing <tt>AddressModel</tt> is 
+only about 100 lines, but the file is about 280 lines. Comments, document 
+strings, and scaffolding account for the difference. Although it takes up 28 
+lines, scaffolding saves a lot of time in isolating and debugging problems. In a 
+production environment, though, you should put any testing code in its own 
+module.</p>
+<h4 class="docSection2Title" id="ch16lev2sec12">Changes in AddressMain to Accommodate AddressModel</h4>
+<p class="docText">I had to change <tt>AddressMain</tt> to use <tt>AddressModel</tt>. 
+In the code that follows the modifications are highlighted in bold:</p>
+<pre>from java.awt import BorderLayout, FlowLayout
+<span class="docEmphStrong">from AddressModel import AddressModel</span>
+...
+...
+Frame=JFrame; List=JList; Panel=JPanel; Dialog=JDialog; Button=JButton
+Menu=JMenu; MenuItem=JMenuItem; MenuBar=JMenuBar; PopupMenu=JPopupMenu;
+
+from AddressFormPane import AddressForm
+...
+...
+
+class AddressMain(Frame):
+       def __init__(self):
+                    # Call the base class constructor.
+             Frame.__init__(self, &quot;Main Frame&quot;)
+
+                    # Create a list.
+             self.addresses = List()
+
+                    # Keep forward-compatible with other containers like JFrame.
+             self.container = JPanel()
+             self.container.layout = BorderLayout()
+
+                    # Add the addresses list to the container, on the left side.
+             <span class="docEmphStrong">scrollpane = JScrollPane(self.addresses)</span>
+             <span class="docEmphStrong">scrollpane.horizontalScrollBarPolicy =</span>
+                 <span class="docEmphStrong">JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS</span>
+             <span class="docEmphStrong">self.container.add(scrollpane, BorderLayout.WEST)</span>
+
+                    # Create an instance of AddressModel,
+                    # and set the addresses and self model attributes.
+             <span class="docEmphStrong">model = AddressModel()</span>
+             <span class="docEmphStrong">self.addresses.model = model</span>
+             <span class="docEmphStrong">self.model = model</span>
+
+                    # Set the event handler for the addresses.
+             self.addresses.valueChanged = self.__itemSelected
+
+                    # Create the AddressForm and add it to the east.
+             self.form = AddressForm()
+             self.container.add(self.form, BorderLayout.EAST)
+
+                    # Create a tabbed pane, and add the container and table
+                        in their own tabs.
+                    # Add the JTabbed instance to the contentPane.
+             <span class="docEmphStrong">tabbed_pane = JTabbedPane()</span>
+             <span class="docEmphStrong">table = JTable(model)</span>
+             <span class="docEmphStrong">tabbed_pane.addTab('Edit Address', self.container)</span>
+             <span class="docEmphStrong">tabbed_pane.addTab('View Address Book', JScrollPane(table))</span>
+             <span class="docEmphStrong">self.contentPane.add(tabbed_pane, BorderLayout.CENTER)</span>
+
+                    # Set up toolbar and menubar.
+             self.__init__toolbar()
+             self.__init__menu()
+
+             self.popup = None     #to hold the popup menu
+             self.__init__popup()
+              self.addresses.mousePressed = self.__popupEvent
+             self.windowClosing = self.__windowClosing
+
+                    # Set the default address in the list and form.
+             if self.model.getSize() &gt; 0:
+                    self.addresses.setSelectedIndex(0)
+                    address = self.model.getAddressAt(0)
+                    self.form.set(address)
+
+                    # Pack the frame and make it visible.
+             self.pack()
+             self.setSize(600, 300)
+             self.visible=1
+
+       ...
+       ...
+       ...
+       def __addAddress_Clicked(self,event):
+             dialog = AddAddressDialog(self)
+             if dialog.getState() == AddAddressDialog.OK:
+                    addr = dialog.getAddress()
+                    <span class="docEmphStrong">self.model.addAddress(addr)</span>
+                    ...
+
+       def __removeAddress_Clicked(self,event):
+             index = self.addresses.selectedIndex
+             key = self.addresses.selectedValue
+             <span class="docEmphStrong">self.model.removeAddressByName(key)</span>
+
+                    #Get the index of the item before this one
+                    #unless the index of the item we removed is 0.
+                    #Then select the index.
+             if index-1 &lt; 0: index = 0
+             else: index = index -1
+             self.addresses.selectedIndex = index
+
+                    #Set the form to the current address.
+             key = self.addresses.selectedValue
+             address = self.model.getAddressByName(key)
+             self.form.set(address)
+             ...
+             ...
+if __name__ == &quot;__main__&quot;:
+             mainWindow = AddressMain()</pre>
+<p class="docText">The modifications aren't extensive, which is a good thing. An 
+important change is the addition of <tt>JTabbedPane</tt> to include multiple 
+tabs. Run the code. You should get the frames shown in
+<a class="docLink" href="#ch16fig06">Figures 16-6</a> and
+<a class="docLink" href="#ch16fig07">16-7</a>. Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Add an address to the address book. Then check that the 
+  list and table views (<tt>JList</tt> and <tt>JTable</tt>) were updated.</li>
+  <li>
+  <p class="docList">Remove an address from the list.</li>
+  <li>
+  <p class="docList">Add an optional Web site address to the address book. (That 
+  is, make it so each entry has an optional Web page URL.)</li>
+</ul>
+<center>
+<h5 id="ch16fig06" class="docFigureTitle">Figure 16-6. Address Book Entry Form with <tt>
+JTabbedPane</tt></h5>
+<p class="docText"><img alt="graphics/16fig06.gif" src="16fig06.gif" border="0" width="500" height="250"></p>
+</center><center>
+<h5 id="ch16fig07" class="docFigureTitle">Figure 16-7. Address List with <tt>JTabbedPane</tt></h5>
+<p class="docText"><img alt="graphics/16fig07.gif" src="16fig07.gif" border="0" width="500" height="250"></p>
+</center>
+<p class="docText">If you're feeling pretty sure of yourself, try reimplementing 
+the complete address book application in Java.</p>
+<h3 class="docSection1Title" id="ch16lev1sec4">JTree</h3>
+<p class="docText">Breaking things into hierarchies is natural. Think of your 
+computer's file system, which employs drives, directories, subdirectories, 
+folders, and files to keep things organized. With <tt>JTree</tt> we can create 
+hierarchical organizations for any sort of graphical display.</p>
+<p class="docText">The best way to describe <tt>JTree</tt> is as a cross between 
+a list and an organizational chart. We're going to illustrate it first with a 
+simple example and then with examples that increase in complexity (and thus 
+become more realistic).</p>
+<h4 class="docSection2Title" id="ch16lev2sec13">JTree's Constructor</h4>
+<p class="docText">There are several versions of the <tt>JTree</tt> 
+constructor—one takes a hashtable as a parameter; others use vectors, tree 
+models, tree nodes, and arrays. We're going to start off with the hashtable 
+version and add some objects to it. Don't be scared. A hashtable is much like a 
+Python built-in dictionary object—in early versions of Jython; you can use the 
+two interchangeably.</p>
+<p class="docText">Create the hashtable.</p>
+<pre>&gt;&gt;&gt; from java.util import Hashtable
+&gt;&gt;&gt; dict = Hashtable()</pre>
+<p class="docText">Create some sample objects.</p>
+<pre>&gt;&gt;&gt; from address import Address
+&gt;&gt;&gt; rick = Address(&quot;Rick Hightower&quot;, &quot;555-1212&quot;, &quot;r@r.cos&quot;)
+&gt;&gt;&gt; bob = &quot;Bob DeAnna&quot;
+&gt;&gt;&gt; Kiley = &quot;Kiley Hightower&quot;</pre>
+<p class="docText">Add the sample objects to the dictionary.</p>
+<pre>&gt;&gt;&gt; dict['Rick'] = rick
+&gt;&gt;&gt; dict['Bob'] = bob
+&gt;&gt;&gt; dict['Kiley'] = Kiley</pre>
+<p class="docText">Now that we have some data in a form that we can pass to a
+<tt>JTree</tt> constructor, we can create the actual tree.</p>
+<p class="docText">Import <tt>JTree</tt>, and create an instance of it, passing 
+the hashtable (<tt>dict</tt>) as a parameter.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JTree
+&gt;&gt;&gt; tree = JTree(dict)</pre>
+<p class="docText">Add the tree to the frame, and show it.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame
+&gt;&gt;&gt; frame = JFrame(&quot;Tree Test&quot;)
+&gt;&gt;&gt; frame.contentPane.add(tree)
+javax.swing.JTree[,0,0,0x0,invalid,...
+&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.visible=1</pre>
+<p class="docText">The frame should look like
+<a class="docLink" href="#ch16fig08">Figure 16-8</a>. Seems more like a list 
+than a tree, does it not? We'll fix this later when we define our own model.</p>
+<center>
+<h5 id="ch16fig08" class="docFigureTitle">Figure 16-8. A Simple <tt>JTree</tt> Tree</h5>
+<p class="docText"><img alt="graphics/16fig08.gif" src="16fig08.gif" border="0" width="175" height="104"></p>
+</center>
+<h4 class="docSection2Title" id="ch16lev2sec14">The Tree Model</h4>
+<p class="docText">Like <tt>JList</tt> and <tt>JTable</tt>, <tt>JTree</tt> uses 
+JFC's MVC architecture, which means that every tree has a model. You don't have 
+to specify a model because <tt>JTree</tt> does it for you with <tt>
+DefaultTreeModel</tt>, from <span class="docEmphasis">javax.swing.tree.</span></p>
+<pre>&gt;&gt;&gt; tree.model.class
+&lt;jclass javax.swing.tree.DefaultTreeModel at 9727&gt;</pre>
+<p class="docText">The tree model is made up of tree nodes. The <tt>TreeNode</tt> 
+class implements the <tt>TreeNode</tt> interface. Get the root node, and see 
+what class it is.</p>
+<pre>&gt;&gt;&gt; root = tree.model.getRoot()
+&gt;&gt;&gt; root.class
+&lt;jclass javax.swing.tree.DefaultMutableTreeNode...&gt;</pre>
+<p class="docText">Check that the root implements the <tt>TreeNode</tt> 
+interface.</p>
+<pre>&gt;&gt;&gt; root.class.interfaces
+array([&lt;jclass java.lang.Cloneable at 95880612&gt;,
+&lt;jclass javax.swing.tree.MutableTreeNode at -509409883&gt;,
+&lt;jclass java.io.Serializable at 1612121508&gt;], java.lang.Class)</pre>
+<p class="docText">The actual interface implemented is <tt>MutableTreeNode</tt>, 
+which is the second element in the array. Here's how to see if <tt>
+MutableTreeNode</tt> implements <tt>TreeNode</tt>:</p>
+<pre>&gt;&gt;&gt; root.class.interfaces[1].interfaces
+array([&lt;jclass javax.swing.tree.TreeNode at -277936731&gt;], java.lang.Class)</pre>
+<p class="docText">A faster way to do this is with the <tt>isinstance()</tt> 
+built-in function. As we can see<tt>,</tt> <tt>isinstance()</tt> returns a <tt>1</tt> 
+(true) value, so <tt>root</tt> is indeed an instance of <tt>TreeNode</tt>.</p>
+<pre>&gt;&gt;&gt; isinstance(root, TreeNode)
+1</pre>
+<p class="docText">A leaf is a node that can have no children. You can check if 
+a node is a leaf like this:</p>
+<pre>&gt;&gt;&gt; tree.model.isLeaf(root)
+0</pre>
+<p class="docText">The <tt>0</tt> (false) value tells the story.</p>
+<p class="docText">Now we'll iterate through the root node and print out the 
+string representation of the child nodes (we'll also find out if they're 
+actually leaves).</p>
+<pre>&gt;&gt;&gt; count = tree.model.getChildCount(root)
+&gt;&gt;&gt; for index in xrange(0,count):
+...     child_node = tree.model.getChild(root, index)
+...     print child_node
+...     print 'isLeaf ' + `tree.model.isLeaf(child_node)`
+...
+Kiley
+isLeaf 1
+Rick
+isLeaf 1
+Bob
+isLeaf 1</pre>
+<h4 class="docSection2Title" id="ch16lev2sec15">The JTree Model Interface</h4>
+<p class="docText">To create our tree model we have to implement the <tt>
+TreeModel</tt> interface, which has the following methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>addTreeModelListener(listener)</tt>— allows <tt>JTree</tt> 
+  to subscribe to tree model events</li>
+  <li>
+  <p class="docText"><tt>removeTreeModelListener(listener)</tt>— removes the 
+  event listener</li>
+  <li>
+  <p class="docText"><tt>getChild(parent,index)</tt>— returns the child of the 
+  parent at a given index</li>
+  <li>
+  <p class="docText"><tt>getChildCount(parent)</tt>— returns the child count of 
+  the specified parent node</li>
+  <li>
+  <p class="docText"><tt>getIndexOfChild(parent, child)</tt>— returns the index 
+  of the child in the parent</li>
+  <li>
+  <p class="docText"><tt>getRoot()</tt>— returns the root of the tree</li>
+  <li>
+  <p class="docText"><tt>isLeaf(node)</tt>— checks to see if the node is a leaf</li>
+  <li>
+  <p class="docText"><tt>ValueForPathChanged(path, newValue)</tt>— an abstract 
+  method</li>
+</ul>
+<p class="docText"><tt>getRoot()</tt> and <tt>getChild()</tt> return instances 
+of <tt>java.lang.Object</tt>, which are often actual tree nodes.</p>
+<p class="docText"><tt>TreeNode</tt> defines the interface for the nodes, which 
+is one of the reasons that <tt>JTree</tt> is so complex—it's like a model within 
+a model. Here are its methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>children()</tt>— returns an enumeration of children</li>
+  <li>
+  <p class="docText"><tt>getAllowsChildren()</tt>— returns if the node allows 
+  child nodes</li>
+  <li>
+  <p class="docText"><tt>getChildAt()</tt>— gets the child at the specified 
+  index</li>
+  <li>
+  <p class="docText"><tt>getChildCount()</tt>— returns the count of children in 
+  a specified node</li>
+  <li>
+  <p class="docText"><tt>getIndex(node)</tt>— returns the index of the given 
+  child node</li>
+  <li>
+  <p class="docText"><tt>getParent()</tt>— returns the parent of a specified 
+  child node</li>
+  <li>
+  <p class="docText"><tt>isLeaf()</tt>— returns if a specified node is a leaf</li>
+</ul>
+<p class="docText">The <tt>children()</tt> method requires that <tt>TreeNode</tt> 
+return to it an instance of <tt>java.util.Enumeration</tt>, which must implement 
+these methods:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>hasMoreElements()</tt>— returns true if there are more 
+  elements in the enumeration</li>
+  <li>
+  <p class="docText"><tt>nextElement()</tt>— returns the next element in the 
+  collection</li>
+</ul>
+<p class="docText">A short example will illustrate how tree nodes can contain 
+other tree nodes. Our tree model contains instances of <tt>
+javax.swing.tree.TreeNode</tt>. It doesn't have to, but it's not a bad idea. 
+We'll define three classes:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>ListEnumeration</tt>— implements the <tt>
+  java.util.Enumeration</tt> interface</li>
+  <li>
+  <p class="docText"><tt>SimpleNode</tt>— implements the <tt>
+  javax.swing.tree.TreeNode</tt> interface</li>
+  <li>
+  <p class="docText"><tt>SimpleModel</tt>— implements the <tt>
+  javax.swing.tree.TreeModel</tt> interface</li>
+</ul>
+<h5 class="docSection3Title" id="ch16lev3sec9">ListEnumeration</h5>
+<p class="docText">The <tt>ListEnumeration</tt> class helps develop a simple 
+tree node. In its code, you'll notice that the <tt>children()</tt> method 
+returns an enumeration—more precisely, an instance of <tt>java.util.Enumeration</tt>—which 
+provides a standard way to enumerate over a collection of elements while 
+abstracting the collection type.</p>
+<p class="docText">Here's the code (from <span class="docEmphasis">TreeModel1\ListEnumeration.py</span>):</p>
+<pre>from java.util import Enumeration
+
+class ListEnumeration(Enumeration):
+       def __init__(self, the_list):
+              self.list = the_list[:]
+              self.count = len(self.list)
+              self.index = 0
+
+       def hasMoreElements(self):
+              return self.index &lt; self.count
+
+       def nextElement(self):
+              object = self.list[self.index]
+              self.index = self.index + 1
+              return object</pre>
+<p class="docText">Let's break it down interactively. Import <tt>ListEnumeration</tt>.</p>
+<pre>&gt;&gt;&gt; from ListEnumeration import ListEnumeration</pre>
+<p class="docText">Create a list containing three integers.</p>
+<pre>&gt;&gt;&gt; mylist = [1,2,3]</pre>
+<p class="docText">Show that the list has been created.</p>
+<pre>&gt;&gt;&gt; mylist.__class__
+&lt;jclass org.python.core.PyList at -992650171&gt;</pre>
+<p class="docText">Create a <tt>ListEnumeration</tt> object, passing it <tt>
+mylist</tt> as an argument to the constructor.</p>
+<pre>&gt;&gt;&gt; enum = ListEnumeration(mylist)
+&gt;&gt;&gt; enum.__class__
+&lt;class ListEnumeration.ListEnumeration at -736797627&gt;</pre>
+<p class="docText">Iterate through the list.</p>
+<pre>&gt;&gt;&gt; while(enum.hasMoreElements()):
+...     print enum.nextElement()
+...
+1
+2
+3</pre>
+<h5 class="docSection3Title" id="ch16lev3sec10">SimpleNode</h5>
+<p class="docText"><tt>SimpleNode</tt> implements <tt>TreeNode</tt> and can be 
+used alone or with <tt>JTree</tt>. Like other classes that implement <tt>
+TreeNode</tt>, it's sort of a model without events. <tt>SimpleNode</tt> has a 
+parent node, a list of child nodes (which are of type <tt>SimpleNode</tt> as 
+well), and a property that determines whether a given node is a leaf. Its 
+constructor optionally creates leaf nodes and adds them to its node list.</p>
+<p class="docText">Here's the code (from <span class="docEmphasis">TreeModel1\SimpleNode.py</span>):</p>
+<pre>from javax.swing.tree import TreeNode
+from ListEnumeration import ListEnumeration
+from java.lang import Object
+
+class SimpleNode (Object, TreeNode):
+       def __init__(self, name, items=[], parent=None, leaf=0):
+             self.__nodes = []
+
+             self.__name = name
+             self.__parent = parent
+             self.__leaf=leaf
+
+             for name in items:
+                   node = SampleNode(name, parent=self, leaf=1)
+                   self.__nodes.append(node)
+
+       def getChildAt(self, index):
+             &quot;Get the child at the given index&quot;
+             return self.__nodes[index]
+
+       def children(self):
+             'get children nodes '
+             return ListEnumeration(self.__nodes)
+
+       def getAllowsChildren(self):
+             'Does this node allow children node?'
+             return not self.leaf
+
+       def getChildCount(self):
+             'child count of this node'
+             return len (self.__nodes)
+
+       def getIndex(self, node):
+             'get index of node in nodes list'
+             try:
+                   return self.__nodes.index(node)
+             except ValueError, e:
+                   return None
+
+       def getParent(self):
+             'get parent node'
+             return self.__parent
+
+       def isLeaf(self):
+             'is leaf node'
+             return self.__leaf</pre>
+<p class="docText">In addition to all of <tt>TreeNode</tt>'s methods, <tt>
+SimpleNode</tt> implements its own:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>__str__()</tt>— displays the node as a Python string</li>
+  <li>
+  <p class="docText"><tt>toString()</tt>— displays the node as a Java print 
+  string</li>
+  <li>
+  <p class="docText"><tt>__repr__()</tt>— displays the node as a string for 
+  debugging</li>
+  <li>
+  <p class="docText"><tt>add()</tt>— adds a <tt>SimpleNode</tt> child to the 
+  list of nodes</li>
+  <li>
+  <p class="docText"><tt>setParent(parent)</tt>— sets the parent of a specified 
+  node</li>
+  <li>
+  <p class="docText"><tt>getName()</tt>— gets the name of a specified node</li>
+  <li>
+  <p class="docText"><tt>setName()</tt>— sets the name of a specified node</li>
+</ul>
+<p class="docText">For <tt>toString()</tt> to function, <tt>SimpleNode</tt> has 
+to extend <tt>java.lang.Object</tt>, which defines this method. I hope all this 
+will take is defining <tt>__str__</tt> in future Jython releases.</p>
+<p class="docText">Here's part of the <tt>SimpleNode</tt> class showing its 
+helper methods:</p>
+<pre>def __str__(self):
+       'str node'
+       return self.__name
+
+def toString(self):
+       return self.__str__()
+
+def __repr__(self):
+       nodes = []
+
+       for node in self.__nodes:
+             nodes.append(str(node))
+
+       if (self.__parent):
+             tpl=(self.__name, nodes, self.__parent, self.__leaf)
+             return 'SampleNode(name=%s,list=%s,parent=%s,leaf=%s)' % tpl
+       else:
+             tpl=(self.__name, nodes, self.__leaf)
+             return 'SampleNode(name=%s,list=%s,leaf=%s)' % tpl
+
+def add(self, node):
+       self.__nodes.append(node)
+       node.setParent(self)
+
+def setParent(self, parent):
+       self.__parent = parent
+
+def setName(self, name):
+       self.__name=name
+
+def getName(self, name):
+       return self.__name</pre>
+<p class="docText">The best way to define <tt>SimpleNode</tt> is to show it 
+building a tree-like structure of nodes.</p>
+<p class="docText">Create a parent node.</p>
+<pre>&gt;&gt;&gt; parent = SimpleNode(&quot;Dick &amp; Mary&quot;)</pre>
+<p class="docText">Create three child nodes: <tt>child1</tt>, <tt>child2</tt>, 
+and <tt>child3</tt> with their spouses. Pass a list of offspring to each node.</p>
+<pre>&gt;&gt;&gt; child1 = SimpleNode(&quot;Rick &amp; Kiley&quot;, [&quot;Whitney&quot;])
+&gt;&gt;&gt; child2 = SimpleNode(&quot;Martha &amp; Miguel&quot;, [&quot;Alex&quot;, &quot;Nicholai&quot;, &quot;Marcus&quot;])
+&gt;&gt;&gt; child3 = SimpleNode(&quot;Missy &amp; Adam&quot;, [&quot;Mary&quot;, &quot;Sarah&quot;])</pre>
+<p class="docText">Add the children to the parent node.</p>
+<pre>&gt;&gt;&gt; parent.add(child1)
+&gt;&gt;&gt; parent.add(child2)
+&gt;&gt;&gt; parent.add(child3)</pre>
+<p class="docText">Iterate through the children in the parent node showing their 
+names.</p>
+<pre>&gt;&gt;&gt; child = parent.children()
+&gt;&gt;&gt; children = parent.children()
+&gt;&gt;&gt; while(children.hasMoreElements()):
+...     print children.nextElement()
+...
+Rick &amp; Kiley
+Martha &amp; Miguel
+Missy &amp; Adam</pre>
+<p class="docText">Here's an easier version of this example, using the <tt>for 
+loop</tt> statement to handle the enumerators:</p>
+<pre>&gt;&gt;&gt; child = parent.children()
+&gt;&gt;&gt; children = parent.children()
+&gt;&gt;&gt; for child in children:
+...     print child
+...
+Rick &amp; Kiley
+Martha &amp; Miguel
+Missy &amp; Adam</pre>
+<p class="docText">Now let's make the parent tree node a tree model. Import the 
+GUI components that are needed.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JTree, JScrollPane, JFrame</pre>
+<p class="docText">Create a <tt>JTree</tt> instance, passing the parent node as 
+the argument to the <tt>JTree</tt> constructor.</p>
+<pre>&gt;&gt;&gt; tree = JTree(parent)</pre>
+<p class="docText">Create a frame, and add the <tt>JTree</tt> instance to it. 
+Pack the frame, and make it visible.</p>
+<pre>&gt;&gt;&gt; frame = JFrame('SimpleNode test')
+&gt;&gt;&gt; frame.contentPane.add(JScrollPane(tree))
+&gt;&gt;&gt; frame.pack()
+&gt;&gt;&gt; frame.show()</pre>
+<p class="docText">Your end result should look like
+<a class="docLink" href="#ch16fig09">Figure 16-9</a>.</p>
+<center>
+<h5 id="ch16fig09" class="docFigureTitle">Figure 16-9. A Family Tree</h5>
+<p class="docText"><img alt="graphics/16fig09.gif" src="16fig09.gif" border="0" width="250" height="248"></p>
+</center>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Sharing a Data Model among JTree Views</h2>
+      <p class="docText">If the tree node works so well, why do we need a model? 
+      I can almost hear you asking this question. For the answer, think what 
+      will happen if <tt>child1</tt>, Kiley, has a second child.</p>
+      <pre>&gt;&gt;&gt; child1
+SimpleNode(name=Rick &amp; Kiley,list=['Whitney', 'Rick JR.'],parent=Dick &amp;
+Mary,leaf=0)</pre>
+      <p class="docText">To make this clearer, we can write this:</p>
+      <pre>&gt;&gt;&gt; kiley = child1</pre>
+      <p class="docText">Create the baby node.</p>
+      <pre>&gt;&gt;&gt; baby = SimpleNode(&quot;Rick JR.&quot;)
+&gt;&gt;&gt; kiley.add(baby)</pre>
+      <p class="docText">Show Kiley's children.</p>
+      <pre>&gt;&gt;&gt; children = kiley.children()
+&gt;&gt;&gt; for child in children:
+...     print child
+...
+Whitney
+Rick JR.</pre>
+      <p class="docText">If you look at Kiley's children in the
+      <a class="docLink" href="#ch16lev1sec4">JTree</a> node, you'll see that 
+      it's out of sync. Worse yet, it will be out of sync with any other <tt>
+      Jtree</tt> you create. That's why we need models. Unlike nodes, they keep 
+      the data and the view synchronized.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 class="docSection3Title" id="ch16lev3sec11">SampleModel</h5>
+<p class="docText">Deriving your nodes from <tt>javax.swing.tree.TreeNode</tt> 
+isn't mandatory if you define your own model. The <tt>TreeModel</tt> interface 
+abstracts a node, which can therefore derive from <tt>java.lang.Object</tt> and 
+implement no interfaces at all. <tt>TreeModel</tt> can have an ID of a database 
+record as a member, so, instead of reading memory out of a Python list, you can 
+get data out of the database via the associated tree model.</p>
+<p class="docText">Models keep data and views in sync. The question is how. I'll 
+show you, with a tree model I created called <tt>SampleModel</tt>.</p>
+<p class="docText">Import <tt>SampleModel</tt> from the
+<span class="docEmphasis">SampleModel.py</span> module.</p>
+<pre>&gt;&gt;&gt; from SampleModel import SampleModel</pre>
+<p class="docText">Create an instance of <tt>SampleModel</tt> by passing its 
+constructor the name of the root node.</p>
+<pre>&gt;&gt;&gt; tree_model = SampleModel(&quot;Dick &amp; Mary&quot;)</pre>
+<p class="docText">Add the two branches (nodes) of the tree off of the root. The
+<tt>addNode()</tt> method returns the node created.</p>
+<pre>&gt;&gt;&gt; tree_model.addNode(&quot;Martha &amp; Miguel&quot;, [&quot;Alex&quot;, &quot;Nicholai&quot;, &quot;Marcus&quot;])
+&gt;&gt;&gt; tree_model.addNode(&quot;Missy &amp; Adam&quot;, [&quot;Mary&quot;, &quot;Sarah&quot;])</pre>
+<p class="docText">Create the last branch, and save it. <tt>Kiley</tt> is a 
+handle we'll use later.</p>
+<pre>&gt;&gt;&gt; Kiley=tree_model.addNode(&quot;Rick &amp; Kiley&quot;, [&quot;Whitney&quot;])</pre>
+<p class="docText">Notice that we haven't called any methods on a node object. 
+Instead, we've dealt directly with the model, which encapsulates node 
+manipulation.</p>
+<p class="docText">Now let's create some views for our model. Import all JFC 
+components that are needed.</p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame, JTree, JScrollPane</pre>
+<p class="docText">Create the first view.</p>
+<pre>&gt;&gt;&gt; frame1 = JFrame(&quot;View 1—-No Scroll&quot;)
+&gt;&gt;&gt; tree = JTree(tree_model)
+&gt;&gt;&gt; frame1.contentPane.add(tree)
+&gt;&gt;&gt; frame1.pack()
+&gt;&gt;&gt; frame1.show()</pre>
+<p class="docText">Create the second view.</p>
+<pre>&gt;&gt;&gt; frame2 = JFrame(&quot;View 2—-With Scroll&quot;)
+&gt;&gt;&gt; tree2 = JTree(tree_model)
+&gt;&gt;&gt; frame2.contentPane.add(JScrollPane(tree2))
+&gt;&gt;&gt; frame2.pack()
+&gt;&gt;&gt; frame2.show()</pre>
+<p class="docText">Expand the <tt>Rick &amp; Kiley</tt> node in both views. Your 
+result should be the two views in <a class="docLink" href="#ch16fig10">Figure 
+16-10</a>.</p>
+<center>
+<h5 id="ch16fig10" class="docFigureTitle">Figure 16-10. Two <tt>SampleModel</tt> Views</h5>
+<p class="docText"><img alt="graphics/16fig10.gif" src="16fig10.gif" border="0" width="400" height="192"></p>
+</center>
+<p class="docText">Now for the true litmus test. Will both views be changed if 
+the family tree changes; that is, will the views be synchronized with the data? 
+As before, we'll say that Kiley has a second child, so we need to add a node to
+<tt>Rick &amp; Kiley</tt>.</p>
+<pre>&gt;&gt;&gt; tree_model.addNode('Rick JR.', parent=Kiley)</pre>
+<p class="docText"><a class="docLink" href="#ch16fig11">Figure 16-11</a> shows 
+that the new node was added to both views.</p>
+<center>
+<h5 id="ch16fig11" class="docFigureTitle">Figure 16-11. A Blessed Event for Views 1 and 2</h5>
+<p class="docText"><img alt="graphics/16fig11.gif" src="16fig11.gif" border="0" width="400" height="189"></p>
+</center>
+<h5 class="docSection3Title" id="ch16lev3sec12">Event Notification</h5>
+<p class="docText">Just like the table model, the tree model keeps a list of 
+listeners, all of which are notified when the model data changes. Since <tt>
+TreeModel</tt> controls access to the nodes, we can add code to it, in the <tt>
+addNode()</tt> method, to fire a notification event. Here's the <tt>addNode()</tt> 
+method with its helpers:</p>
+<pre>def addNode(self, name, children=[], parent=None):
+             # Set the value of the leaf.
+             # No children means the node is a leaf.
+       leaf = len(children)==0
+             # Create a SampleNode,
+             # and add the node to the given parent.
+       node = SampleNode(name, children, leaf=leaf)
+       self.__add(node, parent)
+       return node</pre>
+<p class="docText"><tt>addNode()</tt> creates an instance of <tt>SampleNode</tt> 
+and passes its constructor the <tt>addNode()</tt> arguments. If the <tt>children</tt> 
+argument is empty, the instance is set as a leaf. <tt>addNode()</tt> calls the
+<tt>__add()</tt> helper method and then returns the node so it can be used as a 
+handle to other model methods. Here's the code for <tt>__add()</tt>:</p>
+<pre>def __add(self, node, parent=None):
+             # If the parent is none,
+             # then set the parent to the root.
+       if not parent:
+             parent = self.getRoot()
+
+             # Add the node to the parent,
+             # and notify the world that the node changed.
+       parent.add(node)
+       self.fireStructureChanged(parent)</pre>
+<p class="docText"><tt>__add()</tt> adds the given node to the given parent. If 
+the parent is <tt>None</tt>, the root node becomes the default parent. Adding 
+the node to the parent invokes the <tt>fireStructureChanged</tt> event, which 
+notifies all listeners (that is, views). Here's the code:</p>
+<pre>def fireStructureChanged(self, node):
+             # Get the path to the root node.
+             # Create a TreeModelEvent class instance.
+       path = self.getNodePathToRoot(node)
+       event = TreeModelEvent(self, path)
+
+             # Notify every tree model listener that
+             # this tree model changed at the tree path.
+       for listener in self.listeners:
+             listener.treeStructureChanged(event)</pre>
+<p class="docText"><tt>fireStuctureChanged</tt> iterates through the listener 
+list and calls each listener's <tt>treeStructureChanged()</tt> method, passing a
+<tt>TreeModelEvent</tt> instance. To create the instance, <tt>TreeModelEvent</tt>'s 
+constructor needs a path—a list of nodes—from the root to the changed node. This 
+is how the view notification is carried out and thus how views stay in sync with 
+the data model.</p>
+<p class="docText">Get the path with the <tt>getNodePathToRoot()</tt> method.</p>
+<pre>def getNodePathToRoot(self, node):
+       parent = node # Holds the current node.
+       path=[]       # To hold the path to root.
+
+                     # Get the path to the root
+       while not parent is None:
+                     # Add the parent to the path, and then get the
+                     # parent's parent.
+             path.append(parent)
+             parent = parent.getParent()
+
+             #Switch the order
+       path.reverse()
+       return path</pre>
+<p class="docText">This event does just what is says it does: it gets the node's 
+path to the root. It should be obvious from the comments how it works.</p>
+<h4 class="docSection2Title" id="ch16lev2sec16">Additional Tree Model Methods</h4>
+<p class="docText">The rest of the tree model is somewhat boring. Two methods 
+add and remove listeners, and several other methods delegate responsibility for 
+specific tasks to their corresponding <tt>SimpleNode</tt> instances.</p>
+<pre>class SampleModel(TreeModel):
+       def __init__(self, root_name):
+            root = SampleNode(root_name, [])
+            self._root = root
+            self.listeners = [] # to hold TreeModel listeners
+            #——————- The following methods implement the TreeModel interface.
+
+       def addTreeModelListener(self, listener):
+            self.listeners.append(listener)
+
+       def removeTreeModelListener(self, listener):
+            self.listeners.remove(listener)
+
+       def getChild(self, parent, index):
+            return parent.getChildAt(index)
+
+       def getChildCount(self, parent):
+            return parent.getChildCount()
+
+       def getIndexOfChild(self, parent, child):
+            return parent.getIndex(child)
+
+       def getRoot(self):
+            return self._root
+
+       def isLeaf(self, node):
+            return node.isLeaf()
+
+       def valueForPathChanged(self, path, newValue):
+            node = path.getLastPathComponent()
+            node.setName(newValue)
+       ...
+       ...</pre>
+<p class="docText">You can see that most of the work is done by the underlying 
+tree nodes and the noninterface methods.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">DefaultMutableTreeNode and DefaultTreeModel</h2>
+      <p class="docText">Another way to use <tt>JTree</tt> is with <tt>
+      DefaultMutableTreeNode</tt> and <tt>DefaultTreeModel</tt>. Once you 
+      understand <tt>TreeModel</tt>, these classes are easy. Look them up in the 
+      Java API documentation. As an exercise, use them to implement the last 
+      interactive session.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch16lev2sec17">Handling JTree Events</h4>
+<p class="docText"><tt>JTree</tt> publishes the following event properties:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>treeExpanded</tt>— a node has expanded; associated with
+  <tt>javax.swing.event.TreeExpansionListener</tt> and passed an instance of <tt>
+  java.swing.event.TreeExpansionEvent</tt></li>
+  <li>
+  <p class="docText"><tt>treeCollapsed</tt>— a node has collapsed; associated 
+  with <tt>javax.swing.event.TreeExpansionListener</tt> and passed an instance 
+  of <tt>javax.swing.event.TreeExpansionEvent</tt></li>
+  <li>
+  <p class="docText"><tt>treeWillExpand</tt>— a node will expand (used to fetch 
+  data, as needed, into the tree model); associated with <tt>
+  javax.swing.event.TreeWillExpandListener</tt> and passed an instance of <tt>
+  javax.swing.eventTreeExpansionEvent</tt></li>
+  <li>
+  <p class="docText"><tt>treeWillCollapse</tt>— a node will collapse; associated 
+  with <tt>javax.swing.event.TreeWillExpandListener</tt> and passed an instance 
+  of <tt>javax.swing.event.TreeExpansionEvent</tt></li>
+  <li>
+  <p class="docText"><tt>valueChanged</tt>— a new node was selected; associated 
+  with <tt>javax.swing.event.TreeSelectionListener</tt> and passed an instance 
+  of <tt>javax.swing.event.TreeSelectionEvent</tt></li>
+</ul>
+<p class="docText">A little confusing? Let's look at an example that uses the 
+event mechanism to put these properties to work. It's from
+<span class="docEmphasis">TreeModel1\TreeEvents.py.</span></p>
+<pre>from SampleModel import SampleModel
+from javax.swing import JFrame, JTree, JScrollPane
+def handleTreeExpanded(event):
+      global g_event
+      print &quot;Tree Expanded&quot;
+      showPath(event.path)
+      g_event = event
+
+def handleTreeCollapsed(event):
+      global g_event
+      print &quot;Tree Collapsed&quot;
+      showPath(event.path)
+      g_event = event
+
+def handleTreeWillExpand(event):
+      global g_event
+      print &quot;Tree Will Expand&quot;
+      showPath(event.path)
+      g_event = event
+
+def handleTreeWillCollapse(event):
+      global g_event
+      print &quot;Tree Will Collapse&quot;
+      showPath(event.path)
+      g_event = event
+
+def handleValueChanged(event):
+      global g_event
+      print &quot;Value Changed&quot;
+      showPath(event.path)
+      g_event = event
+
+def showPath(treePath):
+      path = &quot;&quot;
+      count = treePath.pathCount
+      for index in range(0,count):
+            node = treePath.getPathComponent(index)
+            path = path + &quot;-&gt; [&quot; + str(node) + &quot;]&quot;
+      print path
+
+tree_model = SampleModel(&quot;Dick &amp; Mary&quot;)
+tree_model.addNode(&quot;Martha &amp; Miguel&quot;, [&quot;Alex&quot;, &quot;Nicholai&quot;, &quot;Marcus&quot;])
+tree_model.addNode(&quot;Missy &amp; Adam&quot;, [&quot;Mary&quot;, &quot;Sarah&quot;])
+Kiley=tree_model.addNode(&quot;Rick &amp; Kiley&quot;, [&quot;Whitney&quot;])
+
+frame = JFrame(&quot;Tree Events&quot;)
+tree = JTree(tree_model)
+frame.contentPane.add(tree)
+frame.pack()
+frame.show()
+
+      # A node in the tree expanded.
+tree.treeExpanded = handleTreeExpanded
+      # A node in the tree collapsed.
+tree.treeCollapsed = handleTreeCollapsed
+      # A node in the tree will expand.
+tree.treeWillExpand = handleTreeWillExpand
+      # A node in the tree will collapse.
+tree.treeWillCollapse = handleTreeWillCollapse
+      # A new node was selected.
+tree.valueChanged = handleValueChanged</pre>
+<p class="docText">Notice that there's an event handler for every possible 
+event. The handler prints out the path of the event using the tree path 
+associated with it. It also copies the last handler to a global variable, <tt>
+g_event</tt>.</p>
+<h5 class="docSection3Title" id="ch16lev3sec13">TreeEvents.py Example</h5>
+<p class="docText">Let's do an interactive session, first typing this at the 
+system prompt:</p>
+<pre>C:\jython_book\scripts\chap16\TreeModel1&gt;jython -i TreeEvents.py</pre>
+<p class="docText">Expand the first node to get the following output:</p>
+<pre><span class="docEmphStrong">Tree Will Expand</span>
+-&gt; [Dick &amp; Mary]-&gt; [Martha &amp; Miguel]
+<span class="docEmphStrong">Tree Expanded</span>
+-&gt;[Dick &amp; Mary]-&gt; [Martha &amp; Miguel]</pre>
+<p class="docText">Select the first leaf in the first node to get this output:</p>
+<pre><span class="docEmphStrong">Value Changed</span>
+-&gt; [Dick &amp; Mary]-&gt; [Martha &amp; Miguel]-&gt; [Alex]</pre>
+<p class="docText">Collapse the first node.</p>
+<pre><span class="docEmphStrong">Tree Will Collapse</span>
+-&gt; [Dick &amp; Mary]-&gt; [Martha &amp; Miguel]
+<span class="docEmphStrong">Tree Collapsed</span>
+-&gt; [Dick &amp; Mary]-&gt; [Martha &amp; Miguel]</pre>
+<p class="docText">That was how to get the whole path, but our only interest is 
+in the last node. We can get that by inspecting the last event, which is stored 
+in <tt>g_event</tt>.</p>
+<p class="docText">The event has a property called <tt>path</tt>, which is an 
+instance of <tt>TreePath</tt>.</p>
+<pre>&gt;&gt;&gt; g_event.path.class
+&lt;jclass javax.swing.tree.TreePath at -1128707474&gt;</pre>
+<p class="docText"><tt>TreePath</tt> has a method called <tt>
+getLastPathComponent()</tt>.</p>
+<pre>&gt;&gt;&gt; dir (g_event.path.class)
+['getParentPath', 'path', 'getPathComponent', 'pathCount',
+'pathByAddingChild', 'getPath', 'isDescendant', 'getPathCount',
+'lastPathComponent', 'parentPath', 'getLastPathComponent']</pre>
+<p class="docText"><tt>getLastPathComponent()</tt> returns the node selected.</p>
+<pre>    &gt;&gt;&gt; g_event.path.getLastPathComponent()
+SampleNode(name=Martha &amp; Miguel,list=['Alex', 'Nicholai', 'Marcus'],
+    parent=Dick&amp; Mary,leaf=0)</pre>
+<p class="docText">That about covers tree view events. To make sure you 
+understand them, try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Add a <tt>JTree</tt> component to the address book example 
+  that replaces the <tt>JList</tt> component. Group the addresses by 
+  category—business, personal, and so forth. <tt>JTree</tt> will show the 
+  category and all of its addresses. Clicking on a particular category should 
+  show all of its items in the table. Clicking on a particular address should 
+  show that address in the entry form.</li>
+  <li>
+  <p class="docList">Modify the tree so that categories and subcategories can be 
+  added to it.</li>
+</ul>
+<h3 class="docSection1Title" id="ch16lev1sec5">JToolBar and Actions</h3>
+<p class="docText">We've improved the address book application with the addition 
+of <tt>JTabbedPane</tt>, <tt>JTable</tt>, and (if you did the exercises) <tt>
+JTree</tt>. Still, something's missing.</p>
+<p class="docText">In the early days of Java there was no Swing, and AWT didn't 
+have a toolbar. This meant that most developers used panels, which is what I did 
+in the address book application. I had two reasons for this: to show how <tt>
+JPanel</tt> and the <tt>BorderLayout</tt> layout manager work and to avoid 
+introducing actions.</p>
+<h4 class="docSection2Title" id="ch16lev2sec18">Actions</h4>
+<p class="docText">We can avoid actions no longer. Any introduction to <tt>
+JToolBar</tt> has to include them. I held off until now because actions are a 
+higher abstraction than components, and I thought you should have a good grip on 
+components first.</p>
+<p class="docText">Think of an action as a command. An item on a menu that says 
+&quot;remove address&quot; is one example; another is a button on a toolbar that says the 
+same thing. The main difference is that an action added to a toolbar usually 
+becomes a button and an action added to a menu usually becomes an item.</p>
+<p class="docText">The following code, from our third iteration of the address 
+book application in this chapter, uses <tt>javax.swing.JToolBar</tt> and <tt>
+javax.swing.AbstractAction</tt> to show how actions work. Notice that the 
+actions created are used by both a popup menu and a menubar menu, which makes 
+the code much shorter.</p>
+<p class="docText">First we define two classes that extend <tt>AbstractAction</tt>: 
+one for adding and one for removing addresses.</p>
+<pre>class Add (AbstractAction):
+       def __init__(self, this):
+             self.this = this
+             AbstractAction.__init__(self, &quot;Add&quot;)
+
+       def actionPerformed(self, event):
+             self.this.addAddress_Clicked()
+
+class Remove (AbstractAction):
+       def __init__(self, this):
+             self.this = this
+             AbstractAction.__init__(self, &quot;Remove&quot;)
+
+       def actionPerformed(self, event):
+             self.this.removeAddress_Clicked()</pre>
+<p class="docText">As you can see, both classes extend <tt>AbstractAction</tt>, 
+and the only method they have to override is <tt>actionPerformed()</tt>. The <tt>
+Remove</tt> and <tt>Add</tt> actions respectively delegate calls to the <tt>
+AddressMain</tt> classes <tt>removeAddress</tt> and <tt>addAddress</tt>.</p>
+<p class="docText">Next we instantiate the actions and add them to the toolbar. 
+(Later they'll be added to the menubar and popup menus.)</p>
+<pre>       #Instantiate the add and remove actions.
+addAction = Add(self)
+removeAction = Remove(self)
+
+       # Create the toolbar panel, and
+       # add it to the North border
+       # of the container.
+toolbar = JToolBar()
+self.contentPane.add(toolbar, BorderLayout.NORTH)
+
+       #Add the actions to the toolbar.
+toolbar.add(addAction)
+toolbar.add(removeAction)</pre>
+<p class="docText">This code is much smaller than the code for creating menu 
+items and buttons. Since we're using <tt>JToolBar</tt> instead of <tt>JPanel</tt>, 
+we get the additional capability of moving the toolbar at runtime, as 
+illustrated in <a class="docLink" href="#ch16fig12">Figures 16-12</a>,
+<a class="docLink" href="#ch16fig13">16-13</a>, and
+<a class="docLink" href="#ch16fig14">16-14</a>.</p>
+<center>
+<h5 id="ch16fig12" class="docFigureTitle">Figure 16-12. Main Frame with the Toolbar at the Top</h5>
+<p class="docText"><img alt="graphics/16fig12.gif" src="16fig12.gif" border="0" width="500" height="206"></p>
+</center><center>
+<h5 id="ch16fig13" class="docFigureTitle">Figure 16-13. Main Frame with the Toolbar at the Left</h5>
+<p class="docText"><img alt="graphics/16fig13.gif" src="16fig13.gif" border="0" width="500" height="206"></p>
+</center><center>
+<h5 id="ch16fig14" class="docFigureTitle">Figure 16-14. Main Frame with a Floating Toolbar</h5>
+<p class="docText"><img alt="graphics/16fig14.gif" src="16fig14.gif" border="0" width="500" height="168"></p>
+</center>
+<h5 class="docSection3Title" id="ch16lev3sec14">Icons</h5>
+<p class="docText">With <tt>Action</tt> in general and <tt>AbstractAction</tt> 
+in particular, we can easily add support for icons. I did it with the following 
+code:</p>
+<pre>class Add (AbstractAction):
+       def __init__(self, this):
+             self.this = this
+             icon = ImageIcon(&quot;./images/add.jpg&quot;)
+             AbstractAction.__init__(self, &quot;Add&quot;, icon)
+
+       def actionPerformed(self, event):
+             self.this.addAddress_Clicked()
+
+class Remove (AbstractAction):
+       def __init__(self, this):
+             self.this = this
+             icon = ImageIcon(&quot;./images/remove.jpg&quot;)
+             AbstractAction.__init__(self, &quot;Remove&quot;, icon)
+
+    def actionPerformed(self, event):
+             self.this.removeAddress_Clicked()</pre>
+<p class="docText">The result is shown in <a class="docLink" href="#ch16fig15">
+Figure 16-15</a>.</p>
+<center>
+<h5 id="ch16fig15" class="docFigureTitle">Figure 16-15. Main Frame Toolbar with Icons</h5>
+<p class="docText"><img alt="graphics/16fig15.gif" src="16fig15.gif" border="0" width="500" height="250"></p>
+</center>
+<p class="docText">Try these exercises:</p>
+<ul>
+  <li>
+  <p class="docList">Change the paint program from the last chapter to use <tt>
+  JToolBar</tt> for both the shape toolbar and the color/fill panel. For extra 
+  credit, add icons for the shape buttons.</li>
+  <li>
+  <p class="docList">Add mnemonics and tooltips to all of the components in the 
+  address book application.</li>
+</ul>
+<h3 class="docSection1Title" id="ch16lev1sec6">Summary</h3>
+<p class="docText">In this chapter, we explored advanced Swing. We showed an 
+example that employed the JFC components <tt>JTable</tt>, <tt>JTree</tt>, <tt>
+JToolBar</tt>, and <tt>JTabbedPane</tt>, and we discussed <tt>JTable</tt> and
+<tt>JTree</tt>.</p>
+<p class="docText">We extended the address book application to use <tt>JTable</tt>, 
+which led to a discussion of <tt>TableModel</tt> and <tt>TreeModel</tt>. Later 
+we changed menus and toolbars to use actions instead of buttons and menu items.</p>
+<p class="docText">With what you learned in this and the last three chapters, 
+you should be able to create your own Swing-based applications.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2015.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2017.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

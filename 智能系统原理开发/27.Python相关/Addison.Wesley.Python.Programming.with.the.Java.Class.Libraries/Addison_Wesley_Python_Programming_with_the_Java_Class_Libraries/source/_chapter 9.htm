@@ -1,0 +1,1103 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 9</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 9.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 9.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 9.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%208.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2010.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 9. Built-In Functions</h2><ul><li>&nbsp;<a class="docLink" href="#ch09lev1sec1">Conversion</a></li>
+<li>&nbsp;<a class="docLink" href="#ch09lev1sec2">Namespace: dir(), globals(), locals(), vars()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch09lev1sec3">Type Checking: callable(), type()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch09lev1sec4">Operations</a></li>
+<li>&nbsp;<a class="docLink" href="#ch09lev1sec5">Advanced Topic: Functional Programming</a></li>
+<li>&nbsp;<a class="docLink" href="#ch09lev1sec6">Advanced exec and eval</a></li>
+<li>&nbsp;<a class="docLink" href="#ch09lev1sec7">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Built-in (intrinsic) function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Bytecode</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Collection</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">eval statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">exec statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Functional programming</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Hashtable</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Hash value</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Hierarchy</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Identity operator</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">is operator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Keyword</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Lambda function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Mutable/Immutable</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Namespace</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Name/value pair</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Octal</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Parameter</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Sequence</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">A good part of the simplicity and elegance of Python comes 
+from its built-in (or instrinsic) functions. Many of these are longhand for 
+other operators—for example, the <tt>cmp()</tt> function, which performs the <tt>
+==</tt>, <tt>=&gt;</tt>, <tt>=&lt;</tt>, <tt>&lt;</tt>, <tt>&gt;</tt> operations, and the
+<tt>repr()</tt> function, which back-quotes an object. When there's no 
+equivalent operator, the built-in function is often referred to simply as an 
+&quot;operator.&quot;</p>
+<p class="docText">Generally, Python built-in functions are equivalent to 
+keywords in other languages. One example is C++'s keyword <tt>sizeof()</tt>, 
+which determines the size of an array or other structure; its Python counterpart 
+is <tt>len()</tt>, which determines the length of a sequence. Similarly, Java's
+<tt>instanceof()</tt> is equivalent to Python's <tt>isinstance()</tt>.</p>
+<h3 class="docSection1Title" id="ch09lev1sec1">Conversion</h3>
+<p class="docText">Sooner or later you're going to need to convert from one type 
+to another. You may be reading in strings from files and want to convert them to 
+text, or, before writing numbers to a text file, you may want to convert them to 
+strings. Python has several built-in functions to do this.</p>
+<h4 class="docSection2Title" id="ch09lev2sec1">Converting Numbers to Strings: chr(), str(), hex(), 
+oct()</h4>
+<p class="docText">The <tt>chr()</tt> function converts a number to a character. 
+Remember that there are no characters in Python, so <tt>chr()</tt> returns a 
+single character in a string.</p>
+<pre>&gt;&gt;&gt; chr(97)
+'a'
+&gt;&gt;&gt; chr(122)
+'z'</pre>
+<p class="docText">It may seem that you would rarely use <tt>chr()</tt>, but 
+wait until <a class="docLink" href="_chapter%2012.htm">Chapter 12</a>, 
+when it will come in handy for converting a Java binary array into a Python 
+string.</p>
+<p class="docText">The <tt>str()</tt> function converts any object, including 
+numeric types, into a string. (Remember, unlike other languages Python treats 
+all types as objects.)</p>
+<pre>&gt;&gt;&gt; str(1)
+'1'</pre>
+<p class="docText">The <tt>hex()</tt> function converts a number into its 
+hexadecimal equivalent.</p>
+<pre>&gt;&gt;&gt; hex(255)
+'0xff'
+&gt;&gt;&gt; hex(1l)
+'0x1L'</pre>
+<p class="docText">Hexadecimal is a base 16 numbering system used in many 
+computers that allows you to display a byte with two digits. We'll see it again 
+when we cover the Java <tt>InputStream</tt> in
+<a class="docLink" href="_chapter%2012.htm">Chapter 12</a>.</p>
+<p class="docText">The <tt>oct()</tt> function converts a number into its octal 
+equivalent. Octal is a base 8 numbering system.</p>
+<pre>&gt;&gt;&gt; oct(1)
+'01'
+&gt;&gt;&gt; oct(9)
+'011'</pre>
+<p class="docText"><tt>oct()</tt> and <tt>hex()</tt> work only with integers and 
+longs. They don't work with floats.</p>
+<p class="docText">You probably won't use <tt>chr()</tt>, <tt>oct()</tt>, or <tt>
+hex()</tt> very much, if at all, but <tt>str()</tt> you'll use a great deal.</p>
+<h4 class="docSection2Title" id="ch09lev2sec2">Converting Strings to Numbers: float(), int(), 
+long(), ord()</h4>
+<p class="docText">The <tt>float()</tt> function converts a string to a float.</p>
+<pre>&gt;&gt;&gt; f = float(&quot;1.1&quot;)
+&gt;&gt;&gt; type(f)
+&lt;jclass org.python.core.PyFloat at 1662336&gt;
+&gt;&gt;&gt;</pre>
+<p class="docText">The <tt>int()</tt> function converts strings to integers.</p>
+<pre>&gt;&gt;&gt; str = &quot;1&quot;
+&gt;&gt;&gt; num = int(str)
+&gt;&gt;&gt; type(num)
+&lt;jclass org.python.core.PyInteger at 3414368&gt;
+&gt;&gt;&gt;</pre>
+<p class="docText">The <tt>long()</tt> function converts a string into a long.</p>
+<pre>&gt;&gt;&gt; long(&quot;12345678901234567890&quot;)
+12345678901234567890L</pre>
+<p class="docText">The <tt>ord()</tt> function converts a character (that is, a 
+string with one element) into its ASCII value.</p>
+<pre>&gt;&gt;&gt; ord(&quot;A&quot;), ord(&quot;Z&quot;)
+(65, 90)
+&gt;&gt;&gt;</pre>
+<h4 class="docSection2Title" id="ch09lev2sec3">Converting Numbers to Different Numeric Types: 
+coerce()</h4>
+<p class="docText">The <tt>coerce()</tt> function converts one numeric type into 
+another, or rather it changes the type of one value to another type. Actually,
+<tt>coerce()</tt> doesn't change the value but returns it in a tuple.</p>
+<p class="docText">Declare some variables to convert.</p>
+<pre>&gt;&gt;&gt; myinteger = 1          # an int
+&gt;&gt;&gt; mylong = 1l            # a long
+&gt;&gt;&gt; myfloat = 1.0          # a float
+&gt;&gt;&gt; mystring = &quot;1&quot;  # a non-numeric object</pre>
+<p class="docText">Coerce an integer into a long.</p>
+<pre>&gt;&gt;&gt; coerce(mylong, myinteger)
+(1L, 1L)</pre>
+<p class="docText">Do the same as above, but swap the position of the integer 
+and the long.</p>
+<pre>&gt;&gt;&gt; coerce(myint, mylong)
+(1L, 1L)</pre>
+<p class="docText">Coerce an integer into a float.</p>
+<pre>&gt;&gt;&gt; coerce(myint, myfloat)
+(1.0, 1.0)</pre>
+<p class="docText">Coerce a long into a float. (The long has to be in the range 
+of allowable values for the <tt>Float</tt> type.)</p>
+<pre>&gt;&gt;&gt; coerce(mylong, myfloat)
+(1.0, 1.0)</pre>
+<p class="docText"><tt>coerce()</tt> works only with numeric types. It won't 
+work with strings, as you can see here:</p>
+<pre>&gt;&gt;&gt; coerce(mystring, myint)
+Traceback (innermost last):
+  File &quot;&lt;interactive input&gt;&quot;, line 0, in ?
+TypeError: number coercion failed
+&gt;&gt;&gt;</pre>
+<p class="docText">To convert an integer or a long into a float, do this:</p>
+<pre>&gt;&gt;&gt; myint = 10
+&gt;&gt;&gt; myint = coerce(1.0, 10)[1]
+&gt;&gt;&gt; print myint
+10.0</pre>
+<h4 class="docSection2Title" id="ch09lev2sec4">Converting Sequences: list(), tuple()</h4>
+<p class="docText">Remember that tuples are immutable, which means that you 
+can't add items to them. If you need to add items to a sequence, you have to use 
+a list. Conversely, you can't use a list as a key into a dictionary. Since 
+dictionaries store items based on a hashtable that uses the hash value of the 
+key, they need types that won't change—that is, immutable tuples. Python has two 
+built in functions to deal with these problems.</p>
+<p class="docText">The <tt>list()</tt> function converts an immutable sequence 
+(such as a tuple) into a mutable one (such as a list). Here's an example.</p>
+<p class="docText">Create a tuple.</p>
+<pre>&gt;&gt;&gt; tup = (1,2,3,4,5,6,7,8,9)</pre>
+<p class="docText">Try to add something to it (you'll fail).</p>
+<pre>&gt;&gt;&gt; tup.append(1)
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+AttributeError: 'tuple' object has no attribute 'append'</pre>
+<p class="docText">Convert the tuple, <tt>tup</tt>, into a list, <tt>ls</tt>.</p>
+<pre>&gt;&gt;&gt; ls =list(tup)
+&gt;&gt;&gt; ls.append(10)</pre>
+<p class="docText">The <tt>tuple()</tt> function converts a mutable sequence 
+into a tuple. We'll continue our last example to demonstrate how it works.</p>
+<p class="docText">Convert <tt>ls</tt> to a tuple, <tt>tup</tt>, and display it.</p>
+<pre>&gt;&gt;&gt; tup=tuple(ls)
+&gt;&gt;&gt; tup
+(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+&gt;&gt;&gt;</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">tuple() and list()</h2>
+      <p class="docText">The <tt>tuple()</tt> and <tt>list()</tt> functions take 
+      any kind of sequence. Here's what happens if you pass <tt>tuple()</tt> a 
+      tuple:</p>
+      <pre>&gt;&gt;&gt; tup = (1,2,3)
+&gt;&gt;&gt; id(tup), id(tuple(tup))
+(201160, 201160)
+
+&gt;&gt;&gt; tup is tuple(tup)
+1</pre>
+      <p class="docText">As you can see, the <tt>id</tt> of <tt>tup</tt> and the
+      <tt>id</tt> of the tuple returned from <tt>tuple()</tt> are the same. We 
+      can demonstrate this with the identity operator, which returns as a true 
+      statement that <tt>tup</tt> is <tt>tuple(tup)</tt>.</p>
+      <p class="docText">If you pass a list to <tt>tuple()</tt>, you get a new 
+      tuple.</p>
+      <pre>&gt;&gt;&gt; lst = [1,2,3]
+&gt;&gt;&gt; id(lst), tuple(lst)
+(332828, (1, 2, 3))
+
+&gt;&gt;&gt; id(lst), id(tuple(lst))
+(332828, 321564)
+
+&gt;&gt;&gt; lst is tuple(lst)
+0</pre>
+      <p class="docText">Notice that, every time you call <tt>list(ls)</tt>, you 
+      get a new copy of <tt>ls</tt>.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch09lev2sec5">Converting Objects to Strings: str(), repr()</h4>
+<p class="docText">The <tt>str()</tt> function converts all object types to 
+strings. The <tt>repr()</tt> function converts all object types to strings that 
+might be able to reconstruct the object with a call to <tt>eval</tt>. Here's an 
+example of both.</p>
+<p class="docText">Create a list, a tuple, a string, and an integer object.</p>
+<pre>&gt;&gt;&gt; list, tuple, string, int = [1,2],(1,2),&quot;12&quot;,12</pre>
+<p class="docText">Create a dictionary object that contains the list, tuple, 
+string and integer objects just created.</p>
+<pre>&gt;&gt;&gt; dict ={&quot;list&quot;:list, &quot;tuple&quot;:tuple, &quot;string&quot;:string, &quot;int&quot;:12}</pre>
+<p class="docText">Show the string representation of the dictionary object.</p>
+<pre>&gt;&gt;&gt; str(dict)
+&quot;{'tuple': (1, 2), 'string': '12', 'list': [1, 2], 'int': 12} &quot;</pre>
+<p class="docText">Show the <tt>repr()</tt> string representation of the 
+dictionary object.</p>
+<pre>&gt;&gt;&gt; repr(dict)
+&quot;{'tuple': (1, 2), 'string': '12', 'list': [1, 2], 'int': 12} &quot;</pre>
+<h3 class="docSection1Title" id="ch09lev1sec2">Namespace: dir(), globals(), locals(), vars()</h3>
+<p class="docText">In most languages, the namespace is decided at compile time, 
+and there is no way to determine which variables are in it unless you try to use 
+them and the program doesn't compile. With Python, you can see the variables in 
+the namespace, and you can see what variables a given object exposes.</p>
+<h4 class="docSection2Title" id="ch09lev2sec6">dir()</h4>
+<p class="docText"><tt>dir([object])</tt> returns a list of namespace variables. 
+If no arguments are passed, it returns a list of names in the current namespace; 
+otherwise, it returns a list of an object's attribute names.</p>
+<p class="docText">Here are two examples of <tt>dir()</tt> showing what's in the 
+current namespace in a function and in a module, respectively:</p>
+<pre>&gt;&gt;&gt; var1, var2, var3, var4 = 1,2,3,4
+&gt;&gt;&gt; dir()
+['__builtins__', 'var1', 'var2', 'var3', 'var4']
+&gt;&gt;&gt; def func(lvar1, lvar2,lvar3,lvar4):
+...    return dir()
+...
+
+&gt;&gt;&gt; func(var1,var2,var3,var4)
+['lvar1', 'lvar2', 'lvar3', 'lvar4']
+&gt;&gt;&gt;</pre>
+<p class="docText">Here's an example showing <tt>dir()</tt> inspecting a module 
+and a class.</p>
+<p class="docText">Inspect the attributes of the <span class="docEmphasis">sys</span> 
+module.</p>
+<pre>&gt;&gt;&gt; import sys
+&gt;&gt;&gt; dir(sys)
+['__doc__', '__name__', '__stderr__', '__stdin__', '__stdout__', 'argv', 'builtin_module_names', 'copyright', 'dllhandle', 'exc_info', 'exc_type', 'exec_prefix', 'executable', 'exit', 'getrefcount', 'maxint', 'modules', 'path', 'platform', 'prefix', 'ps1', 'ps2', 'setcheckinterval', 'setprofile', 'settrace', 'stderr', 'stdin', 'stdout', 'version', 'winver']</pre>
+<p class="docText">Inspect the <tt>Exception</tt> class.</p>
+<pre>&gt;&gt;&gt; dir(Exception)
+['__doc__', '__getitem__', '__init__', '__module__', '__str__']
+
+&gt;&gt;&gt; type (Exception) #just to show that it is a class
+&lt;jclass org.python.core.PyClass at 4958626&gt;</pre>
+<p class="docText">Inspect an instance of the <tt>Exception</tt> class.</p>
+<pre>&gt;&gt;&gt; e = Exception()
+&gt;&gt;&gt; dir (e)
+['args']</pre>
+<h4 class="docSection2Title" id="ch09lev2sec7">globals()</h4>
+<p class="docText">With a few exceptions, the <tt>globals()</tt> function is 
+similar to <tt>dir()</tt>. It always returns the variable names defined in the 
+current module, and it returns a dictionary where the name in the name/value 
+pairs is the name of the object (the variable name) and the value is the object 
+itself (the value). Even if you call <tt>globals()</tt> in a function call, it 
+returns the global variables for that module.</p>
+<pre>&gt;&gt;&gt; gvar1,gvar2,gvar3=1,&quot;two&quot;,[3,3,3]
+&gt;&gt;&gt; def func():
+...   return globals()
+...
+&gt;&gt;&gt; func()
+{'func': &lt;function func at 428fc&gt;, 'gvar3': [3, 3, 3], 'gvar1': 1, 'gvar2': 'two', '__builtins__': {'cmp': &lt;built-in function cmp&gt;, 'dir': &lt;built-in function dir&gt;, 'round': &lt;built-in function round&gt;, 'AttributeError': &lt;class exceptions.AttributeError at 280e8&gt;, 'SystemExit': &lt;class exceptions.SystemExit at 28bd0&gt;, 'str': &lt;built-in function str&gt;, 'ArithmeticError':
+...</pre>
+<h4 class="docSection2Title" id="ch09lev2sec8">locals()</h4>
+<p class="docText">The <tt>locals()</tt> function is like <tt>globals()</tt> 
+except that it returns the variables in the innermost namespace.</p>
+<pre>&gt;&gt;&gt; def func2(var1, var2, var3):
+...   return locals()
+...
+&gt;&gt;&gt; func2(1,2,3)
+{'var2': 2, 'var3': 3, 'var1': 1}</pre>
+<p class="docText">This shows the use of <tt>locals()</tt> in the body of <tt>
+func2</tt> to print out the variables in <tt>func2</tt>'s namespace.</p>
+<p class="docText"><tt>locals()</tt> also returns any variables defined inside 
+the function.</p>
+<pre>...   var4 = &quot;more&quot;
+...   var5 = &quot;five&quot;
+...   return locals()
+...
+
+&gt;&gt;&gt; func3(1,2,3)
+{'var2': 2, 'var3': 3, 'var1': 1, 'var4': 'more', 'var5': 'five'}</pre>
+<p class="docText">Here <tt>var4</tt> and <tt>var5</tt> are returned as well as 
+the arguments passed to <tt>func3</tt>.</p>
+<h4 class="docSection2Title" id="ch09lev2sec9">vars()</h4>
+<p class="docText">The <tt>vars()</tt> function is like <tt>locals()</tt> except 
+that you can use it for any object type to list the object's public attributes. 
+Here we use <tt>vars()</tt> to list the attributes in the <tt>Exception</tt> 
+class. (<tt>Exception</tt> is always—well, almost always—in the namespace.)</p>
+<pre>&gt;&gt;&gt; vars(Exception)
+{'__module__': 'exceptions', '__init__': &lt;function __init__ at 27b8c&gt;, '__doc__': None, '__str__': &lt;function __str__ at 27be0&gt;, '__getitem__': &lt;function __getitem__ at 24d58&gt;}</pre>
+<h3 class="docSection1Title" id="ch09lev1sec3">Type Checking: callable(), type()</h3>
+<p class="docText">The <tt>callable(object) function</tt> returns true if the 
+object can be called like a function. Since more than object types can be 
+callable (lambdas, functions, methods, class instances, etc.), this feature is 
+very useful. Here's an example:</p>
+<pre>&gt;&gt;&gt; callable(dir)
+1</pre>
+<p class="docText">This is nice, but how do you use it? Let's say that you want 
+to find out which objects in the current module are callable.</p>
+<p class="docText">Define a class whose instances are callable.</p>
+<pre>&gt;&gt;&gt; class myclass:
+...   def __call__(self):
+...          return &quot;hello&quot;
+...</pre>
+<p class="docText">Define an instance of the callable class.</p>
+<pre>&gt;&gt;&gt; hello = myclass()</pre>
+<p class="docText">Define some not so useful functions.</p>
+<pre>&gt;&gt;&gt; def func():pass
+...
+&gt;&gt;&gt; def func1():pass
+...
+&gt;&gt;&gt; def func2():pass
+...
+&gt;&gt;&gt; def func3():pass</pre>
+<p class="docText">Iterate through the list of variables in the module 
+namespace, and see which objects are callable.</p>
+<pre>&gt;&gt;&gt; for (name,value) in vars().items():
+...   if (callable(value)):
+...          print name + &quot; is callable&quot;
+...
+hello is callable
+myclass is callable
+func is callable
+func1 is callable
+func2 is callable
+func3 is callable</pre>
+<p class="docText">The <tt>type()</tt> function returns the type of the object.</p>
+<pre>&gt;&gt;&gt; type(myclass)
+&lt;jclass org.python.core.PyClass . . .&gt;
+
+&gt;&gt;&gt; type (func)
+&lt;jclass org.python.core.PyFunction . . .&gt;
+
+&gt;&gt;&gt; type (dir())
+&lt;jclass org.python.core.PyList . . . &gt;
+
+&gt;&gt;&gt; type(hello)
+&lt;jclass org.python.core.PyInstance . . .&gt;</pre>
+<h3 class="docSection1Title" id="ch09lev1sec4">Operations</h3>
+<p class="docText">This section deals mostly with functions that are longhand 
+for operators.</p>
+<h4 class="docSection2Title" id="ch09lev2sec10">Numeric Operations: cmp(), divmod(), pow(), abs(), 
+round()</h4>
+<p class="docText"><tt>cmp(x,y)</tt> compares two numeric types. It also works 
+for sequences, dictionaries, and other numeric objects. <tt>cmp()</tt> returns a 
+positive number if the <span class="docEmphasis">x</span> argument is greater 
+than the <span class="docEmphasis">y</span> argument, a negative number if the
+<span class="docEmphasis">y</span> argument is greater than the
+<span class="docEmphasis">x</span> argument, and 0 if <span class="docEmphasis">
+x</span> and <span class="docEmphasis">y</span> are equal.</p>
+<pre>&gt;&gt;&gt; cmp(1,0)
+1
+
+&gt;&gt;&gt; cmp(0,1)
+-1
+
+&gt;&gt;&gt; cmp(0,0)
+0</pre>
+<p class="docText"><tt>cmp()</tt> is related to the equality operators (<tt>==</tt>,
+<tt>&gt;=</tt>, <tt>&lt;=</tt>, etc.). If you want these operators to work with class 
+instances, you need to implement <tt>cmp()</tt> for the class by executing <tt>
+cmp(instance1, instance2)</tt>, <tt>instance1 == instance2</tt>, or <tt>
+instance1 &gt; instance2)</tt>.</p>
+<p class="docText">The <tt>divmod()</tt> function divides
+<span class="docEmphasis">a</span> by <span class="docEmphasis">b</span> and 
+returns a tuple containing the divider and the remainder. With <tt>divmod()</tt>, 
+these two examples are equivalent:</p>
+<pre>&gt;&gt;&gt; 100 / 10, 100 % 10
+(10, 0)
+
+&gt;&gt;&gt; divmod(100,10)
+(10, 0)</pre>
+<p class="docText">The <tt>pow()</tt> function raises <span class="docEmphasis">
+x</span> to the power of <span class="docEmphasis">y,</span> so these two 
+examples are the same:</p>
+<pre>&gt;&gt;&gt; 5**3
+125
+
+&gt;&gt;&gt; pow(5,3)
+125</pre>
+<p class="docText">The <tt>abs()</tt> function returns the absolute value of a 
+number.</p>
+<pre>&gt;&gt;&gt; abs(1), abs(-1)
+(1, 1)</pre>
+<p class="docText">The <tt>round(x, [n])</tt> function rounds a number with a 
+fraction to the nearest whole integer (or, if you specify the <tt>n</tt> 
+argument, to the nearest position in the mantissa). Here's an example.</p>
+<p class="docText">Declare a variable containing a float with a long mantissa.</p>
+<pre>&gt;&gt;&gt; myfloat = 1.1111111111111111</pre>
+<p class="docText">Round to the nearest whole integer.</p>
+<pre>&gt;&gt;&gt; round(myfloat)
+1.0</pre>
+<p class="docText">Round to the second decimal place in the mantissa.</p>
+<pre>&gt;&gt;&gt; round(myfloat, 2)
+1.11</pre>
+<p class="docText">Round to the third decimal place in the mantissa.</p>
+<pre>&gt;&gt;&gt; round(myfloat, 3)
+1.111</pre>
+<h4 class="docSection2Title" id="ch09lev2sec11">Identity: hash(), id()</h4>
+<p class="docText">The <tt>hash()</tt> function returns a number that represents 
+the data of an object, called the hash value. Hash values are integers that can 
+be used to efficiently compare dictionary keys.</p>
+<pre>&gt;&gt;&gt; myint= 1
+&gt;&gt;&gt; myfloat = 1.0
+&gt;&gt;&gt; hash(myint)
+1
+
+&gt;&gt;&gt; hash(myfloat)
+1</pre>
+<p class="docText">The <tt>id(object)</tt> function assigns objects in the 
+system a unique ID. It implements the <tt>is</tt> operator. In the following 
+statements, <tt>id</tt> and <tt>is</tt> are functionally equivalent:</p>
+<pre>&gt;&gt;&gt; dict = {}
+&gt;&gt;&gt; id(dict)==id(dict), dict is dict
+(1, 1)</pre>
+<h4 class="docSection2Title" id="ch09lev2sec12">Class, Instance, and Modules: delattr(), getattr(), 
+hasattr(), setattr()</h4>
+<p class="docText">The <tt>delattr(object,name)</tt> function removes attributes 
+from a class or instance or removes variables from a module namespace. It works 
+similarly to <tt>del()</tt>. Consider the following example, which defines an 
+empty class, <tt>myclass</tt>, creates an instance of it, and adds attributes to 
+the instance.</p>
+<p class="docText">Define <tt>myclass</tt>.</p>
+<pre>&gt;&gt;&gt; class myclass:pass
+...</pre>
+<p class="docText">Create an instance of <tt>myclass</tt>, <tt>ci</tt> (&quot;class 
+instance&quot;), and add to it the attributes <tt>&quot;hello&quot;</tt> and <tt>&quot;goodbye&quot;</tt>.</p>
+<pre>&gt;&gt;&gt; ci = myclass()
+
+&gt;&gt;&gt; ci.hello = &quot;hello&quot;
+&gt;&gt;&gt; ci.goodbye = &quot;goodbye&quot;</pre>
+<p class="docText">Display the attributes.</p>
+<pre>&gt;&gt;&gt; vars(ci)
+{'goodbye': 'goodbye', 'hello': 'hello'}</pre>
+<p class="docText">Use the <tt>del</tt> keyword to delete the <tt>&quot;hello&quot;</tt> 
+attribute: then display the attributes that remain.</p>
+<pre>&gt;&gt;&gt; del ci.hello
+&gt;&gt;&gt; vars(ci)
+{'goodbye': 'goodbye'}</pre>
+<p class="docText">Use <tt>delattr()</tt>to delete <tt>&quot;goodbye&quot;</tt> from the 
+class instance, and use <tt>vars()</tt> to show that the instance has no more 
+attributes.</p>
+<pre>&gt;&gt;&gt; delattr(ci,&quot;goodbye&quot;)
+&gt;&gt;&gt; vars(ci)
+{}</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Del</h2>
+      <p class="docText">You can't use <tt>delattr()</tt> to remove items 
+      (key/value pairs) from a dictionary; only the <tt>del</tt> keyword can do 
+      that. <tt>del</tt> and <tt>delattr()</tt> are equivalent only for classes, 
+      instances, and modules.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Here's an example that works with a module,
+<span class="docEmphasis">mymodule.py.</span> It just defines two variables, <tt>
+attr1</tt> and <tt>attr2</tt>.</p>
+<pre>attr1=1
+attr2=2</pre>
+<p class="docText">Import <span class="docEmphasis">mymodule.py</span> into the 
+interactive interpreter.</p>
+<pre>&gt;&gt;&gt; import mymodule</pre>
+<p class="docText">Show <span class="docEmphasis">mymodule</span>'s namespace 
+with the <tt>dir()</tt> function.</p>
+<pre>&gt;&gt;&gt; dir (mymodule)
+['__builtins__', '__doc__', '__file__', '__name__', 'attr1', 'attr2']</pre>
+<p class="docText">Use <tt>delattr()</tt> to remove <tt>attr1</tt> from the 
+namespace.</p>
+<pre>&gt;&gt;&gt; delattr(mymodule, &quot;attr1&quot;)</pre>
+<p class="docText">Verify the removal.</p>
+<pre>&gt;&gt;&gt; dir(mymodule)
+['__builtins__', '__doc__', '__file__', '__name__', 'attr2']</pre>
+<p class="docText">Use <tt>del()</tt> to do the same thing with <tt>attr2</tt>.</p>
+<pre>&gt;&gt;&gt; del mymodule.attr2
+&gt;&gt;&gt; dir(mymodule)
+['__builtins__', '__doc__', '__file__', '__name__']</pre>
+<p class="docText">The <tt>getattr()</tt> function, strange as it may seem, 
+&quot;gets&quot; an attribute from a class, instance, or module. Here's an example using a 
+class, <tt>myclass2</tt>, whose instances have the attributes <tt>name</tt> and
+<tt>height</tt>.</p>
+<p class="docText">Define <tt>myclass2</tt>.</p>
+<pre>&gt;&gt;&gt; class myclass2:
+...   def __init__(self):
+...         self.name = &quot;Bob&quot;
+...         self.height = &quot;5'11&quot;
+...
+&gt;&gt;&gt; ci = myclass2()</pre>
+<p class="docText">Display the attributes of the class instance.</p>
+<pre>&gt;&gt;&gt; vars(ci)
+{'height': &quot;5'11&quot;, 'name': 'Bob'}</pre>
+<p class="docText">Get the <tt>height</tt> attribute.</p>
+<pre>&gt;&gt;&gt; getattr(ci, &quot;height&quot;)
+&quot;5'11&quot;</pre>
+<p class="docText">There's an easier way to do this.</p>
+<pre>&gt;&gt;&gt; ci.height
+&quot;5'11&quot;</pre>
+<p class="docText">But with <tt>getattr()</tt> we can get attributes dynamically 
+at runtime.</p>
+<p class="docText">The <tt>getattr()</tt> function also works with modules:</p>
+<pre>&gt;&gt;&gt; getattr(mymodule, &quot;attr1&quot;)
+1</pre>
+<p class="docText">which is equivalent to</p>
+<pre>&gt;&gt;&gt;mymodule.attr1
+1</pre>
+<p class="docText">The <tt>hasattr()</tt> function checks to see if a class, 
+instance, or module has an attribute. It returns true if so, false if not. 
+Continuing our <span class="docEmphasis">mymodule.py</span> example, we have the 
+following:</p>
+<pre>&gt;&gt;&gt; hasattr(ci,&quot;height&quot;)
+1
+
+&gt;&gt;&gt; hasattr(ci,&quot;weight&quot;)
+0</pre>
+<p class="docText"><tt>hasattr()</tt> also works with modules.</p>
+<pre>&gt;&gt;&gt; hasattr(mymodule, &quot;attr1&quot;)
+1</pre>
+<p class="docText">The <tt>setattr()</tt> function sets an attribute for a 
+class, instance, or module. Still with the same example, we'll add the <tt>
+weight</tt> attribute to the class instance.</p>
+<p class="docText">Determine if the <tt>ci</tt> class instance already has <tt>
+weight</tt>.</p>
+<pre>&gt;&gt;&gt; hasattr(ci,&quot;weight&quot;)
+0</pre>
+<p class="docText">The <tt>0</tt> (false) value indicates no, so add it.</p>
+<pre>&gt;&gt;&gt; setattr(ci,&quot;weight&quot;, 220)</pre>
+<p class="docText">Now does it have it?</p>
+<pre>&gt;&gt;&gt; hasattr(ci,&quot;weight&quot;)</pre>
+<p class="docText">The <tt>1</tt> (true) value indicates yes.</p>
+<p class="docText">We know the other way to add the <tt>weight</tt> attribute, 
+but first we need to remove it.</p>
+<pre>&gt;&gt;&gt; delattr(ci, &quot;weight&quot;)   #remove it
+&gt;&gt;&gt; hasattr(ci, &quot;weight&quot;)   # make sure it is gone
+0</pre>
+<p class="docText">Now we set it and check to see if it's there.</p>
+<pre>&gt;&gt;&gt; ci.weight = 220
+&gt;&gt;&gt; hasattr(ci,&quot;weight&quot;)
+1</pre>
+<h5 class="docSection3Title" id="ch09lev3sec1">Working with Modules</h5>
+<p class="docText">Here's an example of how <tt>setattr()</tt>, <tt>hasattr()</tt>, 
+and <tt>delattr()</tt> work with modules.</p>
+<p class="docText">Import the <span class="docEmphasis">sys</span> module.</p>
+<pre>&gt;&gt;&gt; import sys</pre>
+<p class="docText">Get the exit and version objects.</p>
+<pre>&gt;&gt;&gt; getattr(sys, &quot;exit&quot;)
+&lt;built-in function exit&gt;
+
+&gt;&gt;&gt; getattr(sys, &quot;version&quot;)
+'1.5.1 (#0, 07/16/98 22:30:00) [MSC SH3]'</pre>
+<p class="docText">Remove the <tt>exit()</tt> function and make sure it's gone.</p>
+<pre>&gt;&gt;&gt; delattr(sys, &quot;exit&quot;)
+&gt;&gt;&gt; hasattr(sys, &quot;exit&quot;)
+0</pre>
+<p class="docText">Redefine the exit object in the context of the
+<span class="docEmphasis">sys</span> module.</p>
+<pre>&gt;&gt;&gt; setattr(sys,&quot;exit&quot;,&quot;exit has left the building&quot;)</pre>
+<p class="docText">Display the new <tt>exit()</tt> function.</p>
+<pre>&gt;&gt;&gt; getattr(sys, &quot;exit&quot;)
+'exit has left the building'</pre>
+<h4 class="docSection2Title" id="ch09lev2sec13">cmp() and Classes and Dictionaries</h4>
+<p class="docText"><tt>cmp()</tt> works with many object types. For example, if 
+left undefined, it works with class instances just as <tt>id</tt> or <tt>is</tt> 
+does. As with numeric objects, <tt>cmp()</tt> returns <tt>0</tt> if the objects 
+are equal. Here's an illustration.</p>
+<p class="docText">Create two class instances.</p>
+<pre>&gt;&gt;&gt; ci1,ci2 = myclass2(),myclass2()</pre>
+<p class="docText">Compare them.</p>
+<pre>&gt;&gt;&gt; cmp(ci1,ci2)
+-1</pre>
+<p class="docText">Even though the values are the same, the instances are 
+unequal because the default is to check object identity (to make sure that the 
+variable references the same object).</p>
+<p class="docText">Compare one instance to itself.</p>
+<pre>&gt;&gt;&gt; cmp(ci1,ci1)
+0</pre>
+<p class="docText">Since <tt>cmp()</tt> checks identity for equality, comparing 
+an object to itself returns <tt>0</tt>, which means equality.</p>
+<p class="docText">The <tt>cmp()</tt> method defines the behavior of the 
+equality operators. That means that the following is like using the identity 
+operator:</p>
+<pre>&gt;&gt;&gt; ci1 == ci2
+0
+
+&gt;&gt;&gt; ci1 == ci1
+1
+
+&gt;&gt;&gt; ci1 is ci2, ci1 is ci1
+(0, 1)</pre>
+<p class="docText"><a class="docLink" href="_chapter%208.htm">
+Chapter 8</a> has an example of __<tt>cmp</tt>__ defined for the <tt>Address</tt> 
+class. Here's an excerpt:</p>
+<pre>def __cmp__(self,other):
+      &quot;&quot;&quot;
+      Compares one address instance to another.
+      If the address instances are equal the __cmp__ returns 0.
+If the address instances are not equal then we return a non-zero
+value.
+       &quot;&quot;&quot;
+                    # To implement this all we do is compare
+# the dictionaries of the class
+                    # The __dict__ member of the instance holds
+# all of the instance fields
+# in a dictionary
+       return cmp(self.__dict__ ,other.__dict__)</pre>
+<p class="docText">This compares all attribute values of one instance of <tt>
+Address</tt> with those of another instance. Remember, the default is just to 
+compare identity.</p>
+<h4 class="docSection2Title" id="ch09lev2sec14">Sequence and Collection: len(), max(), min(), cmp()</h4>
+<p class="docText">We covered sequences and collections in
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>, so we'll 
+just review them here.</p>
+<p class="docText">The <tt>len(s)</tt> method returns the length of a sequence 
+or dictionary. It works with tuples, lists, and dictionaries, as shown in the 
+following three examples:</p>
+<pre>&gt;&gt;&gt; len((1,2,3))
+3
+
+&gt;&gt;&gt; len([1,2,3])
+3
+
+&gt;&gt;&gt; len({1:1,2:2,3:3} )
+3</pre>
+<p class="docText">The <tt>max(s)</tt> function returns the <tt>max</tt> value 
+in a sequence. It uses <tt>cmp()</tt> to determine which item in the list is the 
+greatest.</p>
+<pre>&gt;&gt;&gt; max((1,2,3))
+3</pre>
+<p class="docText">The <tt>min(s)</tt> function returns the <tt>min</tt> value 
+in the list.</p>
+<pre>&gt;&gt;&gt; min((1,2,3))
+1</pre>
+<p class="docText">The <tt>cmp(x,y)</tt> method compares sequences (list and 
+tuple) to sequences and dictionaries to dictionaries. Here's how.</p>
+<p class="docText">Create three tuples, the first and second having equal 
+values.</p>
+<pre>&gt;&gt;&gt; list1,list2,list3=(1,2,3),(1,2,3),(1,2,4)</pre>
+<p class="docText">Compare the first and the second tuples.</p>
+<pre>&gt;&gt;&gt; cmp (list1, list2) #cmp returns 0 if they are equal
+0
+
+&gt;&gt;&gt; list1==list2
+1</pre>
+<p class="docText">Compare the second and third tuples.</p>
+<pre>&gt;&gt;&gt; cmp(list2, list3)
+-1
+
+&gt;&gt;&gt; cmp(list3, list2)
+1
+
+&gt;&gt;&gt; list2==list3
+0</pre>
+<p class="docText">Create two dictionaries.</p>
+<pre>&gt;&gt;&gt; dict1,dict2 = {1:1,2:2,3:3} , {1:1,2:2,3:3}</pre>
+<p class="docText">Compare them.</p>
+<pre>1
+&gt;&gt;&gt; cmp (dict1, dict2) #cmp returns 0 if they are equal
+0</pre>
+<p class="docText">Add an item to the first dictionary.</p>
+<pre>&gt;&gt;&gt; dict1[&quot;cow&quot;]=&quot;moo&quot;</pre>
+<p class="docText">Compare the first and second dictionaries again.</p>
+<pre>&gt;&gt;&gt; dict1==dict2
+0
+
+&gt;&gt;&gt; cmp(dict1,dict2)
+1</pre>
+<h4 class="docSection2Title" id="ch09lev2sec15">Modules: reload()</h4>
+<p class="docText">The <tt>reload()</tt> function allows you to dynamically 
+reload a module. It comes in very handy when you're debugging code. Here's an 
+example with the <span class="docEmphasis">string</span> module:</p>
+<pre>&gt;&gt;&gt; import string
+&gt;&gt;&gt; reload(string)
+&lt;module 'string'&gt;</pre>
+<p class="docText">During development of a module, it's often necessary to make 
+minor changes. Instead of exiting the interactive interpreter, you can make your 
+changes and then reload.</p>
+<p class="docText"><tt>reload()</tt>needs a reference to the module. Let's say 
+you're using the <tt>from &lt;module&gt; import &lt;object&gt;</tt> form of the <tt>import</tt> 
+statement. In that case, you don't have a reference to the module, even though 
+the module is loaded. (You need to exit and restart the interactive interpreter 
+for this example.)</p>
+<pre>&gt;&gt;&gt; from string import find
+&gt;&gt;&gt; print find
+&lt;built-in function find&gt;
+&gt;&gt;&gt; print string
+Traceback (innermost last):
+  File &quot;&lt;interactive input&gt;&quot;, line 1, in ?
+NameError: string</pre>
+<p class="docText">Although we have access to the <tt>find()</tt> function, we 
+don't have access to the <span class="docEmphasis">string</span> module, so when 
+we try to print it out we get a <tt>NameError</tt>. To reload <tt>find()</tt> we 
+have to first import and reload <span class="docEmphasis">string</span> (which 
+puts it in the current namespace). We'll continue with our example.</p>
+<p class="docText">Explicitly import <span class="docEmphasis">string.</span></p>
+<pre>&gt;&gt;&gt; import string</pre>
+<p class="docText">Reload it.</p>
+<pre>&gt;&gt;&gt; reload (string)
+&lt;module 'string'&gt;</pre>
+<p class="docText">Access <tt>find()</tt>as before.</p>
+<pre>&gt;&gt;&gt; del string #optionally remove string from your namespace
+&gt;&gt;&gt; print find
+&lt;built-in function find&gt;</pre>
+<p class="docText">Reloading the <span class="docEmphasis">string</span> module 
+will reload all of its code; any changes will be reflected at that time. This is 
+a great tool for debugging your Python modules.</p>
+<p class="docText">The <tt>__import__()</tt> function (__<tt>import__(name, [globals], 
+[locals], [fromlist])</tt>) works like the <tt>import</tt> statement, except 
+that it allows you to pass the name of the module as a string. Imagine a program 
+that, given a command-line argument, loads a module and executes its <tt>test()</tt> 
+function. You can use this test harness with many different modules with many 
+different names. Now imagine another program that detects how it connects to the 
+home office and, based on that information, loads the correct module to talk to 
+the boss.</p>
+<p class="docText">Here's an example of <tt>__import__()</tt>:</p>
+<pre>&gt;&gt;&gt; __import__(&quot;string&quot;)
+&lt;module 'string'&gt;</pre>
+<h4 class="docSection2Title" id="ch09lev2sec16">Class Operations: isinstance(), issubclass()</h4>
+<p class="docText">We covered the built-in <tt>isinstance()</tt> and <tt>
+issubclass()</tt> functions in
+<a class="docLink" href="_chapter%206.htm">Chapter 6</a>, but 
+let's briefly review them. We're going to use the following code, which defines 
+a class hierarchy:</p>
+<pre>&gt;&gt;&gt; class animal:
+...     pass
+...
+
+&gt;&gt;&gt; class mammal(animal):
+...   pass
+...
+
+&gt;&gt;&gt; class human(mammal):
+...   pass
+...
+
+&gt;&gt;&gt; class geek:
+...   pass
+...
+
+&gt;&gt;&gt; class programmer(geek, human):
+...   pass
+...</pre>
+<p class="docText">The <tt>isinstance(object,class)</tt> function determines if 
+the instance is of a particular class. It works with the instance's base class; 
+that is, if the human class is a subclass of the mammal class, any instance of 
+human is also an instance of mammal. For example:</p>
+<pre>&gt;&gt;&gt; Rick = programmer()</pre>
+<p class="docText">Is the <tt>Rick</tt> class instance an instance of <tt>
+programmer</tt>?</p>
+<pre>&gt;&gt;&gt; isinstance(Rick,programmer)
+1</pre>
+<p class="docText">Is Rick a geek?</p>
+<pre>&gt;&gt;&gt; isinstance(Rick,geek)
+1</pre>
+<p class="docText">Are programmers human?</p>
+<pre>&gt;&gt;&gt; isinstance(Rick,human)
+1</pre>
+<p class="docText">Since <tt>Rick</tt> is an instance of <tt>programmer</tt> and
+<tt>programmer</tt> is a subclass of <tt>human</tt>, <tt>Rick</tt> is an 
+instance of <tt>human</tt>.</p>
+<p class="docText">Of course, it doesn't stop with the immediate base classes.
+<tt>Rick</tt> is an instance of <tt>mammal</tt> and <tt>animal</tt> because 
+these are in the base class hierarchy of <tt>programmer</tt>.</p>
+<p class="docText">Is Rick a mammal?</p>
+<pre>&gt;&gt;&gt; isinstance(Rick, mammal)
+1</pre>
+<p class="docText">Is Rick an animal?</p>
+<pre>&gt;&gt;&gt; isinstance(Rick, animal)
+1</pre>
+<p class="docText">Since Rick is a human and humans are subclasses of mammals, 
+Rick is a mammal. Since Rick is a mammal and mammals are subclasses of animals, 
+Rick is an animal.</p>
+<p class="docText"><tt>issubclass(class1, class2)</tt> returns whether one class 
+is a subclass of another. Our illustration of <tt>issubclass()</tt> will 
+continue our class hierarchy.</p>
+<p class="docText">Is <tt>human</tt> a subclass of <tt>animal</tt>?</p>
+<pre>&gt;&gt;&gt; issubclass(human, animal)
+1</pre>
+<p class="docText">Is <tt>human</tt> a subclass of <tt>mammal</tt>?</p>
+<pre>&gt;&gt;&gt; issubclass(human, mammal)
+1</pre>
+<p class="docText">Is <tt>geek</tt> a subclass of <tt>animal</tt>?</p>
+<pre>&gt;&gt;&gt; issubclass(geek,animal)
+0</pre>
+<p class="docText"><tt>issubclass()</tt> doesn't work just for immediate 
+subclasses but for subclasses anywhere in the hierarchy that have a class as a 
+base class anywhere in their own hierarchy.</p>
+<h4 class="docSection2Title" id="ch09lev2sec17">I/O: open(), raw_input()</h4>
+<p class="docText">The <tt>open(filename, [mode], [bufsize])</tt> function 
+returns a file object. Again, this is just a brief review since we covered I/O 
+in <a class="docLink" href="_chapter%207.htm">Chapter 7</a>.</p>
+<p class="docText">Open a file for reading.</p>
+<pre>&gt;&gt;&gt; file = open(&quot;\\dat\\exp.txt&quot;, &quot;w&quot;)
+&gt;&gt;&gt; file.write(&quot;Hello&quot;)
+&gt;&gt;&gt; file.close()</pre>
+<p class="docText">Open a file for writing.</p>
+<pre>&gt;&gt;&gt; file = open(&quot;\\dat\\exp.txt&quot;)
+&gt;&gt;&gt; file.read()
+'Hello'</pre>
+<p class="docText">The <tt>mode</tt> argument specifies read <tt>(&quot;r&quot;</tt>), 
+write (<tt>&quot;w&quot;</tt>), read/write (<tt>&quot;r+&quot;</tt>), and append (<tt>&quot;a&quot;</tt>) 
+mode. <tt>bufsize</tt> sets the size of the buffer. Setting the buffer to zero 
+means no buffering. (For more on buffering see
+<a class="docLink" href="_chapter%2012.htm">Chapter 12</a>.)</p>
+<p class="docText">The <tt>raw_input([prompt])</tt> function reads input from 
+the user. The prompt tells the user what that input should be and returns it 
+when the user hits Enter. Try following this:</p>
+<pre>&gt;&gt;&gt; raw_input(&quot;Enter your age: &quot;)
+Enter your age: 31
+'31'</pre>
+<h3 class="docSection1Title" id="ch09lev1sec5">Advanced Topic: Functional Programming</h3>
+<p class="docText">You don't need to know functional programming to develop 
+Python code, but learning it can reduce the amount of code you write.</p>
+<h4 class="docSection2Title" id="ch09lev2sec18">apply(), filter(), map(), reduce</h4>
+<p class="docText">The <tt>apply(function, args, [keywords])</tt> function needs 
+a callable object as the <tt>function</tt> argument, which it calls with <tt>
+args</tt> as the argument list (and <tt>keywords</tt> as the named argument 
+list). <tt>args</tt> is a sequence, <tt>keywords</tt> a dictionary.</p>
+<p class="docText">The function</p>
+<pre>&gt;&gt;&gt; def hello(str):
+...   print &quot;hello &quot; + str
+...</pre>
+<p class="docText">can be called with <tt>apply()</tt> like this:</p>
+<pre>&gt;&gt;&gt; apply(hello,(&quot;Bobby&quot;,))
+hello Bobby</pre>
+<p class="docText">Without <tt>apply()</tt> it's called like this.</p>
+<pre>&gt;&gt;&gt; hello(&quot;Bobby&quot;)
+hello Bobby</pre>
+<p class="docText">You can use <tt>apply()</tt>to call several functions. Or you 
+can have several functions operating on the same data.</p>
+<p class="docText">The <tt>filter(function, list)</tt> function filters out 
+items in a list. Its argument is a callable object that takes an item out of the 
+list and returns true or false. Let's say the only list items we want are those 
+that begin with <span class="docEmphasis">R.</span></p>
+<p class="docText">Create a list containing names.</p>
+<pre>&gt;&gt;&gt; list = [&quot;Mary&quot;, &quot;Adam&quot;, &quot;Bob&quot;, &quot;Rick&quot;, &quot;Robert&quot;]</pre>
+<p class="docText">Define a function that returns true if the name starts with
+<span class="docEmphasis">R.</span></p>
+<pre>&gt;&gt;&gt; def Rfilter(name):
+...   if name[0]==&quot;R&quot;: return 1
+...   else:             return 0
+...</pre>
+<p class="docText">Invoke <tt>filter()</tt>, passing it the <tt>Rfilter</tt> and
+<tt>list</tt> arguments.</p>
+<pre>&gt;&gt;&gt; filter(Rfilter,list)
+['Rick', 'Robert']</pre>
+<p class="docText">This example is, admittedly, contrived. In a real situation, 
+the items in the sequence can be much more complex than just strings; they can 
+be class instances or dictionaries with 100 items, or tuples with dictionaries, 
+class instances, and lists. Also, the function passed can be just short of 
+rocket science. The point is that <tt>filter()</tt> returns every item in the 
+list where the item applied to it returns a true value.</p>
+<p class="docText">As an exercise, rewrite the above functionality with <tt>for</tt> 
+loops instead of <tt>filter()</tt>. Which code is more concise? Which code is 
+easier to understand? Once you answer these questions, I think you'll find that
+<tt>filter()</tt> is very useful.</p>
+<p class="docText">The <tt>map(function, list)</tt> function is similar to <tt>
+filter()</tt>. It applies functions to every item in a list and returns the 
+results for each function (item) call. <tt>map()</tt>'s first argument is a 
+callable type; its second argument is a list.</p>
+<p class="docText">As an example, let's say you have the following sequence that 
+you want to convert into a string:</p>
+<pre>&gt;&gt;&gt; seq = (72, 105, 32, 77, 111, 109)</pre>
+<p class="docText">which you can do with a <tt>for</tt> loop.</p>
+<pre>&gt;&gt;&gt; list = []
+&gt;&gt;&gt; for item in seq:
+...   list.append(chr(item))
+...
+&gt;&gt;&gt; from string import join
+&gt;&gt;&gt; str = join(list,&quot;&quot;)</pre>
+<p class="docText">After this code executes, <tt>str</tt> will contain a string 
+version of the sequence, and it will take only four lines (we won't count <tt>
+from string</tt> <tt>import join</tt>). With the <tt>map()</tt> function, you 
+can do all four lines of code in one method call.</p>
+<pre>&gt;&gt;&gt; str = join(map(chr,seq),&quot;&quot;)</pre>
+<p class="docText">Note that the call to <tt>map()</tt> is inside the <tt>join()</tt> 
+function call.</p>
+<p class="docText">You may be wondering what <tt>str</tt> contains. To unravel 
+this mystery, enter in the code example.</p>
+<pre>&gt;&gt;&gt; str</pre>
+<p class="docText">The <tt>reduce(function, list, [initializer])</tt> function 
+is very similar to <tt>filter()</tt> and <tt>map()</tt> in that a function 
+parameter is applied to each item in a sequence. However, instead of returning a 
+list it returns one value.</p>
+<p class="docText">Let's say that you want to sum up the following list (the <tt>
+list</tt> variable is really a tuple):</p>
+<pre>&gt;&gt;&gt; list = (1,2,3,4,5,6,7,8,9,10)</pre>
+<p class="docText">To do so with a <tt>for</tt> loop, you need to do something 
+like this:</p>
+<pre>&gt;&gt;&gt; sum=0
+&gt;&gt;&gt; for num in list:
+...   sum = sum + num
+&gt;&gt;&gt; sum
+55</pre>
+<p class="docText">With <tt>reduce()</tt>, you do something like this:</p>
+<pre>&gt;&gt;&gt; def add(a,b): return a + b
+...
+&gt;&gt;&gt; reduce (add,list)
+55</pre>
+<p class="docText">which cuts out two lines of code.</p>
+<p class="docText">If you want to cut out a third line, you can rewrite the 
+above with a lambda function, which turns four lines into one (how very 
+Pythonesque).</p>
+<pre>&gt;&gt;&gt; reduce(lambda a,b: a+b,list)
+55</pre>
+<p class="docText">Lambdas are a new concept. Think of them as anonymous 
+functions but without names or parentheses. If you want to know more about 
+lambda functions, consult the Python documentation.</p>
+<p class="docText">Although powerful and elegant, <tt>reduce()</tt>, <tt>apply()</tt>,
+<tt>map()</tt>, and <tt>filter()</tt> (and, for that matter, lambdas) can be 
+confusing. Don't let them trip you up, though—you don't need to master them to 
+program in Python.</p>
+<h3 class="docSection1Title" id="ch09lev1sec6">Advanced exec and eval</h3>
+<p class="docText">Imagine easily sending code to update changes to a program or 
+easily moving code around the network to update remote clients. How about adding 
+scriptability so that end users can write scripts to automate common tasks? In 
+other languages, these things are hard to accomplish. In Python they're built 
+into the language.</p>
+<h4 class="docSection2Title" id="ch09lev2sec19">compile()</h4>
+<p class="docText">The <tt>compile(string, filename, kind)</tt> function 
+converts a string into a code object that represents Python bytecode. The <tt>
+filename</tt> argument states the origin of the code, that is, the file name; 
+the <tt>kind</tt> argument specifies how the code should be compiled based on 
+the contents of the <tt>string</tt> argument. There are three choices for <tt>
+kind</tt>:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>exec</tt>— a group of statements</li>
+  <li>
+  <p class="docText"><tt>eval</tt>— a single expression</li>
+  <li>
+  <p class="docText"><tt>single—</tt> a single statement</li>
+</ul>
+<p class="docText"><tt>compile()</tt> works in conjunction with the <tt>eval</tt> 
+statement, which you use to execute the code object. More than likely you'll use 
+it to execute a string representing code over and over again so that <tt>eval</tt> 
+won't have to execute the string by recompiling the code object each time.</p>
+<p class="docText">Here's an example of <tt>compile()</tt> with the <tt>exec</tt>
+<tt>kind</tt> argument. It pretends that it has read the string from a file 
+called <span class="docEmphasis">friends.py.</span></p>
+<pre>&gt;&gt;&gt; string = &quot;&quot;&quot;
+... friends = ['Ross','Rachel','Chandler','Joey','Tom','Jerry','Monica']
+... for myfriend in friends:
+...   print &quot;Hello &quot; + myfriend
+... &quot;&quot;&quot;
+&gt;&gt;&gt; code = compile(string,&quot;Friends.py&quot;,&quot;exec&quot;)
+&gt;&gt;&gt; eval(code)
+Hello Ross
+Hello Rachel
+Hello Chandler
+Hello Joey
+Hello Tom
+Hello Jerry
+Hello Monica
+&gt;&gt;&gt;</pre>
+<p class="docText">Here's an example compiling an expression that returns a 
+dictionary:</p>
+<pre>&gt;&gt;&gt; str = &quot;{1:1,2:2,3:3,4:4} &quot;
+&gt;&gt;&gt; cd = compile (str,&quot;string&quot;,&quot;eval&quot;)
+&gt;&gt;&gt; eval(cd)
+{4: 4, 3: 3, 2: 2, 1: 1}
+
+&gt;&gt;&gt; dict = eval(cd)
+&gt;&gt;&gt; type (dict)
+&lt;jclass org.python.core.PyDictionary at 6190231&gt;</pre>
+<p class="docText">which compiles a single statement:</p>
+<pre>&gt;&gt;&gt; cd2 = compile(&quot;&quot;&quot;print &quot;Hello World&quot; &quot;&quot;&quot;, &quot;string&quot;, &quot;single&quot;)
+&gt;&gt;&gt; eval (cd2)
+Hello World</pre>
+<p class="docText">Of course, we've covered <tt>eval(expressions, [globals], 
+[locals])</tt> quite a few times. Here we'll drill down to the details that can 
+make you stumble.</p>
+<h4 class="docSection2Title" id="ch09lev2sec20">globals and locals</h4>
+<p class="docText"><tt>eval</tt>'s <tt>globals</tt> and <tt>locals</tt> 
+arguments are dictionaries that contain the global variables, where the keys are 
+the variable names and the values are the objects to which the variables refer. 
+Not specifying <tt>globals</tt> or <tt>locals</tt> is the same as doing this:</p>
+<pre>eval(str, globals(), locals())</pre>
+<p class="docText">which passes the variables from the current namespace.</p>
+<p class="docText">Here's an example of calling an <tt>eva</tt>l statement:</p>
+<pre>&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; eval(&quot;a&quot;)
+1</pre>
+<p class="docText">Since the <tt>a</tt> variable is in the global namespace, and 
+we're not passing a dictionary for the global variables, it's the one used.</p>
+<p class="docText">In this next call to <tt>eval</tt>, we pass a dictionary for 
+the <tt>globals</tt> argument. You can see that the value of <tt>a</tt> in the 
+dictionary overrides the value of <tt>a</tt> in the global area of the module.</p>
+<pre>&gt;&gt;&gt; eval(&quot;a&quot;, {&quot;a&quot;:2} )
+2</pre>
+<p class="docText">Here we pass a variable named <tt>a</tt> in the <tt>locals</tt> 
+dictionary. The inner namespace—<tt>locals</tt>—overrides the value of the <tt>a</tt> 
+global dictionary.</p>
+<pre>&gt;&gt;&gt; eval(&quot;a&quot;,{&quot;a&quot;:2} , {&quot;a&quot;:3} )
+3</pre>
+<p class="docText">Continuing this example, here we use a local <tt>a</tt> (that 
+is, local to the <tt>func()</tt> function). You can see that the <tt>a</tt> in 
+the local area takes precedence over the <tt>a</tt> in the global area (where we 
+set <tt>a</tt> to <tt>1</tt>).</p>
+<pre>&gt;&gt;&gt; def func():
+...   a=4
+...   print eval(&quot;a&quot;)
+...
+&gt;&gt;&gt; func()
+4</pre>
+<h4 class="docSection2Title" id="ch09lev2sec21">execfile()</h4>
+<p class="docText">The <tt>execfile(file, [globals], [locals])</tt> function 
+acts just like the <tt>exec</tt> statement, except that it reads the contents of 
+a file and executes it. As with <tt>eval</tt>, you can specify <tt>globals</tt> 
+and <tt>locals</tt> arguments. <tt>Execfile()</tt> may seem a lot like <tt>
+import()</tt>, but the code executed with it acts as if it were executed in the 
+current namespace. There is no namespace management with <tt>execfile</tt> as 
+when a module is imported.</p>
+<p class="docText">Here's an example of <tt>exec</tt> printing <tt>'hello world'</tt> 
+from a string.</p>
+<pre>&gt;&gt;&gt; exec &quot;print 'hello world'&quot;
+hello world</pre>
+<p class="docText">As an exercise, create a text file containing Python code 
+that prints <tt>'hello world'</tt> to the console. Then, in the interactive 
+interpreter, read and execute the file with <tt>execfile()</tt>.</p>
+<h3 class="docSection1Title" id="ch09lev1sec7">Summary</h3>
+<p class="docText">Of all of the chapters so far, this one was the most fun to 
+write, simply because Python's numerous built-in functions make simple things 
+even simpler and impossible things possible. We reviewed a lot from other 
+chapters, but we also covered many new items, such as functional programming and 
+executing scripts.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%208.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2010.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

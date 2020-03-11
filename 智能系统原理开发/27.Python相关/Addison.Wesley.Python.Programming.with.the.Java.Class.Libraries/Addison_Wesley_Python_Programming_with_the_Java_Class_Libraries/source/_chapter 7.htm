@@ -1,0 +1,1182 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 7</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 7.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 7.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 7.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%206.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%208.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 7. Errors and Exceptions</h2><ul><li>&nbsp;<a class="docLink" href="#ch07lev1sec1">Syntax and Sequence Errors</a></li>
+<li>&nbsp;<a class="docLink" href="#ch07lev1sec2">The Danger of Exceptions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch07lev1sec3">The try Statement</a></li>
+<li>&nbsp;<a class="docLink" href="#ch07lev1sec4">The raise Statement</a></li>
+<li>&nbsp;<a class="docLink" href="#ch07lev1sec5">Classes and Instances as Exceptions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch07lev1sec6">Getting the Most Out of Your Exceptions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch07lev1sec7">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Call stack</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Catchall bucket, exception 
+  handler</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">catch statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class-based exception</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">else clause</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Error</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">except clause</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Exception</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Exception class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Exception handling</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">finally clause</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Granularity</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Most to least specific order</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">raise statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Throwing versus raising</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">try block</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">try statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Suite</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">User-defined versus built-in 
+  exception</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Bad things happen to good programs: Disks crash, files are 
+corrupted, and batteries fail. Such things are typically more the exception than 
+the rule, and to plan for all of them would make for some very complicated code. 
+That's why modern programming languages like Python have the ability to handle 
+bad things, called exceptions in programming speak.</p>
+<p class="docText">The old way of dealing with errors was to check the return 
+types of functions, but this was very time consuming. Each function call would 
+require an <tt>if</tt> statement with perhaps many <tt>elif</tt> clauses; code 
+would have to be written to extract what had happened. The new way is exception 
+handling, in which the exception has the information about what went wrong. 
+Instead of checking after each of the method calls, you can set up one exception 
+handler that works with many methods.</p>
+<p class="docText">By the end of this chapter, you should understand <tt>try</tt>,
+<tt>raise</tt>, and <tt>finally</tt> statements. You should also have a firm 
+grasp on the class-based exceptions that Python defines. A class-based exception 
+allows you to create a hierarchy of exception classes.</p>
+<h3 class="docSection1Title" id="ch07lev1sec1">Syntax and Sequence Errors</h3>
+<p class="docText">If you followed along with the interactive sessions in 
+previous chapters as recommended, you ran into errors, most of them involving 
+syntax (I know I have). Here's an example:</p>
+<pre>&gt;&gt;&gt; for x in xrange(0, 100)
+... Traceback (innermost last):
+  (no code object) at line 0
+  File &quot;&lt;stdin&gt;&quot;, line 1
+        for x in xrange(0, 100)
+                                               ^
+SyntaxError: invalid syntax</pre>
+<p class="docText">Using <tt>SyntaxError: invalid syntax</tt> as a clue, we 
+discover that we forgot to put the colon at the end of the <tt>for</tt> header. 
+There's not much you can do about syntax errors except fix them. As you learn 
+Python, you'll see such errors less and less.</p>
+<p class="docText">Perhaps some readers have run into exceptions like this one:</p>
+<pre>&gt;&gt;&gt; list = 1
+&gt;&gt;&gt; for x in list:
+...     print(`x`)
+...
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+AttributeError: __getitem__</pre>
+<p class="docText">Here we tried to use an integer like a sequence, and, by 
+throwing an exception, Python is telling us we can't do that.</p>
+<p class="docText">Before we go any further, I should clear up the difference 
+between and error and an exception. An error usually involves syntax, such as a 
+missing comma, whereas an exception usually involves an operation gone wrong, 
+such as dividing by zero. Think of it this way: Exceptions can be correct syntax 
+but wrong operations.</p>
+<h3 class="docSection1Title" id="ch07lev1sec2">The Danger of Exceptions</h3>
+<p class="docText">An unhandled exception can stop a program dead in its tracks. 
+This may be okay if you're still developing it, but it's bad if the program has 
+been delivered. Consider the following function (from <span class="docEmphasis">
+divby()-1.py</span>), which stops as soon as it runs into a <tt>0</tt> value as 
+a denominator in the list.</p>
+<pre>def figurePercentage(figures):
+      for tuple in figures:
+            numerator = tuple[0]
+            denominator = tuple[1]
+            percent = numerator/denominator
+            print (&quot;The percentage is &quot; + `percent`)</pre>
+<p class="docText">Here the function <tt>figurePercentage()</tt> expects to 
+receive a sequence of sequences that each contain two numeric fields. So we 
+create a list sequence that contains several tuples, each containing two numeric 
+values, and we invoke <tt>figurePercentage()</tt> with the sequence as follows:</p>
+<pre>figures = [(10.0,20.0), (100.0, 200.0), (300.0, 400.0), (1.0, 0.0), (11.0,20.0), (110.0, 200.0) ]
+figurePercentage(figures)</pre>
+<p class="docText">The <tt>figurePercentage()</tt> function iterates through 
+each tuple in the list, extracting its <tt>0</tt>-indexed item as the numerator 
+and its <tt>1</tt>-indexed item as the denominator.</p>
+<pre>for tuple in figures:
+      numerator = tuple[0]
+      denominator = tuple[1]
+      percent = numerator/denominator
+      percent = percent * 100
+      print (&quot;The percentage is &quot; + `percent` + &quot;%&quot;)</pre>
+<p class="docText">One tuple has a <tt>0.0</tt> denominator, and we know that we 
+can't divide any number by zero. Let's run this and see what happens.</p>
+<pre>&gt;&gt;&gt; import divby0_1
+The percentage is 50.0%
+The percentage is 50.0%
+The percentage is 75.0%
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+  File &quot;C:\\.\divby0_1.py&quot;, line 10, in ?
+  File &quot;C:\\.\divby0_1.py&quot;, line 5, in figurePercentage
+ZeroDivisionError: float division
+&gt;&gt;&gt;</pre>
+<p class="docText">The function stops as soon as it hits the zero denominator 
+because a <tt>ZeroDivisionError</tt> exception has occurred.</p>
+<p class="docText">One way to solve such a problem is to prevent it from 
+happening. We can do this by checking for a zero denominator before we divide 
+the numerator by the denominator. In a lot of C and older C++ programs that 
+predate exception handling, this is exactly what you have to do. (We'll cover 
+when to handle a problem as an exception and when to check beforehand for 
+possible errors later in the chapter.)</p>
+<p class="docText">But what if we don't expect to get a zero value in the 
+denominator? What if this value is an exceptional occurrence? If we add tests 
+for every possible thing that can go wrong, our code can become messy and hard 
+to read. Conversely, if we don't handle this error, our program will just stop 
+working when it receives a zero divisor. Mission-critical programs aren't 
+supposed to stop working for minor problems like this. What if this is a 
+function in a payroll program? Would you want to get paid late because someone 
+forgot to check for a divide-by-zero exception?</p>
+<h3 class="docSection1Title" id="ch07lev1sec3">The try Statement</h3>
+<p class="docText">The <tt>try</tt> statement specifies a way to handle 
+exceptions. One form is the following:</p>
+<pre>try:
+      suite
+except expression-target:
+      suite
+except:
+      suite</pre>
+<p class="docText">which can have one or many <tt>except</tt> clauses—the 
+exception handlers. If an exception occurs in the <tt>try</tt> clause's suite of 
+statements, an exception handler that best fits it will be invoked. An <tt>
+except</tt> clause that doesn't have an expression target can act as a <tt>
+catchall</tt> <tt>bucket</tt>. If an exception doesn't have a specific exception 
+handler and an <tt>except</tt> clause without an expression target is present, 
+the exception will go to that clause.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The Call Stack</h2>
+      <p class="docText">A call stack represents the order of called functions. 
+      For example, if a module calls function <tt>A()</tt> and function <tt>A()</tt> 
+      calls function <tt>B()</tt> and function <tt>B()</tt> calls function <tt>
+      C()</tt>, the call stack is <tt>A-&gt;B-&gt;C</tt>. If an exception occurs in 
+      function <tt>C()</tt> and isn't handled, it propagates to function <tt>B()</tt>. 
+      If function <tt>B()</tt> doesn't handle it, the exception propagates to 
+      function <tt>A()</tt>. If function <tt>A()</tt> doesn't handle it, the 
+      program stops.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Matching a Handler to an Exception</h2>
+      <p class="docText">Unlike in Java, in Python there is no common base class 
+      such as <tt>Throwable</tt>, <tt>RuntimeException</tt>, or <tt>Exception</tt> 
+      for all exceptions. Even so, Python has generally adopted the Java 
+      approach to exception handling, as we'll see later.</p>
+      <p class="docText">Similar to Java's way, in Python an exception matches a 
+      handler if the handler is the object that identifies the exception or a 
+      base class of the exception, or if the object thrown exactly matches the 
+      handler's object identity.</p>
+      <p class="docText">Also, in Python the handler matches the exception if it 
+      has a tuple containing an item that matches the exception. This means that 
+      you can handle several exceptions in one <tt>except</tt> clause.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Here is <tt>figurePercentage()</tt> (from
+<span class="docEmphasis">divby0-2.py</span>) expanded with exception handling:</p>
+<pre>def figurePercentage(figures):
+      for tuple in figures:
+             try:
+                   numerator = tuple[0]
+                   denominator = tuple[1]
+                   percent = numerator/denominator
+                   percent = percent * 100
+                   print (&quot;The percentage is &quot; + `percent` + &quot;%&quot;)
+             except ZeroDivisionError:
+                   print (&quot;percentage error&quot;)
+
+figures = [(10.0,20.0), (100.0, 200.0), (300.0, 400.0), (1.0, 0.0), (11.0,20.0), (110.0, 200.0)]
+figurePercentage(figures)</pre>
+<p class="docText">The output looks like this:</p>
+<pre>&gt;&gt;&gt; import divby0_2
+The percentage is 50.0%
+The percentage is 50.0%
+The percentage is 75.0%
+percentage error
+The percentage is 55.0%
+The percentage is 55.0%
+&gt;&gt;&gt;</pre>
+<h4 class="docSection2Title" id="ch07lev2sec1">The except Clause</h4>
+<p class="docText">Notice that the program in the example above doesn't stop 
+midway in its iteration through the list. Instead, it prints out that there was 
+an error in one of the percentage calculations and continues on its way. The 
+magic to this is the <tt>try</tt> statement with the <tt>except</tt> <tt>clause</tt>.</p>
+<pre>try:
+       numerator = tuple[0]
+       denominator = tuple[1]
+       percent = numerator/denominator
+       print (&quot;The percentage is &quot; + `percent`)
+except ZeroDivisionError:
+             print (&quot;percentage error&quot;)</pre>
+<p class="docText">In English this says, &quot;Try to execute these statements. If 
+the <tt>ZeroDivisionError</tt> exception occurs, go to the <tt>except</tt> 
+clause and execute its statement.&quot; This handling of the exception allows the 
+program to continue.</p>
+<p class="docText">What if someone passes a list that doesn't have just 
+sequences? Follow along in interactive mode.</p>
+<pre>&gt;&gt;&gt; from divby0_2 import figurePercentage
+&gt;&gt;&gt; nasty_list = [(1.0, 1.0), (2.0, 2.0), 2, (3.0, 3.0)]
+&gt;&gt;&gt; figurePercentage(nasty_list)</pre>
+<p class="docText">Here's the output:</p>
+<pre>The percentage is 1.0
+The percentage is 1.0
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+  File &quot;C:\\.\divby0_2.py&quot;, line 19, in ?
+  File &quot;C:\\.\divby0_2.py&quot;, line 4, in figurePercentage
+AttributeError: __getitem__</pre>
+<p class="docText">Even though we handled the divide-by-zero problem, we didn't 
+handle the <tt>AttributeError</tt> exception. So we add an <tt>except</tt> 
+clause with an empty target expression to catch this and any other possible 
+exceptions.</p>
+<h5 class="docSection3Title" id="ch07lev3sec1">The Catchall Exception Handler</h5>
+<p class="docText">Let's continue figuring percentages and add the ability to 
+handle a nonsequence being passed to <tt>figurePercentage()</tt>. The following 
+example is from <span class="docEmphasis">divby0_3.py.</span></p>
+<pre>def figurePercentage(figures):
+      for tuple in figures:
+             try:
+                   numerator = tuple[0]
+                   denominator = tuple[1]
+                   percent = numerator/denominator
+                   percent = percent * 100
+                   print (&quot;The percentage is &quot; + `percent` + &quot;%&quot;)
+             except ZeroDivisionError:
+                   print (&quot;divide by 0 percentage error&quot;)
+             except:
+                   print (&quot;percentage error&quot;)
+print(&quot;The nice list&quot;)
+figures = [(10.0,20.0), (100.0, 200.0), (300.0, 400.0), (1.0, 0.0), (11.0,20.0), (110.0, 200.0)]
+figurePercentage(figures)
+
+print(&quot;—————————————————————————————————————-&quot;)
+print(&quot;The nasty list&quot;)
+nasty_list = [(1.0, 1.0), (2.0, 2.0), 2, (3.0, 3.0)]
+figurePercentage(nasty_list)</pre>
+<p class="docText">This time when we run our program, the error is caught. Note 
+that we changed the exception handler of the <tt>ZeroDivisionError</tt> 
+exception to print that there was a divide-by-zero error. The catchall exception 
+handler prints out that there was a generic percentage error as before. Here's 
+the output:</p>
+<pre>The nice list
+The percentage is 50.0%
+The percentage is 50.0%
+The percentage is 75.0%
+divide by 0 percentage error
+The percentage is 55.0%
+The percentage is 55.0%
+———————————————————-————————————————
+
+The nasty list
+The percentage is 100.0%
+The percentage is 100.0%
+percentage error
+The percentage is 100.0%</pre>
+<p class="docText">In essence, the catchall exception handler</p>
+<pre>except:
+      print (&quot;percentage error&quot;)</pre>
+<p class="docText">says, &quot;If any exception is raised, catch it and print out <tt>
+&quot;percentage error&quot;</tt>.&quot; To highlight that this statement is a catchall 
+exception, let's send <tt>figurePercentage()</tt> another list, this time with a 
+sequence that contains only one item (this example is from
+<span class="docEmphasis">divby0_3.py</span>).</p>
+<pre>&gt;&gt;&gt; from divby0_3 import figurePercentage
+...
+...
+&gt;&gt;&gt; list1 = [[0,0], [1,1], [2,2], [3], [4,4]]
+&gt;&gt;&gt; figurePercentage(list1)
+divide by 0 percentage error
+The percentage is 100%
+The percentage is 100%
+percentage error
+The percentage is 100%</pre>
+<p class="docText"><tt>list[3]</tt> is a list with only one item in it, so we 
+get an <tt>IndexError</tt> exception when we try to get the denominator.</p>
+<p class="docText">Generally it's a bad idea to sprinkle catchall exception 
+handlers throughout your code. However, instead of a hard and fast rule this is 
+more an issue of style and application specifics. For instance, if you expect a 
+zero in the denominator from time to time, you should test for this rather than 
+rely on catching it as an exception. The same is true if you expect an 
+occasional integer instead of a sequence in a list.</p>
+<p class="docText">Because we added exception handling for zero denominators, 
+we're saying that we don't expect them, but if we add the check</p>
+<pre>if(denominator == 0):
+      print (&quot;The percentage cannot be calculated&quot;)
+elif:
+percent = numerator/denominator
+      percent = percent * 100
+      print (&quot;The percentage is &quot; + `percent` + &quot;%&quot;)</pre>
+<p class="docText">we're saying that we do expect them.</p>
+<p class="docText">Using exception handling is a matter of program requirements; 
+in other words, it's application specific. Exception handling is expensive and 
+should be used only in exceptional cases, not in the normal execution of code. 
+Remember, though, you should never put go code (for beginners, &quot;go code&quot; is code 
+essential to running the program) in an exception handler.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Exception Handling and Interfacing with Other 
+      Systems</h2>
+      <p class="docText">When you interface with other systems, such as 
+      components you didn't write, nonstandard libraries, or, worse, end users, 
+      the chances of an exception happening that you can't plan for increase. As 
+      I said, one uncaught exception can bring down the whole program, so just 
+      before deployment put catchall exception handlers in your code where this 
+      interfacing will take place. (At a minimum, the catchall should be able to 
+      log the error or you should be able to enable logging with problematic 
+      code to catch exceptions.)</p>
+      <p class="docText">You don't want a catchall exception handler when you're 
+      developing a program. Rather, you want to identify and handle as many 
+      exceptional conditions as needed, especially for mission-critical systems. 
+      To avoid a harmless exception bringing down such a system, log all 
+      exceptions and evaluate them offline or try to recreate them in a 
+      controlled setting and develop a handler for them. You may be able to 
+      recover from some exceptions gracefully.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch07lev2sec2">The else Clause</h4>
+<p class="docText">Another feature of the first form of the <tt>try</tt> 
+statement is the <tt>else</tt> clause. <tt>else</tt>'s suite is executed only if 
+no exceptions occurred.</p>
+<pre>try:
+       suite
+except expression-target:
+       suite
+except:
+       suite
+else:
+       suite
+
+The percentage is 1.0
+The percentage is 1.0
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+  File &quot;C:\\.\divby0_2.py&quot;, line 19, in ?
+  File &quot;C:\\.\divby0_2.py&quot;, line 4, in figurePercentage
+AttributeError: __getitem__</pre>
+<p class="docText">Using our denominator example (<span class="docEmphasis">divby0_4.py</span>), 
+if we want to determine if any exceptions occurred, we can add an <tt>else</tt> 
+clause to the end of our <tt>try</tt> statement as follows:</p>
+<pre>def figurePercentage(figures):
+      for tuple in figures:
+             try:
+                   numerator = tuple[0]
+                   denominator = tuple[1]
+                   percent = numerator/denominator
+                   percent = percent * 100
+                   print (&quot;The percentage is &quot; + `percent` + &quot;%&quot;)
+             except ZeroDivisionError:
+                   print (&quot;divide by 0 percentage error&quot;)
+
+             except:
+                    print (&quot;percentage error&quot;)
+             else:
+                    print (&quot;No exceptions occurred&quot;)</pre>
+<p class="docText">If no exceptions occurred, the <tt>figurePercentage()</tt> 
+function prints out <tt>&quot;No exceptions occurred&quot;</tt> during each iteration in 
+which that statement remains true.</p>
+<h3 class="docSection1Title" id="ch07lev1sec4">The raise Statement</h3>
+<p class="docText">A <tt>raise</tt> statement forces an exception to be raised. 
+One form is</p>
+<pre>raise exception-expression, description-expression</pre>
+<p class="docText">In our denominator example, it raises a specific exception.</p>
+<pre>&gt;&gt;&gt; raise ZeroDivisionError, &quot;Sequence has a Zero value in the denominator&quot;
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+ZeroDivisionError: Sequence has a Zero value in the denominator</pre>
+<p class="docText">The <tt>exception-expression</tt> must be of type <tt>String</tt> 
+or be an instance object. The <tt>description-expression</tt> is optional. If 
+you use <tt>raise</tt> with no <tt>exception-expression</tt>, it reraises the 
+last exception.</p>
+<p class="docText">You can easily define your own exception using a string 
+variable.</p>
+<pre>&gt;&gt;&gt; badListForm = 'badListForm'
+&gt;&gt;&gt; try:
+...     raise badListForm, &quot;The list had a malformed tuple&quot;
+... except badListForm, msg:
+...     print (&quot;Exception occurred :&quot; + badListForm + &quot; &quot; + msg)
+...
+Exception occurred :badListForm The list had a malformed tuple
+&gt;&gt;&gt; raise badListForm, &quot;Hi Mom&quot;
+&gt;&gt;&gt; badListForm = 'badListForm'
+&gt;&gt;&gt; try:
+...     raise badListForm, &quot;The list had a malformed tuple&quot;
+... except badListForm, msg:
+...     print (&quot;Exception occurred :&quot; + badListForm + &quot; &quot; + msg)
+...
+Exception occurred :badListForm The list had a malformed tuple
+&gt;&gt;&gt; raise badListForm, &quot;Hi Mom&quot;
+</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Strings: Bad Style for Exceptions</h2>
+      <p class="docText">The use of strings to raise exceptions has fallen out 
+      of favor and will likely be phased out of the language. The more &quot;Pythonically&quot; 
+      correct method is to use a class instance, which we'll cover a little 
+      later. I used the string example here because strings are easy to define 
+      and thus make it easy to illustrate exceptions.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Here's how we can modify our <tt>figurePercentage()</tt> 
+example to handle and reraise (throw) an exception we've already defined:</p>
+<pre>badListForm = 'badListForm'
+
+def figurePercentage(figures):
+       for tuple in figures:
+              try:
+                    numerator = tuple[0]
+                    denominator = tuple[1]
+                    percent = numerator/denominator
+                    percent = percent * 100
+                    print (&quot;The percentage is &quot; + `percent` + &quot;%&quot;)
+              except ZeroDivisionError:
+                    print (&quot;divide by 0 percentage error&quot;)
+                    raise
+              except AttributeError:
+                    raise badListForm, &quot;An item in the list is not a sequence&quot;
+              except IndexError:
+                    raise badListForm, &quot;A sequence in the list does&quot; \
+                                 &quot; not have two items&quot;
+              except:
+                    print (&quot;percentage error&quot;)
+              else:
+                    #print (&quot;No exceptions occurred&quot;)
+                    pass</pre>
+<p class="docText">First, let's examine the <tt>ZeroDivisionError</tt> exception 
+handler</p>
+<pre>except ZeroDivisionError:
+       print (&quot;divide by 0 percentage error&quot;)
+      raise</pre>
+<p class="docText">which, as we see, prints out an error message and then uses 
+the <tt>raise</tt> statement with no expressions. (Remember, <tt>raise</tt> with 
+no expressions reraises the active exception.) The following code snippet passes 
+a list containing a tuple with a zero for the denominator:</p>
+<pre>try:
+       print(&quot;The nice list&quot;)
+       figures = [(10.0,20.0), (100.0, 200.0), (300.0, 400.0), (1.0, 0.0), (11.0,20.0), (110.0, 200.0)]
+       figurePercentage(figures)
+except ZeroDivisionError, msg:
+       print(&quot;Exception:&quot; + `ZeroDivisionError` + &quot;: &quot; + msg)</pre>
+<p class="docText">As soon as <tt>figurePercentage()</tt> hits the zero 
+denominator tuple (<tt>(1,0,0,0)</tt>), it catches the exception, prints a 
+message, and then reraises the exception, which in the above code will be caught 
+by the exception handler at the top of the call stack. Here's the output:</p>
+<pre>The percentage is 50.0%
+The percentage is 50.0%
+The percentage is 75.0%
+divide by 0 percentage error
+Exception:'ZeroDivisionError': float division</pre>
+<p class="docText">In the following example, we define our own exception, <tt>
+badListForm</tt>, and raise it when we get an <tt>AttributeError</tt> or an <tt>
+IndexError</tt>. Notice that the <tt>raise</tt> statement is used to raise <tt>
+badListForm</tt> with two different messages.</p>
+<pre>badListForm = 'badListForm'
+       ...
+       ...
+       except AttributeError:
+              raise badListForm, &quot;An item in the list is not a sequence&quot;
+       except IndexError:
+              raise badListForm, &quot;A sequence in the list does&quot; \
+                           &quot; not have two items&quot;</pre>
+<p class="docText">Therefore, if we execute the code snippet</p>
+<pre>try:
+       print(&quot;—————————————————————————————————————-&quot;)
+       print(&quot;The list with a non sequence&quot;)
+       nasty_list = [(1.0, 1.0), (2.0, 2.0), 2, (3.0, 3.0)]
+       figurePercentage(nasty_list)
+except badListForm, msg:
+          print (&quot;Exception:&quot; + `badListForm` + &quot; : &quot; + msg)
+try:
+       print(&quot;—————————————————————————————————————-&quot;)
+       print(&quot;The list with a sequence that contains less items than 2&quot;)
+       nasty_list = [(1.0, 1.0), (2.0, 2.0), [3], (4.0, 4.0)]
+       figurePercentage(nasty_list)
+except badListForm, msg:
+       print (&quot;Exception:&quot; + `badListForm` + &quot; : &quot; + msg)</pre>
+<p class="docText">we get the following output:</p>
+<pre>——————————————————————————————————————-
+The list with a non sequence
+The percentage is 100.0%
+The percentage is 100.0%
+Exception:'badListForm' : An item in the list is not a sequence
+——————————————————————————————————————-
+The list with a sequence that contains less items than 2
+The percentage is 100.0%
+The percentage is 100.0%
+Exception:'badListForm' : A sequence in the list does not have two items
+</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Equality Is Not Enough</h2>
+      <p class="docText">Having the same value string is not enough. The string 
+      exception in the <tt>except</tt> clause must be exactly the same as the 
+      object that was raised, which in Pythonese means</p>
+      <pre>str1 == str2 being true is not enough</pre>
+      <p class="docText">instead of</p>
+      <pre>str1 is str2 has to be true.</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch07lev2sec3">The finally Clause</h4>
+<p class="docText">The second of the two forms of <tt>try</tt> cleans up an 
+exception. It includes a <tt>finally</tt> clause, and looks like this:</p>
+<pre>try:
+       suite
+finally:
+       suite</pre>
+<p class="docText">You can't use a <tt>finally</tt> clause and an <tt>except</tt> 
+clause in the same <tt>try</tt> statement.</p>
+<p class="docText">Here's a simple <tt>try...finally</tt> example:</p>
+<pre>&gt;&gt;&gt; try:
+...    raise &quot;hello&quot;, &quot;Hello Error&quot;
+...    print &quot;Hello&quot;
+... finally:
+...    print &quot;Finally&quot;
+...
+Finally
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 2, in ?
+hello: Hello Error</pre>
+<p class="docText">The <tt>try...finally</tt> clause guarantees that the <tt>
+finally</tt> clause will be executed whether or not an exception occurs. You 
+want cleanup code in a <tt>finally</tt> clause—it's like closing a database 
+connection or a file. We'll use <tt>finally</tt> a lot when we deal with files 
+in <a class="docLink" href="_chapter%208.htm">Chapter 8</a>.</p>
+<h3 class="docSection1Title" id="ch07lev1sec5">Classes and Instances as Exceptions</h3>
+<p class="docText">Earlier we defined our own exception using a string object, 
+making it user defined. The new Python way of defining exceptions is with 
+classes and class instances, which means that the <tt>raise</tt> statement can 
+take the following form:</p>
+<pre>raise class, class_instance
+
+raise class_instance</pre>
+<p class="docText">In the <tt>except</tt> clause, you list the name of the 
+class. If the exception instance raised is an instance of that class (a direct 
+instance or an instance of a subclass), <tt>except</tt> will catch it. The 
+exception class you define <span class="docEmphasis">should</span> be derived 
+from the Exception class, which is defined in the exception module (<span class="docEmphasis">exception.py</span>). 
+As of now, this isn't a requirement, but it likely will be in the future. If you 
+use an instance of <tt>Exception</tt> in conjunction with the <tt>str()</tt> 
+function, it will return all of the arguments passed to its constructor.</p>
+<p class="docText">I know these concepts are hard to visualize, so let's do a 
+few quick examples to make them easier to grasp.</p>
+<h4 class="docSection2Title" id="ch07lev2sec4">Type Exception</h4>
+<p class="docText">First we raise an error of type <tt>Exception</tt> as 
+follows:</p>
+<pre>&gt;&gt;&gt; try:
+...      error = Exception(&quot;Not working&quot;, &quot;Something Broke&quot;, &quot;Better call for help&quot;)
+...      raise error
+... except Exception:
+...      print &quot;Got an error&quot;
+...
+Got an error
+&gt;&gt;&gt;</pre>
+<p class="docText">We catch the raised exception with our <tt>except</tt> <tt>
+Exception:</tt> handler, which is useful but doesn't do anything with the 
+arguments we passed as our <tt>exceptions</tt> instance.</p>
+<p class="docText">The next listing (<span class="docEmphasis">chap7_1</span>) 
+shows how to use the arguments we passed to the <tt>Exception</tt> constructor 
+in conjunction with the <tt>str</tt> statement. (We're going to make things 
+gradually more complex, so be sure to follow along.)</p>
+<pre>try:
+      error = Exception(&quot;Not working&quot;, &quot;Something Broke&quot;, &quot;call for help&quot;)
+      raise error
+except Exception, instance:
+      print &quot;Got an error &quot; + str( instance)
+      print instance.__class__.__name__</pre>
+<p class="docText">As you can see, the second argument passed to the exception 
+handler is the instance we raised. When you use the <tt>str</tt> statement with 
+the instance of the <tt>Exception</tt> class, you get the argument passed to the 
+constructor converted to a string. The output from the above code is</p>
+<pre>Got an error ('Not working', 'Something Broke', 'call for help')
+Exception</pre>
+<p class="docText">Just so we leave no doubt that the second argument to the <tt>
+except</tt> clause is in fact the instance we threw (I meant to say 
+&quot;raised&quot;—more on this later), we print out the name of the instance class, that 
+is, <tt>Exception</tt>.</p>
+<h4 class="docSection2Title" id="ch07lev2sec5">User-Defined Class-Based Exceptions</h4>
+<p class="docText">To round out our examples of class-based exceptions, we'll 
+create our own (that is, user-defined). Of course, we did this before using the 
+old way with string objects, but now we'll do it using classes. Here is a 
+listing (<span class="docEmphasis">chap7_2</span>) that defines three 
+user-defined exceptions.</p>
+<pre>Listing chap7_2
+class CarException(Exception):
+       pass
+class BrakeFailed(CarException):
+       pass
+class EngineFailed(CarException):
+       pass
+if __name__ == &quot;__main__&quot;:
+       main()
+def main():
+       try:
+                     error = BrakeFailed(&quot;Not working&quot;, &quot;Something Broke&quot;,
+                               &quot;Better call for help&quot;, &quot;Get an Airbag&quot;)
+                     raise error
+       except BrakeFailed, instance:
+                     print &quot;Got a BrakeFailed exception &quot; + str(instance) \
+                     + &quot; &quot; + instance.__class__.__name__
+       try:
+                     error = BrakeFailed(&quot;Brakes Not working&quot;, &quot;Something Broke&quot;, &quot;Better call for help&quot;, &quot;Get an Airbag&quot;)
+                     raise error
+       except CarException, instance:
+                     print &quot;Got a Car Exception &quot; + str(instance) + &quot; &quot; \
+                     + instance.__class__.__name__
+       except Exception, instance:
+                     print &quot;Got an exception &quot; + str(instance) + &quot; &quot; \
+                     + instance.__class__.__name__
+       try:
+                     error = BrakeFailed(&quot;Not working&quot;, &quot;Something Broke&quot;, &quot;Better call for help&quot;, &quot;Get an Airbag&quot;)
+                     raise error
+       except Exception, instance:
+                     print &quot;Got an exception &quot; + str(instance) + &quot; &quot; \
+                     + instance.__class__.__name__</pre>
+<p class="docText">Here's the output:</p>
+<pre>Got a BrakeFailed exception ('Not working', 'Something Broke', 'Better call for help', 'Get an Airbag') BrakeFailed
+Got an exception ('Not working', 'Something Broke', 'Better call for help', 'Get an Airbag')
+BrakeFailed
+Got a Car Exception ('Brakes Not working', 'Something Broke', 'Better call for help', 'Get an Airbag') BrakeFailed</pre>
+<h4 class="docSection2Title" id="ch07lev2sec6">Exception Hierarchy</h4>
+<p class="docText">Using the class approach, you can build a hierarchy of 
+exceptions. This allows programmers who use the methods of one of your classes 
+to decide the level of detail or granularity they care about. For example, you 
+can define 30 <tt>CarException</tt> classes that can be thrown when the <tt>Car</tt> 
+class starts—that is, when someone calls the class's <tt>__start__</tt> method. 
+One user of your <tt>Car</tt> class may care about all 30. Another may care only 
+if any <tt>CarException</tt> is thrown and therefore write an <tt>except</tt> 
+clause only to catch any exception derived from it.</p>
+<p class="docText">The first <tt>try</tt> block in the main function of the
+<span class="docEmphasis">chap7_2</span> module raises an instance of <tt>
+BrakeFailed</tt>. Here we demonstrate an <tt>except</tt> clause that catches a
+<tt>BrakeFailed</tt> class. The second parameter should be the instance we 
+raised.</p>
+<pre>try:
+       error = BrakeFailed(&quot;Not working&quot;, &quot;Something Broke&quot;, &quot;Better call for help&quot;, &quot;Get an Airbag&quot;)
+       raise error
+except BrakeFailed, instance:
+       print &quot;Got a BrakeFailed exception &quot; + str(instance) + &quot; &quot; \
+       + instance.__class__.__name__</pre>
+<p class="docText">To take our demonstration further, we show that not only can 
+we catch a <tt>BrakeFailed</tt> instance with an <tt>except</tt> clause that 
+specifies a <tt>BrakeFailed</tt> class, but we can also catch the <tt>
+BrakeFailed</tt> instance with any base class of the <tt>BrakeFailed</tt> base 
+class.</p>
+<pre>try:
+       error = BrakeFailed(&quot;Brakes Not working&quot;, &quot;Something Broke&quot;, &quot;Better call for help&quot;, &quot;Get an Airbag&quot;)
+       raise error
+except CarException, instance:
+       print &quot;Got a Car Exception &quot; + str(instance) + &quot; &quot; \
+       + instance.__class__.__name__</pre>
+<p class="docText">In the above code, we catch the <tt>BrakeFailed</tt> instance 
+with an <tt>except</tt> block that specifies a <tt>CarException</tt>. We can do 
+this because <tt>CarException</tt> is a base class of <tt>BrakeFailed</tt>. We 
+can also catch a <tt>BrakeFailed</tt> class with any base class.</p>
+<pre>try:
+       error = BrakeFailed(&quot;Not working&quot;, &quot;Something Broke&quot;, &quot;Better call for help&quot;, &quot;Get an Airbag&quot;)
+       raise error
+
+except Exception, instance:
+       print &quot;Got an exception &quot; + str(instance) + &quot; &quot; \
+       + instance.__class__.__name__</pre>
+<p class="docText">Here we catch the <tt>BrakeFailed</tt> instance with the 
+exception handler (the <tt>except</tt> clause) using the <tt>Exception</tt> 
+class. With the above approach we can create hierarchies of exceptions that can 
+all be caught by <tt>except</tt> clauses that specify the exceptions' base 
+classes.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Don't Give Up</h2>
+      <p class="docText">If you still don't understand these concepts, fire up 
+      the interactive interpreter and import the <tt>BrakeFailed</tt> class from 
+      module <span class="docEmphasis">chap7_2,</span> and try raising and 
+      catching the error inside a try block.</p>
+      <p class="docText">Once again, the only way to learn programming is to 
+      program. I guarantee that the people having the hardest time understanding 
+      this chapter are probably the ones who aren't following along with the 
+      examples. Remember, if a picture is worth a thousand words, a working 
+      model is worth a thousand pictures.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 class="docSection3Title" id="ch07lev3sec2">Most to Least Specific Order</h5>
+<p class="docText">What happens if you have two <tt>except</tt> clauses that 
+both catch base classes of the instance you're throwing (raising)? Does the most 
+specific class prevail? By most specific, I mean the class that's closest in the 
+class hierarchy to the class of the instance being raised. Look at the listing 
+for <span class="docEmphasis">chap7_2,</span> which shows the <tt>catch()</tt> 
+method.</p>
+<pre>def catch():
+       print &quot;the most specific to the least specific&quot;
+       try:
+             error = BrakeFailed()
+             raise error
+       except BrakeFailed, instance:
+             print &quot;I got it—1&quot;
+       except CarException, instance:
+             print &quot;Excuse me, but I've got it—2&quot;
+       except Exception, instance:
+             print &quot;No I beg your pardon, I've got it—3&quot;
+       print &quot;Least specific to most specific&quot;
+       try:
+             error = BrakeFailed()
+             raise error
+       except Exception, instance:
+             print &quot;Exception&quot;
+       except CarException, instance:
+             print &quot;CarException&quot;
+       except BrakeFailed, instance:
+             print &quot;BrakeFailed&quot;</pre>
+<p class="docText">In the following excerpt from <span class="docEmphasis">
+chap7_2.catch(),</span> we see that the <tt>BrakeFailed</tt> exception is being 
+raised and that there are three <tt>except</tt> clauses that can potentially 
+catch it.</p>
+<pre>try:
+       error = BrakeFailed()
+       raise error
+except BrakeFailed, instance:
+       print &quot;I got it—1&quot;
+except CarException, instance:
+       print &quot;Excuse me, but I've got it—2&quot;
+except Exception, instance:
+       print &quot;No I beg your pardon, I've got it—3&quot;</pre>
+<p class="docText">The first <tt>except</tt> can catch <tt>BrakeFailed</tt> 
+simply because it declares <tt>BrakeFailed</tt> in its clause. The next <tt>
+except</tt> also seems like a candidate because it declares a <tt>CarException</tt> 
+in its clause and <tt>CarException</tt> is a base class of <tt>BrakeFailed</tt>. 
+The third <tt>except</tt> seems to be a candidate as well because <tt>Exception</tt> 
+is also a base class of <tt>BrakeFailed</tt>. (<tt>Exception</tt> is a direct 
+base class of <tt>CarException</tt>, and <tt>CarException</tt> is a base class 
+of <tt>BrakeFailed</tt>; thus, <tt>Exception</tt> is a base class of <tt>
+BrakeFailed</tt>, and an instance of <tt>BrakeFailed</tt> is also an instance of
+<tt>Exception</tt>.)</p>
+<p class="docText">If we run the above code segment, we get</p>
+<pre>I got it—1</pre>
+<p class="docText">So in this case the most specific <tt>except</tt> caught the 
+exception—that is, the first one, which has <tt>BrakeFailed</tt> in its clause. 
+This being the case, what do you think the following code will do? Is it always 
+the case that the most specific <tt>except</tt> clause will catch the exception?</p>
+<pre>try:
+       error = BrakeFailed()
+       raise error
+except Exception, instance:
+       print &quot;Exception&quot;
+except CarException, instance:
+       print &quot;CarException&quot;
+except BrakeFailed, instance:
+       print &quot;BrakeFailed&quot;</pre>
+<p class="docText">Unlike the last example, here we organized the order of <tt>
+except</tt> clauses from least to most specific. When we run this code, we get 
+the following output:</p>
+<pre>Exception</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Java versus Python versus Delphi versus Visual 
+      Basic Exception Handling</h2>
+      <p class="docText">Java's handling of exceptions is very similar to 
+      Python's. The following table shows the equivalent exception statements in 
+      the two languages as well as in Delphi and Visual Basic.</p>
+      <div align="center">
+        <center>
+        <table cellSpacing="0" cellPadding="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111">
+          <colgroup span="4" align="left">
+          </colgroup>
+          <tr>
+            <th class="docTableHeader" vAlign="top" align="left">
+            <span class="docEmphStrong">Python</span> </th>
+            <th class="docTableHeader" vAlign="top" align="left">
+            <span class="docEmphStrong">Java</span> </th>
+            <th class="docTableHeader" vAlign="top" align="left">
+            <span class="docEmphStrong">Delphi (Object Pascal)</span> </th>
+            <th class="docTableHeader" vAlign="top" align="left">
+            <span class="docEmphStrong">Visual Basic</span> </th>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left"><tt>try</tt> </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>try</tt> </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>try</tt> </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>on error goto 
+            label</tt> </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left"><tt>except</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>catch</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>except</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>label</tt>
+            </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left"><tt>raise</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>throw</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>raise</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>raise</tt>
+            </td>
+          </tr>
+          <tr>
+            <td class="docTableCell" vAlign="top" align="left"><tt>finally</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>finally</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>finally</tt>
+            </td>
+            <td class="docTableCell" vAlign="top" align="left"><tt>on error 
+            resume next</tt> </td>
+          </tr>
+        </table>
+        </center>
+      </div>
+      <p class="docText">Exception handling in Java and Python isn't completely 
+      the same. One key difference is that Java allows you to declare the type 
+      of exception that a method will throw (that is, &quot;raise&quot; in Python). The 
+      method code must catch that exception or its base class.</p>
+      <p class="docText">Another key difference is that it's a syntax error in 
+      Java to list <tt>catch</tt> statements (<tt>except</tt> clauses in Python) 
+      as anything but most to least specific. This feature won't allow you to 
+      write code that will never be reached. In my opinion, Python should do 
+      something like this or, better yet, should always send the raised 
+      exception to the most specific handler (<tt>except</tt> clause).</p>
+      <p class="docText">Python and Delphi share similar keywords, but Python's 
+      syntax for handling errors seems a little closer to Java's than to 
+      Delphi's. Regardless, exception handling in the three languages is close. 
+      Visual Basic does its own type of error handling.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Thus, the first <tt>except</tt> that has a base class of the 
+class of the instance we're raising catches that raised instance. The last two 
+in the example are never reached. This proves that the most specific <tt>except</tt> 
+does not always catch the exception, and it means that we have to be careful in 
+how we organize our <tt>except</tt> clauses to make sure that they're in most to 
+least specific order.</p>
+<h4 class="docSection2Title" id="ch07lev2sec7">Garden Variety Exceptions</h4>
+<p class="docText">The exceptions described in the subsections that follow are 
+used as base classes.</p>
+<h5 class="docSection3Title" id="ch07lev3sec3">Exception</h5>
+<p class="docText"><tt>Exception</tt> is the root class for all exceptions—all 
+built-in exceptions are derived from it, and all user-defined exceptions
+<span class="docEmphasis">should</span> be derived from it. The following 
+interactive session shows that <tt>ZeroDivisionError</tt> is derived from <tt>
+Exception</tt>.</p>
+<pre>&gt;&gt;&gt; try:
+...   1/0
+... except Exception, instance:
+...   print instance.__class__.__name__
+...
+ZeroDivisionError</pre>
+<h5 class="docSection3Title" id="ch07lev3sec4">StandardError</h5>
+<p class="docText"><tt>StandardError</tt>, derived from <tt>Exception</tt>, is 
+the base class for all built-in exceptions. The following interactive session 
+shows that <tt>StandardError</tt> is a base class of <tt>ZeroDivisionError</tt>.</p>
+<pre>&gt;&gt;&gt; try:
+...   1/0
+... except StandardError, error:
+...   print error.__class__.__name__
+...
+ZeroDivisionError</pre>
+<p class="docText">The code uses the <tt>StandardError</tt> class in the <tt>
+except</tt> clause, which will catch all exceptions that are either instances of
+<tt>StandardError</tt> or instances of its subclasses. (Remember, all instances 
+of subclasses of <tt>StandardError</tt> are considered instances of <tt>
+StandardError</tt>.)</p>
+<p class="docText">As I said before, all user-defined exceptions should be 
+subclasses of the <tt>Exception</tt> class, but don't subclass your exception 
+from <tt>StandardError</tt>, which is reserved for the built-in variety. It's 
+easy to tell the difference between a system (built-in) exception and an 
+application (or library) exception. It's built in if it's an instance of a <tt>
+StandardError</tt> subclass.</p>
+<h5 class="docSection3Title" id="ch07lev3sec5">ArithmeticError</h5>
+<p class="docText"><tt>ArithmeticError</tt> is the base class for built-in 
+exceptions representing arithmetic errors, such as <tt>OverflowError</tt>, <tt>
+ZeroDivisionError</tt>, and <tt>FloatingPointError</tt>.</p>
+<pre>&gt;&gt;&gt; try:
+...   1/0
+... except ArithmeticError, aerror:
+...   print aerror
+...   print aerror.__class__.__name__
+integer division or modulo
+ZeroDivisionError</pre>
+<h5 class="docSection3Title" id="ch07lev3sec6">LookupError</h5>
+<p class="docText"><tt>LookupError</tt> is a base class for the exceptions 
+associated with items not in a collection object (mapping or sequence)—for 
+example, <tt>IndexError</tt> and <tt>KeyError</tt>. The following example shows 
+how to catch a <tt>LookupError</tt>:</p>
+<pre>&gt;&gt;&gt; dictionary = {&quot;Hello&quot;:&quot;Hi&quot;, &quot;Goodbye&quot;:&quot;Bye&quot;, &quot;See ya Later&quot;:&quot;Later&quot;}
+&gt;&gt;&gt; print dictionary[&quot;Hello&quot;]
+Hi
+&gt;&gt;&gt; try:
+...   print dictionary[&quot;Ciao&quot;]
+... except LookupError, error:
+...   print error.__class__.__name__
+...
+KeyError</pre>
+<p class="docText">We can see that <a class="docLink" href="#ch07lev3sec12">
+KeyError</a> is a subclass of <tt>LookupError</tt>, from which it derives.</p>
+<h5 class="docSection3Title" id="ch07lev3sec7">AttributeError</h5>
+<p class="docText"><tt>AttributeError</tt> is used in conjunction with classes 
+and instances. It signifies an attribute reference or a failed assignment.</p>
+<pre>&gt;&gt;&gt; class clazz:
+...   a = 1
+...   b = &quot;hi&quot;
+...   c = None
+...
+&gt;&gt;&gt; clazz.b
+'hi'
+&gt;&gt;&gt; try:
+...   clazz.a = clazz.e
+... except AttributeError, error:
+...   print &quot;Class does not support attribute e&quot;
+...
+Class does not support attribute e</pre>
+<h5 class="docSection3Title" id="ch07lev3sec8">EOFError</h5>
+<p class="docText"><tt>EOFError</tt> signifies that a built-in function has hit 
+the end of the file—possibly unexpectedly. We'll leave this example to
+<a class="docLink" href="_chapter%208.htm">Chapters 8</a> and
+<a class="docLink" href="_chapter%209.htm">9</a>.</p>
+<h5 class="docSection3Title" id="ch07lev3sec9">FloatingPointError</h5>
+<p class="docText"><tt>FloatingPointError</tt> signifies the failure of a 
+floating-point operation.</p>
+<h5 class="docSection3Title" id="ch07lev3sec10">IOError</h5>
+<p class="docText"><tt>IOError</tt> signifies failure of an I/O operation. We'll 
+discuss this more in <a class="docLink" href="_chapter%209.htm">
+Chapter 9</a>.</p>
+<h5 class="docSection3Title" id="ch07lev3sec11">IndexError</h5>
+<p class="docText"><tt>IndexError</tt> signifies that a subscript is out of 
+range. The following example shows how you might get such an exception:</p>
+<pre>&gt;&gt;&gt; seq = (1,2,3,4,5)
+&gt;&gt;&gt; seq[1]
+2
+&gt;&gt;&gt; seq[5]
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+IndexError: tuple index out of range</pre>
+<h5 class="docSection3Title" id="ch07lev3sec12">KeyError</h5>
+<p class="docText"><tt>KeyError</tt> signifies a key not found in a dictionary, 
+which the following example demonstrates:</p>
+<pre>&gt;&gt;&gt; dictionary = {&quot;Hello&quot;:&quot;Hi&quot;, &quot;Goodbye&quot;:&quot;Bye&quot;, &quot;See ya Later&quot;:&quot;Later&quot;}
+&gt;&gt;&gt; print dictionary[&quot;Hello&quot;]
+Hi
+&gt;&gt;&gt; try:
+...   print dictionary[&quot;Ciao&quot;]
+... except KeyError, error:
+...   print &quot;Ciao not in dictionary&quot;
+...
+Ciao not in dictionary
+&gt;&gt;&gt;</pre>
+<p class="docText">Does this example look familiar? As an exercise, compare it 
+to the one for <tt>LookupError</tt>.</p>
+<h5 class="docSection3Title" id="ch07lev3sec13">NameError</h5>
+<p class="docText"><tt>NameError</tt> signifies that a name isn't found in the 
+current namespace.</p>
+<pre>&gt;&gt;&gt; name1 = None
+&gt;&gt;&gt; name2 = None
+&gt;&gt;&gt; name1
+&gt;&gt;&gt; name2
+&gt;&gt;&gt; name3
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+NameError: name3</pre>
+<p class="docText">Here two variables, <tt>name1</tt> and <tt>name2</tt>, are 
+defined. After the interactive session accesses their values, it tries to access 
+a variable that it didn't define. Thus, an exception is uncaught and displayed 
+in the interactive interpreter.</p>
+<p class="docText">To catch the exception, we do this:</p>
+<pre>&gt;&gt;&gt; try:
+...   print name3
+... except NameError, error:
+...   print &quot;name3 is not present&quot;
+...
+name3 is not present
+&gt;&gt;&gt;</pre>
+<h5 class="docSection3Title" id="ch07lev3sec14">OverflowError</h5>
+<p class="docText"><tt>OverflowError</tt> signifies that a number is too big to 
+fit in a number variable.</p>
+<h5 class="docSection3Title" id="ch07lev3sec15">TypeError</h5>
+<p class="docText"><tt>TypeError</tt> signifies that the code is trying to use a 
+built-in object with a function or operation that doesn't support it. In this 
+example, we try to multiply a list by another list, which can't be done. We'll 
+try to get a <tt>TypeError</tt>.</p>
+<pre>&gt;&gt;&gt; list = [1,2,3]
+&gt;&gt;&gt; list2 = [1,2,3]
+&gt;&gt;&gt; list = list * list2
+Traceback (innermost last):
+  File &quot;&lt;console&gt;&quot;, line 1, in ?
+TypeError: can't multiply sequence with non-int</pre>
+<p class="docText">Do you remember that a dictionary key has to be immutable? If 
+you use a mutable object as a key, what happens? Fire up the interactive 
+interpreter, and try the following example:</p>
+<pre>&gt;&gt;&gt; dict = {}
+&gt;&gt;&gt; list = [1,2,3]
+&gt;&gt;&gt; dict[list]=&quot;item&quot;
+Traceback (innermost last):
+  File &quot;&lt;console&gt;&quot;, line 1, in ?
+TypeError: unhashable type</pre>
+<h5 class="docSection3Title" id="ch07lev3sec16">ValueError</h5>
+<p class="docText"><tt>ValueError</tt> signifies the wrong type for the current 
+operation or function. In this example, the string module uses it to indicate 
+that a string can't be evaluated to a number when the <tt>atoi</tt> 
+(ASCII-to-Integer) function is called (see
+<a class="docLink" href="_chapter%2010.htm">Chapter 10</a>).</p>
+<pre>&gt;&gt;&gt; import string
+&gt;&gt;&gt; string.atoi(&quot;123&quot;)
+123
+&gt;&gt;&gt; string.atoi(&quot;YOU&quot;)
+Traceback (innermost last):
+  File &quot;&lt;interactive input&gt;&quot;, line 0, in ?
+ValueError: invalid literal for atoi(): YOU</pre>
+<p class="docText">First the code imports the string module and then invokes the 
+module's <tt>atoi</tt> function to convert the string <tt>&quot;123&quot;</tt> to an 
+integer. Next it uses <tt>atoi</tt> to convert the string <tt>&quot;YOU&quot;</tt> to an 
+integer, which raises a <tt>ValueError</tt> exception because that string has no 
+integer equivalent.</p>
+<p class="docText"><tt>ValueError</tt> is used in all kinds of modules. It's a 
+nice way of saying that the value is out of the range a particular function was 
+expecting.</p>
+<h5 class="docSection3Title" id="ch07lev3sec17">ZeroDivisionError</h5>
+<p class="docText">We used <tt>ZeroDivisionError</tt> a lot in the examples 
+earlier in the chapter. Remember that it occurs when you have a zero in the 
+denominator.</p>
+<pre>&gt;&gt;&gt; 1/0
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+  ZeroDivisionError: integer division or modulo</pre>
+<h3 class="docSection1Title" id="ch07lev1sec6">Getting the Most Out of Your Exceptions</h3>
+<p class="docText">Exception class instances have the attributes <tt>filename</tt>,
+<tt>lineno</tt>, <tt>offset</tt>, and <tt>text</tt>. You can access these 
+details to locate where your code failed. The next example (<span class="docEmphasis">chap7_3.py</span>) 
+shows how:</p>
+<pre>class MyException(Exception):
+       pass
+def raiseMyException():
+       raise Exception()
+def catchMyException():
+       try:
+             raiseMyException()
+       except MyException, err:
+             print &quot;line number &quot; +err.lineno
+             print &quot;file name &quot; + err.filename
+             print &quot;offset &quot; + err.offset
+             print &quot; text &quot; + err.text</pre>
+<h3 class="docSection1Title" id="ch07lev1sec7">Summary</h3>
+<p class="docText">Exception handling is easier than the traditional approach of 
+always checking the return type from functions. Exceptions can be class objects 
+or string objects, although string object exceptions are no longer in favor. The 
+newer, more correct way is to use class instances. In fact, as of Python version 
+1.5, all of the standard exceptions are class instances.</p>
+<p class="docText">The <tt>try</tt> statement tries a block of code; if that 
+block raises an exception, <tt>try</tt> either handles that exception or 
+performs some type of cleanup. There are two forms of <tt>try</tt>. One has <tt>
+try</tt>, <tt>except</tt>, and <tt>else</tt> clauses. The <tt>except</tt> clause 
+handles all exception classes derived from the class it mentions. The <tt>else</tt> 
+clause is the default handler for code that must be executed if no exceptions 
+are raised.</p>
+<p class="docText">The other form of <tt>try</tt> has a <tt>finally</tt> clause.
+<tt>finally</tt> guarantees that some form of cleanup code (like file closing) 
+is performed. The <tt>raise</tt> statement allows programmers to raise an 
+exception in their code.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%206.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%208.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

@@ -1,0 +1,1107 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 1</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 1.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 1.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 1.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="front%20matter.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%202.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 1. Jython Overview</h2><ul><li>&nbsp;<a class="docLink" href="#ch01lev1sec1">Programming, Briefly</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec2">Learning Python First</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec3">Python the Language</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec4">Starting with Python</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec5">Basic Functions with Python</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec6">Python as a Main Program</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec7">The Fast Track</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec8">The Power of Python</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec9">Where Do You Go from Here?</a></li>
+<li>&nbsp;<a class="docLink" href="#ch01lev1sec10">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Applet</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Boolean value</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Bytecode</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Compiler</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Concatenation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Control flow</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Expression</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Floating-point number</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">for loop</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Immutability</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Index/Indexing</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Interactive mode</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Interpreter</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Iteration</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Macro</span></li>
+</ul>
+      </td>
+      <td width="50%" valign="top">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Main method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Module</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Programming</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Pseudocode</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Script</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Sequence</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Servlet</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Slice notation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">String</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Syntax</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Type</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Value</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Variable</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In this chapter you will learn just what Python programming
+is and how to save and run Python scripts.</p>
+<h3 class="docSection1Title" id="ch01lev1sec1">Programming, Briefly</h3>
+<p class="docText">You may have programmed a computer without even knowing it.
+For example, have you ever written or recorded a spreadsheet macro (or any other
+macro for any type of application)? If you have, you've programmed. Of course,
+programming is a lot more complicated than writing macros; still, many people
+are overly apprehensive when it comes to learning this skill.</p>
+<p class="docText">You're going to find out that there's often not much
+difference between a macro or a scripting language and &quot;real&quot; programming.
+However, macro and script don't intimidate novice users, whereas programming
+does. The point is that learning programming doesn't have to be hard. In fact,
+the hardest part about it is having the right attitude. If you believe you can't
+learn to program, you probably won't.</p>
+<p class="docText">At its most basic level, programming is instructing the
+computer, in a language that it understands, so that it can perform tasks. Like
+any language you learned in high school, a programming language has a
+vocabulary, grammar, syntax, punctuation, and parts of speech. The trick is
+knowing how to use these components correctly so that you get your point across
+and the job gets done.</p>
+<p class="docText">Consider this very simple instruction:</p>
+<pre>write(&quot;Hello World&quot;)</pre>
+<p class="docText">Called a statement, it's the primary building block of
+programming. It &quot;invokes,&quot; or &quot;calls,&quot; the <tt>write</tt> function.</p>
+<p class="docText">A function is a grouped set of statements. Within a program,
+one function can perform a task in its entirety, but more likely it will call
+another function, which in turn can call other functions, and so on, all of
+which together organize the program's statements. Remember being told in English
+class to organize your thoughts into a cohesive whole to get your point across?
+This is what statements and functions do in computer languages.</p>
+<p class="docText">Languages like Python need an interpreter to translate a
+human-generated program into a &quot;machine-readable&quot; form that the computer can
+understand. Other languages, such as C and C++, use a compiler. The difference
+between the two is that the compiler saves the translated code on the machine,
+allowing it to be run independently on another occasion, whereas the interpreter
+holds it in memory only for the duration of the program running when the
+translation was made. The upshot is that compiled programs are faster than
+interpreted programs.</p>
+<h3 class="docSection1Title" id="ch01lev1sec2">Learning Python First</h3>
+<p class="docText">Learning any one programming language makes it much easier to
+understand not only computers but other programming languages as well. As you'll
+see, Python is perhaps the easiest language to learn and use. This makes it the
+logical one to get under your belt as a first step on the way to Visual Basic,
+Java, and so forth.</p>
+<p class="docText">It's important to understand that not all languages are
+alike. For example, some, such as C++, Java, and Python, are
+<span class="docEmphasis">terse.</span> That is, they get a lot done without a
+lot of code. Others, like Assembly, are <span class="docEmphasis">verbose.</span>
+They need many lines of code to perform a simple task. To illustrate, let's
+pretend we're asking a computer to tell us how to get to downtown Phoenix,
+Arizona. Python would tell us to take Speedway Boulevard to I-10 and head west.
+Here's what Assembly would say:</p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Walk to your garage.</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">Open the garage door.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">Walk to the driver's side of the car.</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Put the key in the door.</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Unlock the door.</span></li>
+  <li><span style="font-weight: normal" value="6">
+  <p class="docList">Sit in the driver's seat…</span></li>
+</ol>
+</span>
+<p class="docText">You get the picture.</p>
+<p class="docText">Assembly language needs to be verbose because it does its
+heavy lifting in building core operating system parts and high-speed optimized
+programs. Most programs don't require a low-level draft horse like Assembly,
+however, but a high-level language that offers greater productivity.</p>
+<p class="docText">A higher-level language abstracts (i.e., hides) the
+complexity of a lower-level language. It looks at the bigger picture and omits
+the details, as we saw in how Python and Assembly tell us how to get to Phoenix.
+The tradeoff is that a lower-level language is friendlier to the computer—it can
+run faster—whereas a higher-level language is friendlier to the programmer—she
+can program faster. There's a hierarchy of complexity with programming
+languages: C and C++ are higher level than Assembly; Java is higher level than
+C++; and Python is higher level than Java. The higher the level, the greater the
+ease of use. The goal is making a language easy to use without draining its
+power.</p>
+<h3 class="docSection1Title" id="ch01lev1sec3">Python the Language</h3>
+<p class="docText">Python is a dynamic object-oriented language (i.e., flexible)
+for writing applications, Java applets and servlets, and the like. (We'll learn
+more about applets in <a class="docLink" href="_chapter%2018.htm">
+Chapter 18</a>.) It has a close relationship with Java. In fact, it can do
+pretty much anything Java can because it compiles to Java and uses the Java
+class libraries. With Python, you can create animated Web pages, automate
+monotonous jobs, and write Internet-interactive programs.</p>
+<h4 class="docSection2Title" id="ch01lev2sec1">Java and Python</h4>
+<p class="docText">No doubt you've heard of Java, even the novices among you.
+Over a thousand books on it are on bookstore and library shelves, so it's hard
+to miss.</p>
+<p class="docText">Remember our discussion of compilers and interpreters? Like
+Python, Java is an interpreted language, but, like C++, it's also a compiled
+language. In other words, it compiles into an intermediate language called
+bytecode, which is then interpreted into machine code at runtime (that is, when
+the program is put to use by the user). This makes Java a hybrid; its ability to
+be both interepreted and compiled gives it flexibility as well as speed.</p>
+<p class="docText">Java is popular among programmers because of its versatility
+and because it's a much easier language than C++. Still, it's a far cry from
+Visual Basic in the simplicity department. In fact, its complexity, along with
+its client-side speed and graphics problems, has allowed other languages, such
+as DHTML (that is, HTML combined with VBScript and/or JavaScript), to lure a
+substantial number of developers away from the Java camp.</p>
+<p class="docText">None of this means that Java doesn't have the potential to
+become an excellent client-side development tool. I believe it does, and I
+program in it professionally. However, it doesn't fill the need for a
+higher-level scripting language that's easy on the programmer, and this is where
+Python comes in. Unlike Java, Python is easy enough for beginning programmers to
+master quickly and yet powerful enough to keep experienced programmers
+interested.</p>
+<h4 class="docSection2Title" id="ch01lev2sec2">Jython</h4>
+<p class="docText">Because of the success of Java, it made sense to make Java
+and Python compatible. Thus, one version of Python, called Jython, has been
+ported to Java and so can compile to bytecode. This move will likely make Python
+the next Internet development phenomenon, like Java or XML. At the least, it
+will make it available to a much broader audience and make it applicable in more
+environments. Consider, for example, that Jython makes it much easier to add
+user-defined types in Java. (Don't worry, <span class="docEmphasis">types</span>
+will be explained in due time.)</p>
+<p class="docText">The Object Management Group (OMG) has adopted Python as one
+of the scripting component languages of CORBA, a standard distributed object
+model. In fact, CorbaScript, which is also a standard script, is one of Python's
+close cousins. Python also works with ActiveX (also known as COM+), a
+nonstandard distributed component model that ships with Windows operating
+systems, and with JavaBeans and RMI, which is a distributed object model for
+Java applications. With the addition of the OMG's CORBABean specification, which
+effectively gives CORBA a client-side tool-able component model, Python can be
+used to script CORBA objects as well.</p>
+<p class="docText">The reason Python works so well with JavaBeans, ActiveX, and
+CORBA is that these products are all component models, that is, ways to
+manufacture components. Python serves as a means to wire together, or &quot;glue,&quot;
+purchased or built components into an application. At the moment, Visual Basic
+is the de facto standard for scripting together ActiveX components into
+applications, but it's limited to Windows platforms. Python is becoming the
+standard for scripting together components from CORBA, JavaBeans, Enterprise
+JavaBeans, and ActiveX.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers and Novices: Jython Focus</h2>
+      <p class="docText">Our focus will be primarily on Jython, rather than on
+      CPython (the non-Java version). Either Jython or CPython can be used for
+      an understanding of the core aspects of Python, but you'll definitely need
+      the Java version when we get to JFC/Swing, applets, and the like.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">You know the old saying &quot;Every journey begins with the first
+step.&quot; Let's take that first step now.</p>
+<h3 class="docSection1Title" id="ch01lev1sec4">Starting with Python</h3>
+<p class="docText">To install Python you must have a recent version of the Java
+Development Kit (JDK). For installation details, refer to
+<a class="docLink" href="appendix%20a.htm">Appendix A</a>.</p>
+<p class="docText">Now you're up and running. I'm going to assume that you're
+sitting at the keyboard with this book situated so that you can follow along
+with the interactive sessions. This is critical even if you don't understand the
+topic under discussion. Once again, the only way to learn programming is to
+program, even if you're not sure what you're doing. Don't worry; you soon will.</p>
+<h4 class="docSection2Title" id="ch01lev2sec3">Python Interactive Mode</h4>
+<p class="docText">This section explains how to use Python in interactive mode,
+that is, the user and Python interacting one instruction at a time. It's a great
+way to learn the language. Also explained are the essential features of Python,
+including simple statements, expressions, and data types.</p>
+<p class="docText">To get Python going, at the DOS prompt (or the equivalent for
+your operating system) type <tt>Python</tt> (for CPython) or <tt>Jython</tt>
+(for the Java-enabled version). You should see a welcome message showing the
+Python version number and a copyright notice.</p>
+<pre>C:\Jython&gt;jython
+Jython 1.1 on jdk1.3
+Copyright 1997-1998 Corporation for National Research Initiatives
+&gt;&gt;&gt;</pre>
+<p class="docText">This is followed by a prompt for your first command, known as
+the <span class="docEmphasis">primary prompt</span> and denoted by <tt>&gt;&gt;&gt;</tt>.
+If you enter <tt>print</tt> <tt>&quot;Hello World&quot;</tt> here and then hit the Enter
+key, Python will obey your command and print <tt>&quot;Hello World&quot;</tt> to the
+monitor.</p>
+<pre>&gt;&gt;&gt; print &quot;Hello World&quot;
+Hello World
+&gt;&gt;&gt;</pre>
+<p class="docText">If that's all you want Python to do at this point, you can
+exit the system with another command.</p>
+<pre>&gt;&gt;&gt;raise SystemExit</pre>
+<p class="docText">This creates what's known as an &quot;<a class="docLink" href="_chapter%207.htm#ch07lev3sec3">exception</a>&quot;
+(we'll go into exceptions in
+<a class="docLink" href="_chapter%207.htm">Chapter 7</a>), which
+gets you out of Python. Another way to exit is to hit the Ctrl key in
+combination with whichever key your system designates for leaving a session. On
+Windows this is usually Ctrl-z; on UNIX it's usually Ctrl-d.</p>
+<h3 class="docSection1Title" id="ch01lev1sec5">Basic Functions with Python</h3>
+<p class="docText">The following sections cover how Python deals with the raw
+material of programming: numbers and text.</p>
+<h4 class="docSection2Title" id="ch01lev2sec4">Numbers</h4>
+<p class="docText">Python can serve as a simple calculator. The syntax it uses
+is nearly identical to that used for writing spreadsheet formulas. For novices
+who've created spreadsheets, all of this will seem familiar. The same is true
+for programmers who've worked with any language that uses an algebraic syntax,
+such as Pascal, Fortran, Basic, C, or Java.</p>
+<p class="docText">In Python, you enter a mathematical formula (called an
+expression) just as you do with spreadsheets, and you're given a resulting value<span class="docEmphasis">.</span>
+In programming terms, an expression is a Python statement that returns a value<span class="docEmphasis">.</span>
+That value is printed to the console.</p>
+<p class="docText">Python's <span class="docEmphasis">expression</span> syntax
+is straightforward. The addition (<tt>+</tt>), subtraction (<tt>–</tt>),
+multiplication (<tt>*</tt>), and division (<tt>/</tt>) operators work just like
+they do in spreadsheets and other programming languages. Parentheses work
+similarly as well, for grouping.</p>
+<pre>&gt;&gt;&gt; (2*2)/4
+1</pre>
+<p class="docText">The equal sign (<tt>=</tt>) assigns a value to a variable. In
+the first line of the following example, the variable is <tt>annual_salary</tt>,
+to which we assign a value of <tt>20000</tt>. (My convention is to join two-word
+variable names with an underscore.)</p>
+<pre>&gt;&gt;&gt; annual_salary = 20000
+&gt;&gt;&gt; monthly_salary = annual_salary/12
+&gt;&gt;&gt; monthly_salary
+1666
+&gt;&gt;&gt; bosses_salary = annual_salary * 3
+&gt;&gt;&gt; bosses_salary
+60000</pre>
+<p class="docText">In the second line, we divide <tt>annual_salary</tt> by 12 to
+arrive at a value for the variable <tt>monthly_salary</tt>. Then, in the third
+line, we enter <tt>monthly_salary</tt> at the prompt, which tells Python to
+print the value of that variable to the console. We can use <tt>annual_salary</tt>
+again in assigning a value to <tt>bosses_salary</tt>.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Implicit Variable Declaration</h2>
+      <p class="docText">In Python variables are <span class="docEmphasis">
+      implicitly declared.</span> That is, the first time a variable is used it
+      is assigned a value. This assigned value determines its type. In the
+      salary example, all variables are assigned values of type <tt>Integer</tt>.</p>
+      <p class="docText">Novices, if you're reading this note and are confused
+      by the concept of <span class="docEmphasis">type,</span> don't worry;
+      we'll get to it. For understanding the ideas presented in the rest of the
+      chapter, you just need to know that numbers can be of type <tt>Integer</tt>;
+      text can be of types <tt>String</tt>, <tt>List</tt>, etc. Basically, the
+      type assigned to a variable tells Python what values it can have and what
+      operations can be performed on it.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">The values assigned to the variables we've seen so far have
+been whole numbers. Python can also work with decimals, known in programming as
+floating-point numbers (of type <tt>Float</tt>).</p>
+<pre>&gt;&gt;&gt; sum=1.3 + 1.4 + 1.56 + 1.7 + 1.2 + 1.9
+&gt;&gt;&gt; mean = sum /6
+&gt;&gt;&gt; mean
+1.51
+&gt;&gt;&gt;</pre>
+<p class="docText">In the first line, we create a variable called <tt>sum</tt>
+and assign as its value the result of adding six floating-point numbers. In the
+second line, we create a new variable called <tt>mean</tt>, to which we assign
+as its value the value of <tt>sum</tt> divided by <tt>6</tt>. In the third line,
+we enter the variable <tt>mean</tt>, and Python displays its value to the
+console.</p>
+<h4 class="docSection2Title" id="ch01lev2sec5">Text</h4>
+<p class="docText">Python, like all programming languages, works with text as
+strings of characters; individual strings are delimited by quotes. Take a look
+at the following code example:</p>
+<pre>&gt;&gt;&gt; Name = &quot;James Agular&quot;
+&gt;&gt;&gt; HelloGreeting = &quot;Hello &quot; + Name + &quot;, how are you?&quot;
+&gt;&gt;&gt; print HelloGreeting
+Hello James Agular, how are you?
+&gt;&gt;&gt;</pre>
+<p class="docText">In the first line, we create a variable called <tt>Name</tt>
+and assign as its value the string <tt>&quot;James Agular&quot;</tt>. In the second line,
+we create a variable called <tt>HelloGreeting</tt> and assign as its value the
+string <tt>&quot;Hello&quot;</tt> plus the value of <tt>Name</tt> plus <tt>&quot;how are you?&quot;</tt>.
+Note that this value is made up of three strings joined by two plus (<tt>+</tt>)
+signs. This is known as concatenation, which is a fancy term for the simple act
+of &quot;stringing&quot; strings together. In the third line, we ask Python to print <tt>
+HelloGreeting</tt>, which it does in the fourth line.</p>
+<h5 class="docSection3Title" id="ch01lev3sec1">Indexing</h5>
+<p class="docText">As in Java and C, we can work with individual characters in a
+string. To access them we use indexing, in which the string characters, starting
+with the first one, are assigned consecutive numbers, or indexes<span class="docEmphasis">.</span>
+Thus, the first character is assigned the index 0; the second character, the
+index 1; and so forth. We can refer to these as &quot;0 index&quot; and &quot;1 index.&quot; The
+numbers assigned to characters in a string are referred to as the string's
+indexes<span class="docEmphasis">.</span></p>
+<p class="docText">The following example should give you a clear picture of
+indexing.</p>
+<pre>&gt;&gt;&gt; sample = &quot;abcdefghijklmnopqrstuvwxyz&quot;
+&gt;&gt;&gt; sample
+'abcdefghijklmnopqrstuvwxyz'
+&gt;&gt;&gt; sample[1]
+'b'
+&gt;&gt;&gt; sample[0]
+'a'</pre>
+<p class="docText">Here we first want the letter <tt>b</tt>, so we enter <tt>
+sample[1]</tt>. Next we want the letter <tt>a</tt>, so we enter <tt>sample[0]</tt>.
+Notice that the indexes are indicated by square brackets.</p>
+<p class="docText">Just remember, novices, the index of the first character in a
+string is <tt>0</tt>, not <tt>1</tt>, which is why the index of <tt>z</tt> in
+the example above is <tt>25</tt>, not <tt>26</tt>.</p>
+<h5 class="docSection3Title" id="ch01lev3sec2">Slice Notation</h5>
+<p class="docText">Another way to access parts of a string is with slice
+notation, which, simply put, allows you to enter a string (or a list or a tuple,
+which we'll get to shortly) and extract the &quot;slice&quot; you want to work with.</p>
+<p class="docText">Let's look at an example:</p>
+<pre>&gt;&gt;&gt; alphabet = &quot;abcdefghijklmnopqrstuvwxyz&quot;
+&gt;&gt;&gt; AthruD = alphabet[0:4]
+&gt;&gt;&gt; AthruD
+'abcd'</pre>
+<p class="docText">The first line assigns the letters of the alphabet to the
+variable <tt>alphabet</tt>; the second line assigns the value of indexes 0
+through 3 to the variable <tt>AthruD</tt>; the third line instructs Python to
+output <tt>AthruD</tt>; the fourth line is the result: <tt>'abcd'</tt>.</p>
+<p class="docText">Another way to write the slice <tt>[0:4]</tt> is as <tt>[:4]</tt>.
+An omitted first index tells Python to start at zero. In the same way, <tt>[1:]</tt>
+tells Python to start at index 1 and make the rest of the string the slice. The
+following example uses the slice notation in all three ways: without a first
+index in the first line; with both indexes in the fourth line; and without the
+second index in seventh line. <a class="docLink" href="#ch01table01">Table 1-1</a>
+describes each of these slices in English.</p>
+<pre>&gt;&gt;&gt; AthruD= alphabet[:4]
+&gt;&gt;&gt; AthruD
+'abcd'</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch01table01" class="docTableTitle">Table 1-1. Slice Notation</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Slice</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Meaning</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>AthruD=alphabet[:4]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Assign the variable <tt>
+    AthruD</tt> from the first character up to but not including the 4 index,
+    i.e., index 0 through index 3. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>EthruM=alphabet[4:13]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Assign the variable <tt>
+    EthruM</tt> from the 4 index up to but not including the 13 index. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>NthruZ=alphabet[13:]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Assign the variable <tt>
+    NthruZ</tt> from the 13 index up to and including the last character in this
+    string. </td>
+  </tr>
+</table>
+<pre>&gt;&gt;&gt; EthruM = alphabet[4:13]
+&gt;&gt;&gt; EthruM
+'efghijklm'
+&gt;&gt;&gt; NthruZ = alphabet[13:]
+&gt;&gt;&gt; NthruZ
+'nopqrstuvwxyz'
+&gt;&gt;&gt; alphabet2 = AthruD + EthruM + NthruZ
+&gt;&gt;&gt; alphabet2
+'abcdefghijklmnopqrstuvwxyz'
+&gt;&gt;&gt; alphabet
+'abcdefghijklmnopqrstuvwxyz'
+</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The Slice</h2>
+      <p class="docText">In a slice notation, the range of the slice is up to
+      <span class="docEmphasis">but not including</span> the second index. Thus,
+      a slice of <tt>[2:5]</tt> actually means the second through the fourth
+      characters in a string.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 class="docSection3Title" id="ch01lev3sec3">Lists</h5>
+<p class="docText">A list is a built-in Python type (remember, we'll get to
+types in <a class="docLink" href="_chapter%202.htm">Chapter 2</a>).
+It's in the same type family as a string and can contain either strings or
+numbers. Lists are somewhat like arrays in Java or C, except that they can
+contain values of different types.</p>
+<p class="docText">The following example shows how a list uses slice notation:</p>
+<pre>&gt;&gt;&gt; letters = &quot;abcdefghijklmnop&quot;
+&gt;&gt;&gt; numbers = &quot;123456789&quot;
+&gt;&gt;&gt; list = [letters, numbers, 1, 2, 3, 4, 5, 1.0, 2.0, 3.0, 4.0]
+&gt;&gt;&gt; list[0]
+'abcdefghijklmnop'
+&gt;&gt;&gt; list[1]
+'123456789'
+&gt;&gt;&gt; list[2]
+1
+&gt;&gt;&gt; list[7]
+1.0
+&gt;&gt;&gt; list[:]
+['abcdefghijklmnop', '123456789', 1, 2, 3, 4, 5, 1.0, 2.0, 3.0, 4.0]
+&gt;&gt;&gt; len(list)
+11
+&gt;&gt;&gt; list = [&quot;hello&quot;, &quot;goodbye&quot;]
+&gt;&gt;&gt; list[0:2]
+['hello', 'goodbye']
+&gt;&gt;&gt;len (list)
+2</pre>
+<h3 class="docSection1Title" id="ch01lev1sec6">Python as a Main Program</h3>
+<p class="docText">In interactive mode, you work with Python one instruction at
+a time. When it's set up as a standalone program (i.e., not needing user
+interaction), Python performs any number of consecutive tasks. Just turn it on,
+and it does all the rest. To use Python this way, you first have to write a
+program and then save it as a text file.</p>
+<p class="docText">Enter the following at your console and save it as
+<span class="docEmphasis">campPython.py.</span></p>
+<pre>print &quot;hello mother&quot;
+print &quot;hello father&quot;
+print &quot;greetings from camp Python&quot;</pre>
+<p class="docText">Go to the command prompt and enter <tt>Jython campPython.py</tt>.</p>
+<pre>C:\book\chap1&gt;jython campPython.py</pre>
+<p class="docText">The output is</p>
+<pre>hello mother
+hello father
+greetings from camp Python</pre>
+<p class="docText">Essentially, you've created a module called
+<span class="docEmphasis">campPython.py,</span> and the text you typed in is the
+module's main method—the code that's executed first.</p>
+<p class="docText">Now take a look at the next code example. It represents a
+module containing a class called <tt>Camp</tt>, a method called <tt>SayHello()</tt>,
+and a function called <tt>sayCampHello()</tt>.</p>
+<pre>class Camp:
+      def sayHello(self):
+            return &quot;\n Hello Mom \n Hello Dad&quot;
+
+def sayCampHello():
+      camp = Camp()
+      print (&quot;Hello: &quot; + camp.sayHello())
+
+if __name__ == &quot;__main__&quot;:
+      sayCampHello()</pre>
+<p class="docText">If you're feeling adventurous, enter this module and run it,
+making sure to indent each line exactly as shown. Don't waste too much time
+trying to figure out what's going on, however. For that you have to know about
+functions, which are covered in
+<a class="docLink" href="_chapter%203.htm">Chapter 3</a>, and
+classes, which are covered in
+<a class="docLink" href="_chapter%205.htm">Chapter 5</a> (along
+with methods). By the way, the line <tt>if __name__==&quot;__main__&quot;:</tt> indicates
+that this part of the module should be executed if this script is run as the
+main program (from the command prompt example).</p>
+<h4 class="docSection2Title" id="ch01lev2sec6">For Programmers Only</h4>
+<p class="docText">Novices, go ahead and read the following two subsections if
+you like, but they're way over your head right now.</p>
+<h5 class="docSection3Title" id="ch01lev3sec4">Code Blocks</h5>
+<p class="docText">In the <tt>Camp</tt> example, notice that the class and
+function definitions don't have block delimiters but are delimited by whitespace
+only. In Python, indentation defines code blocks, so all Python programs look
+pretty much the same. This is in real contrast with other languages, such as C++
+or Visual Basic, in which three different programmers can come up with three
+different styles for the same program. You should understand the issue if you've
+ever written a language style guide. In a Python style guide, defining the best
+style for delimiting code blocks is something you won't have to worry about.</p>
+<h5 class="docSection3Title" id="ch01lev3sec5">Passing Arguments to a Program</h5>
+<p class="docText">If you're writing a utility application, you might want to be
+able to pass command-line arguments to the program. In Python, we do this by
+putting the arguments on the command line after the script.</p>
+<pre>C:\book\chap1&gt;jython args.py hello how are you</pre>
+<p class="docText">Here we enter four command-line arguments in the
+<span class="docEmphasis">args</span> module. These arguments are stored in a
+list called <tt>argv</tt> in the <span class="docEmphasis">sys</span> module (<span class="docEmphasis">sys</span>
+must be imported before it can be used by <span class="docEmphasis">args</span>).
+The <span class="docEmphasis">args.py</span> module is an example of using the
+<tt>sys.argv</tt> variable.</p>
+<pre>import sys
+print(sys.argv[0])
+print(sys.argv[1])
+print(sys.argv[2])
+print(sys.argv[3])
+print(sys.argv[4])</pre>
+<p class="docText">The first line of <span class="docEmphasis">args</span>
+imports the <span class="docEmphasis">sys</span> module. The second through
+sixth lines place each command-line argument in the <tt>sys.argv</tt> list. This
+produces the following output:</p>
+<pre>args.py
+hello
+how
+are
+you</pre>
+<p class="docText">As you can see,
+<a class="docLink" href="_chapter%205.htm#ch05sb04">sys</a><tt>.argv[0]</tt>
+equals <tt>args.py</tt>, which is the name of the script. <tt>argv[1:]</tt>
+equals the remaining command-line arguments—<tt>hello</tt>, <tt>how</tt>, <tt>
+are</tt>, <tt>you</tt>. Remember, the slice notation <tt>argv[1:]</tt> indicates
+the 1 index through the end of the <tt>argv</tt> list.</p>
+<h4 class="docSection2Title" id="ch01lev2sec7">Back to Basics</h4>
+<p class="docText">If you're working in a Python program, you can switch to
+interactive mode with the <tt>-i</tt> command-line argument, which allows the
+script to be interpreted and then inspected by the interactive interpreter.
+You'll be glad to have this feature if there's a bug in your code that you need
+to find and fix.</p>
+<p class="docText">The following code is our <span class="docEmphasis">
+campPython.py</span> module, this time with the <tt>-i</tt> inserted before the
+module name in the first line.</p>
+<pre>C:\book\chap1&gt;jython -i campHello2.py
+Hello:
+ Hello Mom
+ Hello Dad
+&gt;&gt;&gt; camp = Camp()
+&gt;&gt;&gt; print camp.sayHello()
+
+ Hello Mom
+ Hello Dad
+&gt;&gt;&gt;</pre>
+<h3 class="docSection1Title" id="ch01lev1sec7">The Fast Track</h3>
+<p class="docText">Python supports control flow, functions, exception handling,
+object-oriented programming, and more, much like Java, Visual Basic, Perl,
+Delphi, and C++, among others. In syntax, Python is a lot like C, whose syntax
+is the basis of that used in Java, JavaScript, and C++.</p>
+<h4 class="docSection2Title" id="ch01lev2sec8">Types</h4>
+<p class="docText">Python is a dynamically typed language, similar to Smalltalk.
+When you assign a variable a value, that value specifies the type. There are
+many built-in types in Python, but, unlike in Java, no primitive types.
+Functions, methods, classes, code blocks, namespaces, numbers, strings, and so
+forth, are all treated as objects that can be manipulated.</p>
+<p class="docText">If you're a Smalltalk fan, you'll like Python. Of all of the
+mainstream programming languages, Python has the closest thing to Smalltalk's
+object model (it even has multiple inheritance).</p>
+<h5 class="docSection3Title" id="ch01lev3sec6">Numeric Types</h5>
+<p class="docText">Numeric types are objects in Python. The built-in function
+<tt>type()</tt> indicates the type, as the following code snippet illustrates:</p>
+<pre>&gt;&gt;&gt; myInt = 1
+&gt;&gt;&gt; type(myInt)
+&lt;jclass org.python.core.PyInteger&gt;
+
+&gt;&gt;&gt; myFloat = 1.1
+&gt;&gt;&gt; type(myFloat)
+&lt;jclass org.python.core.PyFloat&gt;
+
+&gt;&gt;&gt; myLong = 1l
+&gt;&gt;&gt; type(myLong)
+&lt;jclass org.python.core.PyLong&gt;</pre>
+<p class="docText">You can add, subtract, divide, and multiply numeric types.</p>
+<pre>&gt;&gt;&gt; num = 1 + 1
+&gt;&gt;&gt; print num
+2
+&gt;&gt;&gt; average = (1+2+3)/3
+&gt;&gt;&gt; print average
+2</pre>
+<p class="docText"><a class="docLink" href="_chapter%202.htm">
+Chapter 2</a> will tell you more about Python built-in types.
+<a class="docLink" href="_chapter%203.htm">Chapter 3</a> will tell
+you about Python-supported operators.</p>
+<h5 class="docSection3Title" id="ch01lev3sec7">Collection Types</h5>
+<p class="docText">Python supports four main built-in collection types: strings,
+dictionaries, lists, and tuples. Strings, lists, and tuples are called
+sequences, for which Python provides many built-in operations. If you know Java,
+think of a list as a vector and a dictionary as a hashtable. If you know Visual
+Basic, think of a dictionary as a collection object or, if you know Perl, as an
+associative array. Like Perl and Visual Basic, Python has a built-in syntax for
+dealing with collections, which makes the code that works with them easier to
+write and understand. Java has no such syntax.</p>
+<p class="docText">The example that follows shows how to declare an instance of
+each collection type.</p>
+<pre>&gt;&gt;&gt; list = [1,2,3,4,5,6]
+&gt;&gt;&gt; tuple = (1,2,3,4,5,6)
+&gt;&gt;&gt; string = &quot;123456&quot;
+&gt;&gt;&gt; dict = {&quot;one&quot;:1, &quot;two&quot;:2, &quot;three&quot;:3, &quot;four&quot;:4, &quot;five&quot;:5, &quot;six&quot;:6}</pre>
+<p class="docText">Here are the corresponding type names for each collection
+variable:</p>
+<pre>&gt;&gt;&gt; type(list)
+&lt;jclass org.python.core.PyList&gt;
+
+&gt;&gt;&gt; type (tuple)
+&lt;jclass org.python.core.PyTuple&gt;
+
+&gt;&gt;&gt; type(string)
+&lt;jclass org.python.core.PyString&gt;
+
+&gt;&gt;&gt; type(dict)
+&lt;jclass org.python.core.PyDictionary&gt;</pre>
+<p class="docText">Also like Perl and Visual Basic, Python allows effortless
+iteration through collections. Here's an example of iterating through each item
+in a list, and printing it to the console, using a <tt>for</tt> loop:</p>
+<pre>&gt;&gt;&gt; for item in list:
+...    print item
+...
+1
+2
+3
+4
+5
+6</pre>
+<p class="docText">Here's the same <tt>for</tt> loop for a string and a tuple,
+respectively:</p>
+<pre>&gt;&gt;&gt; for item in string:
+...     print item
+...
+1
+2
+3
+4
+5
+6
+
+&gt;&gt;&gt; for item in tuple:
+...     print item
+...
+1
+2
+3
+4
+5
+6</pre>
+<p class="docText">Note the indentation that marks the body of the <tt>for</tt>
+statement in all three examples. (<a class="docLink" href="_chapter%204.htm">Chapter
+4</a> deals with <tt>for</tt> loops and <tt>for</tt> statements.)</p>
+<p class="docText">All of the Python collection types can be indexed using the
+<tt>[ ]</tt> notation—just like an array in Java or C. The following example
+shows how for lists, tuples, and strings:</p>
+<pre>&gt;&gt;&gt; list[1]
+2
+&gt;&gt;&gt; tuple[1]
+2
+&gt;&gt;&gt; string[1]
+'2'</pre>
+<p class="docText">With dictionaries you use a key to index a value.</p>
+<pre>&gt;&gt;&gt; dict[&quot;one&quot;]
+1</pre>
+<p class="docText">For any collection type, if you try to index a value that's
+not available (out of range, a nonexistent key, etc.), the collection object
+will throw an exception.</p>
+<p class="docText">You can use the index to change the value held by a list or a
+dictionary at that index.</p>
+<pre>&gt;&gt;&gt; list [0]=0
+&gt;&gt;&gt; print list
+[0, 2, 3, 4, 5, 6]
+
+&gt;&gt;&gt; dict[&quot;one&quot;]=0
+&gt;&gt;&gt; print dict
+{'one': 0, 'six': 6, 'two': 2, 'five': 5, 'three': 3, 'four': 4}</pre>
+<p class="docText">You can't do this with a string or tuple because these
+collection types are immutable.</p>
+<p class="docText">Strings can be added and multiplied. Here's an example of
+addition:</p>
+<pre>&gt;&gt;&gt; string2 = string + &quot;789&quot;
+&gt;&gt;&gt; print string2
+123456789</pre>
+<p class="docText">Here's an example of multiplication:</p>
+<pre>&gt;&gt;&gt; string2 = string * 2
+&gt;&gt;&gt; print string2
+123456123456
+
+&gt;&gt;&gt; print string
+123456</pre>
+<p class="docText">Addition and multiplication also work for lists and tuples.</p>
+<pre>&gt;&gt;&gt; list = list + [7, 8, 9]
+&gt;&gt;&gt; list
+[0, 2, 3, 4, 5, 6, 7, 8, 9]
+
+&gt;&gt;&gt; tuple = tuple + (7,8,9)
+&gt;&gt;&gt; tuple
+(1, 2, 3, 4, 5, 6, 7, 8, 9)</pre>
+<p class="docText">There are many built-in operations for dealing with
+collections. One example finds the minimum and maximum item; another determines
+the collection length. See
+<a class="docLink" href="_chapter%202.htm">Chapter 2</a> for more
+on built-in types and <a class="docLink" href="_chapter%209.htm">
+Chapter 9</a> for more on built-in functions and operations.</p>
+<h4 class="docSection2Title" id="ch01lev2sec9">Control Flow</h4>
+<p class="docText">Python provides all of the <span class="docEmphStrong">
+control flow</span> constructs (discussed in
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a>) that an
+experienced programmer is used to: <tt>if</tt>, <tt>while</tt>, and <tt>for</tt><span class="docEmphasis">.</span>
+The only difference between these constructs in Python and their counterparts in
+other languages is their use of indentation to define code blocks.</p>
+<p class="docText">Here's a simple <tt>if</tt> statement. Note that, unlike
+Java, Python uses numerics as Boolean values; thus, any nonzero value is
+considered true.</p>
+<pre>&gt;&gt;&gt; var1=1
+&gt;&gt;&gt; if var1:
+...     print &quot;hello&quot;
+...
+hello</pre>
+<p class="docText">Here's a more complex <tt>if</tt> statement that uses <tt>
+elif</tt> (&quot;else if&quot;) and <tt>else</tt> blocks:</p>
+<pre>&gt;&gt;&gt; var1 = 1
+&gt;&gt;&gt; if var1==1:
+...     print &quot;Hello&quot;
+... elif var1==2:
+...     print &quot;Goodbye&quot;
+... else:
+...     print &quot;Later on&quot;
+...
+Hello</pre>
+<p class="docText">You see that, if the first test passes (<tt>var1 == 1:</tt>),
+the second (<tt>var1 == 2:</tt>) doesn't execute, even though both may be true.</p>
+<p class="docText"><tt>while</tt> statements work as expected. The back quotes
+get a string representation of <tt>var1</tt>.</p>
+<pre>&gt;&gt;&gt; while var1 &gt; 10:
+...     print &quot;var1 = &quot; + 'var1'
+...     var1 = var1 - 10
+...
+var1 = 100
+var1 = 90
+var1 = 80
+var1 = 70
+var1 = 60
+var1 = 50
+var1 = 40
+var1 = 30
+var1 = 20</pre>
+<p class="docText">Earlier we used a <tt>for</tt> loop to iterate through a
+collection. The use of <tt>for</tt> in a more traditional fashion requires the
+<tt>xrange()</tt> built-in function. The following Python example is equivalent
+to the one that follows it, which uses a basic C-like syntax.</p>
+<pre>&gt;&gt;&gt; for index in xrange(0, 100, 10):
+...     print `index`
+...
+
+      for(int index = 0; index &lt; 100; index += 10){
+
+            System.out.println(index)
+      }</pre>
+<p class="docText">If you leave out the <tt>10</tt> in the call to <tt>xrange()</tt>,
+it defaults to incrementing by 1. Thus, the following example iterates 100 times
+(0–100).</p>
+<pre>&gt;&gt;&gt; for index in xrange(0, 100):</pre>
+<p class="docText"><a class="docLink" href="_chapter%203.htm">
+Chapter 3</a> deals with comparison operators;
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a>, with
+control flow.</p>
+<h4 class="docSection2Title" id="ch01lev2sec10">Exception Handling</h4>
+<p class="docText">Like so much of Python, exception handling is a lot like its
+counterparts in other languages. For example, Python's <tt>try</tt> clause is
+like Java's <tt>try</tt>, and its <tt>except</tt> clause is like Java's <tt>
+catch</tt>. Consider an exception thrown by a dictionary object if we try a
+nonexistent key. In this case, the interpreter simply prints the exception out
+to the screen.</p>
+<pre>&gt;&gt;&gt; dict = {&quot;Green Eggs&quot;:&quot;Ham&quot;}
+&gt;&gt;&gt; dict[&quot;Blue Eggs&quot;]
+Traceback (innermost last):
+  File &quot;&lt;console&gt;&quot;, line 1, in ?
+KeyError: Blue Eggs</pre>
+<p class="docText">To handle this exception we can do this:</p>
+<pre>&gt;&gt;&gt; try:
+...     dict[&quot;Blue Eggs&quot;]
+... except KeyError, error:
+...     print &quot;Sam, Blue Eggs do not go with Ham &quot; + 'error'
+...
+
+Sam, Blue Eggs do not go with Ham &lt;exceptions.KeyError instance at
+-864407725&gt;</pre>
+<p class="docText"><tt>KeyError</tt> refers to the class of the exception that
+we want to catch, and <tt>error</tt> refers to the instance of <tt>KeyError</tt>.
+Here's the equivalent Java pseudocode:</p>
+<pre>try{
+            dict.index(&quot;Blue Eggs&quot;);
+}
+catch(KeyError error){
+
+      System.out.println(&quot;Sam, Blue Eggs do not go with Ham&quot;
+                        + error);
+}</pre>
+<p class="docText">C++'s pseudocode is similar.</p>
+<p class="docText">In addition to <tt>try...except</tt>, Python has a <tt>
+try...finally</tt> block. Its <tt>finally</tt> clause works much like Java's <tt>
+finally</tt> block, but it can't be mixed with <tt>except</tt>, as Java's can be
+mixed with its <tt>catch</tt>. Instead, you have to nest Python's <tt>
+try...catch</tt> blocks inside its <tt>try...finally</tt> blocks.</p>
+<p class="docText"><a class="docLink" href="_chapter%207.htm">
+Chapter 7</a> deals with Python exception handling.</p>
+<h4 class="docSection2Title" id="ch01lev2sec11">Functions</h4>
+<p class="docText">As usual, Python's functions are similar to other languages'
+functions. That is, they perform one action and return a value. However, unlike
+Visual Basic and Pascal, Python uses the same syntax to define both functions
+and procedures, which perform multiple actions.</p>
+<p class="docText">Here's a function that sums two numbers and returns their
+value:</p>
+<pre>&gt;&gt;&gt; def sum(num1, num2):
+...     return num1 + num2
+...
+&gt;&gt;&gt; sum(5,5)
+10</pre>
+<p class="docText">It shows how Python, like Visual Basic, uses named arguments
+and default values, which allow customization of function calls.</p>
+<pre>&gt;&gt;&gt; def sum(var1=0, var2=0, var3=0):
+...     return var1 + var2 + var3
+...
+&gt;&gt;&gt; sum()
+0
+&gt;&gt;&gt; sum(1,1)
+2
+&gt;&gt;&gt; sum(var1=5, var3=5)
+10</pre>
+<p class="docText">Because Python is dynamically typed, the <tt>sum</tt>
+function works with numeric types as well as strings.</p>
+<pre>&gt;&gt;&gt; sum(&quot;Hello, &quot;, &quot;Mom, &quot;, &quot;how are you?&quot;)
+'Hello, Mom, how are you?'</pre>
+<p class="docText">A function that doesn't return a type automatically returns
+the value <tt>None</tt>. Python's <tt>None</tt> is like Java's <tt>null</tt>,
+Visual Basic's <tt>Nothing</tt>, and Delphi's <tt>Nil</tt>. It means nothing or
+no value, not the integer value <tt>zero</tt>.</p>
+<p class="docText"><a class="docLink" href="_chapter%205.htm">
+Chapter 5</a> covers functions in detail.</p>
+<h4 class="docSection2Title" id="ch01lev2sec12">Modules and Packages</h4>
+<p class="docText">If you're from a Java or C++ background, a Python module will
+seem like a cross between a package and a class with static methods. Modules can
+contain classes, functions, and data objects. Essentially they're files that
+contain Python definitions—classes and functions—and Python statements; they can
+be imported into other modules or into the main module. Module file names are
+appended with the suffix <span class="docEmphasis">.py.</span></p>
+<p class="docText">Python modules are similar to <span class="docEmphasis">
+*.java</span> files and look and act very much like Visual Basic modules. See
+<a class="docLink" href="_chapter%205.htm">Chapter 5</a> to learn
+more about them. This chapter also discusses Python packages, which help group
+and organize a set of related modules.</p>
+<h4 class="docSection2Title" id="ch01lev2sec13">Classes and OOP</h4>
+<p class="docText">Like their counterparts in other languages, classes in Python
+are collections of variables and the methods that operate on them. To
+illustrate, here's an example class, <tt>Car</tt>, that inherits from the two
+other classes, <tt>Automobile</tt> and <tt>Transportation</tt>:</p>
+<pre>&gt;&gt;&gt; class Automobile:
+...     pass
+...
+&gt;&gt;&gt; class Transportation:
+...     pass
+...
+&gt;&gt;&gt; class Car(Automobile, Transportation):
+...     make=&quot;Ford&quot;
+...     model=&quot;Taurus&quot;
+...     def __init__(self, make, model):
+...             self.make=make
+...             self.model=model
+...     def __del__(self):
+...             print &quot;similar to a destructor&quot;
+...     def __str__(self):
+...             str = &quot;Make &quot; + self.make
+...             str = str + &quot;, Model &quot; + self.model
+...             return str
+...</pre>
+<p class="docText">We can create an instance of <tt>Car</tt> and call it <tt>car</tt>.</p>
+<pre>&gt;&gt;&gt; car = Car(&quot;Chevy&quot;, &quot;Nova&quot;) #Create an instance of car
+&gt;&gt;&gt; print car
+Make Chevy, Model Nova</pre>
+<p class="docText">And we can show that <tt>car</tt> is also an instance of
+classes <tt>Car</tt> and <tt>Automobile</tt>.</p>
+<pre>&gt;&gt;&gt; print isinstance(car, Car)
+1
+&gt;&gt;&gt; print isinstance(car, Automobile)
+1</pre>
+<p class="docText">Note that <tt>Car</tt> defines two methods: <tt>__init__</tt>,
+which acts as a constructor; and <tt>__del__</tt>, which acts as a destructor.
+<tt>__str__</tt> returns a string representation of the class.</p>
+<p class="docText">Unlike Java classes, Python classes can have multiple
+inheritance, which we saw above with <tt>Car</tt> inheriting functionality from
+both <tt>Automobile</tt> and <tt>Transportation</tt>. In this regard, Python is
+more like C++ and Smalltalk.</p>
+<p class="docText"><a class="docLink" href="_chapter%205.htm">
+Chapters 5</a> and <a class="docLink" href="_chapter%206.htm">6</a>
+cover Python classes. <a class="docLink" href="_chapter%209.htm">
+Chapter 9</a> covers built-in operations and functions that pertain to classes.</p>
+<h4 class="docSection2Title" id="ch01lev2sec14">Working with Java from Python</h4>
+<p class="docText">The following interactive session shows how to import and use
+Java classes from Python:</p>
+<p class="docText">Import the <tt>Frame</tt> class from the
+<span class="docEmphasis">java.awt</span> package.</p>
+<pre>&gt;&gt;&gt; from java.awt import Frame</pre>
+<p class="docText">Create an instance of <tt>Frame</tt>, named <tt>frame</tt>.</p>
+<pre>&gt;&gt;&gt; frame = Frame(&quot;My first frame created in Jython&quot;)</pre>
+<p class="docText">Call <tt>frame</tt>'s <tt>setVisible()</tt> method</p>
+<pre>&gt;&gt;&gt; frame.setVisible(1)</pre>
+<p class="docText">Import the <tt>Button</tt> class from
+<span class="docEmphasis">java.awt.</span></p>
+<pre>&gt;&gt;&gt;from java.awt import Button</pre>
+<p class="docText">Create an instance of <tt>Button</tt>, called <tt>hit_me</tt>.</p>
+<pre>&gt;&gt;&gt;hit_me = Button (&quot;Hit me!&quot;)</pre>
+<p class="docText">Create a handler for <tt>Button</tt> (the event handler is
+just a function).</p>
+<pre>&gt;&gt;&gt;def hit_me_event_handler(event):
+...     print &quot;Ouch!&quot;
+...</pre>
+<p class="docText">Register the handler with the function.</p>
+<pre>&gt;&gt;&gt;hit_me.actionPerformed = hit_me_event_handler</pre>
+<p class="docText">Add <tt>button</tt> to <tt>frame</tt> by calling <tt>frame</tt>'s
+<tt>add()</tt> method.</p>
+<pre>&gt;&gt;&gt; frame.add(hit_me)
+java.awt.Button[button0,0,0,0x0,invalid,label=Hit me!]</pre>
+<p class="docText">Call <tt>frame</tt>'s <tt>pack()</tt> method so that the
+button will be visible.</p>
+<pre>&gt;&gt;&gt;frame.pack()</pre>
+<p class="docText">Click the button with the mouse and watch the output in the
+interactive interpreter.</p>
+<p class="docText"><a class="docLink" href="_chapter%2011.htm">
+Chapter 11</a> covers working with Java APIs from Python.</p>
+<h3 class="docSection1Title" id="ch01lev1sec8">The Power of Python</h3>
+<p class="docText">Python can make tough tasks trivial. Let's prove this by an
+example. How many lines of code will it take you in your favorite language to
+parse the following string and put each value in a variable?</p>
+<pre>&gt;&gt;&gt; str = &quot;Rick Hightower, 555-1212,rick_m_hightower@emailcompany.com
+</pre>
+<p class="docText">Can you parse it in ten lines? Maybe five? Python can do it
+in one (not including the <tt>import</tt> statement).</p>
+<pre>&gt;&gt;&gt;from string import split
+&gt;&gt;&gt;name, phone, email = split(str, &quot;,&quot;)
+</pre>
+<p class="docText">This is what we get:</p>
+<pre>&gt;&gt;&gt; print name
+Rick Hightower
+&gt;&gt;&gt; print phone
+ 555-1212
+&gt;&gt;&gt; print email
+ rick_m_hightower@emailcompany.com
+&gt;&gt;&gt;
+</pre>
+<p class="docText">Simple parsing using the <tt>split()</tt> function is covered
+in <a class="docLink" href="_chapter%2010.htm">Chapter 10</a>; more
+advanced parsing using regular expressions is covered in
+<a class="docLink" href="appendix%20e.htm">Appendix E</a>.</p>
+<p class="docText">Here's an easy way to print the variables <tt>name</tt>, <tt>
+phone number</tt>, and <tt>email</tt> from the above session. It shows how, in
+Python, every namespace equates to a dictionary.</p>
+<pre>&gt;&gt;&gt; v = &quot;%(name)s's phone number and email is %(phone)s and %(email)s&quot; %
+locals() #one line
+&gt;&gt;&gt; print v
+Rick Hightower's phone number and email is 555-1212 and
+rick_m_hightower@emailcompany.com
+</pre>
+<p class="docText"><a class="docLink" href="_chapter%203.htm">
+Chapter 3</a> covers Python string formatting. It's a lot like string formatting
+in C, with its <tt>sprintf()</tt> and <tt>printf()</tt> functions, so you should
+pick it up quickly if you have any C background.</p>
+<h3 class="docSection1Title" id="ch01lev1sec9">Where Do You Go from Here?</h3>
+<p class="docText">If you're an experienced C++ programmer you can skip to
+<a class="docLink" href="_chapter%208.htm">Chapter 8</a>, although
+you might want to skim <a class="docLink" href="_chapter%202.htm">
+Chapters 2</a> through <a class="docLink" href="_chapter%207.htm">
+7</a> and use them as a reference. Visual Basic programmers can skip to
+<a class="docLink" href="_chapter%208.htm">Chapter 8</a> as well,
+with detours to <a class="docLink" href="_chapter%206.htm">Chapter
+6</a> (on object-oriented programming) and
+<a class="docLink" href="_chapter%207.htm">7</a> (on exception
+handling) and a skim of <a class="docLink" href="_chapter%202.htm">
+Chapters 2</a> though <a class="docLink" href="_chapter%205.htm">5</a>.</p>
+<p class="docText">Novice Java programmers with no C experience should
+concentrate on the last half of
+<a class="docLink" href="_chapter%203.htm">Chapter 3</a> (on
+string formatting) and the last half of
+<a class="docLink" href="_chapter%206.htm">Chapter 6</a> (on
+dynamic polymorphism and operator overloading) and skim
+<a class="docLink" href="_chapter%202.htm">Chapters 2</a> through
+<a class="docLink" href="_chapter%205.htm">5</a>. If you're
+comfortable with Java, see
+<a class="docLink" href="appendix%20c.htm">Appendix C</a>,which
+creates equivalent Java and Python programs for comparison.</p>
+<h3 class="docSection1Title" id="ch01lev1sec10">Summary</h3>
+<p class="docText">This chapter introduced some basic programming concepts.
+Having downloaded and installed the Java Development Kit (JDK), Jython, and the
+Jython libraries, and having dipped your toe in the Python interactive
+interpreter, you should have a pretty good feel for what programming is. Don't
+worry if you still feel confused. Your confusion will go away after the next few
+chapters. Once you've read up through
+<a class="docLink" href="_chapter%208.htm">Chapter 8</a>, you'll
+feel confident using Python—you'll feel like a programmer. After that, we'll get
+into the really fun stuff: graphical user interfaces and applets.</p>
+<p class="docText">If you want to learn more about Python on your own, go to
+<a class="docLink" href="http://www.python.org" target="_blank">www.python.org</a>,
+<a class="docLink" href="http://www.sourceforge.net" target="_blank">
+www.sourceforge.net</a> and
+<a class="docLink" href="http://www.jython.org" target="_blank">www.jython.org</a>,
+or go to <a class="docLink" href="http://www.sourceforge.net" target="_blank">
+www.sourceforge.net</a> and look for Jython. (That's not a typo. JPython now
+goes by the name Jython.) At any of these sites, you can sign up for the email
+list, view the documentation, visit some of the contributor sites, and join a
+newsgroup.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="front%20matter.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%202.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

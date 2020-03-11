@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>5. 资料结构</title>
+  
+  <meta name="description" content="5. Data Structures ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node8.html">
+ 
+  <link rel="previous" href="node6.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node8.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node6.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node8.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node6.html">4.
+更多流程控制的工具</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node8.html">
+6. 模组(module)</a> <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落 </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html284" href="node7.html#SECTION007100000000000000000">
+5.1 列(Lists)(续)  </a> 
+    <ul>
+ 
+      <li><a name="tex2html285" href="node7.html#SECTION007110000000000000000">
+5.1.1 把列(Lists)当作堆积(Stacks)使用 </a> </li>
+      <li><a name="tex2html286" href="node7.html#SECTION007120000000000000000">
+5.1.2 把列(Lists)当作伫列(Queues)使用 </a> </li>
+      <li><a name="tex2html287" href="node7.html#SECTION007130000000000000000">
+5.1.3 功能式程式设计工具 </a> </li>
+      <li><a name="tex2html288" href="node7.html#SECTION007140000000000000000">
+5.1.4 传回整个列(List Comprehensions)  </a> </li>
+    </ul>
+ </li>
+  <li><a name="tex2html289" href="node7.html#SECTION007200000000000000000">
+5.2 <tt class="keyword">del</tt> 叙述 </a> </li>
+  <li><a name="tex2html290" href="node7.html#SECTION007300000000000000000">
+5.3 Tuples(固定有序列)及Sequences(有序列) </a> </li>
+  <li><a name="tex2html291" href="node7.html#SECTION007400000000000000000">
+5.4 Dictionaries(字典) </a> </li>
+  <li><a name="tex2html292" href="node7.html#SECTION007500000000000000000">
+5.5 条件(续) </a> </li>
+  <li><a name="tex2html293" href="node7.html#SECTION007600000000000000000">
+5.6 Sequences(有序列)及其他资料型态的比较 </a> </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 5. 资料结构  </h1>
+  
+<p> 这一章讨论的内容有些你在之前已经看过，但我们会更深入的讨论。另外，我们也会介绍一些新的东西。   </p>
+<p>  </p>
+<h1> <br>
+ 5.1 列(Lists)(续)  </h1>
+  
+<p> 列(list)这个资料型态有一些方法可以使用，底下我们就列出来一些常用的方法：   </p>
+<p> </p>
+<dl>
+<dt><strong><code>append(x)</code></strong></dt>
+  <dd>在list的尾端加入一个成员，也可以用这个方法来写 <code>a[len(a):] = [x]</code> 。  
+    <p> </p>
+    </dd>
+    <dt><strong><code>extend(L)</code></strong></dt>
+      <dd>接受一个新的list的参数，然后把它加入到目前这个list的尾端，也可以写作 <code>a[len(a):] = L</code>
+ 。  
+        <p> </p>
+        </dd>
+        <dt><strong><code>insert(i, x)</code></strong></dt>
+          <dd>在某个特定的位置加入一个成员。第一个参数是要加入的位置的index，所以 <code>a.insert(0, x)</code>
+ 会加入在list的最前端，而 <code>a.insert(len(a), x)</code> 会在最后端加入，相等于  <code>a.append(x)</code>
+ 。  
+            <p> </p>
+            </dd>
+            <dt><strong><code>remove(x)</code></strong></dt>
+              <dd>拿掉第一个其值相等于 <code>x</code>. 的成员。如果整个list都没有这个成员，那就会得到一个错误(error)。
+  
+                <p> </p>
+                </dd>
+                <dt><strong><code>pop(<big>[</big>i<big>]</big>)</code></strong></dt>
+                  <dd>从一个list中拿掉某个位置的成员，并且传回这个被拿掉的成员。如果没有传入位置的index的话， <code>
+a.pop()</code> 会传回这个list的最一个成员，同样的这个成为会被从这个list之中拿掉。    
+                    <p> </p>
+                    </dd>
+                    <dt><strong><code>index(x)</code></strong></dt>
+                      <dd>传回第一个其值相等于 <code>x</code> 的成员之位置(index)，如果整个list都没有这个成员，那就会得到一个错误(error)。
+   
+                        <p> </p>
+                        </dd>
+                        <dt><strong><code>count(x)</code></strong></dt>
+                          <dd>传回在整个list里面， <code>x</code> 出现了多少次。  
+                            <p> </p>
+                            </dd>
+                            <dt><strong><code>sort()</code></strong></dt>
+                              <dd>针对list里面的成员做排序。   
+                                <p> </p>
+                                </dd>
+                                <dt><strong><code>reverse()</code></strong></dt>
+                                  <dd>反转整个list里面成员的位置。   
+                                    <p> </p>
+                                    </dd>
+                                    </dl>
+  
+                                    <p> 底下的这个例子使用了大部分的lsit的方法(method)：   </p>
+                                    <p> </p>
+                                    <dl>
+                                    <dd><pre class="verbatim">&gt;&gt;&gt; a = [66.6, 333, 333, 1, 1234.5]<br>&gt;&gt;&gt; print a.count(333), a.count(66.6), a.count('x')<br>2 1 0<br>&gt;&gt;&gt; a.insert(2, -1)<br>&gt;&gt;&gt; a.append(333)<br>&gt;&gt;&gt; a<br>[66.6, 333, -1, 333, 1, 1234.5, 333]<br>&gt;&gt;&gt; a.index(333)<br>1<br>&gt;&gt;&gt; a.remove(333)<br>&gt;&gt;&gt; a<br>[66.6, -1, 333, 1, 1234.5, 333]<br>&gt;&gt;&gt; a.reverse()<br>&gt;&gt;&gt; a<br>[333, 1234.5, 1, 333, -1, 66.6]<br>&gt;&gt;&gt; a.sort()<br>&gt;&gt;&gt; a<br>[-1, 1, 66.6, 333, 333, 1234.5]<br></pre>
+                                      </dd>
+                                      </dl>
+  
+                                      <p>  </p>
+                                      <h2> <br>
+ 5.1.1 把列(Lists)当作堆积(Stacks)使用   </h2>
+  
+                                      <p> 由于有这些好用的方法，把列(list)当作堆积(stack)来使用是一件容易的事。Stacks的最后一个加入的成员是第一个被取出来的成员(后进先出``last-in, 
+first-out''法则)。要在stack的最顶端加入一个成员可以使用  <tt class="method">append()</tt> ，要从stack的最顶端取出一个成员可以用
+ <tt class="method">pop()</tt> (不须加入参数)。例子如下：   </p>
+                                      <p> </p>
+                                      <dl>
+                                      <dd><pre class="verbatim">&gt;&gt;&gt; stack = [3, 4, 5]<br>&gt;&gt;&gt; stack.append(6)<br>&gt;&gt;&gt; stack.append(7)<br>&gt;&gt;&gt; stack<br>[3, 4, 5, 6, 7]<br>&gt;&gt;&gt; stack.pop()<br>7<br>&gt;&gt;&gt; stack<br>[3, 4, 5, 6]<br>&gt;&gt;&gt; stack.pop()<br>6<br>&gt;&gt;&gt; stack.pop()<br>5<br>&gt;&gt;&gt; stack<br>[3, 4]<br></pre>
+                                        </dd>
+                                        </dl>
+  
+                                        <p>  </p>
+                                        <h2> <br>
+ 5.1.2 把列(Lists)当作伫列(Queues)使用   </h2>
+  
+                                        <p> 你也可以很方便的拿list来当作伫列(queues)来使用。Queues的特点是第一个加入的成员会是第一个被取出的成员(先进先出``first-in, 
+first-out''法则)。要在queue的后端加入一个成员可以使用 <tt class="method">append()</tt> ，要从queue的最前端取出一个成员可以使用
+ use <tt class="method">pop()</tt> ，记得参数是 <code>0</code> 。例子如下：   </p>
+                                        <p> </p>
+                                        <dl>
+                                        <dd><pre class="verbatim">&gt;&gt;&gt; queue = ["Eric", "John", "Michael"]<br>&gt;&gt;&gt; queue.append("Terry")           # Terry arrives<br>&gt;&gt;&gt; queue.append("Graham")          # Graham arrives<br>&gt;&gt;&gt; queue.pop(0)<br>'Eric'<br>&gt;&gt;&gt; queue.pop(0)<br>'John'<br>&gt;&gt;&gt; queue<br>['Michael', 'Terry', 'Graham']<br></pre>
+                                          </dd>
+                                          </dl>
+  
+                                          <p>  </p>
+                                          <h2> <br>
+ 5.1.3 功能式程式设计工具  </h2>
+  
+                                          <p> 有三个与list合用非常有用的内建工具函式： <tt class="function">
+filter()</tt>, <tt class="function">map()</tt>, 以及 <tt class="function">reduce()</tt>
+ 。  </p>
+                                          <p> "<tt class="samp">filter(<var>
+function</var>, <var>sequence</var>)</tt>" 这个函式会传回 一个sequence (如果可能的话其成员为同一资料型态)，这个sequence里面的成员都是将
+                                          <var>sequence</var> 里面的的成员，一一传入到
+                                          <code><var>function</var>(<var>
+item</var>)</code> 所代表的函式后，传回值为true的成员所组合而成。这个函式对于传入的 <var>sequence</var>
+ 有过滤的效果，如下例所示：   </p>
+                                          <p> </p>
+                                          <dl>
+                                          <dd><pre class="verbatim">&gt;&gt;&gt; def f(x): return x % 2 != 0 and x % 3 != 0<br>...<br>&gt;&gt;&gt; filter(f, range(2, 25))<br>[5, 7, 11, 13, 17, 19, 23]<br></pre>
+                                            </dd>
+                                            </dl>
+  
+                                            <p> "<tt class="samp">map(<var>
+function</var>, <var>sequence</var>)</tt>" 会针对 <var>sequence</var> 里的各个成员呼叫
+ <code><var>function</var>(<var>item</var>)</code> ，然后传回个别成员呼叫之后传回的结果。举例来说，要计算一连串的立方值，我们可以如此做：
+  </p>
+                                            <p> </p>
+                                            <dl>
+                                            <dd><pre class="verbatim">&gt;&gt;&gt; def cube(x): return x*x*x<br>...<br>&gt;&gt;&gt; map(cube, range(1, 11))<br>[1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]<br></pre>
+                                              </dd>
+                                              </dl>
+  
+                                              <p> 我们也可以传入不只一个sequence。如果传入多个sequence的话，第一个函式名称的参数要是能够处理多个参数的函式，然后系统会把各个sequence相对应的成员拿出来放入函式之中(如果两个sequence长度不相等的话，不足的会用
+                                              <code>None</code> 来补足)。如果第一个函式名称参数为
+                                              <code>None</code> 的话，所呼叫的函式就仅仅是传回其所传入的参数。 
+ </p>
+                                              <p> 综合以上的两个特性，我们可以使用 "<tt class="samp">
+map(None, <var>list1</var>, <var>list2</var>)</tt>" 这一个工具函式来方便的转换两个sequence成为一个成对的成员组合的sequence。请看例子： 
+ </p>
+                                              <p> </p>
+                                              <dl>
+                                              <dd><pre class="verbatim">&gt;&gt;&gt; seq = range(8)<br>&gt;&gt;&gt; def square(x): return x*x<br>...<br>&gt;&gt;&gt; map(None, seq, map(square, seq))<br>[(0, 0), (1, 1), (2, 4), (3, 9), (4, 16), (5, 25), (6, 36), (7, 49)]<br></pre>
+                                                </dd>
+                                                </dl>
+  
+                                                <p> "<tt class="samp">reduce(<var>
+func</var>, <var>sequence</var>)</tt>" 会利用 <var>sequence</var> 的前两个成员当参数呼叫 
+ <var>func</var> ，然后所得的传回值再与下一个成员当参数传入 <var>func</var> ，一直到整个 <var>sequence</var>
+ 结束。下面的例子计算1到10的总和：   </p>
+                                                <p> </p>
+                                                <dl>
+                                                <dd><pre class="verbatim">&gt;&gt;&gt; def add(x,y): return x+y<br>...<br>&gt;&gt;&gt; reduce(add, range(1, 11))<br>55<br></pre>
+                                                  </dd>
+                                                  </dl>
+  
+                                                  <p> 如果在 <var>sequence</var>
+ 里面只有一个成员的话，这个成员的值就会直接传回。如果在 <var>sequence</var> 里面没有任何成员的话，会造成一个例外状况(exception)。
+  </p>
+                                                  <p> 我们也可以加入第三个参数来当作开始的值，如此当传入的
+ <var>sequence</var>  是空的话，就可以使用这个开始值。如果是正常的sequencde的话，开始值会先跟第一个成员被传入当作呼叫
+ <var>func</var> 的参数，其传回值再跟第二个成员传入  <var>func</var> ，依此类推。请看下例：   </p>
+                                                  <p> </p>
+                                                  <dl>
+                                                  <dd><pre class="verbatim">&gt;&gt;&gt; def sum(seq):<br>...     def add(x,y): return x+y<br>...     return reduce(add, seq, 0)<br>... <br>&gt;&gt;&gt; sum(range(1, 11))<br>55<br>&gt;&gt;&gt; sum([])<br>0<br></pre>
+                                                    </dd>
+                                                    </dl>
+  
+                                                    <p>  </p>
+                                                    <h2><a name="SECTION007140000000000000000">
+ 5.1.4 传回整个列 (List Comprehensions) </a> </h2>
+  
+                                                    <p> List comprehensions提供了一个制造list简洁的方法，而不用使用
+                                                    <tt class="function">
+map()</tt>, <tt class="function">filter()</tt> 以及/或者 <tt class="keyword">
+lambda</tt> 形式。其结果也比使用以上的方法来做出list要来的清楚易懂。list comprehension通常是一个expression跟着是一个
+                                                    <tt class="keyword">for</tt>
+ 的语句，然后是零个或多个 <tt class="keyword">for</tt> 或是 <tt class="keyword">if</tt>
+ 语句。其传回的list是一个由在 <tt class="keyword">for</tt> 及 <tt class="keyword">if</tt>
+ 语句条件下执行expression的结果。如果expression的结果是一个tuple，就必须用括号"( )"括起来。   </p>
+                                                    <p> </p>
+                                                    <dl>
+                                                    <dd><pre class="verbatim">&gt;&gt;&gt; freshfruit = ['  banana', '  loganberry ', 'passion fruit  ']<br>&gt;&gt;&gt; [weapon.strip() for weapon in freshfruit]<br>['banana', 'loganberry', 'passion fruit']<br>&gt;&gt;&gt; vec = [2, 4, 6]<br>&gt;&gt;&gt; [3*x for x in vec]<br>[6, 12, 18]<br>&gt;&gt;&gt; [3*x for x in vec if x &gt; 3]<br>[12, 18]<br>&gt;&gt;&gt; [3*x for x in vec if x &lt; 2]<br>[]<br>&gt;&gt;&gt; [{x: x**2} for x in vec]<br>[{2: 4}, {4: 16}, {6: 36}]<br>&gt;&gt;&gt; [[x,x**2] for x in vec]<br>[[2, 4], [4, 16], [6, 36]]<br>&gt;&gt;&gt; [x, x**2 for x in vec]	# error - parens required for tuples<br>  File "&lt;stdin&gt;", line 1<br>    [x, x**2 for x in vec]<br>               ^<br>SyntaxError: invalid syntax<br>&gt;&gt;&gt; [(x, x**2) for x in vec]<br>[(2, 4), (4, 16), (6, 36)]<br>&gt;&gt;&gt; vec1 = [2, 4, 6]<br>&gt;&gt;&gt; vec2 = [4, 3, -9]<br>&gt;&gt;&gt; [x*y for x in vec1 for y in vec2]<br>[8, 6, -18, 16, 12, -36, 24, 18, -54]<br>&gt;&gt;&gt; [x+y for x in vec1 for y in vec2]<br>[6, 5, -7, 8, 7, -5, 10, 9, -3]<br></pre>
+                                                      </dd>
+                                                      </dl>
+  
+                                                      <p>  </p>
+                                                      <h1> <br>
+ 5.2 <tt class="keyword">del</tt> 叙述   </h1>
+  
+                                                      <p> <tt class="keyword">
+del</tt> 叙述可以让你轻松的去掉在list当中某一个位置(index)的成员。这个叙述也可以用切割(slice)的方法来去掉某一段的成员(在之前我们必须藉着设定某个slice为空list来达成同样的效果)。请看下例：
+  </p>
+                                                      <p> </p>
+                                                      <dl>
+                                                      <dd><pre class="verbatim">&gt;&gt;&gt; a<br>[-1, 1, 66.6, 333, 333, 1234.5]<br>&gt;&gt;&gt; del a[0]<br>&gt;&gt;&gt; a<br>[1, 66.6, 333, 333, 1234.5]<br>&gt;&gt;&gt; del a[2:4]<br>&gt;&gt;&gt; a<br>[1, 66.6, 1234.5]<br></pre>
+                                                        </dd>
+                                                        </dl>
+  
+                                                        <p> <tt class="keyword">
+del</tt> 也可以用来去掉整个变数：   </p>
+                                                        <p> </p>
+                                                        <dl>
+                                                        <dd><pre class="verbatim">&gt;&gt;&gt; del a<br></pre>
+                                                          </dd>
+                                                          </dl>
+  
+                                                          <p> 如果你在去掉之后还继续使用这个变数名称的话，就会得到一个错误
+(除非你之后再设定另外一个值给它)。我们稍后会继续看到使用  <tt class="keyword">del</tt> 的例子。  </p>
+                                                          <p>  </p>
+                                                          <h1> <br>
+ 5.3 Tuples(固定有序列)及Sequences(有序列)   </h1>
+  
+                                                          <p> 我们之前所讨论的lists以及字串(strings)有很多的共通点，例如可以用index来定位置，可以切出其中的某一段(slicing)等等。事实上，list及字串都是
+ <i>sequence</i> 这个资料型态的特例。由于Python是一个可以不断进步的语言，其他的sequence资料型态有可能会陆续的加入。我们就来看另外一种标准的sequence资料型态：固定有序列(
+                                                          <i>tuple</i> )。 
+ </p>
+                                                          <p> 一个tuple是由特定数目的值所组成，其成员与成员之间以逗号分开。举例如下： 
+ </p>
+                                                          <p> </p>
+                                                          <dl>
+                                                          <dd><pre class="verbatim">&gt;&gt;&gt; t = 12345, 54321, 'hello!'<br>&gt;&gt;&gt; t[0]<br>12345<br>&gt;&gt;&gt; t<br>(12345, 54321, 'hello!')<br>&gt;&gt;&gt; # Tuples may be nested:<br>... u = t, (1, 2, 3, 4, 5)<br>&gt;&gt;&gt; u<br>((12345, 54321, 'hello!'), (1, 2, 3, 4, 5))<br></pre>
+                                                            </dd>
+                                                            </dl>
+  
+                                                            <p> 如同在前面例子所见到的，tuples输出的结果都会包含在括弧之中。所以，巢状tuple(tuple之中有tuple)可以被清楚的区分出来。Tuple在输入的时候可以有括弧也可以没有，通常我们都会加上括弧(特别是用在在复杂的expression之中)。
+  </p>
+                                                            <p> Tuples有很多种用途，例如(x,
+y)座标，从资料库取出的员工的资料库记录等等。Tuples跟字串一样都是不可改变(immutable)的：我们不能单独的设定一个tuple里面的个别成员(虽然我们可以用切割及连结(concaatenation)来达到同样的效果)。我们也可以做出可以改变成员的tuple来，例如list。
+  </p>
+                                                            <p> 有一个特殊的情况就是只包含0个或1个成员的tuple：要创造这样的一个tuple，我们必须在语法上有一些的变化。空的tuple的表示方法是一对空的括弧，只有一个成员的tuple表示方法是在成员后面加上逗点(不能只是用括弧把一个成员括起来)。虽然有点奇怪，但是蛮有用的。请看例子：
+  </p>
+                                                            <p> </p>
+                                                            <dl>
+                                                            <dd><pre class="verbatim">&gt;&gt;&gt; empty = ()<br>&gt;&gt;&gt; singleton = 'hello',    # &lt;-- note trailing comma<br>&gt;&gt;&gt; len(empty)<br>0<br>&gt;&gt;&gt; len(singleton)<br>1<br>&gt;&gt;&gt; singleton<br>('hello',)<br></pre>
+                                                              </dd>
+                                                              </dl>
+  
+                                                              <p> <code>t
+= 12345, 54321, 'hello!'</code> 这个叙述是一个tuple包装(  <i>tuple packing</i> )的例子：
+                                                              <code>12345</code>
+, <code>54321</code> 以及 <code>'hello!'</code> 这三个值都被包装放在一个tuple里面了。我们也可以使用相反的操作方式，例如：
+  </p>
+                                                              <p> </p>
+                                                              <dl>
+                                                              <dd><pre class="verbatim">&gt;&gt;&gt; x, y, z = t<br></pre>
+                                                                </dd>
+                                                                </dl>
+  
+                                                                <p> 这个动作叫做打开sequence(
+                                                                <i>sequence
+unpacking</i> )。Sequence unpacking的动作需要在设定符号左边有一串的变数，其数目应与右边sequence的成员数目相同。值得注意的是，多重设定(a,
+b = 1, 2)其实只是tuple packing以及sequence unpacking的结合罢了！   </p>
+                                                                <p> 有一个不太对称的地方：packing的动作永远结果是一个tuple，但是unpacking可以针对各种不同的sequence来做。
+   </p>
+                                                                <p>  </p>
+                                                                <h1> <br>
+ 5.4 Dictionaries(字典)   </h1>
+  
+                                                                <p> 另外一个在Python当中很好用的内建资料型态是字典(
+                                                                <i>dictionary</i>
+ )。Dictionary有的时候在别的程式语言里面也叫做连结记忆( ``associative memories'' )或者是连结阵列( ``associative
+arrays'' )。不同于sequence是由一连串的数字来做index，dictionary用一个特殊的不可改变的(immutable)钥(
+                                                                <i>keys</i>
+ 来当作其 index。字串及数字都不能被改变，所以都可以来当作dictionary的key。Tuple如果只含有字串，数目字，以及其他tuple的话也可以当作key。如果tuple里面有包含任何可改变的(mutable)的物件的话(包括直接或间接)，就不能当作key来使用。List不能当作key，因为list的成员可以被改变(你可以用
+ <tt class="method">append()</tt> 以及 <tt class="method">extend()</tt> 之类的方法，或是切割(slicing)
+或 index 来设定list的个别成员)。   </p>
+                                                                <p> 我们最好把dictionary想像成一个没有顺序的
+ <i>key: value</i> 成对的组合。唯一的条件是，在dictionary里面key的值必须是唯一不重复的。最简单的dictionary就是一对空的中括弧：
+                                                                <code>{}</code>
+ 。在中括弧里面放入由逗号分开的key:value对，就成了dictionary里面的成员。这也是当dictionary被印到输出时的标准格式。
+  </p>
+                                                                <p> 我们可以对dictionary做一些事，包括加入一个带有key的值、或者是用key来找一个特殊的值。我们也可以用
+                                                                <code>del</code>
+ 来删去一对key:value的成员。如果你试图存一对key:value但是这个key已经被使用了的话，原来的那一个value的值就会被盖过。如果你想用一个不存在的key来找出某一个成员的话，你会得到一个error。
+  </p>
+                                                                <p> 使用 <code>
+keys()</code> 这一个dictionary的方法我们可以得到一个由所有的key值组成的list，其顺序是随机没有次序的(如果你想要排序的话，只要针对这一个得到的list来呼叫其
+                                                                <code>sort()</code>
+ 方法就可以了)。要检查某个key是不是存在的话，你可以使用  <code>has_key()</code> 这一个method来做检查。   </p>
+                                                                <p> 底下是一个有关dictionary的小例子：
+  </p>
+                                                                <p> </p>
+                                                                <dl>
+                                                                <dd><pre class="verbatim">&gt;&gt;&gt; tel = {'jack': 4098, 'sape': 4139}<br>&gt;&gt;&gt; tel['guido'] = 4127<br>&gt;&gt;&gt; tel<br>{'sape': 4139, 'guido': 4127, 'jack': 4098}<br>&gt;&gt;&gt; tel['jack']<br>4098<br>&gt;&gt;&gt; del tel['sape']<br>&gt;&gt;&gt; tel['irv'] = 4127<br>&gt;&gt;&gt; tel<br>{'guido': 4127, 'irv': 4127, 'jack': 4098}<br>&gt;&gt;&gt; tel.keys()<br>['guido', 'irv', 'jack']<br>&gt;&gt;&gt; tel.has_key('guido')<br>1<br></pre>
+                                                                  </dd>
+                                                                  </dl>
+  
+                                                                  <p>  </p>
+                                                                  <h1> <br>
+ 5.5 条件(续)   </h1>
+  
+                                                                  <p> 在之前所谈到的
+                                                                  <code>while</code>
+ 及 <code>if</code> 里面的条件叙述，除了一般的比较之外也可以包含其他的运算。   </p>
+                                                                  <p> 我们可以用
+                                                                  <code>in</code>
+ 以及 <code>not in</code> 来检查某个值是否出现(或没出现)在某个sequence里面。我们也可以使用 <code>is</code>
+ 以及  <code>is not</code> 来检查两个物件是否事实上指的是相同的一个物件(这只有跟像是list一样可变的物件有关)。所有的比较运算的运算优先次序都是一样的，都比所有的数字运算要来的低。
+  </p>
+                                                                  <p> 比较运算是可以连起来的：像是
+                                                                  <code>a
+&lt; b == c</code> 就是试验是否 <code>a</code> 比  <code>b</code> 小，以及 <code>b</code>
+ 和 <code>c</code> 是否相等。   </p>
+                                                                  <p> 比较运算也可以用
+                                                                  <code>and</code>
+ 以及  <code>or</code> 等boolean运算来连结起来，其比较的结果(或其他boolean运算的结果)也可以用 <code>not</code>
+ 来得到相反(negated)的结果。在这些运算里， <code>not</code> 有最高的优先次序， <code>or</code> 的优先次序最低，但是它们所有的优先次序都比比较运算来的低。所以，
+ <code>A and not B or C</code> 其实相等于  <code>(A and (not B)) or C</code> 。当然，最好适时的使用括弧来帮助你表达你真正想要的组合。
+  </p>
+                                                                  <p> <code>
+and</code> 以及 <code>or</code> 这两个boolean运算元也可以称做有捷径的运算元(  <i>shortcut</i>
+ operators)：它们的evaluated的次序都是由左而右，而且一但已经可以决定其运算的结果，就不会再继续的做下去。也就是说如果 <code>
+A</code> 以及 <code>C</code> 都是 true 而  <code>B</code> 是false的话，  <code>A and
+B and C</code> 并不会evaluate C 这个expression。一般来说这些shortcut operator 的传回值如果不是当作boolean而是当作一般的值来用的话，其传回值会是最后一个被evaluate的expression的值。
+  </p>
+                                                                  <p> 我们也可以把一个比较运算，或是
+boolean运算的结果设定给一个变数，其例子如下：   </p>
+                                                                  <p> </p>
+                                                                  <dl>
+                                                                  <dd><pre class="verbatim">&gt;&gt;&gt; string1, string2, string3 = '', 'Trondheim', 'Hammer Dance'<br>&gt;&gt;&gt; non_null = string1 or string2 or string3<br>&gt;&gt;&gt; non_null<br>'Trondheim'<br></pre>
+                                                                    </dd>
+                                                                    </dl>
+  
+                                                                    <p> 值得注意的是不像是C，在Python里面设定(assignment)不能够放在expression里面。C的程式设计师也许会针对此点抱怨，但是这样的好处是可以避免一些常见的把设定(
+                                                                    <code>
+=</code> )及等于(  <code>==</code> )弄混淆的情形  </p>
+                                                                    <p>  </p>
+                                                                    <h1> <br>
+ 5.6 Sequences(有序列)及其他资料型态的比较  </h1>
+  
+                                                                    <p> Sequence
+物件可以和其他的相同资料型态的sequence 物件相比较，其比较方法是依照所谓的 <i>lexicographical</i> 顺序(lexicographical
+ordering)。首先是两个sequence的第一个成员互相比较，如果比较有大小之别的话就此决定其相对大小，若是相等的话就再比较下一个成员的大小，余此类推直到sequence的结束。如果两个要相比较的成员本身也是一个sequence的话，同样的条件可以继续递回的使用在这两个sequence之上。如果这两个sequence的所有成员都相等的话，我们就说这两个成员是相等的。如果某一个sequence是另一个sequence的一部份的话，较短的那一个sequence就是较小的。字串的Lexicographical顺序用的是个别字元的ASCII码的顺序。底下是一些同一资料型态的sequence的比较例子：
+  </p>
+                                                                    <p> </p>
+                                                                    <dl>
+                                                                    <dd><pre class="verbatim">(1, 2, 3)              &lt; (1, 2, 4)<br>[1, 2, 3]              &lt; [1, 2, 4]<br>'ABC' &lt; 'C' &lt; 'Pascal' &lt; 'Python'<br>(1, 2, 3, 4)           &lt; (1, 2, 4)<br>(1, 2)                 &lt; (1, 2, -1)<br>(1, 2, 3)             == (1.0, 2.0, 3.0)<br>(1, 2, ('aa', 'ab'))   &lt; (1, 2, ('abc', 'a'), 4)<br></pre>
+                                                                      </dd>
+                                                                      </dl>
+  
+                                                                      <p>
+ 值得注意的是，我们也可以 比较两个不同资料型态的物件，而其结果是依其资料型态的名称来决定的。所以所有的list都比字串还要来的小(因为list小于string)，所有的string也都比tuple还要小。至于数值的资料型态则是由其数值大小来决定其大小，所以0等于0.0的，其余按此类推。
+                                                                      <a name="tex2html3" href="#foot607"><sup>
+5.1</sup></a> </p>
+                                                                      <p>
+ <br>
+                                                                      </p>
+                                                                      <hr>
+                                                                      <h4>
+Footnotes</h4>
+ 
+                                                                      <dl>
+                                                                      <dt><a name="foot607">
+... 其余按此类推。</a><a name="foot607" href="node7.html#tex2html3"><sup>5.1</sup></a>
+ </dt>
+                                                                        <dd>
+         你不应该完全倚赖这些比较不同资料型态的规则，因为这些规则是尚未确定的，以后的Python版本也有可能会再做更动。    </dd>
+                                                                          </dl>
+ 
+                                                                          <div class="navigation">
+                                                                          <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                                                                              <tr>
+ <td><a href="node6.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node8.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                                                                            </tbody>
+                                                                          </table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node6.html">4.
+更多流程控制的工具</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node8.html">
+6. 模组(module)</a> <br>
+                                                                          <hr></div>
+ <!--End of Navigation Panel--> 
+                                                                          <address>
+ </address>
+                                                                          <hr>
+请看<i><a href="about.html">关于此文件&hellip;</a></i> 里面有关如何给我们建议的说明。  
+                                                                          </body>
+                                                                          </html>

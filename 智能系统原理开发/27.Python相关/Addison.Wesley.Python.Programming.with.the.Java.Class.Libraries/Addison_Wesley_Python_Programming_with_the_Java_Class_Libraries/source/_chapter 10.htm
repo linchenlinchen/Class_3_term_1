@@ -1,0 +1,382 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 10</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 10.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 10.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 10.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%209.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2011.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 10. Working with Strings</h2><ul><li>&nbsp;<a class="docLink" href="#ch10lev1sec1">Conversion: atoi(), atof(), atol()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch10lev1sec2">Case Change: capitalize(), capwords(), swapcases(), lower(), upper()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch10lev1sec3">Finding: find(), rfind(), index(), rindex(), count(), replace()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch10lev1sec4">Splitting and Joining: split(), splitfields(), join(), joinfields()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch10lev1sec5">Stripping and Parsing: lstrip(), rstrip(), strip()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch10lev1sec6">Adjusting Text: ljust(), rjust(), center(), zfill(), expandtabs()</a></li>
+<li>&nbsp;<a class="docLink" href="#ch10lev1sec7">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Argument</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Decimal 10</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Exception</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Field</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Hexadecimal 16</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Namespace</span></li>
+</ul>
+      </td>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Octal 8</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Parsing</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Separator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Sequence</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">string module</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Substring</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Whitespace</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Sooner or later, you'll need to format, parse, or manipulate 
+strings. For these tasks, you'll likely use the functions in the Python
+<span class="docEmphasis">string</span> module. Spend some time familiarizing 
+yourself with this module by following along with the examples in this chapter.</p>
+<h3 class="docSection1Title" id="ch10lev1sec1">Conversion: atoi(), atof(), atol()</h3>
+<p class="docText"><tt>atoi(s[,base])</tt> converts a string into an integer. 
+The default is decimal, but you can specify octal 8, hexadecimal 16, or decimal 
+10. If 0 is the base, the string will be parsed as a hexadecimal if it has a 
+leading 0x and as an octal if it has a leading 0. Otherwise, it will be treated 
+as a decimal.</p>
+<p class="docText">Let's do an example. In this and all other examples in this 
+chapter, you have to first import the <span class="docEmphasis">string</span> 
+module: <tt>from string import *.</tt></p>
+<p class="docText">Convert <tt>&quot;1&quot;</tt> to an integer.</p>
+<pre>&gt;&gt;&gt; atoi(&quot;1&quot;)
+1</pre>
+<p class="docText">Convert <tt>&quot;255&quot;</tt> to a base 10 integer.</p>
+<pre>&gt;&gt;&gt; atoi(&quot;255&quot;,10)
+255</pre>
+<p class="docText">Convert <tt>&quot;FF&quot;</tt> to a base 16 integer.</p>
+<pre>&gt;&gt;&gt; atoi(&quot;FF&quot;,16)
+255</pre>
+<p class="docText">The <tt>atof(s)</tt> function converts a string to a float.</p>
+<pre>&gt;&gt;&gt; atof(&quot;1.1&quot;)
+1.1</pre>
+<p class="docText">The <tt>atol(s[, base])</tt> converts a string to a long.</p>
+<pre>&gt;&gt;&gt; atol(&quot;1&quot;)
+1L
+
+&gt;&gt;&gt; atol(&quot;255&quot;, 16)
+0xFFL</pre>
+<h3 class="docSection1Title" id="ch10lev1sec2">Case Change: capitalize(), capwords(), swapcases(), 
+lower(), upper()</h3>
+<p class="docText">The <tt>capitalize(word)</tt> function capitalizes a given 
+word in a string.</p>
+<pre>&gt;&gt;&gt; capitalize(&quot;bill&quot;)
+'Bill'</pre>
+<p class="docText">The <tt>capwords(s)</tt> function capitalizes all words in a 
+string.</p>
+<pre>&gt;&gt;&gt; str = &quot;bill joy&quot;
+&gt;&gt;&gt; str = capwords(str)
+&gt;&gt;&gt; print str
+Bill Joy</pre>
+<p class="docText">The <tt>swapcases(s)</tt> function converts uppercase letters 
+to lowercase letters and vice versa.</p>
+<pre>&gt;&gt;&gt; swapcase(&quot;ABC abc 123&quot;)
+'abc ABC 123'</pre>
+<p class="docText">(Frankly, I don't see the value of this one.)</p>
+<p class="docText">The <tt>lower(s)</tt> function converts uppercase letters to 
+lowercase letters.</p>
+<pre>&gt;&gt;&gt; lower(&quot;ABC abc 123&quot;)
+'abc abc 123'</pre>
+<p class="docText">The <tt>upper(s)</tt> function converts lowercase letters to 
+uppercase letters.</p>
+<pre>&gt;&gt;&gt; upper(&quot;ABC abc 123&quot;)
+'ABC ABC 123'</pre>
+<h3 class="docSection1Title" id="ch10lev1sec3">Finding: find(), rfind(), index(), rindex(), 
+count(), replace()</h3>
+<p class="docText">The finding functions in the <span class="docEmphasis">string</span> 
+module locate a substring within a string. For example, substrings of &quot;Python is 
+fun&quot; are &quot;Pyt&quot;, &quot;is&quot;, &quot;fun&quot;, &quot;n is f&quot;, and so forth. Using a substring helps in 
+parsing string data.</p>
+<p class="docText">The <tt>find(s, sub, [start],[end])</tt> function finds the 
+first position of a substring in a given string. You can set the start and stop 
+position arguments, which determine where in the string the search will begin 
+and end. Here's an example:</p>
+<pre>&gt;&gt;&gt; str = &quot;apple peach pear grapes apple lime lemon&quot;
+&gt;&gt;&gt; position = find(str, &quot;pear&quot;)</pre>
+<p class="docText">Here's a real-world use of <tt>find()</tt>: extracting text 
+out of a tag when reading in an HTML file from a server.</p>
+<p class="docText">Create some sample text embedded in HTML tags.</p>
+<pre>&gt;&gt;&gt;    #simulated input string from some file
+&gt;&gt;&gt; str = &quot;&lt;h1&gt; text we want to extract &lt;/h1&gt;&quot;</pre>
+<p class="docText">Set the <tt>start</tt> and <tt>stop</tt> strings (the HTML 
+tags).</p>
+<pre>&gt;&gt;&gt; start = &quot;&lt;h1&gt;&quot;                #html tag
+&gt;&gt;&gt; stop = &quot;&lt;/h1&gt;&quot;                #html tag</pre>
+<p class="docText">Find the position of the first and second strings.</p>
+<pre>&gt;&gt;&gt; begin = find(str,start)       #find the location of the 1st tag
+&gt;&gt;&gt; end = find(str,stop)   #find the location of the 2nd tag</pre>
+<p class="docText">Locate the text to be extracted.</p>
+<pre>&gt;&gt;&gt;   #compute where the start of the string we want is:
+&gt;&gt;&gt; begin = begin + len(start)</pre>
+<p class="docText">Extract the text embedded in the HTML tags, and display it.</p>
+<pre>&gt;&gt;&gt;    #using slice notation extract the text from the string
+&gt;&gt;&gt; text = str[begin:end]
+&gt;&gt;&gt; print text
+text we want to extract</pre>
+<p class="docText">The HTML tags supply the boundaries of the desired text.</p>
+<p class="docText"><tt>rfind(s, sub, [start],[end])</tt> is similar to <tt>
+find()</tt>, but it searches the substring from right to left. Here it finds the 
+last occurrence of <tt>&quot;apple&quot;</tt> in the <tt>str</tt> string.</p>
+<pre>&gt;&gt;&gt; str = &quot;apple orange tangerine apple pear grapes&quot;
+&gt;&gt;&gt; rfind(str,&quot;apple&quot;)
+23
+
+&gt;&gt;&gt; find(str, &quot;apple&quot;) #find finds the first occurrence
+0</pre>
+<p class="docText"><tt>index(s, sub, [start],[end])</tt> works like <tt>find()</tt> 
+with one difference. When <tt>find()</tt> can't locate a substring, it returns a
+<tt>–1</tt>; when <tt>index()</tt> can't, it throws an exception.</p>
+<pre>&gt;&gt;&gt; find(str, &quot;commodore&quot;)
+-1
+
+&gt;&gt;&gt; index(str, &quot;commodore&quot;)
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+  File &quot;D:\Apps\Python\Lib\string.py&quot;, line 226, in index
+ValueError: substring not found in string.index</pre>
+<p class="docText"><tt>rindex(s, sub, [start],[end])</tt> searches from the back 
+of the string for a substring. It's like <tt>rfind()</tt>, but throws an 
+exception if it fails.</p>
+<p class="docText">Find <tt>&quot;green&quot;</tt> in the <tt>str</tt> string.</p>
+<pre>&gt;&gt;&gt; str = &quot;blue blue blue green red red red&quot;
+&gt;&gt;&gt; rindex(str,&quot;green&quot;)
+15</pre>
+<p class="docText">Find <tt>&quot;purple&quot;</tt>.</p>
+<pre>&gt;&gt;&gt; rindex(str, &quot;purple&quot;)
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+  File &quot;D:\Apps\Python\Lib\string.py&quot;, line 243, in rindex
+ValueError: substring not found in string.index</pre>
+<p class="docText"><tt>count(s, sub, [start],[end])</tt> finds the number of 
+occurrences of a substring in a string.</p>
+<p class="docText">Count <tt>&quot;blue&quot;</tt> in the <tt>str</tt> string.</p>
+<pre>&gt;&gt;&gt; str = &quot;blue blue blue green red red red&quot;
+&gt;&gt;&gt; count(str, &quot;blue&quot;)
+3</pre>
+<p class="docText">Count <tt>&quot;red&quot;</tt>.</p>
+<pre>&gt;&gt;&gt; count(str, &quot;red&quot;)
+3</pre>
+<p class="docText"><tt>replace(str, old, new, [max])</tt> replaces one substring 
+with a new one. The <tt>max</tt> argument specifies the number of occurrences 
+you want replaced. The default is all occurrences.</p>
+<p class="docText">Create a string with four <tt>&quot;apple&quot;</tt> substrings.</p>
+<pre>&gt;&gt;&gt; str = &quot;apple, apple, apple, apple&quot;</pre>
+<p class="docText">Replace the first <tt>&quot;apple&quot;</tt> with <tt>&quot;pear&quot;</tt>.</p>
+<pre>&gt;&gt;&gt; replace(str, &quot;apple&quot;, &quot;pear&quot;, 1)
+'pear, apple, apple, apple'</pre>
+<p class="docText">Replace every occurrence of <tt>&quot;apple&quot;</tt> with <tt>
+&quot;orange&quot;</tt>.</p>
+<pre>&gt;&gt;&gt; replace(str, &quot;apple&quot;, &quot;orange&quot;)
+'orange, orange, orange, orange'</pre>
+<h3 class="docSection1Title" id="ch10lev1sec4">Splitting and Joining: split(), splitfields(), 
+join(), joinfields()</h3>
+<p class="docText"><tt>split(s, [sep], [maxsplit])</tt> and <tt>splitfields(s, 
+[sep], [maxsplit])</tt> both split a string into a sequence. With the <tt>sep</tt> 
+argument you can specify what you want to use for the separator—the default is
+<tt>whitespace</tt> (spaces or tabs). The <tt>maxsplit</tt> optional argument 
+allows you to specify how many items you want to break up; the default is all.</p>
+<p class="docText">Here, with one line of code, we parse an address containing 
+five fields. (Try to do this with Java, C, Delphi, or Visual Basic—you can't.)</p>
+<pre>&gt;&gt;&gt; input_string = &quot;Bill,Gates,123 Main St., WA, 65743&quot;
+&gt;&gt;&gt; fname, lname, street, state, zip = split(input_string,&quot;,&quot;)
+&gt;&gt;&gt; print &quot;&quot;&quot;
+... Name: %(fname)s %(lname)s
+... Street: %(street)s
+... %(state)s, %(zip)s&quot;&quot;&quot; % locals()
+
+Name: Bill Gates
+Street: 123 Main St.
+WA, 65743</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">A Few Things to Note</h2>
+      <ul>
+        <li>
+        <p class="docList">You can assign multiple variables to a sequence (<a class="docLink" href="_chapter%2012.htm">Chapter 
+        12</a>).</li>
+        <li>
+        <p class="docList">The <tt>locals()</tt> built-in function (<a class="docLink" href="_chapter%209.htm">Chapter 
+        9</a>) returns a dictionary that contains the variables in a local 
+        namespace, so the statement</p>
+        <pre>&gt;&gt;&gt; locals()[&quot;lname&quot;]</pre>
+        <p class="docList">returns</p>
+        <pre>'Gates'</pre>
+        </li>
+        <li>
+        <p class="docList">The <tt>%</tt> format string operator works with 
+        dictionaries or sequences (<a class="docLink" href="_chapter%203.htm">Chapter 
+        3</a>).</li>
+      </ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Here we demonstrate that <tt>split()</tt> and <tt>splitfields()</tt> 
+do the same thing:</p>
+<pre>&gt;&gt;&gt; split (input_string)
+['Bill,Gates,123', 'Main', 'St.,', 'WA,', '65743']
+
+&gt;&gt;&gt; splitfields(input_string)
+['Bill,Gates,123', 'Main', 'St.,', 'WA,', '65743']</pre>
+<p class="docText">Here's an example demonstrating the default operation for <tt>
+split()</tt>:</p>
+<pre>&gt;&gt;&gt; split(&quot;tab\tspace word1 word2        word3\t\t\tword4&quot;)
+['tab', 'space', 'word1', 'word2', 'word3', 'word4']</pre>
+<p class="docText"><tt>join(words, [sep])</tt> and <tt>joinfields(words, [sep])</tt> 
+also do the same thing. Here's our last example showing how to build an address 
+string from a sequence of fields:</p>
+<pre>&gt;&gt;&gt; seq = (fname, lname, street, state, zip)
+&gt;&gt;&gt; input_string = join(seq, &quot;,&quot;)
+&gt;&gt;&gt; print input_string
+Bill,Gates,123 Main St., WA, 65743</pre>
+<p class="docText">The next two examples demonstrate the similarities of <tt>
+join()</tt> and <tt>joinfields()</tt>:</p>
+<pre>&gt;&gt;&gt; seq = (&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;)
+&gt;&gt;&gt; join(seq, &quot;#&quot;)
+'1#2#3#4#5'
+
+&gt;&gt;&gt; joinfields(seq,&quot;#&quot;)
+'1#2#3#4#5'</pre>
+<h3 class="docSection1Title" id="ch10lev1sec5">Stripping and Parsing: lstrip(), rstrip(), strip()</h3>
+<p class="docText">When you parse strings, you often need to get rid of 
+whitespace. This is what the stripping functions do. They're handy and 
+convenient; I think you'll use them quite a bit.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Whitespace Variables</h2>
+      <p class="docText">Whitespace is defined by the public variable <tt>
+      whitespace</tt> in the <span class="docEmphasis">string</span> module. 
+      This code contains a tab and spaces:</p>
+      <pre>&gt;&gt;&gt; whitespace
+'\ 11 '</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">The <tt>lstrip(s)</tt> (left strip) function removes leading 
+whitespace (on the left) in the string. The <tt>rstrip(s)</tt> (right strip) 
+function removes the trailing whitespace (on the right). The <tt>strip(s)</tt> 
+function removes both leading and trailing whitespace. Here's an example of all 
+three:</p>
+<pre>&gt;&gt;&gt; str = &quot;      String    String &quot;
+
+&gt;&gt;&gt; lstrip(str)
+'String    String        '
+
+&gt;&gt;&gt; rstrip(str)
+'       String     String'
+
+&gt;&gt;&gt; strip(str)
+'String    String'</pre>
+<h3 class="docSection1Title" id="ch10lev1sec6">Adjusting Text: ljust(), rjust(), center(), zfill(), 
+expandtabs()</h3>
+<p class="docText">The functions for adjusting text are as handy and convenient 
+as the parsing functions. You'll use them a lot, particularly for attractive 
+report printing.</p>
+<p class="docText">The <tt>ljust(s, width)</tt> function left-justifies a string 
+to a given width. The <tt>rjust(s, width)</tt> function right-justifies it. The
+<tt>center(s, width)</tt> function centers a string to a given width. Here are 
+examples of all three:</p>
+<pre>&gt;&gt;&gt; rjust(&quot;String&quot;,20)
+'              String'
+
+&gt;&gt;&gt; rjust (&quot;str&quot;,20)
+'                 str'
+
+&gt;&gt;&gt; ljust(&quot;String&quot;,20)
+'String              '
+
+&gt;&gt;&gt; ljust(&quot;str&quot;,20)
+'str                 '
+
+&gt;&gt;&gt; center(&quot;str&quot;,20)
+'        str         '
+
+&gt;&gt;&gt; center(&quot;String&quot;,20)
+'       String       '</pre>
+<p class="docText"><tt>zfill(snum,width)</tt> pads a numeric string with leading 
+zeros.</p>
+<pre>&gt;&gt;&gt; zfill(&quot;0.1&quot;, 10)
+'00000000.1'</pre>
+<p class="docText"><tt>expandtabs(s,tabsize)</tt> converts tabs into spaces that 
+equal the width of the <tt>tabsize</tt> argument.</p>
+<p class="docText">Create a string with tabs denoted by <tt>\t</tt>.</p>
+<pre>&gt;&gt;&gt; str = &quot;tab\ttab\ttab\t&quot;</pre>
+<p class="docText">Expand the tabs to five spaces.</p>
+<pre>&gt;&gt;&gt; expandtabs(str, 5)
+'tab   tab   tab '</pre>
+<p class="docText">Expand the tabs to ten spaces.</p>
+<pre>&gt;&gt;&gt; expandtabs(str,10)
+'tab       tab       tab       '</pre>
+<p class="docText">Expand the tabs to twenty spaces.</p>
+<pre>&gt;&gt;&gt; expandtabs(str, 20)
+'tab                 tab                 tab                 '</pre>
+<h3 class="docSection1Title" id="ch10lev1sec7">Summary</h3>
+<p class="docText">In its standard distribution, Python provides a rich set of 
+functions to manipulate and parse strings not found in other programming 
+languages. My guess is that you'll use these functions a lot.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%209.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%2011.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

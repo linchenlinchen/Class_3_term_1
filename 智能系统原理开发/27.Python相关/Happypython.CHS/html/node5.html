@@ -1,0 +1,580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>3. 非正式的Python介绍</title>
+  
+  <meta name="description" content="3. 非正式的Python介绍  ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node6.html">
+ 
+  <link rel="previous" href="node4.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node6.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node4.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node6.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node4.html">2.
+使用Python的直译器 </a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node6.html">
+4. 更多流程控制的工具 </a> <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落</strong></a>  
+<ul>
+ 
+  <li><a name="tex2html244" href="node5.html#SECTION005100000000000000000">
+3.1 把Python当作计算机来用 </a> 
+    <ul>
+ 
+      <li><a name="tex2html245" href="node5.html#SECTION005110000000000000000">
+3.1.1 数字 </a> </li>
+      <li><a name="tex2html246" href="node5.html#SECTION005120000000000000000">
+3.1.2 字串 </a> </li>
+      <li><a name="tex2html247" href="node5.html#SECTION005130000000000000000">
+3.1.3 Unicode 字串 </a> </li>
+      <li><a name="tex2html248" href="node5.html#SECTION005140000000000000000">
+3.1.4 列(List) </a> </li>
+    </ul>
+ </li>
+  <li><a name="tex2html249" href="node5.html#SECTION005200000000000000000">
+3.2 迈向程式设计的第一步 </a> </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 3. An Informal Introduction to Python  </h1>
+  
+<p> 在底下的例子里，你可以很容易区别凡是需要输入的地方都会出现prompts ("<tt class="samp">&gt;<code>&gt;</code>
+&gt;&nbsp;</tt>" 或  "<tt class="samp">...&nbsp;</tt>")，凡是输出的结果则没有。如果你想要跟着这个教学文件一起做的话，你就得打入所有在prompts之后的指令，凡是没有prompts出现的行就是直译器输出的结果。值得注意的是，secondary
+promt 之后如果什么东西都没有，表示这是一个空行(直接按ENTER的结果)，也表示这是一个多行指令的结束。   </p>
+<p> 在本文件中的大部分例子，都有加上注释，甚至是那些互动模式下的例子。注释(comment)在Python中是以 "<tt class="character">
+#</tt>" 之后的东西都是注释(译：跟Perl一样)。注释可以自成一行，也可以跟在空白字元或是程式码的后面。但是，如果  "<tt class="character">
+#</tt>" 是在字串常数(string literal)之中的话，就不代表注释的意义，而只是一个普通字元罢了。  </p>
+<p> 底下是一些例子：   </p>
+<p> </p>
+<dl>
+<dd><pre class="verbatim"># this is the first comment<br>SPAM = 1                 # and this is the second comment<br>                         # ... and now a third!<br>STRING = "# This is not a comment."<br></pre>
+  </dd>
+  </dl>
+  
+  <p>  </p>
+  <h1> <br>
+ 3.1 把Python当作计算机来用  </h1>
+  
+  <p> 现在我们来试一试一些简单的Python指令吧。请先启动Python的直译器并且等待primary prompt(  "<tt class="samp">
+&gt;<code>&gt;</code>&gt;&nbsp;</tt>" )的出现。(应该不会很久的)  </p>
+  <p>  </p>
+  <h2> <br>
+ 3.1.1 数字  </h2>
+  
+  <p> 直译器就好像一个计算机一样：你可以打入一个表示式(expression)，然后直译器会把这个expression的执行结果秀出来。Expression的语法都很简单直接，一般的运算符号
+ <code>+</code>, <code>-</code>, <code>*</code> 以及  <code>/</code> 的用法就跟其他的程式语言(像是Pascal或C)一样。你也可以用括号
+"( )" 来表示运算执行的先后次序。例子如下：   </p>
+  <p> </p>
+  <dl>
+  <dd><pre class="verbatim">&gt;&gt;&gt; 2+2<br>4<br>&gt;&gt;&gt; # This is a comment<br>... 2+2<br>4<br>&gt;&gt;&gt; 2+2  # and a comment on the same line as code<br>4<br>&gt;&gt;&gt; (50-5*6)/4<br>5<br>&gt;&gt;&gt; # Integer division returns the floor:<br>... 7/3<br>2<br>&gt;&gt;&gt; 7/-3<br>-3<br></pre>
+    </dd>
+    </dl>
+  
+    <p> 跟C语言一样，等于符号 ("<tt class="character">=</tt>") 其实是表示设定某个值给一个变数的意思。虽然设定
+("<tt class="character">=</tt>") 运算本身是有结果值的，但是直译器并不会输出其结果来。   </p>
+    <p> </p>
+    <dl>
+    <dd><pre class="verbatim">&gt;&gt;&gt; width = 20<br>&gt;&gt;&gt; height = 5*9<br>&gt;&gt;&gt; width * height<br>900<br></pre>
+      </dd>
+      </dl>
+  
+      <p> 一个值是可以同时设给许多变数的：   </p>
+      <p> </p>
+      <dl>
+      <dd><pre class="verbatim">&gt;&gt;&gt; x = y = z = 0  # Zero x, y and z<br>&gt;&gt;&gt; x<br>0<br>&gt;&gt;&gt; y<br>0<br>&gt;&gt;&gt; z<br>0<br></pre>
+        </dd>
+        </dl>
+  
+        <p> 浮点数的运算在Python里面也是支援的，如果整数与浮点数(带小数点或e的数)进行运算的话，整数部分会先转换(convert)成浮点数再进行运算。
+  </p>
+        <p> </p>
+        <dl>
+        <dd><pre class="verbatim">&gt;&gt;&gt; 4 * 2.5 / 3.3<br>3.0303030303<br>&gt;&gt;&gt; 7.0 / 2<br>3.5<br></pre>
+          </dd>
+          </dl>
+  
+          <p> 甚至连复数的运算也支援喔，只需要把虚数部分加上 "<tt class="samp">j</tt>" 或是  "<tt class="samp">
+J</tt>"在其后就可以了。如果实部不为零的话，复数的写法就写成 "<tt class="samp">(<var>real</var>+<var>
+imag</var>j)</tt>" 。或者，我们也可以用函数的方式来表示复数为 "<tt class="samp">complex(<var>real</var>
+, <var>imag</var>)</tt>" 的形式。 </p>
+          <p> </p>
+          <dl>
+          <dd><pre class="verbatim">&gt;&gt;&gt; 1j * 1J<br>(-1+0j)<br>&gt;&gt;&gt; 1j * complex(0,1)<br>(-1+0j)<br>&gt;&gt;&gt; 3+1j*3<br>(3+3j)<br>&gt;&gt;&gt; (3+1j)*3<br>(9+3j)<br>&gt;&gt;&gt; (1+2j)/(1+1j)<br>(1.5+0.5j)<br></pre>
+            </dd>
+            </dl>
+  
+            <p> 复数的虚数部分及实数部分的值都是以浮点数(float point numbers)来表示的，如果 <var>z</var>
+ 代表一个复数的话，你可以很轻易的用 <code><var>z</var>.real</code> 以及  <code><var>z</var>.imag</code>
+ 得到一个复数的实数部分及虚数部分。    </p>
+            <p> </p>
+            <dl>
+            <dd><pre class="verbatim">&gt;&gt;&gt; a=1.5+0.5j<br>&gt;&gt;&gt; a.real<br>1.5<br>&gt;&gt;&gt; a.imag<br>0.5<br></pre>
+              </dd>
+              </dl>
+  
+              <p> 复数没有办法直接用 (<tt class="function">float()</tt>, <tt class="function">
+int()</tt> 或是  <tt class="function">long()</tt>) 转换成浮点数或是整数。事实上，复数没有直接对应的实数，你必须用
+              <code>abs(<var>z</var>)</code> 来得到 <code>z</code> 的magnitude(以浮点数表示)，或是如上所述
+用<code>z.real</code> 直接得到其实数部分。   </p>
+              <p> </p>
+              <dl>
+              <dd><pre class="verbatim">&gt;&gt;&gt; a=1.5+0.5j<br>&gt;&gt;&gt; float(a)<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1, in ?<br>TypeError: can't convert complex to float; use e.g. abs(z)<br>&gt;&gt;&gt; a.real<br>1.5<br>&gt;&gt;&gt; abs(a)<br>1.58113883008<br></pre>
+                </dd>
+                </dl>
+  
+                <p> 在互动模式之下，最后一个印出来的expression的值会储存在一个特殊变数 "<code>_</code>
+" 之中。这表示，当你用Python的直译器来当作计算机用的时候，想要连续做运算其实是方便许多的。如下例：   </p>
+                <p> </p>
+                <dl>
+                <dd><pre class="verbatim">&gt;&gt;&gt; tax = 17.5 / 100<br>&gt;&gt;&gt; price = 3.50<br>&gt;&gt;&gt; price * tax<br>0.61249999999999993<br>&gt;&gt;&gt; price + _<br>4.1124999999999998<br>&gt;&gt;&gt; round(_, 2)<br>4.1100000000000003<br></pre>
+                  </dd>
+                  </dl>
+  
+                  <p> 对于使用者来说， "<code>_</code>" 这个变数是一个唯读的变数。你没有办法设定一个值给它，当你这样做的时候，事实上你是重新创造一个同名的变数，但是跟之前系统内建的
+"<code>_</code>" 这个变数是一点关系也没有的了。  </p>
+                  <p>  </p>
+                  <h2> <br>
+ 3.1.2 字串   </h2>
+  
+                  <p> 除了数字之外， Python也有能力处理字串(string)。字串在Python中有很多种表达方式，它可以放在双括号&rdquo;&rdquo;之中，也可以放在单括号&rsquo;&rsquo;里面：
+  </p>
+                  <p> </p>
+                  <dl>
+                  <dd><pre class="verbatim">&gt;&gt;&gt; 'spam eggs'<br>'spam eggs'<br>&gt;&gt;&gt; 'doesn\'t'<br>"doesn't"<br>&gt;&gt;&gt; "doesn't"<br>"doesn't"<br>&gt;&gt;&gt; '"Yes," he said.'<br>'"Yes," he said.'<br>&gt;&gt;&gt; "\"Yes,\" he said."<br>'"Yes," he said.'<br>&gt;&gt;&gt; '"Isn\'t," she said.'<br>'"Isn\'t," she said.'<br></pre>
+                    </dd>
+                    </dl>
+  
+                    <p> 字串常数(string literals)是可以跨越多行的，其表示方法有很多。如果要换行的话可以用&rdquo;\&rdquo;符号来表示之。如下例：
+  </p>
+                    <p> </p>
+                    <dl>
+                    <dd><pre class="verbatim">hello = "This is a rather long string containing\n\<br>several lines of text just as you would do in C.\n\<br>    Note that whitespace at the beginning of the line is\<br> significant.\n"<br>print hello<br></pre>
+                      </dd>
+                      </dl>
+  
+                      <p> 这个例子会印出以下的结果：   </p>
+                      <p> </p>
+                      <dl>
+                      <dd><pre class="verbatim">This is a rather long string containing<br>several lines of text just as you would do in C.<br>    Note that whitespace at the beginning of the line is significant.<br></pre>
+                        </dd>
+                        </dl>
+  
+                        <p> 你也可以用成对的三个单引号(  <code>"""</code> ) 或双引号 ( <code>
+'''</code> ) 来表示字串。在此情况下你所打入的ENTER就会直接被解读为换行符号而不需要再用\n了。  </p>
+                        <p> </p>
+                        <dl>
+                        <dd><pre class="verbatim">print """<br>Usage: thingy [OPTIONS] <br>     -h                        Display this usage message<br>     -H hostname               Hostname to connect to<br>"""<br></pre>
+                          </dd>
+                          </dl>
+  
+                          <p> 这个例子会印出以下的结果：  </p>
+                          <p> </p>
+                          <dl>
+                          <dd><pre class="verbatim">Usage: thingy [OPTIONS] <br>     -h                        Display this usage message<br>     -H hostname               Hostname to connect to<br></pre>
+                            </dd>
+                            </dl>
+  
+                            <p> 如果你打入的expression是字串的运算，运算的结果的同样的会由直译器显示出来，而且显示的方式跟你直接打入字串常数(string
+literals)是一样的：会在引号之中，所有有escape character &ldquo;\&rdquo;表示的字元都会依样的显示出来。如果字串本身包含有单引号，整个字串就会用双引号括起来，要不然就会只用单引号来把整个字串括起来。(如果你使用
+                            <tt class="keyword">print</tt> 这个叙述(statement)来印出字串的话，萤幕的输出就不会有引号出现，而且字串中的escape
+character (\&rdquo;表示的特殊字元) 都会显示出其所代表的意义来。)   </p>
+                            <p> 字串可以用 <code>+</code> 这个运算元来相加 (连接起来)，或是用
+                            <code>*</code> 这个运算元来重复之。请看例子：   </p>
+                            <p> </p>
+                            <dl>
+                            <dd><pre class="verbatim">&gt;&gt;&gt; word = 'Help' + 'A'<br>&gt;&gt;&gt; word<br>'HelpA'<br>&gt;&gt;&gt; '&lt;' + word*5 + '&gt;'<br>'&lt;HelpAHelpAHelpAHelpAHelpA&gt;'<br></pre>
+                              </dd>
+                              </dl>
+  
+                              <p> 如果你把两个字串常数放在一起，它们自动就会相加起来。所以，上面的例子的第一行也可以写作
+"<tt class="samp">word = 'Help' 'A'</tt>" 。不过这个方法只适用于两个字串常数的相加，其他情况就不适合了。请看例子：
+  </p>
+                              <p> </p>
+                              <dl>
+                              <dd><pre class="verbatim">&gt;&gt;&gt; import string<br>&gt;&gt;&gt; 'str' 'ing'                   #  &lt;-  This is ok<br>'string'<br>&gt;&gt;&gt; string.strip('str') + 'ing'   #  &lt;-  This is ok<br>'string'<br>&gt;&gt;&gt; string.strip('str') 'ing'     #  &lt;-  This is invalid<br>  File "&lt;stdin&gt;", line 1<br>    string.strip('str') 'ing'<br>                            ^<br>SyntaxError: invalid syntax<br></pre>
+                                </dd>
+                                </dl>
+  
+                                <p> 如同在C语言一样，字串是有标记(subscript(index))的，第一个字元的标记(subscript(index))就是0。在Python中没有另外一个字元character资料型态，一个字元就是一个长度为
+1的字串。就像是在Icon语言一样，字串是可以用其subscript(index)来切出( <i>slice notation</i> )其中的一部份的，其语法为
+"<tt class="samp" string[subscprt:subscprt]</tt="">"。  </tt></p>
+                                <p> </p>
+                                <dl>
+                                <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[4]<br>'A'<br>&gt;&gt;&gt; word[0:2]<br>'He'<br>&gt;&gt;&gt; word[2:4]<br>'lp'<br></tt></pre>
+                                  </dd>
+                                  </dl>
+  
+                                  <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+与C不同的是，Python的字串是不可改变的(immutable)，如果你想要改变其中的一个字元或是一个部份(slice)，你会得到一个错误的信息：
+  </tt></p>
+                                  <p> </p>
+                                  <dl>
+                                  <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[0] = 'x'<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1, in ?<br>TypeError: object doesn't support item assignment<br>&gt;&gt;&gt; word[:-1] = 'Splat'<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1, in ?<br>TypeError: object doesn't support slice assignment<br></tt></pre>
+                                    </dd>
+                                    </dl>
+  
+                                    <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+但是你可以任意使用一个字串的一个字元或是一个部份(slice)来创造出另一个字串，这是完全可行的：   </tt></p>
+                                    <p> </p>
+                                    <dl>
+                                    <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; 'x' + word[1:]<br>'xelpA'<br>&gt;&gt;&gt; 'Splat' + word[-1:]<br>'SplatA'<br></tt></pre>
+                                      </dd>
+                                      </dl>
+  
+                                      <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+当你用字串切片(string slice)的语法时，可以使用其预定(default)的subscript(index)值，这是很方便的。第一个subscript(index)的预设值是0，第二个subscript(index)的预设值则是这个字串的整体长度。
+  </tt></p>
+                                      <p> </p>
+                                      <dl>
+                                      <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[:2]    # The first two characters<br>'He'<br>&gt;&gt;&gt; word[2:]    # All but the first two characters<br>'lpA'<br></tt></pre>
+                                        </dd>
+                                        </dl>
+  
+                                        <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+所以， <code>s[:i] + s[i:]</code> 会恰好等于  <code>s</code> 。你可以想一想为什么：  </tt></p>
+                                        <p> </p>
+                                        <dl>
+                                        <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[:2] + word[2:]<br>'HelpA'<br>&gt;&gt;&gt; word[:3] + word[3:]<br>'HelpA'<br></tt></pre>
+                                          </dd>
+                                          </dl>
+  
+                                          <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+如果你用一些奇怪的index来切割字串，Python直译器也都处理的很好：如果第二个index太大的话就自动代换为字串的长度，如果第二个index比第一个index还要小的话就自动传回
+一个空字串。   </tt></p>
+                                          <p> </p>
+                                          <dl>
+                                          <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[1:100]<br>'elpA'<br>&gt;&gt;&gt; word[10:]<br>''<br>&gt;&gt;&gt; word[2:1]<br>''<br></tt></pre>
+                                            </dd>
+                                            </dl>
+  
+                                            <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+字串的index甚至可以是负数，若是负数的话，就必须从字串的尾巴开始算起。如下例：   </tt></p>
+                                            <p> </p>
+                                            <dl>
+                                            <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[-1]     # The last character<br>'A'<br>&gt;&gt;&gt; word[-2]     # The last-but-one character<br>'p'<br>&gt;&gt;&gt; word[-2:]    # The last two characters<br>'pA'<br>&gt;&gt;&gt; word[:-2]    # All but the last two characters<br>'Hel'<br></tt></pre>
+                                              </dd>
+                                              </dl>
+  
+                                              <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+但是 -0 事实上是等于 0 ，所以不会从尾巴开始算起。  </tt></p>
+                                              <p> </p>
+                                              <dl>
+                                              <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[-0]     # (since -0 equals 0)<br>'H'<br></tt></pre>
+                                                </dd>
+                                                </dl>
+  
+                                                <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+如果负数index超过字串的范围的话，就自动只会到最大可能的范围，但是如果不是切割一部份的话就会造成错误的情形：   </tt></p>
+                                                <p> </p>
+                                                <dl>
+                                                <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; word[-100:]<br>'HelpA'<br>&gt;&gt;&gt; word[-10]    # error<br>Traceback (innermost last):<br>  File "&lt;stdin&gt;", line 1<br>IndexError: string index out of range<br></tt></pre>
+                                                  </dd>
+                                                  </dl>
+  
+                                                  <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+最好避免错误的方法是把index看成是指向字元及字元间位置的指标，字串的最开头是0，字串的结尾处就是字串的长度。如下图所示：   </tt></p>
+                                                  <p> </p>
+                                                  <dl>
+                                                  <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt=""> +---+---+---+---+---+ <br> | H | e | l | p | A |<br> +---+---+---+---+---+ <br> 0   1   2   3   4   5 <br>-5  -4  -3  -2  -1<br></tt></pre>
+                                                    </dd>
+                                                    </dl>
+  
+                                                    <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+上图的数字部分第一行代表的是正数的index，由0到字串的长度，第二行代表的是负数的index。字串的切片(slice)很容易就可以看出来，就是两个index之间的所有字元组合成的字串啰。
+  </tt></p>
+                                                    <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+对于正数的index来说，如果两个index都在范围之内，字串的切片(slice)的长度就正好是其两个index相减的结果。举例来说  <code>
+word[1:3]</code> 的长度就正好是 2。   </tt></p>
+                                                    <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+Python内建的 <tt class="function">len()</tt> 函式可以帮助我们得到字串的长度值。   </tt></p>
+                                                    <p> </p>
+                                                    <dl>
+                                                    <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; s = 'supercalifragilisticexpialidocious'<br>&gt;&gt;&gt; len(s)<br>34<br></tt></pre>
+                                                      </dd>
+                                                      </dl>
+  
+                                                      <p>  </p>
+                                                      <h2> <tt class="samp" string[subscprt:subscprt]</tt=""><br>
+ 3.1.3 Unicode 字串   </tt></h2>
+  
+                                                      <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+从Python 2.0 开始Python支援一种新的储存文字资料的资料型态：Unicode物件(object)。使用这个物件你可以储存并控制Unicode的资料(详见
+                                                      <a class="url" href="http://www.unicode.org">
+http://www.unicode.org <img src="../icons/offsite.gif" border="0" class="offsitelink" height="15" width="17" alt="[off-site link]"></a>
+) ，并且这个物件跟已经存在的字串(string)物件是完全可以互相整合，并且在需要时可以互相转换的。   </tt></p>
+                                                      <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+使用Unicode的好处是可以处理各种不同国家语言的字元。在Unicode之前，在一个code page里只有256个字元可以使用在script中。这个限制的结果常常造成软体国际化(internationalizetion，通常写作
+"<tt class="samp">i18n</tt>" -- "<tt class="character">i</tt>" + 18个字元  +
+"<tt class="character">n</tt>")时候的困扰。Unicode的出现定义一个所有script都可以用的code page，如此就解决了这个问题。 
+ </tt></p>
+                                                      <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+在Python中要创造一个Unicode字串就跟创造一个普通字串一样容易：   </tt></p>
+                                                      <p> </p>
+                                                      <dl>
+                                                      <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; u'Hello World !'<br>u'Hello World !'<br></tt></pre>
+                                                        </dd>
+                                                        </dl>
+  
+                                                        <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+在引号之前小写的 "<tt class="character">u</tt>" 代表这个字串是一个Unicode字串。如果你要用到特殊字元，你可能要使用Python的Unicode特殊字元编码( 
+                                                        <i>Unicode-Escape</i>
+ encoding)。底下的范例示范如何使用之：   </tt></p>
+                                                        <p> </p>
+                                                        <dl>
+                                                        <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; u'Hello\\u0020World !'<br>u'Hello World !'<br></tt></pre>
+                                                          </dd>
+                                                          </dl>
+  
+                                                          <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+上面的 <code> <br>
+ u0020</code> 表示在这个位置要插入一个由十六位元0x0020所代表的Unicode字元 (就是空白字元啦)。   </tt></p>
+                                                          <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+其他的字元也是一样的会被解读为其对应的Unicode字元。由于Unicode对应中的前256 个Unicode字元正好就是大部分欧美国家使用的Latin-1
+编码字元，所以其转换是更加的容易。   </tt></p>
+                                                          <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+对于专家们来说，有一个字串的原始模式(raw mode)可以使用。你必须再加上一个小写 'r' 来使Python 使用这一个原始的Unicode特殊字元编码(
+                                                          <i>Raw-Unicode-Escape</i>
+ encoding)。只有当  <code> <br>
+ uXXXX</code> 之中的小写 'r' 有奇数的'\'时才会用到这一个编码的。  </tt></p>
+                                                          <p> </p>
+                                                          <dl>
+                                                          <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; ur'Hello\u0020World !'<br>u'Hello World !'<br>&gt;&gt;&gt; ur'Hello\\u0020World !'<br>u'Hello\\\\u0020World !'<br></tt></pre>
+                                                            </dd>
+                                                            </dl>
+  
+                                                            <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+这个原始模式(raw mode)通常用在当你的字串里面有一大堆的反斜线 '\' 时 ，例如regular expressions(正规表示)时就常用到。
+  </tt></p>
+                                                            <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+除了这些标准的编码之外， Python还提供了一整套的方法让你可以从以知的编码中创造出Unicode字串来。   </tt></p>
+                                                            <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+Python内建的 <tt class="function">unicode()</tt> p() 函式可以让你使用所有的已注册的Unicode解码/编码系统(codecs
+(COders and DECoders))。 这个 codes 可以与大部分的系统互相转换，包括 <i>Latin-1</i>, <i>ASCII</i>
+, <i>UTF-8</i> 以及  <i>UTF-16</i> 等等。上面所提到的最后两种系统是可变长度的编码系统，可以来储存8位元及16位元的Unicode字元。Python预设使用UTF-8为预设编码系统。当你印出Unicode或是将Unicode写入档案时都会使用到。
+  </tt></p>
+                                                            <p> </p>
+                                                            <dl>
+                                                            <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; u"&auml;&ouml;&uuml;"<br>u'\344\366\374'<br>&gt;&gt;&gt; str(u"&auml;&ouml;&uuml;")<br>'\303\244\303\266\303\274'<br></tt></pre>
+                                                              </dd>
+                                                              </dl>
+  
+                                                              <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+如果你要使用一个特别的编码系统，但是要印出对应的Unicode码时，你可以使用  <tt class="function">unicode()</tt>
+ 函式，加上这个编码系统的名称当作第二个参数。   </tt></p>
+                                                              <p> </p>
+                                                              <dl>
+                                                              <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; unicode('\303\244\303\266\303\274','UTF-8')<br>u'\344\366\374'<br></tt></pre>
+                                                                </dd>
+                                                                </dl>
+  
+                                                                <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+如果要把Unicode字串转换为一般的字串编码时，可以使用Unicode物件的 <tt class="method">encode()</tt>
+方法(method)。   </tt></p>
+                                                                <p> </p>
+                                                                <dl>
+                                                                <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; u"&auml;&ouml;&uuml;".encode('UTF-8')<br>'\303\244\303\266\303\274'<br></tt></pre>
+                                                                  </dd>
+                                                                  </dl>
+  
+                                                                  <p>  </p>
+                                                                  <h2> <tt class="samp" string[subscprt:subscprt]</tt=""><br>
+ 3.1.4 列(List)   </tt></h2>
+  
+                                                                  <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+(译：硬要翻译list实在太不方便，我直接用原文啰)  </tt></p>
+                                                                  <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+Python能够了解一些较为 <i>复杂</i> 的资料型态，这些资料型态大多是用来处理一群的其他资料值。最方便使用的要算是 <i>list</i>
+ 了，一个list可以写成一串由逗号分开的值(东西)，然后用角括号括起来便成。放在list里的东西不需要是同一个资料型态  </tt></p>
+                                                                  <p> </p>
+                                                                  <dl>
+                                                                  <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; a = ['spam', 'eggs', 100, 1234]<br>&gt;&gt;&gt; a<br>['spam', 'eggs', 100, 1234]<br></tt></pre>
+                                                                    </dd>
+                                                                    </dl>
+  
+                                                                    <p> <tt class="samp" string[subscprt:subscprt]</tt="">
+跟字串的index用法相同，list的index也由0开始，同样你可以用index来切割lists、组合两个list等等：  </tt></p>
+                                                                    <p> </p>
+                                                                    <dl>
+                                                                    <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; a[0]<br>'spam'<br>&gt;&gt;&gt; a[3]<br>1234<br>&gt;&gt;&gt; a[-2]<br>100<br>&gt;&gt;&gt; a[1:-1]<br>['eggs', 100]<br>&gt;&gt;&gt; a[:2] + ['bacon', 2*2]<br>['spam', 'eggs', 'bacon', 4]<br>&gt;&gt;&gt; 3*a[:3] + ['Boe!']<br>['spam', 'eggs', 100, 'spam', 'eggs', 100, 'spam', 'eggs', 100, 'Boe!']<br></tt></pre>
+                                                                      </dd>
+                                                                      </dl>
+  
+                                                                      <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">与字串不相同的是，字串的个别字元是不可变动的(
+                                                                      <i>
+immutable</i> )，但是list的个别成员是可以自由改变的。   </tt></p>
+                                                                      <p>
+ </p>
+                                                                      <dl>
+                                                                      <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; a<br>['spam', 'eggs', 100, 1234]<br>&gt;&gt;&gt; a[2] = a[2] + 23<br>&gt;&gt;&gt; a<br>['spam', 'eggs', 123, 1234]<br></tt></pre>
+                                                                        </dd>
+                                                                        </dl>
+  
+                                                                        <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">你也可以设定一个值或是一个list给一个list的切割部分(slice)，但是这样的结果会改变整个list的长度：
+  </tt></p>
+                                                                        <p>
+ </p>
+                                                                        <dl>
+                                                                        <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; # Replace some items:<br>... a[0:2] = [1, 12]<br>&gt;&gt;&gt; a<br>[1, 12, 123, 1234]<br>&gt;&gt;&gt; # Remove some:<br>... a[0:2] = []<br>&gt;&gt;&gt; a<br>[123, 1234]<br>&gt;&gt;&gt; # Insert some:<br>... a[1:1] = ['bletch', 'xyzzy']<br>&gt;&gt;&gt; a<br>[123, 'bletch', 'xyzzy', 1234]<br>&gt;&gt;&gt; a[:0] = a     # Insert (a copy of) itself at the beginning<br>&gt;&gt;&gt; a<br>[123, 'bletch', 'xyzzy', 1234, 123, 'bletch', 'xyzzy', 1234]<br></tt></pre>
+                                                                          </dd>
+                                                                          </dl>
+  
+                                                                          <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">内建的 <tt class="function">
+len()</tt> 函式仍然可用在list上面：   </tt></p>
+                                                                          <p>
+ </p>
+                                                                          <dl>
+                                                                          <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; len(a)<br>8<br></tt></pre>
+                                                                            </dd>
+                                                                            </dl>
+  
+                                                                            <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">一个list也可以是另一个list的成员(这叫作巢状list,
+nested list)，参考下例：  </tt></p>
+                                                                            <p>
+ </p>
+                                                                            <dl>
+                                                                            <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; q = [2, 3]<br>&gt;&gt;&gt; p = [1, q, 4]<br>&gt;&gt;&gt; len(p)<br>3<br>&gt;&gt;&gt; p[1]<br>[2, 3]<br>&gt;&gt;&gt; p[1][0]<br>2<br>&gt;&gt;&gt; p[1].append('xtra')     # See section 5.1<br>&gt;&gt;&gt; p<br>[1, [2, 3, 'xtra'], 4]<br>&gt;&gt;&gt; q<br>[2, 3, 'xtra']<br></tt></pre>
+                                                                              </dd>
+                                                                              </dl>
+  
+                                                                              <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">注意前一个例子，  <code>p[1]</code>
+ 以及  <code>q</code> 事实上指得是同一个物件。我们在之后还会再讨论物件的语法( <i>object semantics</i>
+)。  </tt></p>
+                                                                              <p>
+  </p>
+                                                                              <h1>
+ <tt class="samp" string[subscprt:subscprt]</tt=""><br>
+ 3.2 迈向程式设计的第一步  </tt></h1>
+  
+                                                                              <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">当然Python能做比二加二更有用更复杂的事，例如说，我们可以写一个程式来印出费氏数列(
+                                                                              <i>
+the Fibonacci series</i> )来：   </tt></p>
+                                                                              <p>
+ </p>
+                                                                              <dl>
+                                                                              <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; # Fibonacci series:<br>... # the sum of two elements defines the next<br>... a, b = 0, 1<br>&gt;&gt;&gt; while b &lt; 10:<br>...       print b<br>...       a, b = b, a+b<br>... <br>1<br>1<br>2<br>3<br>5<br>8<br></tt></pre>
+                                                                                </dd>
+                                                                                </dl>
+  
+                                                                                <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">这个范例告诉了我们很多新的事情：   </tt></p>
+                                                                                <p>
+  </p>
+                                                                                <ul>
+ 
+                                                                                  <li><tt class="samp" string[subscprt:subscprt]</tt="">
+程式的第一行是一个多重设定( <i>multiple assignment</i> )：两个变数 <code>a</code> 以及  <code>
+b</code> 同时都设定了新的值0 与 1。 程式的最后一行再次使用这个技巧，这次在设定符号(等号)的右边我们使用了expression，所有在右边的expression会先求得其值(evaluate)然后才进行设定(assign)的动作。对于在右边的expression来说，其evaluate的次序则是由左至右的。
+  </tt>
+                                                                                    <p>
+  </p>
+                                                                                  </li>
+                                                                                  <li><tt class="samp" string[subscprt:subscprt]</tt="">
+在  <tt class="keyword">while</tt> 回圈中，只要条件符合(在这里是  <code>b &lt; 10</code>
+)， 这个while 回圈就会一直执行。与C相同的是，对Python而言只要是非零的整数都代表在决定true/false的情况下都代表true，0则代表false。我们也可以在回圈的条件的地方放入字串或是一个list，只要这个字串或list的长度不是零就代表true，若是空字串或空的list就代表false。在这个例子里，我们比较两个值的大小。比较的运算元与C是完全相同的：
+ <code>&lt;</code> (小于), <code>&gt;</code> (大于), <code>==</code> (等于), <code>
+&lt;=</code> (小于或等于), <code>&gt;=</code> (大于或等于)  以及  <code>!=</code> (不等于)。 
+ </tt>
+                                                                                    <p>
+  </p>
+                                                                                  </li>
+                                                                                  <li><tt class="samp" string[subscprt:subscprt]</tt="">
+在回圈中的执行部分是 <i>缩排</i> 的：缩排在Python中是表示一群叙述的方法(way of grouping statements)。Python没有(还没有)提供够聪明的行排版机制，所以每个要缩排的行你都得打入空白键或是tab键来缩排。实际的工作环境中，你也许会有自己的文字编辑器，大部分的编辑器会自动帮你做缩排的工作。当在互动模式下输入一个复合的statement时(一个由许多statements组合成的statement)，最后你需要再打入一个空白行(译：按ENTER键)来告诉直译器这个statement已经完成了(直译器没办法猜你什么时候完成这个statement)。值得注意的是，如果你的statement是属于同一群(block)的话，你缩排的距离就要是一样的。 
+ </tt>
+                                                                                    <p>
+  </p>
+                                                                                  </li>
+                                                                                  <li><tt class="samp" string[subscprt:subscprt]</tt=""><tt class="keyword">
+print</tt> 这个叙述会印出一个expression的结果值，这点与我们之前所做的仅仅打入expression是不同的。不同之处在于对字串及多个的expression来说，用
+                                                                                    <tt class="keyword">
+print</tt>  不会印出字串的引号，也会在多个expression之间印出空白来，这样会让结果好看一点。如下所示：  </tt>
+                                                                                    <p>
+ </p>
+                                                                                    <dl>
+                                                                                    <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; i = 256*256<br>&gt;&gt;&gt; print 'The value of i is', i<br>The value of i is 65536<br></tt></pre>
+                                                                                      </dd>
+                                                                                      </dl>
+  
+                                                                                      <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">如果不想每次的输出都换行的话可以在 <tt class="keyword">
+print</tt>  叙述之后加上逗号，如下所示：  </tt></p>
+                                                                                      <p>
+ </p>
+                                                                                      <dl>
+                                                                                      <dd><pre class="verbatim"><tt class="samp" string[subscprt:subscprt]</tt="">&gt;&gt;&gt; a, b = 0, 1<br>&gt;&gt;&gt; while b &lt; 1000:<br>...     print b,<br>...     a, b = b, a+b<br>... <br>1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987<br></tt></pre>
+                                                                                        </dd>
+                                                                                        </dl>
+  
+                                                                                        <p>
+ <tt class="samp" string[subscprt:subscprt]</tt="">值得注意的是如果最后一行还没有完成的话，直译器会在印出prompt之前印出新的一行。 
+ </tt></p>
+                                                                                        <p>
+  </p>
+                                                                                      </li>
+                                                                                    </ul>
+  
+                                                                                    <p>
+  </p>
+                                                                                    <div class="navigation">
+                                                                                    <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                                                                                        <tr>
+ <td><a href="node4.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node6.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                                                                                      </tbody>
+                                                                                    </table>
+ <tt class="samp" string[subscprt:subscprt]</tt=""><b class="navlabel">Previous:</b>
+ <a class="sectref" href="node4.html">2. 使用Python的直译器 </a> <b class="navlabel">
+Up:</b> <a class="sectref" href="tut.html">Python 教学文件</a> <b class="navlabel">
+Next:</b> <a class="sectref" href="node6.html">4. 更多流程控制的工具 </a> <br>
+                                                                                    </tt>
+                                                                                    <hr></div>
+ <!--End of Navigation Panel--> 
+                                                                                    <address>
+ </address>
+                                                                                    <hr>
+请看<tt class="samp" string[subscprt:subscprt]</tt=""><i><a href="about.html">
+关于此文件&hellip;</a></i> 里面有关如何给我们建议的说明。  </tt>
+                                                                                    </body>
+                                                                                    </html>

@@ -1,0 +1,1578 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Appendix E</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "appendix e.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/appendix e.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/appendix e.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20d.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle">
+  <img src="rarrow.gif" border="0" width="17" height="19"></td></tr></table>
+<h2 class="docAppendixTitle">Appendix E. Regular Expressions</h2><ul><li>&nbsp;<a class="docLink" href="#ch23lev1sec1">A Simple Example</a></li>
+<li>&nbsp;<a class="docLink" href="#ch23lev1sec2">Pattern Characteristics</a></li>
+<li>&nbsp;<a class="docLink" href="#ch23lev1sec3">Regular Expression Functions and Error and Flags Properties</a></li>
+<li>&nbsp;<a class="docLink" href="#ch23lev1sec4">re Object Methods and Properties</a></li>
+<li>&nbsp;<a class="docLink" href="#ch23lev1sec5">Match Object Methods and Properties</a></li>
+<li>&nbsp;<a class="docLink" href="#ch23lev1sec6">Metacharacters</a></li>
+<li>&nbsp;<a class="docLink" href="#ch23lev1sec7">Putting Things Together</a></li>
+</ul>
+<p class="docText">Jaysen Lorenzen</p>
+<p class="docText">Regular expressions are patterns that match groups of 
+characters. We can use them to find and return (or replace) characters, words, 
+and lines. Python's standard-distribution <span class="docEmphasis">re</span> 
+module derives from Perl's regular expressions, which, like Perl itself, combine 
+features from UNIX utilities such as Awk, Sed, and Grep, and programs like vi 
+and Gnu Emacs. Though the syntax and metacharacters may be slightly different, 
+expressions in any of these tools can be written in Jython.</p>
+<h3 class="docSection1Title" id="ch23lev1sec1">A Simple Example</h3>
+<p class="docText">Let's say that you're looking for a job in the newspaper and 
+you've decided to narrow your focus to ads that say, &quot;Money is no object.&quot; This 
+is the pattern you're searching for, and of course you're looking in the 
+employment section, which is the group of characters you're searching in. You 
+don't care where you find your pattern, only that it's there.</p>
+<p class="docText">If you were writing a Python program to help you find a job, 
+it would start out looking like this:</p>
+<pre>&gt;&gt;&gt; from re import *
+mino = compile(&quot;money is no object&quot;);
+
+for ad in classifieds:
+        if(mino.search(ad)):
+        print ad;</pre>
+<p class="docText">Let's work through this example interactively.</p>
+<p class="docText">Import the <span class="docEmphasis">re</span> module.</p>
+<pre>&gt;&gt;&gt; from re import *</pre>
+<p class="docText">Import class <tt>re</tt>.</p>
+<pre>&gt;&gt;&gt; classifieds = [&quot;School Teacher; salary $20,000.&quot;,&quot;Engineer; salary money
+    is no object&quot;]</pre>
+<p class="docText">Make the variable <tt>classifieds</tt> a list of ads.</p>
+<pre>&gt;&gt;&gt; mino = compile(&quot;money is no object&quot;)</pre>
+<p class="docText">Compile the search phrase, and store in it the <tt>mino</tt> 
+(&quot;money is no object&quot;) object.</p>
+<pre>&gt;&gt;&gt; for ad in classifieds:
+...      if(mino.search(ad)):
+...            print ad
+...</pre>
+<p class="docText">Compare the precompiled expression to each element in the 
+list. If a match is found within an element, print it.</p>
+<pre>'Engineer; salary money is no object'
+&gt;&gt;&gt;</pre>
+<h3 class="docSection1Title" id="ch23lev1sec2">Pattern Characteristics</h3>
+<p class="docText">A pattern can be as small as one character (as in the 
+previous example), matching only itself, or of almost any length. It can contain 
+wildcard and special characters, subexpressions, and so forth, depending on 
+system resources.</p>
+<p class="docText">Our expression &quot;money is no object&quot; is a string of literal 
+characters requiring an exact match in the exact order, but regular expressions 
+can be much more powerful. Say, for example, that you're looking for a job whose 
+salary figure is within a certain range—that is, with a certain number of digits 
+to the left of the decimal. To find all records with two digits before the comma 
+and three digits after, you can write this expression:</p>
+<pre>&gt;&gt;&gt; reStr = r'\$..,...\.'</pre>
+<p class="docText">Then you can compile and match it against a string.</p>
+<pre>&gt;&gt;&gt; cre = compile(reStr)
+&gt;&gt;&gt; cre.search(&quot;salary: $90,000.00&quot;)</pre>
+<p class="docText">The figure $90,000 matches, and the statement returns a match 
+object.</p>
+<h4 class="docSection2Title" id="ch23lev2sec1">The Raw String Construct</h4>
+<p class="docText">Notice the <tt>r'...'</tt> construct in the code above. This 
+denotes a raw string—that is, one with its backslash (\) escaped characters left 
+intact. In this case the <tt>$</tt> and the decimal are the special characters 
+that must be escaped to be matched with a wildcard or metacharacter.</p>
+<p class="docText">Actually, the pattern above would work without the raw string 
+construct, but I wanted to introduce it early on because its absence can 
+occasionally cause problems, as you can see in the following examples.</p>
+<p class="docText">The following expression, with <tt>r'...'</tt>, returns a 
+match:</p>
+<pre>&gt;&gt;&gt; STR = r'(\be[ a-z][ a-z])'
+&gt;&gt;&gt; cre = compile(STR)
+&gt;&gt;&gt; cre.search(&quot;the beg the end&quot;)</pre>
+<p class="docText">Its matched text is <tt>end</tt>, gotten with <tt>group</tt>.</p>
+<pre>&gt;&gt;&gt; cre.search(&quot;the beg the end&quot;).group()
+'end'</pre>
+<p class="docText">This one, without <tt>r'...'</tt>, doesn't get a match:</p>
+<pre>&gt;&gt;&gt; STR = &quot;(\be[ a-z][ a-z])&quot;
+&gt;&gt;&gt; cre = compile(STR)
+&gt;&gt;&gt; cre.search(&quot;the beg the end&quot;)
+&gt;&gt;&gt;</pre>
+<p class="docText">A look at the two expressions' patterns shows why. Here's the 
+first one:</p>
+<pre>&gt;&gt;&gt; STR = r'(\be[ a-z][ a-z])'
+&gt;&gt;&gt; cre = compile(STR)
+&gt;&gt;&gt; cre.pattern</pre>
+<p class="docText">which returns</p>
+<pre>'(\\be[ a-z][ a-z])'</pre>
+<p class="docText">Here's the second one:</p>
+<pre>&gt;&gt;&gt; STR = &quot;(\be[ a-z][ a-z])&quot;
+&gt;&gt;&gt; cre = compile(STR)
+&gt;&gt;&gt; cre.pattern</pre>
+<p class="docText">which returns</p>
+<pre>'(\be[ a-z][ a-z])'</pre>
+<p class="docText">The lesson is, use the raw string construct whenever a normal 
+string might cause confusion. It can't hurt.</p>
+<h4 class="docSection2Title" id="ch23lev2sec2">Wildcard Metacharacters</h4>
+<p class="docText">In regular expression patterns, the period is a wildcard, 
+that is, a special character that by default matches any character except a 
+newline (<tt>\n</tt>). In our example, <tt>'\$..,...\'</tt> says in English,
+<span class="docEmphasis">A dollar sign followed by any two characters, except a 
+newline, followed by a comma, then any three non-newline characters and a 
+period.</span> Thus, $XX,XXX or $00,000 or even a dollar sign and six spaces 
+makes a match. Of course, this isn't very useful, so we have to narrow our 
+search. One way to do this is with a character class instead of a metacharacter.</p>
+<h4 class="docSection2Title" id="ch23lev2sec3">Character Classes</h4>
+<p class="docText">A character class is a group of characters enclosed in 
+brackets, only one of which is required for the sequence to match. In our salary 
+example, each period can be replaced with a class of numbers such as <tt>
+[0123456789]</tt>, which gets the job done but is hard to read. Fortunately, a 
+class can contain a range of characters expressed as <tt>[0</tt>-<tt>9]</tt>, 
+which makes for easier reading.</p>
+<pre>r'\$[0-9][0-9],[0-9][0-9][0-9]\.'</pre>
+<p class="docText">This is still a bit unwieldy. Read on.</p>
+<h4 class="docSection2Title" id="ch23lev2sec4">Escaped Special Characters</h4>
+<p class="docText">A number of escaped characters have special meaning. The <tt>
+\d</tt> character, for example, matches any decimal digit and is equal to <tt>
+[0-9]</tt>, so our expression can be written as</p>
+<pre>r'\$\d\d,\d\d\d\.'</pre>
+<p class="docText">Easier still, but wait, there's more.</p>
+<h4 class="docSection2Title" id="ch23lev2sec5">Multiplier Characters</h4>
+<p class="docText">Multiplier characters modify, or multiply, the character to 
+their immediate left. The most popular (and sometimes the most dangerous) is the 
+asterisk (<tt>*</tt>), which requires 0 or more of the characters to its left to 
+produce a match. In our case, all of the digit characters are mandatory, so we 
+need another multiplier, +, which matches one or more of the characters to its 
+right. Now our expression can be written as</p>
+<pre>r'\$\d+,\d+\.'</pre>
+<p class="docText">This is shorter and easier, but we still have a problem. The 
++ character matches one or more of the preceding characters, which means that a 
+salary such as $9999,99999 would be caught in its net. To avoid this, we use the 
+sequence <tt>{min,max}</tt>, which requires at least <tt>min</tt> and no more 
+than <tt>max</tt> repetitions of the character to the immediate left to produce 
+a match.</p>
+<p class="docText">Our expression can now be written precisely as</p>
+<pre>r'\$\d{2,2},\d{3,3}\.'</pre>
+<p class="docText">The only remaining problem is that we'll get salaries as low 
+as $00,000 and as high as $99,999, but we can fix this by converting part of our 
+pattern back to a character class containing a more sensible range. Finally, our 
+expression can be written as</p>
+<pre>r'\$[5-7]\d,\d{3,3}\.'</pre>
+<p class="docText">which allows salaries only in the range of $50,000 to 
+$79,000.</p>
+<h4 class="docSection2Title" id="ch23lev2sec6">Grouping and Backreferences</h4>
+<p class="docText">A very useful feature of Python regular expressions is their 
+ability to reference (or &quot;backreference&quot;) text previously matched and reuse it. 
+Suppose we're looking for a salary in the range of $XX,XXX,XXX. We can extend 
+our expression by adding another set of <tt>\d{3,3}</tt>, but, since we already 
+have this written, we can reuse it instead. To capture the pattern we use the
+<tt>(...)</tt> sequence.</p>
+<pre>r'\$[5-7]\d(,\d{3,3})\.'</pre>
+<p class="docText">The piece enclosed in parentheses is called a group or a 
+subexpression. We can use it to add another three digits to our search.</p>
+<p class="docText">Groups are referenced within the expression by their numeric 
+position and escaped by a backslash. The group numbers are determined by a count 
+of the open parentheses starting from the left: (1 )(2 )(3 (4 )). Now we can 
+extend our expression like so:</p>
+<pre>r'\$[5-7]\d(,\d{3,3})\1\.'</pre>
+<p class="docText">The <tt>\1</tt> gives us another set of <tt>,\d{3,3}</tt>, 
+and our expression thus matches our chosen range.</p>
+<h4 class="docSection2Title" id="ch23lev2sec7">The Match Object—A Brief Introduction</h4>
+<p class="docText">In Python, when a match is found a match object is returned. 
+The match object and its properties will be dealt with later, but we'll give it 
+a brief look here.</p>
+<p class="docText">Here's our salary example compiled and matched against the 
+list of classifieds, now with some added records and capturing the match object 
+for later use.</p>
+<pre>&gt;&gt;&gt; from re import *
+
+&gt;&gt;&gt; classifieds = [&quot;School Teacher; salary $20,000.&quot;,&quot;Engineer; salary money
+is no object&quot;,&quot;Bicycle Racer; salary $75,000,000.&quot;]
+
+&gt;&gt;&gt; for ad in classifieds:
+...     mo = mino.search(ad)
+...     if mo:
+...                   print ad
+...             print mo.group(1)
+...</pre>
+<p class="docText">The output is the ad in which the match was found on the 
+first line and only the text matched by group 1 on the second line.</p>
+<pre>Bicycle Racer; salary $75,000,000.
+,000</pre>
+<h4 class="docSection2Title" id="ch23lev2sec8">Alternation</h4>
+<p class="docText">Alternation, which requires the special, or meta-, sequence
+<tt>...|...</tt>, works in any type of expression in which the character class 
+operates only with literal characters or ranges. Within a pattern, characters, 
+classes, groups, or special characters separated by a bar (|) need only one item 
+from either side to match.</p>
+<pre>a|b|c|d matches a or b or c or d
+abc|xyz matches abc or xyz
+123|[123] matches 123 or 1 or 2 or 3</pre>
+<p class="docText">Within a longer expression, the alternation sequence is used 
+like this:</p>
+<pre>&quot;(thousands|tons) of copies&quot;</pre>
+<p class="docText">which matches &quot;thousands of copies&quot; or &quot;tons of copies.&quot;</p>
+<p class="docText">We can use alternation to enhance our salary pattern by 
+allowing numbers in the range $50,000,000 to $79,999,999 or in the range 
+$50,000,000,000 to $79,999,999,999. All we have to do is replace the <tt>\1</tt> 
+with <tt>(\1</tt>|<tt>\1\1)</tt>.</p>
+<pre>r'\$[5-7]\d(,\d{3,3})(\1|\1\1)\.'</pre>
+<h3 class="docSection1Title" id="ch23lev1sec3">Regular Expression Functions and Error and Flags 
+Properties</h3>
+<p class="docText">The following sections describe the individual regular 
+expression functions, including their syntax, use, arguments, and return values. 
+Also described are the error and flag properties.</p>
+<h4 class="docSection2Title" id="ch23lev2sec9">compile()</h4>
+<pre>compile (pattern[, flags])</pre>
+<p class="docText">The <tt>compile()</tt> function compiles a regular expression 
+pattern, as a string, into a regular expression object. It enables the object to 
+operate like the <tt>search()</tt> and <tt>match()</tt> functions and to be 
+reused for subsequent searches. If the same expression is applied to many 
+searches within a program and/or will never change, precompiling it and reusing 
+it goes faster.</p>
+<p class="docText"><tt>compile()</tt>'s arguments are</p>
+<ul>
+  <li>
+  <p class="docText"><tt>pattern</tt>— the pattern, as a string, to search for</li>
+  <li>
+  <p class="docText"><tt>flags</tt>— one or more of the following variables: <tt>
+  I</tt>, <tt>IGNORECASE</tt>; <tt>L</tt>, <tt>LOCALE</tt>; <tt>M</tt>, <tt>
+  MULTILINE</tt>; <tt>X</tt>, <tt>VERBOSE</tt></li>
+</ul>
+<p class="docText">It returns a regular expression.</p>
+<pre>&gt;&gt;&gt; CompiledRE = compile(&quot;199[0-9].*&quot;)
+&gt;&gt;&gt; CompiledRE.search(&quot;party like it's 1999&quot;)</pre>
+<h4 class="docSection2Title" id="ch23lev2sec10">search()</h4>
+<pre>Search (pattern, string[, flags])</pre>
+<p class="docText">The <tt>search()</tt> function searches for <tt>pattern</tt> 
+anywhere in <tt>string</tt>. It has the following arguments:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>pattern</tt>— the pattern, as a string, to search for</li>
+  <li>
+  <p class="docText"><tt>string</tt>— the string to search in</li>
+  <li>
+  <p class="docText"><tt>flags</tt>— one or more of the variables <tt>I</tt>,
+  <tt>IGNORECASE</tt>; <tt>L</tt>, <tt>LOCALE</tt>; <tt>M</tt>, <tt>MULTILINE</tt>;
+  <tt>X</tt>, <tt>VERBOSE</tt></li>
+</ul>
+<p class="docText">It returns a match object:</p>
+<pre>&gt;&gt;&gt; search(&quot;199[0-9]$&quot;,&quot;party like it's 1999&quot;)</pre>
+<p class="docText">or it returns <tt>None</tt>, which means the search failed.</p>
+<pre>&gt;&gt;&gt; search(&quot;199[0-9]$&quot;,&quot;party like it's 2009&quot;)</pre>
+<h4 class="docSection2Title" id="ch23lev2sec11">match()</h4>
+<pre>match (pattern, string[, flags])</pre>
+<p class="docText">The <tt>match()</tt> function searches for a pattern at the 
+beginning of a string and has the following arguments:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>pattern</tt>— the pattern, as a string, to search for</li>
+  <li>
+  <p class="docText"><tt>string</tt>— the string to search in</li>
+  <li>
+  <p class="docText"><tt>flags</tt>— one or more of the variables <tt>I</tt>,
+  <tt>IGNORECASE</tt>; <tt>L</tt>, <tt>LOCALE</tt>; <tt>M</tt>, <tt>MULTILINE</tt>;
+  <tt>X</tt>, <tt>VERBOSE</tt></li>
+</ul>
+<p class="docText">It returns a match object:</p>
+<pre>&gt;&gt;&gt; match(&quot;199[0-9]&quot;,&quot;1999 like party&quot;)</pre>
+<p class="docText">or it returns <tt>None</tt>.</p>
+<pre>&gt;&gt;&gt; match(&quot;199[0-9]&quot;,&quot;party like it's 1999&quot;)</pre>
+<h4 class="docSection2Title" id="ch23lev2sec12">split()</h4>
+<pre>Split (pattern, string[, maxsplit = 0])</pre>
+<p class="docText">The <tt>split()</tt> function splits a <tt>string</tt> into a 
+list of strings based on occurrences of the regular expression pattern. The 
+string portions that don't match the pattern are returned as a list of strings. 
+If flags are required with the pattern, a regular expression object, obtained 
+with <tt>compile()</tt>, must be used in place of the pattern string, or the <tt>
+(?iLmsx)</tt> sequences (which will be explained later) must be used within the 
+expression. (The compiled regular expression's <tt>split()</tt> method will 
+achieve the same results.)</p>
+<p class="docText"><tt>split()</tt> has the following arguments:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>pattern</tt>— the pattern, as a string, to search for</li>
+  <li>
+  <p class="docText"><tt>string</tt>— the string to search in</li>
+  <li>
+  <p class="docText"><tt>maxsplit</tt>— the maximum number of splits to make 
+  (the default is 0)</li>
+</ul>
+<p class="docText">It returns a list of strings.</p>
+<pre>from re import *
+
+alist = split(&quot;:&quot;,&quot;OS=Linux:Browser=Netscape:WM=Afterstep&quot;)
+
+for str in alist:
+...     print str</pre>
+<p class="docText">The output is</p>
+<pre>OS=Linux
+Browser=Netscape
+WM=Afterstep</pre>
+<h4 class="docSection2Title" id="ch23lev2sec13">sub()</h4>
+<pre>sub (pattern, replacement,string[, count = 0])</pre>
+<p class="docText">The <tt>sub()</tt> function obtains a string with the 
+non-overlapping occurrences of the expression, starting from the left, replaced 
+by the replacement string. If the optional third argument, <tt>count</tt>, is 
+supplied, only the requested number of occurrences is replaced. If flags are 
+required with the pattern, a regular expression obtained with <tt>compile()</tt> 
+must be used in place of the pattern string. (The compiled regular expression's
+<tt>sub()</tt> method can achieve the same results.)</p>
+<p class="docText">If a function is supplied in place of the replacement string, 
+it's executed for each occurrence of the pattern, and a match object is passed 
+as an argument.</p>
+<p class="docText"><tt>sub()</tt>'s arguments are</p>
+<ul>
+  <li>
+  <p class="docText"><tt>pattern</tt>— the pattern, as a string or a regular 
+  expression object, to search for</li>
+  <li>
+  <p class="docText"><tt>replacement</tt>— the replacement, as a string or 
+  function</li>
+  <li>
+  <p class="docText"><tt>string</tt>— the string to search in</li>
+  <li>
+  <p class="docText"><tt>count</tt>— a non-negative number, the number of 
+  replacements to make (the default, 0, replaces all occurrences in the string)</li>
+</ul>
+<p class="docText">It returns the modified string if a match is found, or the 
+original argument if there are no matches.</p>
+<pre>From re import *
+from string import *
+
+def toUpper(matchObj):
+   return capitalize(matchObj.group(0))
+
+newStr = sub(&quot;monkey&quot;,toUpper,&quot;monkey see monkey do, ,,&quot;)
+
+print newStr</pre>
+<p class="docText">The output is</p>
+<pre>Monkey see Monkey do, ,,</pre>
+<h4 class="docSection2Title" id="ch23lev2sec14">subn()</h4>
+<pre>subn (pattern, replacement,string[, count = 0])</pre>
+<p class="docText">The <tt>subn()</tt> function is basically the same as <tt>
+sub()</tt> except that it returns a tuple containing the modified or unmodified 
+string and the number of replacements made. Its arguments are</p>
+<ul>
+  <li>
+  <p class="docText"><tt>pattern</tt>— the pattern, as a string or a regular 
+  expression object, to search for</li>
+  <li>
+  <p class="docText"><tt>replacement</tt>— the replacement, as a string or 
+  function</li>
+  <li>
+  <p class="docText"><tt>string</tt>— the string to search in</li>
+  <li>
+  <p class="docText"><tt>count</tt>— a non-negative number, the number of 
+  replacements to make (the default, 0, replaces all occurrences in the string)</li>
+</ul>
+<p class="docText"><tt>subn()</tt> returns a tuple containing the modified 
+string if a match is found (or the original string argument if there are no 
+matches) and containing the count of replacements made, if any.</p>
+<pre>from re import *
+from string import *
+   deftoUpper(matchObj):return capitalize(matchObj.group(0))
+
+tup = subn(&quot;monkey&quot;,toUpper,&quot;monkey see monkey do, ,,&quot;)
+
+print &quot;In \&quot; %s \&quot; there were %s replacements&quot; % tup</pre>
+<p class="docText">The output is</p>
+<pre>In &quot; Monkey see Monkey do, ,, &quot; there were 2 replacements</pre>
+<h4 class="docSection2Title" id="ch23lev2sec15">escape()</h4>
+<pre>escape(string)</pre>
+<p class="docText"><tt>escape()</tt> escapes all nonalphanumeric characters 
+before passing the expression to the compiler, and returns a string with all 
+metacharacters escaped.</p>
+<p class="docText">Here's an example in which the <tt>compile()</tt> function 
+fails because there are unmatched parentheses:</p>
+<pre>&gt;&gt;&gt; from re import *
+&gt;&gt;&gt; strVar = &quot;((group&quot;))
+&gt;&gt;&gt; cre = compile(strVar)
+
+  Traceback (innermost last):
+    File &quot;&lt;console&gt;&quot;, line 1, in ?
+  re.error: Unmatched parentheses.</pre>
+<p class="docText">In this example, the non-alphanumeric characters are escaped, 
+so the <tt>compile()</tt> function works:</p>
+<pre>&gt;&gt;&gt; cre = compile(escape(strVar))
+&gt;&gt;&gt; cre.search(&quot;((group 1)group 2)&quot;)
+
+org.python.modules.MatchObject@80cceb1</pre>
+<h4 class="docSection2Title" id="ch23lev2sec16">error</h4>
+<p class="docText">The error exception is raised when an illegal expression is 
+passed to a function. It has the form</p>
+<pre>try:
+...    match statement
+except error,e:
+...    handle the error</pre>
+<p class="docText">The optional argument to the <tt>except</tt> statement is a 
+variable to catch the argument sent to the <tt>raise</tt> statement at the time 
+of the error. This can be used in the <tt>handler</tt> statement to alert the 
+user to a mistake.</p>
+<pre>&gt;&gt;&gt; from re import *
+&gt;&gt;&gt; try:
+...    search(&quot;[[[&quot;,&quot;This is a test&quot;)
+... except error,e:
+...    print e
+...</pre>
+<p class="docText">The output is</p>
+<pre>Unmatched [] in expression.
+&gt;&gt;&gt;</pre>
+<h4 class="docSection2Title" id="ch23lev2sec17">flags</h4>
+<p class="docText">The <tt>compile()</tt>, <tt>search()</tt>, and <tt>match()</tt> 
+functions can take a number of options (or modes). These options are set via the 
+functions' optional <tt>flags</tt> argument and are the same for all. A common 
+example is <tt>IGNORECASE</tt>, which specifies the match as case-insensitive. 
+Thus, if the ad list contains</p>
+<pre>classifieds = [&quot;School Teacher; salary $20,000&quot;,&quot;Engineer; salary Money is NO
+              OBJECT&quot;]</pre>
+<p class="docText">the expression is written as</p>
+<pre>mino = compile(&quot;money is no object&quot;,I)</pre>
+<p class="docText">or</p>
+<pre>mino = compile(&quot;money is no object&quot;,IGNORECASE)</pre>
+<p class="docText">The flags available at compile time are listed and described 
+in <a class="docLink" href="?xmlid=0-201-61616-5/app05lev1sec4#app05table01">
+Table E-1</a> (on next page).</p>
+<p class="docText">Note that, as of this writing, the <tt>LOCALE</tt> and <tt>
+VERBOSE</tt> flags aren't fully implemented; that is, their values are set to 0, 
+which is the same as not being set at all. You can get <tt>VERBOSE</tt> 
+functionality by setting the flags integer to <tt>32</tt> instead of <tt>X</tt> 
+or <tt>VERBOSE</tt>, but check your release first, since in CPython this value 
+is 2.</p>
+<h3 class="docSection1Title" id="ch23lev1sec4">re Object Methods and Properties</h3>
+<p class="docText">The sections that follow describe the syntax, use, and 
+arguments of regular expression object methods and properties.</p>
+<h4 class="docSection2Title" id="ch23lev2sec18">search()</h4>
+<pre>&lt;re object&gt;.search (string[, pos][, endpos])</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 class="docTableTitle">Table E-1. Optional Flags for Regular Expression 
+  Functions</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Flag</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Behavior</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Example</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>I (IGNORECASE)</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Ignore case when 
+    searching. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>search(&quot;^exam&quot;,&quot;Example&quot;,I)
+returns a match object
+search(&quot;^exam&quot;,&quot;Example&quot;)
+returns None</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>L (LOCALE)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The metacharacters <tt>\w</tt>,
+    <tt>\W</tt>, <tt>\b</tt>,<tt>\B</tt> are made to fit the currentlocale. </td>
+    <td class="docTableCell" vAlign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>M (MULTILINE)</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">The metacharacter <tt>^</tt> 
+    matches at the beginning of the string and just after each newline 
+    character. The <tt>$</tt> metacharacter matches at the end of the string and 
+    just before each newline character (by default <tt>^</tt> matches only at 
+    the beginning of the string and <tt>$</tt> matches only at the end of the 
+    string). </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>var = &quot;A\nB&quot;.
+
+search(&quot;^B&quot;,var,M)
+returns a match object
+
+search(&quot;^B&quot;,var) returns
+None</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>S (DOTALL)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">The &quot;<tt>.</tt>&quot; 
+    metacharacter matches any character, including the newline. (The default is 
+    for &quot;<tt>.</tt>&quot;to match anything but a newline.) </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>var = &quot;A\nB&quot;
+
+search(&quot;.B&quot;,var,S)
+returns a match object
+
+search(&quot;.B&quot;,var)
+returns None</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>X (VERBOSE)</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Allows formatting of the 
+    regular expression. Whitespace within the expression is ignored, except when 
+    it's in a character class or preceded by an unescaped backslash. If a <tt>#</tt> 
+    character is inserted, all text from the leftmost <tt>#</tt> is ignored, 
+    except when the <tt>#</tt> is within a character class or preceded by an 
+    unescaped backslash. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>exp = &quot;&quot;&quot;
+  # Start of regex
+
+  ^t # starts with &quot;t&quot;
+  [a-z] # is a lcase char
+  * # any qty of
+  t$ # ends with &quot;t&quot;
+
+  # end of expression
+&quot;&quot;&quot;
+
+  regex = compile(exp,X)
+  regex.search(&quot;test&quot;)
+  Returns a match object
+  regex = compile(exp)
+  regex.search(&quot;test&quot;)
+  Returns None</pre>
+    </td>
+  </tr>
+</table>
+<p class="docText">The <tt>search()</tt>method looks for compiled regular 
+expressions anywhere in a string. If the optional parameter <tt>pos</tt> is 
+supplied, the search starts at position <tt>pos</tt>. If the optional parameter
+<tt>endpos</tt> is supplied, the search continues only until <tt>endpos</tt> is 
+reached. The default is from position 0 to the end of the string. The return 
+value is a match object.</p>
+<p class="docText"><tt>search()</tt> has the following arguments:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>string</tt>— the string to search in</li>
+  <li>
+  <p class="docText"><tt>pos</tt>— the position in the string to start the 
+  search</li>
+  <li>
+  <p class="docText"><tt>endpos</tt>— the position in the string to stop the 
+  search</li>
+</ul>
+<p class="docText">Here's an example:</p>
+<pre>cre = compile(&quot;199[0-9]$&quot;)
+cre.search(&quot;party like it's 1999&quot;)</pre>
+<h4 class="docSection2Title" id="ch23lev2sec19">match()</h4>
+<pre>&lt;re object&gt;.match (string[, pos][, endpos])</pre>
+<p class="docText">The <tt>match()</tt>method searches for a regular expression 
+at the beginning of a string. If the optional parameter <tt>pos</tt> is 
+supplied, the search starts at position <tt>pos</tt>, which is considered the 
+start. If the optional parameter <tt>endpos</tt> is supplied, the search ends 
+when <tt>endpos</tt> is encountered. The default is from position 0 to the end 
+of the string. The return is a match object.</p>
+<p class="docText">Here's an example that doesn't match because the test isn't 
+at the beginning of the string. Therefore, nothing is printed out.</p>
+<pre>&gt;&gt;&gt; cre = compile(&quot;test&quot;)
+
+&gt;&gt;&gt; if (cre.match(&quot;This is a test&quot;)):
+...      print &quot;From beginning \n&quot;</pre>
+<p class="docText">Here's an example in which the starting position is 10. A 
+match is returned only if the expression is found at the beginning of the 
+string.</p>
+<pre>&gt;&gt;&gt; if (cre.match(&quot;This is a test&quot;,10)):
+...      print &quot;From pos 10 - \n&quot;</pre>
+<h4 class="docSection2Title" id="ch23lev2sec20">split()</h4>
+<pre>&lt;re object&gt;.split (string[, maxsplit = 0])</pre>
+<p class="docText">The <tt>split()</tt> method splits a &quot;<a class="docLink" href="#ch23lev2sec32">string</a>&quot; 
+into a list of strings based on the occurrences of the compiled regular 
+expression to which the string is being compared. The portions of the string 
+that don't match are returned as a list of strings.</p>
+<p class="docText"><tt>split()</tt>'s arguments are</p>
+<ul>
+  <li>
+  <p class="docText"><tt>string</tt>— the string to search in</li>
+  <li>
+  <p class="docText"><tt>maxsplit</tt>— the maximum number of splits to make 
+  (the default is 0)</li>
+</ul>
+<p class="docText">Here's an example:</p>
+<pre>&gt;&gt;&gt; from re import *
+
+&gt;&gt;&gt; cre = compile(&quot;:&quot;)
+
+&gt;&gt;&gt; alist = cre.split(&quot;OS=Linux:Browser=Netscape:WM=Afterstep&quot;)
+
+&gt;&gt;&gt; for str in alist:
+...      print str</pre>
+<p class="docText">The output is</p>
+<pre>OS=Linux
+Browser=Netscape
+WM=Afterstep</pre>
+<h4 class="docSection2Title" id="ch23lev2sec21">sub()</h4>
+<pre>&lt;re object&gt;.sub (replacement,string[, count = 0])</pre>
+<p class="docText">The <tt>sub()</tt> method achieves the same result as the <tt>
+sub()</tt> function described previously and has the same arguments (except <tt>
+pattern</tt>). Unlike the <tt>sub()</tt> function, however, which returns a list 
+of strings, the <tt>sub()</tt> method returns the modified string if a match is 
+found, or the original string argument if there are no matches.</p>
+<pre>&gt;&gt;&gt; from re import *
+&gt;&gt;&gt; from string import *
+
+&gt;&gt;&gt; def toUpper(matchObj):
+...      return capitalize(matchObj.group(0))
+
+cre = compile(&quot;monkey&quot;)
+newStr = cre.sub(toUpper,&quot;monkey see monkey do, ,,&quot;)
+
+print newStr</pre>
+<p class="docText">The output is</p>
+<pre>Monkey see Monkey do, ,,</pre>
+<h4 class="docSection2Title" id="ch23lev2sec22">subn()</h4>
+<pre>&lt;re object&gt;.subn (replacement,string[, count = 0])</pre>
+<p class="docText">The <tt>subn()</tt> method performs similarly to the <tt>subn()</tt> 
+function described previously. As shown in the following example, it uses the 
+same arguments (except for <tt>pattern</tt>) and returns a tuple.</p>
+<pre>from re import *
+from string import *
+
+def toUpper(matchObj):
+return capitalize(matchObj.group(0))
+
+cre = compile(&quot;monkey&quot;)
+tup = cre.subn(toUpper,&quot;monkey see monkey do, ,,&quot;)
+
+print &quot;In \&quot; %s \&quot; there were %s replacements&quot; % tup</pre>
+<p class="docText">The output is</p>
+<pre>In &quot; Monkey see Monkey do, ,, &quot; there were 2 replacements</pre>
+<h4 class="docSection2Title" id="ch23lev2sec23">flags</h4>
+<p class="docText">The <tt>flags</tt> property contains an integer that 
+represents the sum of all flags passed to the <tt>compile()</tt> function when 
+the object was created, or 0 if no flags were passed. It can be used to 
+determine if a certain set of flags was passed and can take the place of <tt>
+flag</tt> arguments to subsequent <tt>compile()</tt>, <tt>search()</tt>, or <tt>
+match()</tt> function calls.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Finding a Flag Value</h2>
+      <p class="docText">You can create a match object for a flag to check its 
+      property value (do this one flag at a time; if you try with more than one, 
+      the value becomes their sum). Or you can check the underlying object's <tt>
+      flag</tt> property value, which is the only way to check <tt>VERBOSE</tt> 
+      since <tt>compile(&quot;test&quot;,VERBOSE).flags</tt> or <tt>compile(&quot;test&quot;,VERBOSE)</tt> 
+      returns 0.</p>
+      <p class="docText">To check the underlying values, import the <tt>
+      Perl5Compiler</tt> class, and check the properties like this:</p>
+      <pre>&gt;&gt;&gt; from com.oroinc.text.regex import Perl5Compiler
+
+&gt;&gt;&gt; Perl5Compiler.CASE_INSENSITIVE_MASK
+1
+&gt;&gt;&gt; Perl5Compiler.MULTILINE_MASK
+8
+&gt;&gt;&gt; Perl5Compiler.SINGLELINE_MASK
+16
+&gt;&gt;&gt; Perl5Compiler.EXTENDED_MASK
+32</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText"><tt>flags</tt> returns an integer that represents the sum of 
+all flag values used at the time the object was created, or 0 if no flags were 
+used.</p>
+<pre>&gt;&gt;&gt; from re import *
+&gt;&gt;&gt; compile(&quot;^f&quot;,I).flags
+1
+&gt;&gt;&gt; compile(&quot;^f&quot;,M).flags
+8
+&gt;&gt;&gt; compile(&quot;^f&quot;,I|M).flags
+9
+&gt;&gt;&gt; compile(&quot;^f&quot;,S).flags
+16
+&gt;&gt;&gt; compile(&quot;^f&quot;,M|S).flags
+24
+&gt;&gt;&gt;
+&gt;&gt;&gt; cre = compile(&quot;^f&quot;,M|S)
+&gt;&gt;&gt; compile(&quot;g$&quot;,cre.flags).flags
+24</pre>
+<h4 class="docSection2Title" id="ch23lev2sec24">groupindex</h4>
+<pre>&lt;re object&gt;.groupindex</pre>
+<p class="docText">The <tt>groupindex</tt> property gets a dictionary of the 
+group numbers of the expression that creates the regular expression object, with 
+their symbolic group names as the key, if the groups were created with the <tt>
+(?P&lt;key&gt;...)</tt> construct. It returns such a dictionary or an empty 
+dictionary.</p>
+<pre>&gt;&gt;&gt; from re import *
+&gt;&gt;&gt; cre = compile(r'(?P&lt;first&gt;est)(?P&lt;last&gt;t)')
+&gt;&gt;&gt; dict = cre.groupindex
+&gt;&gt;&gt; dict[&quot;first&quot;]
+1
+&gt;&gt;&gt; dict[&quot;last&quot;]</pre>
+<p class="docText">The output is</p>
+<pre>{}</pre>
+<h4 class="docSection2Title" id="ch23lev2sec25">pattern</h4>
+<pre>&lt;re object&gt;.pattern</pre>
+<p class="docText">The <tt>pattern</tt> property contains the expression, that 
+is, the pattern string, with which the regular expression object was created. It 
+returns a string containing a regular expression.</p>
+<pre>&gt;&gt;&gt; from re import *
+&gt;&gt;&gt; cre = compile(&quot;^t.+t$&quot;)
+&gt;&gt;&gt; cre.pattern</pre>
+<p class="docText">The output is</p>
+<pre>'^t.+t$'</pre>
+<h3 class="docSection1Title" id="ch23lev1sec5">Match Object Methods and Properties</h3>
+<p class="docText">The following sections describe the methods and properties of 
+the match object.</p>
+<h4 class="docSection2Title" id="ch23lev2sec26">group()</h4>
+<pre>&lt;match object&gt;.group([name|num][,name|num]...)</pre>
+<p class="docText">The <tt>group()</tt> method gets matches of each group of the 
+expression, or all matches if no group is specified. If a single argument is 
+passed, the return value is a string containing the group specified. If no 
+arguments are passed, the return value is a string containing the entire match. 
+If a group is in part of a pattern that doesn't match, the return value is <tt>
+None</tt>. If it's in part of the pattern that matches multiple times, the last 
+match is returned.</p>
+<pre>&gt;&gt;&gt; mo = search(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)',&quot;test&quot;)
+&gt;&gt;&gt; mo.group()
+'test'
+&gt;&gt;&gt; mo.group(&quot;first&quot;)
+'t'
+&gt;&gt;&gt; mo.group(&quot;last&quot;)
+'est'
+&gt;&gt;&gt; mo.group(2)
+'est'</pre>
+<p class="docText">The return is a tuple.</p>
+<pre>&gt;&gt;&gt; mo.group(&quot;first&quot;,&quot;last&quot;)
+('t', 'est')
+&gt;&gt;&gt;</pre>
+<h4 class="docSection2Title" id="ch23lev2sec27">groups()</h4>
+<pre>&lt;match object&gt;.groups()</pre>
+<p class="docText">The <tt>groups()</tt> method returns a tuple containing all 
+matched text for all groups of the pattern, including those that don't match. 
+Elements in the tuple representing groups that don't match have a value of <tt>
+None</tt>.</p>
+<pre>&gt;&gt;&gt; mo = search(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)+(o)*',&quot;test&quot;)
+&gt;&gt;&gt; mo.groups()
+('t', 'est', None)
+&gt;&gt;&gt;</pre>
+<h4 class="docSection2Title" id="ch23lev2sec28">groupdict()</h4>
+<pre>&lt;match object&gt;.groupdict()</pre>
+<p class="docText">The <tt>groupdict()</tt> method returns a dictionary 
+containing all matched text for all groups of the pattern, including those that 
+don't match. Elements in the dictionary representing unmatched groups have a 
+value of <tt>None</tt>.</p>
+<pre>&gt;&gt;&gt; mo = search(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)+(o)*',&quot;test&quot;)
+&gt;&gt;&gt; dict = mo.groupdict()
+&gt;&gt;&gt; print dict[&quot;first&quot;)</pre>
+<h4 class="docSection2Title" id="ch23lev2sec29">start() and end()</h4>
+<pre>&lt;match object&gt;.start([name|num])
+&lt;match object&gt;.end([name|num])</pre>
+<p class="docText">The <tt>start()</tt> and <tt>end()</tt> methods retrieve the 
+starting and ending positions of the groups matched within the string being 
+searched. The optional argument can be a group number (counting from the left of 
+the expression) or a name if the group was named at the time of creation. If no 
+arguments are passed, the start and end positions are the start and end of the 
+entire matched text. The return value for both methods is an integer.</p>
+<pre>&gt;&gt;&gt; mo = search(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)+(o)*',&quot;test&quot;)
+&gt;&gt;&gt; mo.start(1)
+0
+&gt;&gt;&gt; mo.start(2)
+1
+&gt;&gt;&gt; mo.start(&quot;last&quot;)
+1
+&gt;&gt;&gt; mo.end(&quot;last&quot;)
+4
+&gt;&gt;&gt; mo.start(3)
+-1
+
+&gt;&gt;&gt; mo.start()
+0
+&gt;&gt;&gt; mo.end()
+4</pre>
+<h4 class="docSection2Title" id="ch23lev2sec30">span()</h4>
+<pre>&lt;match object&gt;.span([name|num])</pre>
+<p class="docText">The <tt>span()</tt> method returns the starting and ending 
+positions of a matching group as a two-element tuple. The optional argument is a 
+group number (starting from the left of the expression). If no argument is 
+passed, the tuple will contain the start and end positions of the entire matched 
+text. If the group doesn't match at all, the tuple will contain <tt>–1</tt>, <tt>
+–1</tt>.</p>
+<pre>&gt;&gt;&gt; mo = search(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)+(o)*',&quot;test&quot;)
+&gt;&gt;&gt; mo.span(1)
+(0, 1)
+&gt;&gt;&gt; mo.span(2)
+(1, 4)
+&gt;&gt;&gt; mo.span(3)
+(-1, -1)</pre>
+<h4 class="docSection2Title" id="ch23lev2sec31">pos and endpos</h4>
+<pre>&lt;match object&gt;.pos
+
+&lt;match object&gt;.pos</pre>
+<p class="docText">The <tt>pos</tt> property returns the <tt>pos</tt> value, as 
+an integer, passed to the <tt>search()</tt> or <tt>match()</tt> method. The <tt>
+endpos</tt> property returns the <tt>endpos</tt> value, as an integer, passed to 
+those methods.</p>
+<h4 class="docSection2Title" id="ch23lev2sec32">string</h4>
+<pre>&lt;match object&gt;.string</pre>
+<p class="docText">The <tt>string</tt> property returns the string, as a string 
+to be searched and passed to the <tt>search()</tt> or <tt>match()</tt> method.</p>
+<h4 class="docSection2Title" id="ch23lev2sec33">re</h4>
+<pre>&lt;match object&gt;.re</pre>
+<p class="docText">The <tt>re</tt> property gets a reference to the regular 
+expression object from which the match was triggered. It returns a regular 
+expression object.</p>
+<pre>&gt;&gt;&gt; from re import *
+# from a standard re object
+&gt;&gt;&gt; cre = compile(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)+(o)*')
+
+&gt;&gt;&gt; mo.re.groupindex
+{'last': 2, 'first': 1}
+
+# Retrieve the re object from the search function.
+
+&gt;&gt;&gt; mo = search(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)+(o)*',&quot;test&quot;)
+&gt;&gt;&gt; mo.re
+org.python.modules.RegexObject@80ce6f2
+
+&gt;&gt;&gt; mo.re.groupindex
+{'last': 2, 'first': 1}
+
+&gt;&gt;&gt; mo.re.pattern
+'(?P&lt;first&gt;t)(?P&lt;last&gt;est)+(o)*'</pre>
+<h3 class="docSection1Title" id="ch23lev1sec6">Metacharacters</h3>
+<p class="docText">The Python metacharacters, or special characters and 
+sequences, are listed and described in <a class="docLink" href="#app05table02">
+Tables E–2</a> and
+<a class="docLink" href="#app05table03">E-3</a>.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 class="docTableTitle" id="app05table02">Table E-2. Python Metacharacters (Single Characters)</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Metacharacter</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Behavior</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Example</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>.</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches any character 
+    except a newline, by default. If the <tt>DOTALL</tt> flag has been 
+    specified, this matches any character, including a newline. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>search(&quot;.B&quot;,&quot;AB&quot;)
+returns a match object
+
+search(&quot;.B&quot;,&quot;A\nB&quot;)
+returns None</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>^</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches at the beginning 
+    of a string and, if the <tt>MULTILINE</tt> flag is used, also matches 
+    immediately after each newline. Used as the first character of the 
+    expression or group to match at the beginning of a string. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>search(&quot;^cat&quot;,&quot;cats&quot;)
+returns a match object
+
+search(&quot;^cat&quot;,&quot;a cat&quot;)
+returns Non</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>$</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches at the end of a 
+    string and, if the <tt>MULTILINE</tt> flag is used, also matches immediately 
+    before each newline. Used as the last character of the expression or group 
+    to match at the end of a line. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>search(&quot;at$&quot;,&quot;cat&quot;)
+returns a match object
+
+search(&quot;at$&quot;,&quot;cats&quot;)
+returns None</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>*</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches zero or more 
+    repetitions of the preceding character, group, or character class. None of 
+    the immediately preceding characters is required to match, and any number of 
+    the immediately preceding characters will match. A greedy multiplier, &quot;<tt>*</tt>&quot; 
+    will match as many repetitions as possible. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>cre = compile(&quot;at*&quot;)
+
+cre.search(&quot;a&quot;)
+cre.search(&quot;at&quot;)
+cre.search(&quot;att&quot;)
+
+cre = compile(&quot;a[td]*&quot;)
+cre.search(&quot;atdt&quot;)
+
+cre = compile(&quot;A(BC)*&quot;)
+search(&quot;ABCBC&quot;)
+all return a match
+search(&quot;e[td]*&quot;,&quot;add&quot;)
+does not return a match</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>+</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches one or more 
+    repetitions of the preceding character, group, or character class. Atleast 
+    one of the immediately preceding characters or groups of characters is 
+    required to match, and any number of the them will match. A greedy 
+    multiplier, &quot;<tt>+</tt>&quot; will match as many repetitions as possible. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>cre = compile(&quot;at+&quot;)
+cre.search(&quot;at&quot;)
+cre.search(&quot;att&quot;)
+
+cre = compile(&quot;a[td]+&quot;)
+cre.search(&quot;atdt&quot;)
+cre = compile(&quot;A(BC)+&quot;)
+search(&quot;ABCBC&quot;)
+
+all return a match
+
+cre = compile(&quot;at+&quot;)
+cre.search(&quot;a&quot;)
+does not return a match</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>?</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches zero or one 
+    repetition of the preceding character, group, or character class. None of 
+    the immediately preceding characters or groups of characters is required to 
+    match, and only one of the them will match. A nongreedy multiplier, &quot;<tt>?</tt>&quot; 
+    will match as few repetitions as possible. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>var = compile(&quot;xa?bc&quot;)
+
+var.search(&quot;xbc&quot;)
+returns a match object
+
+var.search(&quot;xaabc&quot;)
+does not return a match
+
+var.search(&quot;xabc&quot;)
+returns a match object</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>*?</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches zero or more 
+    repetitions of the preceding character, group, or character class. None of 
+    the immediately preceding characters is required to match and any number of 
+    the immediately preceding characters will match. A non-greedy multiplier, &quot;<tt>*?</tt>&quot; 
+    will match as few repetitions as possible. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>cre = compile(&quot;(:.*:)&quot;)
+
+STR = &quot;:one:a:two:&quot;
+
+mo = cre.search(STR)
+mo.group(1)
+
+returns
+':one:a:two:'
+
+cre = compile(&quot;(:.*?:)&quot;)
+
+mo = cre.search(STR)
+mo.group(1)
+returns
+':one:'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>+?</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches one or more 
+    repetitions of the preceding character, group, or character class. One of 
+    the immediately preceding characters is required to match, and any number of 
+    the immediately preceding characters will match. A nongreedy multiplier, &quot;<tt>*?</tt>&quot; 
+    will match as few repetitions as possible. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>cre = compile(&quot;(o+)&quot;)
+
+STR = &quot;Pool&quot;
+
+mo = cre.search(STR)
+mo.group(1)
+
+returns
+'oo'
+
+cre = compile(&quot;(o+?)&quot;)
+mo = cre.search(STR)
+mo.group(1)
+returns
+'o'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">&quot;<tt>??</tt>&quot; </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches zero or one of 
+    the preceding character, group, or character class. None of the immediately 
+    preceding characters is required to match, and only one of the immediately 
+    preceding characters will match. A nongreedy multiplier, &quot;<tt>??</tt>&quot; will 
+    match as few characters as possible. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>cre = compile(&quot;(:.?:)&quot;)
+mo = cre.search(&quot;:::&quot;)
+mo.group(1)
+
+returns
+':::'
+
+cre = compile(&quot;(:.??:)&quot;)
+mo = cre.search(&quot;:::&quot;)
+mo.group(1)
+returns
+'::'</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 class="docTableTitle" id="app05table03">Table E-3. Special Escaped Characters</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Character</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Behavior</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Example</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\&lt;No.&gt;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches the same text 
+    matched previously by the group of the same number. Groups are numbered 1–99 
+    and refer to open parentheses counting from the left. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = &quot;y(aba)d\1&quot;
+cre = compile(STR)
+mo = cre.search(&quot;yabadabadoo&quot;)
+matches yabadaba
+so mo.group()
+returns
+'yabadaba'
+mo.group(1)
+returns
+'aba'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\A</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches at the start of 
+    the string and is equal to the <tt>^</tt> meta-character. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = &quot;(\Athe [a-z])&quot;
+cre = compile(STR)
+mo = cre.search(&quot;the beg the end&quot;)
+mo.group()
+returns
+'the b'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\Z</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches at the end of the 
+    string and is equal to the <tt>$</tt> meta-character. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = &quot;([a-z][a-z][a-z]\Z)&quot;
+cre = compile(STR)
+mo = cre.search(&quot;the beg the end&quot;)
+mo.group()
+returns
+'end'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\b</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches an empty string 
+    at the beginning or ending of a word (that is, a sequence of characters 
+    terminated by whitespace or any non-alphanumeric character). </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'(\be[ a-z][ a-z])'
+cre = compile(STR)
+mo = cre.search(&quot;the beg the end&quot;)
+mo.group()
+returns
+'end</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\B</tt> </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Matches an empty string as long as it's not at the 
+    beginning or ending of a word (that is, a position within a word but not<sup>
+    </sup>between the first or last character and a space, period, etc).</p>
+    <p class="docText">(<span class="docEmphasis">Note:</span> <tt>\B</tt> and
+    <tt>\b</tt> are anchors. They do not match any literal characters, but match 
+    positions with a string.)</td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'(\Be[ a-z][ a-z])'
+cre = compile(STR)
+mo = cre.search(&quot;the beg the end&quot;)
+mo.group()
+returns
+'e b'
+
+STR = r'(\Be\B[ a-z][ a-z])'
+cre = compile(STR)
+mo = cre.search(&quot;the beg the end&quot;)
+mo.group()
+returns
+'eg '</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\d</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches any decimal digit 
+    character. This is equal to <tt>[0–9]</tt>. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'(\B\d[a-z])'
+cre = compile(STR)
+mo = cre.search(&quot;3c59x&quot;)
+mo.group()
+returns
+'9x'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\D</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches any nondigit 
+    character. This is equal to <tt>[^0–9]</tt>. </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'(\d\D\d)'
+cre = compile(STR)
+mo = cre.search(&quot;3c59x&quot;)
+mo.group()
+returns
+'3c5'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\s</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches any whitespace 
+    character. This is equal to <tt>[^\t\n\r\f\v]</tt> </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'(\D\sat)'
+cre = compile(STR)
+mo = cre.search(&quot;look at that&quot;)
+mo.group()
+returns
+'k at'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\S</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Matches any non-whitespace 
+    character. This is equal to <tt>[^ \t\n\r\f\v]</tt> </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'(\D\Sat)'
+cre = compile(STR)
+mo = cre.search(&quot;look at that&quot;)
+mo.group()
+returns
+'that'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\w</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>[a-zA-Z0-9_]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'(\D\D\w\b)'
+cre = compile(STR)
+mo = cre.search(&quot;No. Calif&quot;)
+mo.group()
+returns
+'lif'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>\W</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>[^a-zA-Z0-9_]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>STR = r'\D\D\W'
+cre = compile(STR)
+cre.search(&quot;No. Calif&quot;)
+mo = cre.search(&quot;No. Calif&quot;)
+mo.group()
+returns
+'No.'</pre>
+    </td>
+  </tr>
+</table>
+<h4 class="docSection2Title" id="ch23lev2sec34">Sequences of Characters</h4>
+<p class="docText">The <tt>...</tt>|<tt>...</tt> sequence is used for 
+alternation and means &quot;or.&quot; Its purpose is delimiting multiple subexpressions. 
+The main expression matches if any of the subexpressions match. The | 
+metacharacter has the form</p>
+<pre>&lt;expression (&lt;subexpression&gt;|&lt;subexpression&gt;)&gt;
+&lt;expression&gt;|&lt;expression&gt;</pre>
+<p class="docText">The following expressions both return a match object:</p>
+<pre>&gt;&gt;&gt; search(&quot;cat|dog&quot;,&quot;cat&quot;)
+&gt;&gt;&gt; search(&quot;a pet( cat| dog)*&quot;,&quot;I have a pet dog&quot;)</pre>
+<p class="docText">This expression also matches:</p>
+<pre>&gt;&gt;&gt; search(&quot;a pet( cat| dog)*&quot;,&quot;I have a pet&quot;)</pre>
+<p class="docText">This expression returns <tt>dog</tt>:</p>
+<pre>&gt;&gt;&gt; mo = search(&quot;a pet( cat| dog)*&quot;,&quot;I have a pet dog&quot;)
+&gt;&gt;&gt; mo.group(1)</pre>
+<p class="docText">This expression returns <tt>a pet dog</tt>:</p>
+<pre>&gt;&gt;&gt; mo.group()</pre>
+<p class="docText">The <tt>(...)</tt> sequence has the form</p>
+<pre>&lt;expression (&lt;subexpression&gt;)&gt;</pre>
+<p class="docText">It returns a group if the subexpression with the parentheses 
+matches. Any text matched by the group will be available through the resulting 
+match object's <tt>group()</tt> and <tt>groups()</tt> methods.</p>
+<pre>&gt;&gt;&gt; STR = r'(t\w\w\w) and (t\w\w\w)'
+&gt;&gt;&gt; cre = compile(STR)
+
+&gt;&gt;&gt; mo = cre.search(&quot;this and that&quot;)
+&gt;&gt;&gt; mo.group(1)</pre>
+<p class="docText">returns</p>
+<pre>'this'
+&gt;&gt;&gt; mo.group(2)</pre>
+<p class="docText">returns</p>
+<pre>'that'
+
+&gt;&gt;&gt; mo.groups()</pre>
+<p class="docText">returns</p>
+<pre>('this', 'that')</pre>
+<p class="docText">The <tt>(?iLmsx)</tt> sequence is used as a way to include 
+flags as part of a regular expression. It has the form</p>
+<pre>&lt;expression (?iLmsx)&gt;</pre>
+<p class="docText">This sequence is useful if you need to use the <tt>match()</tt> 
+or <tt>search()</tt> function but have to pass flags with the expression 
+(instead of passing a flag argument to the <tt>compile()</tt> function and then 
+using its <tt>search()</tt> or <tt>match()</tt> methods). The flags can be one 
+or more of the set <tt>i</tt>, <tt>L</tt>, <tt>m</tt>, <tt>s</tt>, and <tt>x</tt>. 
+The corresponding flags are <tt>I</tt>, <tt>L</tt>, <tt>M</tt>, <tt>S</tt>, or
+<tt>X</tt> for the entire expression. (Note that, even though the compile 
+object's flags are passed as all uppercase, only the <tt>L</tt> is passed that 
+way here.) The group containing the sequence itself matches an empty string; if 
+it's sent as the only expression, an empty match object is returned.</p>
+<p class="docText">Here's an example in which a match object is returned:</p>
+<pre>&gt;&gt;&gt; search(&quot;test(?i)&quot;,&quot;THIS IS A TEST&quot;)
+&lt;re.MatchObject instance at 80c87b0&gt;</pre>
+<p class="docText">Here no match object is returned because test doesn't match 
+in the string:</p>
+<pre>&gt;&gt;&gt; search(&quot;test(?i)&quot;,&quot;THIS IS TEXT&quot;)
+&gt;&gt;&gt;</pre>
+<p class="docText">This example returns an empty match object:</p>
+<pre>&gt;&gt;&gt; search(&quot;(?i)&quot;,&quot;THIS IS TEST&quot;)
+&lt;re.MatchObject instance at 80ac768&gt;</pre>
+<p class="docText">The <tt>(?:...)</tt> sequence has the form</p>
+<pre>&lt;expression (?:&lt;subexpression&gt;)&gt;</pre>
+<p class="docText">It treats the subexpression within the parentheses like a 
+regular expression but doesn't return a group if matched. Any text matched by 
+the group is unavailable through the match object returned.</p>
+<pre>&gt;&gt;&gt; STR = r'(~\w+~)(?:\w+)(~\w+~)'
+&gt;&gt;&gt; cre = compile(STR)
+
+&gt;&gt;&gt; mo = cre.search(&quot;~one~two~three~&quot;)
+&gt;&gt;&gt; mo.group(1)</pre>
+<p class="docText">returns</p>
+<pre>'~one~'
+
+&gt;&gt;&gt; mo.group(2)</pre>
+<p class="docText">returns</p>
+<pre>'~three~'</pre>
+<p class="docText">The <tt>(?P&lt;name&gt;...)</tt> sequence has the form</p>
+<pre>&lt;expression (?P&lt;group name&gt; subexpression)&gt;</pre>
+<p class="docText">It matches the subexpression within the parentheses, saving 
+the matched text as a group, just as in regular parentheses, but it allows the 
+group to be given a name that can be referenced later.</p>
+<p class="docText">This expression:</p>
+<pre>&gt;&gt;&gt; mo = search(r'(?P&lt;first&gt;t)(?P&lt;last&gt;est)',&quot;test&quot;)
+&gt;&gt;&gt; mo.group()</pre>
+<p class="docText">returns</p>
+<pre>'test'</pre>
+<p class="docText">This one:</p>
+<pre>&gt;&gt;&gt; mo.group(&quot;first&quot;)</pre>
+<p class="docText">returns</p>
+<pre>'t'</pre>
+<p class="docText">This one:</p>
+<pre>&gt;&gt;&gt; mo.group(&quot;last&quot;)</pre>
+<p class="docText">returns</p>
+<pre>'est'</pre>
+<p class="docText">This one:</p>
+<pre>&gt;&gt;&gt; mo.group(2)</pre>
+<p class="docText">returns</p>
+<pre>'est'</pre>
+<p class="docText">The <tt>(?P=Name...)</tt> sequence has the form</p>
+<pre>&lt;expression (?P=name)&gt;</pre>
+<p class="docText">It matches the text matched by the named group referenced 
+earlier in the sub expression.</p>
+<p class="docText">This example:</p>
+<pre>&gt;&gt;&gt; cre = compile(r'\w(?P&lt;first&gt;aba)\w(?P=first)doo')
+&gt;&gt;&gt; mo = cre.search(&quot;yabadabadoo&quot;)
+&gt;&gt;&gt; mo.group(1)</pre>
+<p class="docText">returns this proper match:</p>
+<pre>'aba'</pre>
+<p class="docText">This one:</p>
+<pre>&gt;&gt;&gt; mo.group(2)</pre>
+<p class="docText">returns an error:</p>
+<pre>Traceback (innermost last):
+  File &quot;&lt;console&gt;&quot;, line 1, in ?
+IndexError: group 2 is undefined
+&gt;&gt;&gt; mo.group()</pre>
+<p class="docText">because there's actually only one group:</p>
+<pre>'yabadabadoo'</pre>
+<p class="docText">The <tt>(?#...)</tt> sequence has the form</p>
+<pre>&lt;expression (?# comment text)&gt;</pre>
+<p class="docText">It allows comments to be inserted in an expression with use 
+of the <tt>VERBOSE</tt> flag. The contents of the group are ignored.</p>
+<pre>&gt;&gt;&gt; cre = compile(r'(yaba)(?#silly example)(daba)doo')
+&gt;&gt;&gt; mo = cre.search(&quot;yabadabadoo&quot;)
+
+&gt;&gt;&gt; mo.group(1)
+returns
+'yaba'
+
+&gt;&gt;&gt; mo.group(2)
+returns
+'daba'</pre>
+<p class="docText">The <tt>(?=...)</tt> sequence has the form</p>
+<pre>&lt;expression (?=&lt;subexpression&gt;)&gt;</pre>
+<p class="docText">It acts as a conditional lookahead and matches <tt>expression</tt> 
+only if it's followed by <tt>subexpression</tt>. Any text matched by the <tt>
+(?=...)</tt> group is unsaved and so is unaccessible via methods such as <tt>
+group()</tt> and <tt>groups()</tt>.</p>
+<p class="docText">This example doesn't return a match object:</p>
+<pre>&gt;&gt;&gt; cre = compile(r'Jython (?=1\.1)')
+&gt;&gt;&gt; cre.search(&quot;Jython is stable&quot;)</pre>
+<p class="docText">This one does:</p>
+<pre>&gt;&gt;&gt; cre.search(&quot;Jython 1.1 is stable&quot;)
+
+org.python.modules.MatchObject@80ce02a
+
+&gt;&gt;&gt; mo = cre.search(&quot;Jython 1.1 is stable&quot;)
+&gt;&gt;&gt; mo.group()</pre>
+<p class="docText">and returns</p>
+<pre>'Jython '</pre>
+<p class="docText">The (?!…) sequence has the form</p>
+<pre>&lt;expression (?!&lt;subexpression&gt;)&gt;</pre>
+<p class="docText">It's a negative conditional lookahead (the opposite of <tt>
+(?=...)</tt>) and matches <tt>expression</tt> only if <span class="docEmphasis">
+not</span> followed by <tt>subexpression</tt>. Any text matched by its group 
+isn't saved and so isn't accessible by methods such as <tt>group()</tt> and <tt>
+groups()</tt>.</p>
+<p class="docText">This example:</p>
+<pre>&gt;&gt;&gt; cre = compile(r'Jython (?!1\.1)')
+
+&gt;&gt;&gt; cre.search(&quot;Jython is stable&quot;)</pre>
+<p class="docText">returns a match object. This one:</p>
+<pre>org.python.modules.MatchObject@80cdb0d
+&gt;&gt;&gt; cre.search(&quot;Jython 1.1 is stable&quot;)</pre>
+<p class="docText">doesn't return a match object:</p>
+<pre>&gt;&gt;&gt; mo = cre.search(&quot;Jython is stable&quot;)
+&gt;&gt;&gt; mo.group()</pre>
+<p class="docText">Instead, it returns</p>
+<pre>'Jython '</pre>
+<p class="docText">The <tt>{min,max}</tt> sequence has the form</p>
+<pre>&lt;expression {&lt;min&gt;,&lt;max&gt;} &gt;</pre>
+<p class="docText">It requires a minimum of <tt>min</tt> and allows a maximum of
+<tt>max</tt> repetitions of the immediately preceding character, group, or 
+character class. A greedy multiplier, it matches as many repetitions as 
+possible.</p>
+<p class="docText">This example doesn't return a match object:</p>
+<pre>&gt;&gt;&gt; cre = compile(&quot;\$\d{2,3}(,\d\d\d){2,5}&quot;)
+&gt;&gt;&gt; cre.search(&quot;salary: $9,000.00&quot;)</pre>
+<p class="docText">Nor does this one:</p>
+<pre>&gt;&gt;&gt; cre.search(&quot;salary: $90,000.00&quot;)</pre>
+<p class="docText">This one does return a match object:</p>
+<pre>org.python.modules.MatchObject@80ce140</pre>
+<p class="docText">The <tt>{min,max} ?</tt> sequence has the form</p>
+<pre>&lt;expression {&lt;min&gt;,&lt;max&gt;} ?&gt;</pre>
+<p class="docText">It's the same as <tt>{min,max}</tt>, but as a nongreedy 
+multiplier, it matches as few repetitions as possible. Thus,</p>
+<pre>&gt;&gt;&gt; cre = compile(&quot;(:.{3,10} :)&quot;)
+
+&gt;&gt;&gt; STR = &quot;:one:a:two:&quot;
+
+&gt;&gt;&gt; mo = cre.search(STR)
+&gt;&gt;&gt; mo.group(1)</pre>
+<p class="docText">returns</p>
+<pre>':one:a:two:'
+
+&gt;&gt;&gt; cre = compile(&quot;(:.{3,10} ?:)&quot;)
+
+&gt;&gt;&gt; STR = &quot;:one:a:two:&quot;
+
+&gt;&gt;&gt; mo = cre.search(STR)
+&gt;&gt;&gt; mo.group(1)</pre>
+<p class="docText">returns</p>
+<pre>':one:'
+</pre>
+<p class="docText">The <tt>[...]</tt> sequence has the form</p>
+<pre>&lt;expression [character class]&gt;</pre>
+<p class="docText">It matches any one of the characters within the brackets, 
+listed explicitly or as a range delimited by the <tt>–</tt> (hyphen) 
+metacharacter (it understands [12345] and [1-5] as the same). Popular ranges are 
+[0-9], [a-z], and [A-Z]. Multiple ranges, such as [a-zA-Z], can also be used.</p>
+<p class="docText">The following examples all return a match object:</p>
+<pre>&gt;&gt;&gt; search(r'[RTL]oad',&quot;Toad&quot;)
+&gt;&gt;&gt; search(r'[RTL]oad',&quot;Road&quot;)
+&gt;&gt;&gt; search(r'[RTL]oad',&quot;Load&quot;)
+&gt;&gt;&gt; search(r'199[7-9a-z]',&quot;1998&quot;)
+&gt;&gt;&gt; search(r'199[7-9a-z]',&quot;1999&quot;)
+&gt;&gt;&gt; search(r'199[7-9a-z]',&quot;199x&quot;)</pre>
+<p class="docText">The <tt>[^...]</tt> sequence has the form</p>
+<pre>&lt;expression [^character class]&gt;</pre>
+<p class="docText">The opposite of <tt>[...]</tt>, it matches anything but the 
+characters listed within the brackets. Possible characters can be listed 
+explicitly or as a – (hyphen) delimited range.</p>
+<p class="docText">This example returns a match object:</p>
+<pre>&gt;&gt;&gt; search(r'199[^1-7]',&quot;1998&quot;)</pre>
+<p class="docText">This one doesn't:</p>
+<pre>&gt;&gt;&gt; search(r'199[^1-7]',&quot;1997&quot;)</pre>
+<h3 class="docSection1Title" id="ch23lev1sec7">Putting Things Together</h3>
+<p class="docText">A third-party vendor I (Rick Hightower) worked with once had 
+a problem reading the IDL files we were trying to integrate with its product. 
+Specifically it didn't like identifiers beginning with <tt>::</tt>, as in <tt>::com::mycompany::Employee</tt>, 
+preferring <tt>com::mycompany::Employee</tt>. My job was to convert the IDL 
+files to their liking, which I did using regular expressions. The code I wrote 
+to do this is just four lines long (actually six but four with a little 
+cheating).</p>
+<p class="docText">Here's the code to read in the file and write all the 
+replacement text:</p>
+<pre>f=open(filename)
+fstr=re.compile(r'\s((::)(\w+))\b').sub(r' \3', f.read())
+f.close(); f=open(filename, &quot;w&quot;)
+f.write(fstr); f.close()</pre>
+<p class="docText">Here's the complete <tt>fixIDL()</tt> function:</p>
+<pre>import re
+
+def fixIDL(filename):
+     f=open(filename)
+     fstr=re.compile(r'\s((::)(\w+))\b').sub(r' \3', f.read())
+     f.close(); f=open(filename, &quot;w&quot;)
+     f.write(fstr); f.close()</pre>
+<p class="docText">The key is the regular expression <tt>r'\s((::)(\w+))\b'</tt>. 
+Let's break it down into its most basic components:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>\s</tt>— whitespace</li>
+  <li>
+  <p class="docText"><tt>\w</tt>— alphanumeric</li>
+  <li>
+  <p class="docText"><tt>\b</tt>— word boundary</li>
+  <li>
+  <p class="docText"><tt>+</tt>— one or more</li>
+</ul>
+<p class="docText">Now let's see how these components are used:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>(::)(\w+)</tt>— find a sequence of characters that 
+  begins with <tt>::</tt>, followed by one or more alphanumeric characters</li>
+  <li>
+  <p class="docText"><tt>\s(()(\w+))</tt>— find a sequence of characters that 
+  begins with whitespace, followed by <tt>::</tt>, followed by one or more 
+  alphanumeric characters</li>
+  <li>
+  <p class="docText"><tt>\s((::)(\w+))\b</tt>— find a sequence of characters 
+  that begins with whitespace, followed by <tt>::</tt>, followed by one or more 
+  alphanumeric characters, followed by a word boundary</li>
+</ul>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">re.compile</h2>
+      <p class="docText">The <tt>re.compile</tt> call compiles the regular 
+      expression. It returns a <tt>regex</tt> object that has a <tt>sub()</tt> 
+      (substitute) method. The call to <tt>regex.sub(r'\3\,f.read())</tt> means 
+      replace the matched text with a space and the third group.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">A group is defined by the parentheses in <tt>regex</tt> and 
+read from left to right. Thus,</p>
+<ul>
+  <li>
+  <p class="docList"><tt>((::)(\w+))</tt> defines group 1</li>
+  <li>
+  <p class="docList"><tt>(::)</tt> defines group 2</li>
+  <li>
+  <p class="docList"><tt>(\w+)</tt> defines group 3</li>
+</ul>
+<p class="docText">Group 0 is always the whole matched <tt>regex</tt>. Group 3 
+is important because it represents the text without the preceding <tt>::</tt>.</p>
+<p class="docText">Now we'll break down the code line by line, each line 
+followed by its explanation.</p>
+<pre>import re</pre>
+<p class="docText">imports the <span class="docEmphasis">re</span> (regular 
+expression) module.</p>
+<pre>def fixIDL(filename):</pre>
+<p class="docText">defines the <tt>fixIDL()</tt> function with an argument of
+<tt>filename</tt>.</p>
+<pre>f=open(filename)</pre>
+<p class="docText">opens a file corresponding to <tt>filename</tt>.</p>
+<pre>fstr=re.compile(r'\s((::)(\w+))\b').sub(r' \3', f.read())</pre>
+<p class="docText">does the following:</p>
+<ul>
+  <li>
+  <p class="docText"><tt>re.compile(r'\s((::)(\w+))\b')</tt>— compiles the 
+  regular expression into a <tt>regex</tt> object</li>
+  <li>
+  <p class="docText"><tt>.sub(r' \3', f.read())</tt>— replaces every occurrence 
+  of the matched text with the third group in the match, returning a string with 
+  the text replaced</li>
+  <li>
+  <p class="docText"><tt>f.read())</tt>— reads the entire file into a string:</li>
+</ul>
+<pre>f.close(); f=open(filename, &quot;w&quot;)</pre>
+<p class="docText">then closes the file (<tt>f.close()</tt>) and reopens it in 
+write mode:</p>
+<pre>f.write(fstr); f.close()</pre>
+<p class="docText">It then writes the entire new text into the file and closes 
+the file.</p>
+<p class="docText">Here's another way to write the code:</p>
+<pre>f=open(filename)
+fstr=re.compile(r'\s((::)(\w+))\b').sub(r'\3',f.read())
+f.close();
+f=open(filename, &quot;w&quot;)
+f.write(fstr);
+f.close()</pre>
+<p class="docText">But then I would have lost my bet that I could write this 
+utility package in four lines.</p>
+<div class="docNote">
+  <p class="docNoteTitle">Note</p>
+  <p class="docText">This appendix summary was written by Rick Hightower.</div>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20d.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle">
+  <img src="rarrow.gif" border="0" width="17" height="19"></td></tr></table>
+</body>
+
+</html>

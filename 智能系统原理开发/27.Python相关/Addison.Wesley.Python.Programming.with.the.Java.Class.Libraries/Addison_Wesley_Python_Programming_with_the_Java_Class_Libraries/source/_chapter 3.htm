@@ -1,0 +1,1505 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 3</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 3.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 3.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 3.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%202.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%204.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 3. Operators and String Formatting</h2><ul><li>&nbsp;<a class="docLink" href="#ch03lev1sec1">Operators</a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec2">Formatting Strings—Modulus</a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec3">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Boolean value</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Concatenation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Conversion</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Dictionary</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Directive</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Field</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Flag</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Format directives</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Hexdump</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Key</span></li>
+</ul>
+      </td>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Keyword</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Literal</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Modulus</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Operator precedence</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Operator (%, Arithmetic, Bitwise, 
+  Comparison, Conditional, Logical, Sequence, Shift)</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">String</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Tuple</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Variable</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In this chapter, we'll cover operators and string formatting. 
+Python string formatting controls the creation of strings. Done correctly, it 
+makes the production of these strings simple and straightforward.</p>
+<p class="docText">I've said it before, and I'll say it again: If you're a 
+beginning programmer, remember that the only way to learn programming is by 
+programming, so try to follow along with the interactive sessions throughout the 
+chapter. The interactive interpreter mode will give you a hands-on understanding 
+of Python operators and string formatting. If you have trouble with an Advanced 
+Topic section, just skim over it; don't let it slow you down.</p>
+<p class="docText">As in
+<a class="docLink" href="_chapter%202.htm">Chapter 2</a>, most of 
+the concepts in this chapter act as building blocks for more complex ideas. 
+Don't worry if something seems unclear to you at this point; you might 
+understand it later, in a different context. For example, logical and comparison 
+operators may not be easily grasped here, but wait until
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a>, where we 
+deal with the <tt>if</tt> statement, which makes frequent use of these operators 
+and so should clear things up.</p>
+<p class="docText">If you've programmed before, most of this chapter will be 
+familiar. For example, operators and string formatting in Python and C are very 
+similar. If you have in-depth programming experience, you can probably just skim 
+this material, especially if you're comfortable with C, Java, and/or Visual 
+Basic. Do, however, pay attention to the following sections:</p>
+<ul>
+  <li>
+  <p class="docList">&quot;<a class="docLink" href="#ch03lev2sec7">Arithmetic 
+  with Strings, Lists, and Tuples</a>&quot;</li>
+  <li>
+  <p class="docList">&quot;<a class="docLink" href="#ch03lev2sec9"><tt>%</tt> 
+  Tuple String Formatting</a>&quot;</li>
+  <li>
+  <p class="docList">&quot;<a class="docLink" href="#ch03lev2sec11">Advanced 
+  Topic: Using the <tt>%d</tt>, <tt>%i</tt>, <tt>%f</tt>, and <tt>%e</tt> 
+  Directives for Formatting Numbers</a>&quot;</li>
+</ul>
+<p class="docText">Also read the &quot;<a class="docLink" href="front%20matter.htm#fmlev2sec2">For 
+Programmers</a>&quot; sidebar (see pages 50–51).</p>
+<h3 class="docSection1Title" id="ch03lev1sec1">Operators</h3>
+<p class="docText">Recall from
+<a class="docLink" href="_chapter%202.htm">Chapter 2</a> our 
+definition of expressions as simple statements that return a value. In Python, 
+many expressions use operators, such as <tt>+</tt>, –, <tt>*</tt>, and <tt>=</tt>. 
+The following subsections describe each operator type, and each section contains 
+a table of the type's operators along with sample interactive sessions 
+illustrating their use. If you feel as if you've been this way before, you 
+have—we've been using operators since
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>.</p>
+<h4 class="docSection2Title" id="ch03lev2sec1">Arithmetic Operators</h4>
+<p class="docText">Arithmetic operators work with the numeric types <tt>Float</tt>,
+<tt>Int</tt>, and <tt>Long</tt>. <a class="docLink" href="#ch03table01">Table 
+3-1</a> describes them, including three we have yet to encounter: modulus (<tt>%</tt>), 
+which gives the remainder; exponential (<tt>**</tt>), which raises one number to 
+the power of another number; and <tt>abs</tt>, which gives a number's absolute 
+value.</p>
+<p class="docText">One example of modulus is 3/2, which gives the remainder of 1 
+(3/2 = 1½). Another is 10/7, which gives a remainder of 3 (10/7 = 1 3/7). In 
+Python, we express the previous sentence as</p>
+<pre>&gt;&gt;&gt; 10 % 7
+3
+&gt;&gt;&gt; 3 % 2
+1
+&gt;&gt;&gt;</pre>
+<p class="docText">Once you understand modulus, the <tt>divmod()</tt> function, 
+which we'll discuss in a later chapter, should come easily to you.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table01" class="docTableTitle">Table 3-1. Arithmetic Operators</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Operator</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Interactive Session</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>+</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Addition </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x = 1 + 2
+&gt;&gt;&gt; print (x)
+3</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>–</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Subtraction </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x = 2 – 1
+&gt;&gt;&gt; print (x)
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>*</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Multiplication </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x = 2 * 2
+&gt;&gt;&gt; print (x)
+4</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>/</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Integer division returns 
+    an Integer type; float division returns a float type </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Integer division:</p>
+    <pre>&gt;&gt;&gt; x = 10 / 3
+&gt;&gt;&gt; print (x)
+3</pre>
+    <p class="docText">Float division:</p>
+    <pre>&gt;&gt;&gt; x = 10.0 / 3.3333
+&gt;&gt;&gt; print (x)
+3.000030000300003</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Modulus—gives the 
+    remainder; typically used for integers </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x = 10 % 3
+&gt;&gt;&gt; print (x)
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>**</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Exponential </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x = 10**2
+&gt;&gt;&gt; print(x)
+100</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>divmod</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Does both of the division 
+    operators at once and returns a tuple; the second item in the tuple contains 
+    the remainder. <tt>divmod(x,y</tt> is equivalent to <tt>x/y,x%y</tt> </td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">This:</p>
+    <pre>&gt;&gt;&gt; divmod (10,3)
+(3, 1)</pre>
+    <p class="docText">Is the same as this:</p>
+    <pre>&gt;&gt;&gt; 10/3,10%3
+(3, 1)</pre>
+    <p class="docText">This:</p>
+    <pre>&gt;&gt;&gt; divmod (5,2)
+(2, 1)</pre>
+    <p class="docText">Is the same as this:</p>
+    <pre>&gt;&gt;&gt; 5/2, 5%2
+(2, 1)</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>abs</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Finds the absolute value 
+    of a number </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; abs(100)
+100
+&gt;&gt;&gt; abs(-100)
+100</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>-</tt>, <tt>+</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left">Sign </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; 1, -1, +1, +-1
+(1, -1, 1, -1)</pre>
+    </td>
+  </tr>
+</table>
+<h4 class="docSection2Title" id="ch03lev2sec2">Numeric Conversion Operators</h4>
+<p class="docText">Many times we need to convert from one numeric type to 
+another. The three operators that perform this conversion are <tt>Int(x)</tt>,
+<tt>Long(x</tt>), and <tt>Float(x)</tt>, where <tt>x</tt> is any numeric value. 
+To illustrate, in the example that follows we create three numeric types: <tt>1</tt> 
+(<tt>Long</tt>), <tt>f</tt> (<tt>Float</tt>), and <tt>i</tt> (<tt>Integer</tt>).</p>
+<pre>&gt;&gt;&gt; l,f,i=1L, 1.0, 1</pre>
+<p class="docText">The output is</p>
+<pre>&gt;&gt;&gt; l,f,i
+(1L, 1.0, 1)</pre>
+<p class="docText">The next three examples in turn convert <tt>i</tt> to <tt>
+Float</tt>, <tt>f</tt> and <tt>i</tt> to <tt>Long</tt>, and <tt>l</tt> and <tt>f</tt> 
+to <tt>Integer</tt>.</p>
+<pre>&gt;&gt;&gt; float (i)
+1.0
+&gt;&gt;&gt; float(l)
+1.0
+&gt;&gt;&gt; long(f), long(i)
+(1L, 1L)
+
+&gt;&gt;&gt; int(l), int(f)
+(1, 1)
+&gt;&gt;&gt;</pre>
+<h4 class="docSection2Title" id="ch03lev2sec3">Logical Operators, Comparison Operators, and 
+Boolean Values</h4>
+<p class="docText">Logical operators are a way to express choices, such as &quot;This 
+one <span class="docEmphasis">and</span> that one <span class="docEmphasis">or</span> 
+that one but <span class="docEmphasis">not</span> this one.&quot; Comparison 
+operators are a way to express questions, such as &quot;Is this one
+<span class="docEmphasis">greater than</span> that one?&quot; Both work with Boolean 
+values, which express the answer as either true or false. Unlike Java, Python 
+has no true <tt>Boolean</tt> type. Instead, as in C, its Booleans can be numeric 
+values, where any nonzero value must be true and any zero value must be false. 
+Thus, Python interprets as false the following values:</p>
+<ul>
+  <li>
+  <p class="docList">None</li>
+  <li>
+  <p class="docList">Empty strings</li>
+  <li>
+  <p class="docList">Empty tuples</li>
+  <li>
+  <p class="docList">Empty lists</li>
+  <li>
+  <p class="docList">Empty dictionaries</li>
+  <li>
+  <p class="docList">Zero</li>
+</ul>
+<p class="docText">and as true all other values, including</p>
+<ul>
+  <li>
+  <p class="docList">Nonempty strings</li>
+  <li>
+  <p class="docList">Nonempty tuples</li>
+  <li>
+  <p class="docList">Nonempty lists</li>
+  <li>
+  <p class="docList">Nonempty dictionaries</li>
+  <li>
+  <p class="docList">Not zero</li>
+</ul>
+<p class="docText"><a class="docLink" href="#ch03table02">Table 3-2</a> 
+describes the logical operators. They return 1 for a true expression and 0 for a 
+false expression. <a class="docLink" href="#ch03table03">Table 3-3</a> describes 
+the comparison operators. They return some form of true for a true expression 
+and some form of false for a false expression.</p>
+<p class="docText">Logical and comparison operators often work together to 
+define application logic (in English, application logic simply means decision 
+making).When they do, they're often used with <tt>if</tt> and <tt>while</tt> 
+statements<span class="docEmphStrong">.</span> Don't worry about <tt>if</tt> and
+<tt>while</tt> just yet; we'll get into them in detail in
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a>. For now, 
+a simple way to visualize them is to imagine that you like vanilla and chocolate 
+ice cream but hate nuts, and you want to express your preference in a way that 
+Python will understand, like this:</p>
+<pre>if (flavor == chocolate or flavor == vanilla and \
+   not nuts and mycash &gt; 5):
+     print(&quot;yummy ice cream give me some&quot;)
+
+while(no_vanilla_left and no_chocolate_left ):
+     print (&quot;no more ice cream for me&quot;)</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table02" class="docTableTitle">Table 3-2. Logical Operators</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Operator</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Interactive Session</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>and</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">And two values or 
+    comparisons together </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x,y = 1,0
+&gt;&gt;&gt; x and y
+0
+&gt;&gt;&gt; x,y = 1,1
+&gt;&gt;&gt; x and y
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>or</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Or two values together
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x,y = 1,0
+&gt;&gt;&gt; x or y
+1
+&gt;&gt;&gt; x,y = 0,0
+&gt;&gt;&gt; x or y
+0</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>not</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Inverse a value </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x,y = 0,0
+&gt;&gt;&gt; not x
+1
+&gt;&gt;&gt; not y
+1
+&gt;&gt;&gt; x = 1
+&gt;&gt;&gt; not x
+0</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table03" class="docTableTitle">Table 3-3. Comparison Operators</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Operator</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Interactive Session</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>==</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Equal to </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x,y,z=1,1,2
+&gt;&gt;&gt; x==y
+1
+&gt;&gt;&gt; x==z
+0</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&gt;=</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Greater than or equal to
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; z&gt;=x
+1
+&gt;&gt;&gt; x&gt;=z
+0</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&lt;=</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Less than or equal to
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; z&lt;=x
+0
+&gt;&gt;&gt; x&lt;=z
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&gt;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Greater than </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x&gt;z
+0
+&gt;&gt;&gt; z&gt;x
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&lt;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Less than </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x&lt;z
+1
+&gt;&gt;&gt; z&lt;x
+0</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>!=</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Not equal to </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x!=y
+0
+&gt;&gt;&gt; x!=z
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&lt;&gt;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Not equal to </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; x&lt;&gt;y
+0
+&gt;&gt;&gt; x&lt;&gt;z
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>is</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Object identity </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; str = str2 = &quot;hello&quot;
+&gt;&gt;&gt; str is str2
+
+1
+&gt;&gt;&gt; str = &quot;hi&quot;
+&gt;&gt;&gt; str is str2
+0</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>is not</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Negated object identity
+    </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; s1 = s2 = &quot;hello&quot;
+&gt;&gt;&gt; s1 is not s2
+0
+
+&gt;&gt;&gt; s1 = s2 + &quot; Bob&quot;
+&gt;&gt;&gt; s1 is not s2
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>in</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Checks to see if an item 
+    is in a sequence </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; list = [1,2,3]
+
+&gt;&gt;&gt; 1 in list
+1
+
+&gt;&gt;&gt; 4 in list
+0</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>not in</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Checks to see if an item 
+    is NOT in a sequence </td>
+    <td class="docTableCell" vAlign="top" align="left">
+    <pre>&gt;&gt;&gt; list = [1,2,3]
+
+&gt;&gt;&gt; 1 not in list
+0
+
+&gt;&gt;&gt; 4 not in list
+1</pre>
+    </td>
+  </tr>
+</table>
+<h4 class="docSection2Title" id="ch03lev2sec4">Advanced Topic: Logical Operators and Boolean 
+Returns</h4>
+<p class="docText">Comparison operators always return either 1 or 0 of type <tt>
+Integer</tt>.</p>
+<pre>&gt;&gt;&gt; 1 &gt; 2
+0
+&gt;&gt;&gt; 1 &lt; 2
+1</pre>
+<p class="docText">Logical operators can return more than the <tt>Integer</tt> 
+types 1 or 0, as we see in the following expression, which determines if <tt>0</tt> 
+or <tt>(1,2,3)</tt> is true.</p>
+<pre>&gt;&gt;&gt; 0 or (1,2,3)
+(1, 2, 3)</pre>
+<p class="docText">Python equates <tt>0</tt> to false and a nonempty tuple <tt>
+(1, 2, 3)</tt> to true, so the logical operator returns the true statement, that 
+is, the <tt>(1,2,3)</tt> tuple literal.</p>
+<p class="docText">The following expression determines if <tt>1 &lt; 2</tt> or the 
+integer <tt>5</tt> is true:</p>
+<pre>&gt;&gt;&gt; 1 &lt; 2 or 5
+1</pre>
+<p class="docText">Because <tt>1 &lt; 2</tt> is true, the expression returns <tt>1</tt>, 
+which equates to true, but it equates <tt>5</tt> to true as well; however, only 
+the first true statement in an <tt>or</tt> statement (<tt>1</tt> above) is 
+returned.</p>
+<p class="docText">The next expression also determines if <tt>1 &lt; 2</tt> or the 
+integer <tt>5</tt> is true, but this time we swap the operands.</p>
+<pre>&gt;&gt;&gt; 5 or 1 &lt; 2
+5</pre>
+<p class="docText">Once again, only the first true statement is returned, which 
+is now <tt>5</tt>.</p>
+<p class="docText">Like <tt>or</tt>, <tt>and</tt> returns the first true 
+operand. However, <tt>and</tt> is unlike <tt>or</tt> in that only the last 
+operand can make it true.</p>
+<pre>&gt;&gt;&gt; (1,1) and [2,2]
+[2, 2]
+&gt;&gt;&gt; [2,2] and (1,1)
+(1, 1)
+&gt;&gt;&gt; [2,2] and (3,3) and {&quot;four&quot;:4}
+{'four': 4}</pre>
+<p class="docText">Conversely, the first occurrences of a false are returned by
+<tt>and</tt>.</p>
+<pre>&gt;&gt;&gt; [1,1] and {}  and ()
+{}
+&gt;&gt;&gt; (1,1) and [] and {}
+[]</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: Conditional Operators in 
+      Other Languages</h2>
+      <p class="docText">C, C++, and Java have a conditional operator that works 
+      conveniently as shorthand for <tt>and</tt> and <tt>or</tt>. In Java, for 
+      example, the following two <tt>if</tt> statements are equivalent:</p>
+      <pre>val = boolean_test ?    true_return : false_return;
+
+if (boolean_test)
+      val = true_return;
+else
+      val = false_return;</pre>
+      <p class="docText">Python has no conditional operator, but you can 
+      simulate one with the form</p>
+      <pre>val = (boolean_test and true_return) \
+   or false_return</pre>
+      <p class="docText">This works because <tt>or</tt> always returns the first 
+      true statement and <tt>and</tt> always returns the last one, so these two 
+      statements are equivalent:</p>
+      <pre>&gt;&gt;&gt; if ( 3 &gt; 5):
+...     num = 1
+... else:
+...     num = 2
+...
+&gt;&gt;&gt;num
+2
+
+&gt;&gt;&gt; num = (3&gt;5 and 1) or 2
+&gt;&gt;&gt; num
+2</pre>
+      <p class="docText">The following two expressions are also equivalent:</p>
+      <pre>&gt;&gt;&gt; if ( 5 &gt; 3):
+...     num = 1
+... else:
+...     num = 2
+...
+&gt;&gt;&gt;num
+1
+
+&gt;&gt;&gt; num = (5&gt;3 and 1) or 2
+&gt;&gt;&gt; num
+1</pre>
+      <p class="docText">Be warned: This simulation works only if the 
+      expressions <tt>true_return</tt> and <tt>false_return</tt> are
+      <span class="docEmphasis">not</span> equivalent to false. If we need them 
+      to be false, we can do something like this:</p>
+      <pre>&gt;&gt;&gt; true_return = 0
+&gt;&gt;&gt; false_return = 2
+&gt;&gt;&gt; num = (5 &gt; 3 and [true_return]) \
+    or [false_return]
+&gt;&gt;&gt; num
+[0]</pre>
+      <p class="docText">Now the <tt>num</tt> variable is equivalent to a list 
+      containing one element, but this isn't exactly what we want. However, 
+      since this code is returning a list, we can put the entire expression to 
+      the left of the assignment operator in parentheses, which will achieve our 
+      desired result.</p>
+      <pre>&gt;&gt;&gt; num = ((5 &gt; 3 and [true_return]) or [false_return])[0]
+&gt;&gt;&gt; num
+0</pre>
+      <p class="docText">To sum up, Python's bulletproof equivalent of the 
+      conditional operator is</p>
+      <pre>val = ((boolean_test and [true_return]) \
+           or [false_return])[0]</pre>
+      <p class="docText">which is no more verbose than another Python 
+      expression:</p>
+      <pre>if (boolean_test): val = true_return
+else: val = false_return</pre>
+      <p class="docText">Python's version of the conditional operator is hard to 
+      understand and use, so go easy with it. Perhaps one day Python will have a 
+      conditional operator of its own (and, I might add, its own <tt>+=</tt> 
+      operator).</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch03lev2sec5">Advanced Topic: Bitwise and Shift Operators</h4>
+<p class="docText">If you lack experience with any programming language or with 
+Boolean algebra, you should ignore bitwise operators. Another reason to ignore 
+them is that they're usually associated with low-level programming, and you're 
+learning Python, which is much higher level than C, C++, or even Java. If for 
+some reason you're curious about bitwise operators, any introductory C text will 
+tell you all you need to know. The same goes for shift operators.</p>
+<p class="docText">Just for the sake of completeness,
+<a class="docLink" href="#ch03table04">Table 3-4</a> describes both operator 
+types. To understand it, you need to know something of hexadecimal and Boolean 
+algebra. (See <a class="docLink" href="_chapter%2010.htm">Chapter 
+10</a> for an example of a hexdump file viewer, which uses the shift operators.)</p>
+<h4 class="docSection2Title" id="ch03lev2sec6">Operator Precedence</h4>
+<p class="docText">Operator precedence determines the order in which Python 
+evaluates the parts of a statement. It generally follows the operator precedence 
+you learned in high school algebra and is nearly identical to that used in any 
+other common programming language. Here's an example in which <tt>y/z</tt> is 
+processed before <tt>2 + y</tt>, rendering <tt>x</tt> equal to 4 and not 6.</p>
+<pre>&gt;&gt;&gt; x,y,z=1,4,2
+&gt;&gt;&gt; x = 2 + y / z
+&gt;&gt;&gt; x
+4</pre>
+<p class="docText">When in doubt as to which operator will be evaluated first, 
+use parentheses. They prevent many a mistake if you use them to force 
+precedence, and they enhance code readability.</p>
+<p class="docText">You may occasionally want to force a precedence other than 
+the algebraic default to make it more explicit. The following example shows how 
+to do this:</p>
+<pre>&gt;&gt;&gt; x,y,z = 1,4,2
+&gt;&gt;&gt; x = 2 + (y/z)
+&gt;&gt;&gt; x
+4
+
+&gt;&gt;&gt; x = (2+y) /z
+&gt;&gt;&gt; x
+3</pre>
+<p class="docText">The choice of precedence here depends on which expression—<tt>2 
++ y</tt> or <tt>y/z</tt>—is to be evaluated first. Note, though, that the value 
+of <tt>x</tt> changes according to the grouping and ends up as either <tt>4</tt> 
+or <tt>3</tt>. The first expression, <tt>2 + y/z</tt>, is unnecessary except to 
+adorn the code with parentheses for clarity, which is important for code 
+maintainability.</p>
+<p class="docText">Visit
+<a class="docLink" href="http://www.python.org" target="_blank">www.python.org</a> 
+for a detailed description of operator precedence. For now, the following list 
+shows all operators in their precedence order:</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>[]</tt>, <tt>()</tt>, <tt>{}</tt>, <tt>''</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Parentheses, string conversion</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>seq[index]</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Indexing sequences or dictionaries</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>integer.MAX_INT</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Attribute reference</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>~I</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Bit inversion</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>-i</tt>, <tt>+i</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Unary minus, unary plus</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>*</tt>, <tt>/</tt>, <tt>%</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Multiplication, division, modulus</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>+</tt>, <tt>-</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Addition, subtraction</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table04" class="docTableTitle">Table 3-4. Bitwise and Shift Operators</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Operator</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Interactive Session</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&lt;&lt;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Shift left </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; # binary 1111 1111
+&gt;&gt;&gt; x = 0xff
+
+&gt;&gt;&gt; # z = 0011 1111 1100
+&gt;&gt;&gt; z = x &lt;&lt; 2 &gt;&gt;&gt; print (x)
+255
+
+&gt;&gt;&gt; print (z)
+1020</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&gt;&gt;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Shift right </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; # z = 1020
+&gt;&gt;&gt; #z = 1111 1111
+
+&gt;&gt;&gt; z = z &gt;&gt; 2
+&gt;&gt;&gt; z
+255</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&amp;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Bitwise
+    <span class="docEmphStrong">and</span> </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; # y = binary 0000 1010
+&gt;&gt;&gt; y = 0x0A
+&gt;&gt;&gt; print (y)
+10
+
+&gt;&gt;&gt; print (x)
+255
+
+&gt;&gt;&gt; z = y &amp; z
+&gt;&gt;&gt; print (z)
+10</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>|</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Bitwise
+    <span class="docEmphStrong">or</span> </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; #continued example
+&gt;&gt;&gt; z = y | x
+&gt;&gt;&gt; print (z)
+255</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>^</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Bitwise
+    <span class="docEmphStrong">XOR</span> </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; z = y ^ x
+&gt;&gt;&gt; z
+245</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>~</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Bitwise
+    <span class="docEmphStrong">not</span> </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; y = 0xffffffff
+&gt;&gt;&gt; y
+-1
+
+&gt;&gt;&gt; z = ~y
+&gt;&gt;&gt; z
+0</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>&lt;&lt;</tt>,<tt>&gt;&gt;</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Bit shifting, left and right</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• [bar], &amp;, ^</td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Bitwise operator <tt>or</tt>, <tt>and</tt>, <tt>xor</tt></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>&lt;</tt>, <tt>&gt;</tt>, <tt>&gt;=</tt>, <tt>&lt;=</tt>, <tt>
+    ==</tt>, <tt>is not</tt>, <tt>is</tt>, <tt>!=,</tt> <tt>&lt;&gt;</tt>, <tt>in</tt>,
+    <tt>not in</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Comparison operators</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>not</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Logical not</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>and</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Logical and</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">• <tt>or</tt></td>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText">Logical or</td>
+  </tr>
+</table>
+<h4 class="docSection2Title" id="ch03lev2sec7">Arithmetic with Strings, Lists, and Tuples</h4>
+<p class="docText">As in Java, the addition operator (<tt>+</tt>) in Python 
+works with string types to concatenate, that is, link strings. (Recall that we 
+used <tt>+</tt> on strings in
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>.) Unlike 
+in Java, the multiplication operator (<tt>*</tt>) in Python is used to repeat 
+string values. Consider the following interactive session:</p>
+<pre>&gt;&gt;&gt; love = &quot;I love my family&quot; + (&quot; very &quot; * 4) + &quot;much!&quot;
+&gt;&gt;&gt; love
+'I love my family very very very very much!'
+
+&gt;&gt;&gt; hugs_and_kisses = &quot;XO&quot; * 20
+&gt;&gt;&gt; hugs_and_kisses
+'XOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXOXO'</pre>
+<p class="docText">In the first line, we concatenate the string <tt>&quot;I love my 
+family&quot;</tt> with the string <tt>&quot;very&quot;</tt> multiplied by 4, which gives <tt>
+&quot;very very very very&quot;</tt>. If we want to sign our letter with hugs and kisses (<tt>X</tt>s 
+and <tt>O</tt>s), we can multiply to save time in a similar way.</p>
+<p class="docText">Addition and multiplication also work for lists.</p>
+<pre>&gt;&gt;&gt; friends = [&quot;Joey&quot;, &quot;Monica&quot;, &quot;Ross&quot;, &quot;Chandler&quot;]
+&gt;&gt;&gt; old_friends = [&quot;Fonz&quot;, &quot;Ritchie&quot;, &quot;Potsy&quot;]
+&gt;&gt;&gt; strange_cast = friends + old_friends
+&gt;&gt;&gt; strange_cast
+['Joey', 'Monica', 'Ross', 'Chandler', 'Fonz', 'Ritchie', 'Potsy']</pre>
+<p class="docText">They work for tuples as well.</p>
+<pre>&gt;&gt;&gt; tuple1 = (1,2,3,4)
+&gt;&gt;&gt; tuple2 = (&quot;5&quot;, 6L, 7.0, 0x8)
+&gt;&gt;&gt; tuple3 = tuple1 + tuple2
+&gt;&gt;&gt; tuple3
+(1, 2, 3, 4, '5', 6L, 7.0, 8)
+
+&gt;&gt;&gt; tuple4 = tuple1 * 2
+&gt;&gt;&gt; tuple4
+(1, 2, 3, 4, 1, 2, 3, 4)</pre>
+<h4 class="docSection2Title" id="ch03lev2sec8">Sequence Operators</h4>
+<p class="docText">We've been using sequence operators since
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>, so 
+you've seen most of them. However, some of the operators in
+<a class="docLink" href="#ch03table05">Table 3-5</a> will be new to you.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1" height="796">
+  <caption>
+  <h5 id="ch03table05" class="docTableTitle">Table 3-5. Sequence Operators</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left" height="16">
+    <span class="docEmphStrong">Operator</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left" height="16">
+    <span class="docEmphStrong">Description</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left" height="16">
+    <span class="docEmphStrong">Interactive Session</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left" height="121"><tt>[index]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left" height="121">Get the 
+    indexed item </td>
+    <td class="docTableCell" vAlign="top" height="121">
+    <pre>&gt;&gt;&gt; nums = (0,1,2,3,4,5,6,7,8,9)
+&gt;&gt;&gt; nums[0]
+0
+
+&gt;&gt;&gt; nums[1]
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left" height="189"><tt>[:]</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left" height="189">Slice 
+    notation </td>
+    <td class="docTableCell" vAlign="top" height="189">
+    <pre>&gt;&gt;&gt; nums = (0,1,2,3,4,5,6,7,8,9)
+
+&gt;&gt;&gt; nums [:]
+(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+&gt;&gt;&gt; nums [5:]
+(5, 6, 7, 8, 9)
+
+&gt;&gt;&gt; nums [:5]
+(0, 1, 2, 3, 4)</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left" height="87"><tt>len()</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left" height="87">Length </td>
+    <td class="docTableCell" vAlign="top" height="87">
+    <pre>&gt;&gt;&gt; nums = (0,1,2,3,4,5,6,7,8,9)
+
+&gt;&gt;&gt; len (nums)
+1</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left" height="170"><tt>max()</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left" height="170">Get the 
+    largest item in the sequence </td>
+    <td class="docTableCell" vAlign="top" height="170">
+    <pre>&gt;&gt;&gt; nums = (0,1,2,3,4,5,6,7,8,9)
+
+&gt;&gt;&gt; max(nums)
+9
+
+&gt;&gt;&gt; letters = &quot;abcdefg&quot;
+&gt;&gt;&gt; max (letters)
+'g'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left" height="189"><tt>min()</tt>
+    </td>
+    <td class="docTableCell" vAlign="top" align="left" height="189">Get the 
+    smallest item in the sequence </td>
+    <td class="docTableCell" vAlign="top" height="189">
+    <pre>&gt;&gt;&gt; nums = (0,1,2,3,4,5,6,7,8,9)
+
+&gt;&gt;&gt; min(nums)
+0
+
+&gt;&gt;&gt; letters = &quot;abcdefg&quot;
+
+&gt;&gt;&gt; min (letters)
+'a'</pre>
+    </td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="ch03lev1sec2">Formatting Strings—Modulus</h3>
+<p class="docText">Although not actually modulus, the Python <tt>%</tt> operator 
+works similarly in string formatting to interpolate variables into a formatting 
+string. If you've programmed in C, you'll notice that <tt>%</tt> is much like 
+C's <tt>printf()</tt>, <tt>sprintf()</tt>, and <tt>fprintf()</tt> functions.</p>
+<p class="docText">There are two forms of <tt>%</tt>, one of which works with 
+strings and tuples, the other with dictionaries.</p>
+<pre>StringOperand % TupleOperand
+
+StringOperand % DictionaryOperand</pre>
+<p class="docText">Both return a new formatted string quickly and easily.</p>
+<h4 class="docSection2Title" id="ch03lev2sec9">% Tuple String Formatting</h4>
+<p class="docText">In the <tt>StringOperand % TupleOperand</tt> form, <tt>
+StringOperand</tt> represents special directives within the string that help 
+format the tuple. One such directive is <tt>%s</tt>, which sets up the format 
+string</p>
+<pre>&gt;&gt;&gt; format = &quot;%s is my friend and %s is %s years old&quot;</pre>
+<p class="docText">and creates two tuples, <tt>Ross_Info</tt> and <tt>
+Rachael_Info</tt>.</p>
+<pre>&gt;&gt;&gt; Ross_Info = (&quot;Ross&quot;, &quot;he&quot;, 28)
+&gt;&gt;&gt; Rachael_Info = (&quot;Rachael&quot;, &quot;she&quot;, 28)</pre>
+<p class="docText">The format string operator (<tt>%</tt>) can be used within a
+<tt>print</tt> statement, where you can see that every occurrence of <tt>%s</tt> 
+is respectively replaced by the items in the tuple.</p>
+<pre>&gt;&gt;&gt; print (format % Ross_Info)
+Ross is my friend and he is 28 years old
+
+&gt;&gt;&gt; print (format % Rachael_Info)
+Rachael is my friend and she is 28 years old</pre>
+<p class="docText">Also note that <tt>%s</tt> automatically converts the last 
+item in the tuple to a reasonable string representation. Here's an example of 
+how it does this using a list:</p>
+<pre>&gt;&gt;&gt; bowling_scores = [190, 135, 110, 95, 195]
+
+&gt;&gt;&gt; name = &quot;Ross&quot;
+
+&gt;&gt;&gt; strScores = &quot;%s's bowling scores were %s&quot; \
+...                             % (name, bowling_scores)
+&gt;&gt;&gt; print strScores
+Ross's bowling scores were [190, 135, 110, 95, 195]</pre>
+<p class="docText">First, we create a list variable called <tt>bowling_scores</tt> 
+and then a string variable called <tt>name</tt>. We then use a string literal 
+for a format string (<tt>StringOperand</tt>) and use a tuple containing <tt>name</tt> 
+and <tt>bowling_scores</tt>.</p>
+<h4 class="docSection2Title" id="ch03lev2sec10">Format Directives</h4>
+<p class="docText"><a class="docLink" href="#ch03table06">Table 3-6</a> covers 
+all of the format directives and provides a short example of usage for each. 
+Note that the tuple argument containing a single item can be denoted with the
+<tt>%</tt> operator as <tt>item</tt>, or <tt>(item)</tt>.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table06" class="docTableTitle">Table 3-6. Format Directives</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Directive</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Interactive Session</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%s</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Represents a value as a 
+    string </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; list = [&quot;hi&quot;, 1, 1.0, 1L]
+&gt;&gt;&gt; &quot;%s&quot; % list
+&quot;['hi', 1, 1.0, 1L]&quot;
+
+&gt;&gt;&gt; &quot;list equals %s&quot; % list
+&quot;list equals ['hi', 1, 1.0, 1L]&quot;</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%i</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Integer </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;i = %i&quot; % (5) 
+'i = 5'
+
+&gt;&gt;&gt; &quot;i = %3i&quot; % (5)
+'i = 5'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%d</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Decimal integer </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;d = %d&quot; % 5
+'d = 5'
+
+&gt;&gt;&gt; &quot;%3d&quot; % (3)
+' 3'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%x</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Hexadecimal integer </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%x&quot; % (0xff)
+'ff'
+
+&gt;&gt;&gt; &quot;%x&quot; % (255)
+'ff'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%x</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Hexadecimal integer </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%x&quot; % (0xff)
+'ff'
+
+&gt;&gt;&gt; &quot;%x&quot; % (255)
+'ff'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%o</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Octal integer </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%o&quot; % (255)
+377
+
+&gt;&gt;&gt; &quot;%o&quot; % (0377)
+377</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%u</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Unsigned integer </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; print &quot;%u&quot; % -2000
+2147481648
+
+&gt;&gt;&gt; print &quot;%u&quot; % 2000
+2000</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%e</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Float exponent </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; print &quot;%e&quot; % (30000000L)
+3.000000e+007
+
+&gt;&gt;&gt; &quot;%5.2e&quot; % (300000000L)
+'3.00e+008'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%f</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Float </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;check = %1.2f&quot; % (3000)
+'check = 3000.00'
+
+&gt;&gt;&gt; &quot;payment = $%1.2f&quot; % 3000'
+payment =$3000.00'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%g</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Float exponent </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%3.3g&quot; % 100
+'100.'
+
+&gt;&gt;&gt; &quot;%3.3g&quot; % 1000000000000L
+'10.e11'
+
+&gt;&gt;&gt; &quot;%g&quot; % 100
+'100.'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>%c</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">ASCII character </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%c&quot; % (97)
+'a'
+
+&gt;&gt;&gt; &quot;%c&quot; % 97
+'a'
+
+&gt;&gt;&gt; &quot;%c&quot; % (97)
+'a'</pre>
+    </td>
+  </tr>
+</table>
+<p class="docText"><a class="docLink" href="#ch03table07">Table 3-7</a> shows 
+how flags can be used with the format directives to add leading zeroes or spaces 
+to a formatted number. They should be inserted immediately after the <tt>%</tt>.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table07" class="docTableTitle">Table 3-7. Format Directive Flags</h5>
+  </caption>
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Flag</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Interactive Session</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>#</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Forces octal to have a
+    <tt>0</tt> prefix; forces hex to have a <tt>0x</tt> prefix </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%#x&quot; % 0xff
+'0xff'
+
+&gt;&gt;&gt; &quot;%#o&quot; % 0377
+'0ff'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>+</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Forces a positive number 
+    to have a sign </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%+d&quot; % 100
+'+100'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>-</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Left justification 
+    (default is right) </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%-5d, %-5d&quot; % (10,10)
+'10 , 10 '</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>&quot; &quot;</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left">Precedes a positive 
+    number with a blank space </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;% d,% d&quot; % (-10, 10)
+'-100,10'</pre>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left"><tt>0</tt> </td>
+    <td class="docTableCell" vAlign="top" align="left"><tt>0</tt> padding 
+    instead of spaces </td>
+    <td class="docTableCell" vAlign="top">
+    <pre>&gt;&gt;&gt; &quot;%05d&quot; % (100,)
+'00100'</pre>
+    </td>
+  </tr>
+</table>
+<h4 class="docSection2Title" id="ch03lev2sec11">Advanced Topic: Using the %d, %i, %f, and %e 
+Directives for Formatting Numbers</h4>
+<p class="docText">The <tt>%</tt> directives format numeric types: <tt>%i</tt> 
+works with <tt>Integer</tt>; <tt>%f</tt> and <tt>%e</tt> work with <tt>Float</tt> 
+with and without scientific notation, respectively.</p>
+<pre>&gt;&gt;&gt; &quot;%i, %f, %e&quot; % (1000, 1000, 1000)
+'1000, 1000.000000, 10.000000e+002'</pre>
+<p class="docText">Notice how awkward all of those zeroes look. You can limit 
+the length of precision and neaten up your code like this:</p>
+<pre>&gt;&gt;&gt; &quot;%i, %2.2f, %2.2e&quot; % (1000, 1000, 1000)
+'1000, 1000.00, 10.00e+002'</pre>
+<p class="docText">The <tt>%2.2f</tt> directive tells Python to format the 
+number as at least two characters and to cut the precision to two characters 
+after the decimal point. This is useful for printing floating-point numbers that 
+represent currency.</p>
+<pre>&gt;&gt;&gt; &quot;Your monthly payments are $%1.2f&quot; % (payment)
+'Your monthly payments are $444.43'</pre>
+<p class="docText">All <tt>%</tt> directives have the form <tt>%min.precision(type)</tt>, 
+where <tt>min</tt> is the minimum length of the field, <tt>precision</tt> is the 
+length of the mantissa (the numbers on the right side of the decimal point), and
+<tt>type</tt> is the type of directive (<tt>e</tt>, <tt>f</tt>, <tt>i</tt>, or
+<tt>d</tt>). If the <tt>precision</tt> field is missing, the directive can take 
+the form <tt>%min(type)</tt>, so, for example, <tt>%5d</tt> ensures that a 
+decimal number has at least 5 fields and <tt>%20f</tt> ensures that a 
+floating-point number has at least 20.</p>
+<p class="docText">Let's look at the use of these directives in an interactive 
+session.</p>
+<pre>&gt;&gt;&gt; &quot;%5d&quot; % (100,)
+'   100'
+&gt;&gt;&gt; &quot;%20f&quot; % (100,)
+'          100.000000'</pre>
+<p class="docText">Here's how to truncate the <tt>float</tt>'s mantissa to 2 
+with <tt>%20.2f</tt>.</p>
+<pre>&gt;&gt;&gt; &quot;%20.2f&quot; % (100,)
+'              100.00'</pre>
+<p class="docText">The padding that precedes the directive is useful for 
+printing rows and columns of data for reporting because it makes the printed 
+output easy to read. This can be seen in the following example (from
+<span class="docEmphasis">format.py</span>):</p>
+<pre>   # Create two rows
+row1 = (100, 10000, 20000, 50000, 6000, 6, 5)
+row2 = (1.0, 2L, 5, 2000, 56, 6.0, 7)
+
+   #
+   # Print out the rows without formatting
+print &quot;here is an example of the columns not lining up&quot;
+print `row1` + &quot;\n&quot; + `row2`
+print
+   #
+   # Create a format string that forces the number
+   # to be at least 3 characters long to the left
+   # and 2 characters to the right of the decimal point
+format = &quot;(%3.2e, %3.2e, %3.2e, %3.2e, &quot; + \
+          &quot;%3.2e, %3.2e, %3.2e)&quot;
+
+   #
+   # Create a string for both rows
+   # using the format operator
+strRow1 = format % row1
+strRow2 = format % row2
+print &quot;here is an example of the columns&quot; + \
+      &quot; lining up using \%e&quot;
+
+print strRow1 + &quot;\n&quot; + strRow2
+print
+
+   # Do it again this time with the %i and %d directive
+format1 = &quot;(%6i, %6i, %6i, %6i, %6i, %6i, %6i)&quot;
+format2 = &quot;(%6d, %6d, %6d, %6d, %6d, %6d, %6d)&quot;
+strRow1 = format1 % row1
+strRow2 = format2 % row2
+print &quot;here is an example of the columns&quot; + \
+      &quot; lining up using \%i and \%d&quot;
+
+print strRow1 + &quot;\n&quot; + strRow2
+print
+
+here is an example of the columns not lining up
+(100, 10000, 20000, 50000, 6000, 6, 5)
+(1.0, 2L, 5, 2000, 56, 6.0, 7)
+
+here is an example of the columns lining up using \%e
+(1.00e+002, 1.00e+004, 2.00e+004, 5.00e+004, 6.00e+003, 6.00e+000, 5.00e+000)
+(1.00e+000, 2.00e+000, 5.00e+000, 2.00e+003, 5.60e+001, 6.00e+000, 7.00e+000)
+
+here is an example of the columns lining up using \%i and \%d
+( 100,    10000,    20000,    50000,    6000,    6,    5)
+(   1,        2,        5,     2000,      56,    6,    7)</pre>
+<p class="docText">You can see that the <tt>%3.2e</tt> directive permits a 
+number to take up only three spaces plus the exponential whereas <tt>%6d</tt> 
+and <tt>%6i</tt> permit at least six spaces. Note that <tt>%i</tt> and <tt>%d</tt> 
+do the same thing that <tt>%e</tt> does. Most C programmers are familiar with
+<tt>%d</tt> but may not be familiar with <tt>%i</tt>, which is a recent addition 
+to that language.</p>
+<h4 class="docSection2Title" id="ch03lev2sec12">String % Dictionary</h4>
+<p class="docText">Another useful Python feature for formatting strings is <tt>
+StringOperand %</tt> <tt>DictionaryOperand</tt>. This form allows you to 
+customize and print named fields in the string. <tt>%(Income)d</tt> formats the 
+value referenced by the Income key. Say, for example, that you have a dictionary 
+like the one here:</p>
+<pre>Monica = {
+          &quot;Occupation&quot;: &quot;Chef&quot;,
+          &quot;Name&quot; : &quot;Monica&quot;,
+          &quot;Dating&quot; : &quot;Chandler&quot;,
+          &quot;Income&quot; : 40000
+          }</pre>
+<p class="docText">With <tt>%(Income)d</tt>, this is expressed as</p>
+<pre>&gt;&gt;&gt; &quot;%(Income)d&quot; % Monica
+'40000'</pre>
+<p class="docText">Now let's say you have three best friends, whom you define as 
+dictionaries named <tt>Monica</tt>, <tt>Chandler</tt>, and <tt>Ross</tt>.</p>
+<pre>Monica =     {
+             &quot;Occupation&quot;: &quot;Chef&quot;,
+             &quot;Name&quot; : &quot;Monica&quot;,
+             &quot;Dating&quot; : &quot;Chandler&quot;,
+             &quot;Income&quot; : 40000
+             }
+Ross =              {
+             &quot;Occupation&quot;: &quot;Scientist Museum Dude&quot;,
+             &quot;Name&quot; : &quot;Ross&quot;,
+             &quot;Dating&quot; : &quot;Rachael&quot;,
+             &quot;Income&quot; : 70000
+             }
+
+Chandler =     {
+             &quot;Occupation&quot;: &quot;Buyer&quot;,
+             &quot;Name&quot; : &quot;Chandler&quot;,
+             &quot;Dating&quot; : &quot;Monica&quot;,
+             &quot;Income&quot; : 65000
+             }</pre>
+<p class="docText">To write them a form letter, you can create a format string 
+called <tt>message</tt> that uses all of the above dictionaries' keywords.</p>
+<pre>message = &quot;%(Name)s, %(Occupation)s, %(Dating)s,&quot; \
+           &quot;    %(Income)2.2f&quot;</pre>
+<p class="docText">Notice that <tt>%(Income)2.2f</tt> formats this with a 
+floating-point precision of 2, which is good for currency. The output is</p>
+<pre>Chandler, Buyer, Monica, 65000.00
+Ross, Scientist Museum Dude, Rachael, 70000.00
+Monica, Chef, Chandler, 40000.00</pre>
+<p class="docText">You can then print each dictionary using the format string 
+operator.</p>
+<pre>print message % Chandler
+print message % Ross
+print message % Monica</pre>
+<p class="docText">To generate your form letter and print it out to the screen, 
+you first create a format string called <tt>dialog</tt>.</p>
+<pre>dialog = &quot;&quot;&quot;
+Hi %(Name)s,
+
+How are you doing? How is %(Dating)s?
+Are you still seeing %(Dating)s?
+
+How is work at the office?
+I bet it is hard being a %(Occupation)s.
+I know I could not do it.
+&quot;&quot;&quot;</pre>
+<p class="docText">Then you print out each dictionary using the <tt>dialog</tt> 
+format string with the <tt>%</tt> format string operator.</p>
+<pre>print dialog % Ross
+print dialog % Chandler
+print dialog % Monica</pre>
+<p class="docText">The output is</p>
+<pre>Hi Ross,
+
+How are you doing? How is Rachael?
+Are you still seeing Rachael?
+
+How is work at the office?
+I bet it is hard being a Scientist Museum Dude.
+I know I could not do it.
+
+Hi Chandler,
+How are you doing? How is Monica?
+Are you still seeing Monica?
+
+How is work at the office?
+I bet it is hard being a Buyer.
+I know I could not do it.
+
+Hi Monica,
+How are you doing? How is Chandler?
+Are you still seeing Chandler?
+
+How is work at the office?
+I bet it is hard being a Chef.
+I know I could not do it.</pre>
+<p class="docText"><tt>%(Income)d</tt> is a useful, flexible feature. You just 
+saw how much time it can save you in writing form letters. Imagine what it can 
+do for writing reports.</p>
+<h3 class="docSection1Title" id="ch03lev1sec3">Summary</h3>
+<p class="docText">String formatting is the way we organize instructions so that 
+Python can understand how to incorporate data in the creation of strings. How 
+strings are formatted determines the presentation of this data. The basis of 
+string formatting is its use of the formatting directives.</p>
+<p class="docText">Logical operators (<tt>and</tt>, <tt>or</tt>, <tt>not</tt>) 
+return true or false values. Comparison operators (<tt>in</tt>, <tt>not in</tt>,
+<tt>is</tt>, <tt>is not</tt>, <tt>==</tt>, <tt>!=</tt>, <tt>&lt;&gt;</tt>, <tt>&gt;</tt>,
+<tt>&gt;=</tt>, <tt>&lt;</tt>, <tt>&lt;=</tt>) compare two values—is one value greater 
+than another, or is one value not equal to another? Comparisons always return 1 
+for true and 0 for false.</p>
+<p class="docText">Any value in Python equates to a Boolean true or false. A 
+false can be equal to none, a zero of numeric type (<tt>0</tt>, <tt>0l</tt>, <tt>
+0.0</tt>), an empty sequence (<tt>''</tt>, <tt>()</tt>, <tt>[]</tt>), or an 
+empty dictionary (<tt>{}</tt>). All other values are considered true.</p>
+<p class="docText">Sequences, tuples, lists, and strings can be added or 
+multiplied by a numeric type with the addition and multiplication operators (<tt>+</tt>,
+<tt>*</tt>), respectively. Strings can be formatted with tuples and dictionaries 
+using the format directives <tt>%i, %d, %f</tt>, and <tt>%e</tt>. Formatting 
+flags can be used with these directives.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%202.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%204.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

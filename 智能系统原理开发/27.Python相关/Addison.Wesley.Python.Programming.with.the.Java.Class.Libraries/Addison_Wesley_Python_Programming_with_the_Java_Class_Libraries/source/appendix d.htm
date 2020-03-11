@@ -1,0 +1,913 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Appendix D</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "appendix d.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/appendix d.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/appendix d.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20c.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20e.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+<h2 class="docAppendixTitle">Appendix D. Java and Python: A Comparison</h2><ul><li>&nbsp;<a class="docLink" href="#ch22lev1sec1">Python 101</a></li>
+<li>&nbsp;<a class="docLink" href="#ch22lev1sec2">A GUI Application</a></li>
+<li>&nbsp;<a class="docLink" href="#ch22lev1sec3">A Statistics Application</a></li>
+<li>&nbsp;<a class="docLink" href="#ch22lev1sec4">A String Parsing Example</a></li>
+<li>&nbsp;<a class="docLink" href="#ch22lev1sec5">Embedding Jython in Java</a></li>
+</ul>
+<p class="docText">This appendix looks at the relative merits of Java and Python 
+using the following tests as the basis for comparison: (1) a GUI application, 
+(2) a statistics application, (3) a simple example of string parsing, and (4) an 
+application with an embedded script.</p>
+<h3 class="docSection1Title" id="ch22lev1sec1">Python 101</h3>
+<p class="docText">Here's a Python class followed by its Java equivalent.</p>
+<p class="docText"><span class="docEmphasis">Python:</span></p>
+<pre>class Employee:
+  def __init__(self, fname=&quot;John&quot;, lname=&quot;Doe&quot;, id=1, manager=None, dept=1):
+        self.__firstName     =     fname
+        self.__lastName      =     lname
+        self.__id            =     id
+        self.__manager       =     manager
+        self.__dept          =     dept
+
+  def getManager(self):
+        return self.__manager
+
+  def __str__(self):
+        values = self.__lastName, self.__firstName, self.__id
+        return join(values,',')</pre>
+<p class="docText"><span class="docEmphasis">Java:</span></p>
+<pre>public class Employee{
+   private String firstName, lastName;
+   private int id, dept;
+   private Employee manager;
+
+   public Employee(){
+          firstName = &quot;John&quot;;
+          lastName = &quot;Doe&quot;;
+          id = 1;
+          vmanager=null;
+          dept=1;
+   }
+   public Employee(String fname, String lname, int id, Employee manager, int dept){
+          firstName     =     fname;
+          lastName      =     lname;
+          this.id       =     id;
+          this.manager  =     manager;
+          this.dept     =     dept;
+     }
+
+   public Employee getManager(){
+          return manager;
+     }
+
+   public String toString(){
+          StringBuffer buf = new StringBuffer();
+          buf.append(lastName+',');
+          buf.append(firstName+',');
+          buf.append(&quot;&quot;+id);
+          return buf.toString();
+   }
+   ...
+   ...
+}</pre>
+<p class="docText">Similar to Java's <tt>this</tt>, Python's <tt>self</tt> is a 
+reference to the class instance referred to by the first argument in each 
+method. There's no separate declaration for member variables; they're declared 
+when assigned a value. (You can declare class as well as instance variables.) 
+Python's <tt>__str__()</tt> method is equivalent to Java's <tt>toString()</tt>.</p>
+<p class="docText">In Python, to create an instance of <tt>Employee</tt> and 
+print it to the screen you enter the following:</p>
+<pre>print Employee()</pre>
+<p class="docText">The equivalent in Java is</p>
+<pre>System.out.println(new Employee());</pre>
+<p class="docText">Here's how to create two instances of <tt>Employee</tt>, <tt>
+joe</tt> and <tt>ron</tt>, and print them to the console. Joe is Ron's manager. 
+We get him by invoking the <tt>ron</tt> instance's <tt>getManager()</tt> method.</p>
+<p class="docText"><span class="docEmphasis">Python:</span></p>
+<pre>joe = Employee(&quot;Joe&quot;, &quot;Battista&quot;, 100)
+ron = Employee(manager=joe, id=101, lname=&quot;Furgeson&quot;, fname=&quot;Ron&quot;)
+print ron
+print ron.getManager()</pre>
+<p class="docText"><span class="docEmphasis">Java:</span></p>
+<pre>Employee joe=new Employee(&quot;Joe&quot;,&quot;Batista&quot;,100,null,1);
+Employee ron=new Employee(&quot;Ron&quot;,&quot;Furgeson&quot;,101,joe,1);
+System.out.println(ron);
+System.out.println(ron.getManager());</pre>
+<p class="docText">As you can see, the syntax is similar.</p>
+<p class="docText">Jython uses named arguments and default values. This means 
+that when the <tt>ron</tt> instance is created the arguments are called out of 
+order, which should be familiar to those of you who've used Visual Basic or 
+VBScript. For those of you unfamiliar with this idea, think of it this way: You 
+can call methods as you normally do in Java, or you can do it the Python way, 
+passing the method name/value pairs and saving yourself some coding, not to 
+mention headaches. Have you ever been stuck with several versions of the same 
+method when all you wanted was different default values? Every default value is 
+another overloaded method, which can get messy.</p>
+<p class="docText">A good example of the use of named arguments is Python's <tt>
+GridBag</tt> utility class, which manages the infamous <tt>GridBagLayout</tt> 
+manager. I've created something similar in Java that uses overloaded methods to 
+create <tt>GridBag</tt> constraints.</p>
+<h4 class="docSection2Title" id="ch22lev2sec1">A Simple GUI Prototype</h4>
+<p class="docText">We have our simple class. Now we'll create a simple GUI 
+prototype. (Like the class, it's nonsensical since its only purpose is for 
+illustration.)</p>
+<p class="docText">Fire up the Python interactive interpreter, typing in <tt>
+Jython</tt> at the system prompt. Then import <tt>JFrame</tt> from
+<span class="docEmphasis">javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JFrame</pre>
+<p class="docText">Create an instance of the frame, set its size to 200,200, and 
+make it visible.</p>
+<pre>&gt;&gt;&gt; frame=JFrame(&quot;My Prototype&quot;,visible=1,size=(200,200))</pre>
+<p class="docText">This took only one line of code because in Jython any bean 
+property of a class (by which I mean a property defined by getter and setter 
+methods—that is, the Java Bean design pattern for properties) can be set during 
+the constructor call using named arguments.</p>
+<p class="docText">Now let's add some components: labels, text fields, and a 
+button. Import the necessary classes from <span class="docEmphasis">javax.swing.</span></p>
+<pre>&gt;&gt;&gt; from javax.swing import JButton,JTextField,JLabel,JPanel</pre>
+<p class="docText">We could have entered <tt>from javax.swing import *</tt>, as 
+we do in Java, but that would have imported every class into our namespace, 
+which Python considers bad style. Python's way is to let us view and manipulate 
+a namespace.</p>
+<pre>&gt;&gt;&gt; dir()
+['JButton', 'JFrame', 'JLabel', 'JTextField', '__name__', 'frame']</pre>
+<p class="docText">Create a pane, using <tt>JFrame</tt>'s <tt>contentPane</tt> 
+property.</p>
+<pre>&gt;&gt;&gt; pane = JPanel()
+&gt;&gt;&gt; frame.contentPane.add(pane)
+javax.swing.JPanel[,0,0,0x0,invalid,layout=java.awt.FlowLayout,alignmentX=
+null,alignmentY=null,border=,flags=34,maximumSize=,minimumSize=,preferredSize=
+,default Layout=java.awt.FlowLayout[hgap=5,vgap=5,align=center]]</pre>
+<p class="docText">If this were Java, we'd have to call <tt>frame.getContentPane()</tt> 
+to create a pane because Java does not treat bean properties like instance 
+variables.</p>
+<p class="docText">To lay out the pane we're going to use the infamous <tt>
+GridBagLayout</tt>, which is the most complex of Jython's layout managers. To 
+tame it we'll use the <tt>GridBag</tt> utility class. Notice how few lines of 
+code it takes up.</p>
+<p class="docText">Import the <tt>GridBag</tt> helper class. Then create an 
+instance of it and associate it with the pane.</p>
+<pre>&gt;&gt;&gt; from pawt import GridBag
+&gt;&gt;&gt; bag = GridBag(pane)</pre>
+<p class="docText">Add the first component, a label, to <tt>GridBag</tt>, which 
+will use all of <tt>GridBagConstraints</tt>'s default values.</p>
+<pre>&gt;&gt;&gt; bag.add(JLabel(&quot;Name&quot;))
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Add another label on the second row of the grid.</p>
+<pre>&gt;&gt;&gt; bag.add(JLabel(&quot;ID&quot;), gridy=1)
+&gt;&gt;&gt; frame.validate()</pre>
+<p class="docText">Add a text field on the first row in the second column, and 
+pack the frame.</p>
+<pre>&gt;&gt;&gt; name = JTextField(25)
+&gt;&gt;&gt; bag.add(name, gridx=1, weightx=80.0)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Add another text field for the employee ID to the right on 
+the second row, and pack the frame.</p>
+<pre>&gt;&gt;&gt; id = JTextField(10)
+&gt;&gt;&gt; bag.add(id, gridx=1, gridy=1, weightx=80.0)
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Not what we want, is it? The text field components look silly 
+because I accidentally (on purpose) aligned them centered, not at the left, in 
+their cells. Let's fix this.</p>
+<p class="docText">Remove the ID and name.</p>
+<pre>&gt;&gt;&gt; pane.remove(id)
+&gt;&gt;&gt; pane.remove(name)</pre>
+<p class="docText">Put them back with the correct alignment.</p>
+<pre>&gt;&gt;&gt; bag.add(name, gridx=1, weightx=80.00, anchor='WEST')
+&gt;&gt;&gt; bag.add(id, gridx=1, gridy=1, weightx=80.0, anchor='WEST')
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Jython handles bean events easily because it uses 
+introspection and reflection to create event properties. With the JavaBeans 
+Event design pattern, event properties equate to the method name in a method's 
+event listener interface.</p>
+<p class="docText">To demonstrate assigning a function or method to an event 
+property, we'll set up an Okay button that prints an employee's name and ID when 
+clicked.</p>
+<p class="docText">Create and add a button to the GUI.</p>
+<pre>&gt;&gt;&gt; okay = JButton(&quot;Okay&quot;)
+&gt;&gt;&gt; bag.add(okay, gridx=1, gridy=2, anchor='CENTER')
+&gt;&gt;&gt; frame.pack()</pre>
+<p class="docText">Create a function that prints out the value of the name and 
+ID text.</p>
+<pre>&gt;&gt;&gt; def handleOkay(event):
+...     print &quot;Name &quot; + name.text
+...     print &quot;ID &quot; + id.text
+...
+&gt;&gt;&gt; okay.actionPerformed=handleOkay</pre>
+<p class="docText">Enter some text in the name and ID fields, and hit Okay.</p>
+<h3 class="docSection1Title" id="ch22lev1sec2">A GUI Application</h3>
+<p class="docText">Now let's create a GUI based on our prototype in both Jython 
+and Java. The following example shows our Python employee form; after that is 
+its Java equivalent.</p>
+<p class="docText"><span class="docEmphasis">Python:</span></p>
+<pre>from javax.swing import JFrame, JButton, JTextField, JLabel, JPanel
+from string import split
+from pawt import GridBag
+from Employee import Employee
+
+class EmployeeForm(JFrame):
+  def __init__(self):
+        JFrame.__init__(self, &quot;Employee Form&quot;)
+        pane = JPanel()
+        self.contentPane.add(pane)
+        bag = GridBag(pane)
+
+              #Create a name and id text field.
+        self.__name = JTextField(25)
+        self.__id = JTextField(10)
+
+              #Create and add a &quot;Name&quot; and &quot;ID&quot; label.
+        name = JLabel(&quot;Name&quot;, labelFor=self.__name, displayedMnemonic=ord('N'))
+        bag.add(name)
+        id = JLabel(&quot;ID&quot;, labelFor=self.__id, displayedMnemonic=ord('I'))
+        bag.add(id, gridy=1)
+
+              # Add the name and ID text field to the form.
+        bag.add(self.__name, gridx=1, weightx=80.00, anchor='WEST')
+        bag.add(self.__id, gridx=1, gridy=1, anchor='WEST')
+
+              #Create an okay button, add it, and set up its event handler.
+        okay = JButton(&quot;Okay&quot;, mnemonic=ord('O'))
+        bag.add(okay, gridx=1, gridy=2, anchor='EAST')
+        okay.actionPerformed=self.handleOkay
+
+        self.visible=1
+        self.pack()
+
+def handleOkay(self, event):
+        fname, lname = split(self.__name.text, &quot; &quot;)
+        id = int(self.__id.text)
+        employee = Employee(fname, lname, id)
+        print employee
+
+if __name__==&quot;__main__&quot;:EmployeeForm()</pre>
+<p class="docText"><span class="docEmphasis">Java:</span></p>
+<pre>import javax.swing.*;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import employee.Employee;
+
+public class EmployeeForm extends JFrame{
+   private JTextField name;
+   private JTextField id;
+
+public EmployeeForm(){
+   super(&quot;Employee Form&quot;);
+   JPanel pane = new JPanel();
+   getContentPane().add(pane);
+
+   pane.setLayout(new GridBagLayout());
+
+         // Create a name and id text field.
+   name = new JTextField(25);
+   id = new JTextField(10);
+
+         // Create and add a &quot;Name&quot; and &quot;ID&quot; label.
+   JLabel nameLabel = new JLabel(&quot;Name&quot;);
+   nameLabel.setLabelFor(name);
+   nameLabel.setDisplayedMnemonic('N');
+   GridBagConstraints constraint = new GridBagConstraints();
+   pane.add(nameLabel, constraint);
+
+   JLabel idLabel = new JLabel(&quot;ID&quot;);
+   idLabel.setLabelFor(id);
+   idLabel.setDisplayedMnemonic('I');
+   constraint.gridy=1;
+   pane.add(idLabel, constraint);
+
+         // Add the name and ID text field to the form.
+   constraint.gridy=0; constraint.gridx=1;
+   constraint.weightx=80.00;
+   constraint.anchor=GridBagConstraints.WEST;
+   pane.add(name, constraint);
+   constraint.gridy=1;
+   pane.add(id, constraint);
+
+         // Create an okay button, add it, and set up its event handler.
+   JButton okay = new JButton(&quot;Okay&quot;);
+   okay.setMnemonic('O');
+   constraint.gridx=1; constraint.gridy=2;
+   constraint.anchor=GridBagConstraints.EAST;
+   pane.add(okay, constraint);
+   okay.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent event){
+               handleOkay();
+         }
+   } );
+
+   this.setVisible(true);
+   this.pack();
+}
+
+public void handleOkay(){
+
+   String name, fname, lname;
+   int index=0;
+   int id =0;
+
+   name = this.name.getText();
+   index = name.indexOf(&quot; &quot;);
+   fname = name.substring(0, index);
+   lname = name.substring(index+1, name.length());
+
+   id = Integer.parseInt(this.id.getText());
+
+   Employee employee = new Employee(fname, lname, id, null, 100);
+   System.out.println(&quot;&quot;+employee);
+}
+   public static void main(String [] args){
+         new EmployeeForm();
+     }
+}</pre>
+<p class="docText">The Jython version is 1,290 characters; the Java version is 
+2,139 characters.</p>
+<h3 class="docSection1Title" id="ch22lev1sec3">A Statistics Application</h3>
+<p class="docText">Remember the house price sample application we created in
+<a class="docLink" href="?xmlid=0-201-61616-5/ch04#ch04">Chapter 4</a>? You 
+might want to go back and refresh your memory because we're going to be using it 
+to continue our Python/Java comparison. I'm not going to repeat the information 
+you'll find there, particularly the breakdown and explanation of the code, but I 
+will highlight the important functions, as I did in
+<a class="docLink" href="?xmlid=0-201-61616-5/ch04#ch04">Chapter 4</a>, and show 
+you the full code examples. A suggestion: Place a bookmark at the section on the 
+house price example in that chapter for easy referral.</p>
+<h4 class="docSection2Title" id="ch22lev2sec2">getRange()</h4>
+<p class="docText">The <tt>getRange()</tt> function iterates through a list of 
+numbers passed to it to calculate the minimum and maximum values in a list. It 
+returns these values, with their range, in a tuple. Here's one way to implement 
+it:</p>
+<pre>def getRange (nums):
+
+   min = 300000000
+   max = -300000000
+
+   for item in nums:
+          if (item &gt; max): max = item
+          if (item &lt; min): min = item
+   return (min, max, max-min)</pre>
+<p class="docText">Here's another, better, way:</p>
+<pre>def getRange (nums):
+   return (min(nums), max(nums), max(nums)-min(nums))</pre>
+<p class="docText">With the first implementation, you have to be sure that the 
+values passed to <tt>getRange()</tt> are within the minimum-maximum range. With 
+the second implementation, you don't have to do that, thanks to the built-in <tt>
+min()</tt> and <tt>max()</tt> functions, which work with all numeric types.</p>
+<h4 class="docSection2Title" id="ch22lev2sec3">getMean()</h4>
+<p class="docText">The <tt>getMean()</tt> function calculates the mean of a 
+sequence of numbers by iterating through the sequence, summing the values, and 
+then dividing the sum by the sequence length. It also determines if the result 
+is a sample mean or a population mean.</p>
+<pre>def getMean (nums, sample):
+   sum = 0.0          # holds the value of sum
+
+          # iterate through the sequence
+# of numbers and sum them
+   for x in nums:
+          sum = sum + x
+
+          # Check to see if this is a sample mean
+   if(sample):
+          average = sum / (len(nums)-1)
+
+          # Else it is a population mean
+   else:
+          average = sum / len(nums)
+   return average</pre>
+<p class="docText">As with <tt>getRange()</tt>, Python has a better way to find 
+the mean. It may surprise you.</p>
+<pre>def getMean (nums, sample):
+   sum = reduce(lambda a, b: a+b, nums)
+   if sample: average = sum / (len(nums)-1)
+   else: average = sum / len(nums)
+
+   return average</pre>
+<p class="docText">What's new here is the <tt>reduce()</tt> built-in function, 
+which takes two arguments, <tt>function</tt> and <tt>sequence</tt>. <tt>function</tt> 
+is specified with the <tt>lambda</tt> keyword, which makes it anonymous. <tt>
+reduce()</tt> applies <tt>function</tt> to two items in the sequence, 
+cumulatively from left to right, reducing it to a single value, in our case <tt>
+sum</tt>.</p>
+<p class="docText">The result is the same as with our first implementation of
+<tt>getMean()</tt>, but it's a lot shorter.</p>
+<h4 class="docSection2Title" id="ch22lev2sec4">getMode()</h4>
+<p class="docText">The <tt>getMode()</tt> function finds the value that repeats 
+most often in a sequence. First it duplicates the sequence (before modifying 
+it); then it iterates through it, counting the occurrences of current items via 
+the built-in <tt>count()</tt> method. Once an item is counted, it's removed from 
+the duplicated sequence.</p>
+<pre>def getMode (nums):
+          #
+          # make a duplicate copy of the nums argument
+   duplicate = nums[:]
+   highest_count = -100
+   mode = None
+          #
+          # calculate the highest_count and the mode
+   for item in nums:
+
+          count = duplicate.count(item)
+          if (count == 0): continue
+          if (count &gt; highest_count):
+                highest_count = count
+                mode = item
+
+          while(duplicate.count(item) &gt; 0):
+                duplicate.remove(item)
+   return mode</pre>
+<h4 class="docSection2Title" id="ch22lev2sec5">getMedian()</h4>
+<p class="docText">The <tt>getMedian()</tt> function finds the middlemost value 
+once the sequence is sorted.</p>
+<pre>def getMedian (nums):
+   &quot;Find the Median number&quot;
+
+         # Create a duplicate since we are
+# going to modify it.
+   seq = nums[:]
+
+         # Sort the list of numbers.
+   seq.sort()
+
+   median = None # to hold the median value
+
+   length = len(seq) # to hold the length of the seq
+
+         # Check to see if the length is
+# an even number.
+   if ( ( length % 2) == 0):
+                 # Since it is an even number,
+                 # add the two middle number together.
+         index = length / 2
+         median = (seq[index-1] + seq[index]) /2.0
+   else:
+                 # Since it is an odd number,
+                 # just grab the middle number.
+         index = (length / 2)
+         median = seq[index]
+   return median</pre>
+<h4 class="docSection2Title" id="ch22lev2sec6">reportStatistics()</h4>
+<p class="docText">The <tt>reportStatistics()</tt> function calls all of the 
+functions just described and stores their return values in two dictionaries, <tt>
+averages</tt> and <tt>ranges</tt>. It then places these dictionaries in another 
+dictionary called <tt>report</tt>, which it returns.</p>
+<pre>def reportStatistics (nums):
+         # get central tendencies
+   averages = {
+         &quot;mean&quot;:getMean(nums,0),
+         &quot;median&quot;:getMedian(nums),
+         &quot;mode&quot;:getMode(nums)
+         }
+
+         # get range
+   range = getRange(nums)
+         # put ranges in a dictionary
+   ranges = {
+         &quot;min&quot;:range[0],
+         &quot;max&quot;:range[1],
+         &quot;range&quot;:range[2]
+         }
+   report = {
+         &quot;averages&quot;: averages,
+         &quot;ranges&quot;: ranges
+         }
+   return report</pre>
+<p class="docText">Notice that Python, unlike Java, has a built-in syntax that 
+allows you to specify a dictionary (which is similar to a Java hashtable) with a 
+literal.</p>
+<h4 class="docSection2Title" id="ch22lev2sec7">runReport()</h4>
+<p class="docText">The <tt>runReport()</tt> function uses <tt>reportStatistics()</tt> 
+to get and print the report dictionary.</p>
+<pre>from stat import reportStatistics
+house_in_awahtukee = [100000, 120000, 150000, 200000, 65000, 100000]
+report = reportStatistics(house_in_awahtukee)
+
+range_format = &quot;&quot;&quot;
+Range:
+The least expensive house is %(min)20.2f
+The most expensive house is %(max)20.2f
+The range of house price is %(range)20.2f
+&quot;&quot;&quot;
+average_format = &quot;&quot;&quot;
+Averages:
+The mean house price is %(mean)20.2f
+The mode for house price is %(mode)20.2f
+The median house price is %(median)20.2f
+&quot;&quot;&quot;
+
+print range_format % report[&quot;ranges&quot;]
+print average_format % report[&quot;averages&quot;]</pre>
+<p class="docText">The thing to notice here is the string format operator (<tt>%</tt>), 
+which is like C's <tt>printf()</tt> function except that it can work with 
+dictionaries. It's one of my favorite Python features because it makes text 
+reporting so easy. I've even used it to generate Java code.</p>
+<p class="docText">Here's Python's <tt>runReport()</tt> output:</p>
+<pre>Range:
+The least expensive house is          65000.00
+The most expensive house is          200000.00
+The range of house price is          135000.00
+
+Averages:
+The mean house price is              122500.00
+The mode for house price is          100000.00
+The median house price is            110000.00</pre>
+<p class="docText">Here's the Java version.</p>
+<pre>package stat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Collections;
+import java.util.HashMap;
+
+public class Stats {
+
+  public static double getMean (ArrayList nums,
+                                          boolean sample){
+         // Define mean that finds two types of mean,
+         // namely:
+         // population mean and sample mean
+         double sum=0.0;
+         double average=0.0;
+         Iterator iterator = nums.iterator();
+
+         while(iterator.hasNext())
+                sum = sum +
+                ((Double)iterator.next()).doubleValue();
+                // Check to see if this is a sample mean.
+         if(sample)
+                average = sum / nums.size()-1;
+         else
+                average = sum / nums.size();
+         return average;
+  }
+
+  public static ArrayList getRange (ArrayList nums){
+                // Find the range. Returns a tuple with the
+                // minimum, maximum, and range value
+         double min, max;
+         ArrayList ranges;
+
+         min =
+         ((Double)Collections.min(nums)).doubleValue();
+         max =
+         ((Double)Collections.max(nums)).doubleValue();
+
+         ranges = new ArrayList();
+         ranges.add(new Double (min));
+         ranges.add(new Double (max));
+         ranges.add(new Double (max-min));
+
+         return ranges;
+  }
+
+  public static double getMedian (ArrayList nums){
+                // Find the Median number.
+                // Create a duplicate since we are going to
+                // modify the sequence.
+         ArrayList seq = new ArrayList(nums);
+
+                // Sort the list of numbers.
+         Collections.sort(seq);
+
+         double median = 0.0; // to hold the median value
+
+         int length = seq.size(); // to hold the length of
+                                          // the sequence
+         int index=0;
+
+                // Check to see if the length
+                // is an even number.
+         if ( ( length % 2) == 0){
+                     // Since it is an even number,
+                     // add the two middle numbers together.
+                index = length / 2;
+                double m1 =
+                ((Double)seq.get(index-1)).doubleValue();
+                double m2 =
+                ((Double)seq.get(index)).doubleValue();
+                median = (m1 + m2) /2.0;
+         }
+         else{
+
+                     // Since it is an odd number,
+                     // just grab the middle number.
+                index = (length / 2);
+                median =
+                ((Double)seq.get(index)).doubleValue();
+         }
+         return median;
+  }
+
+  private static int countMode(Object object,
+                                                ArrayList list){
+         int index = 0;
+         int count = 0;
+         do {
+                index=Collections.binarySearch(list,object);
+                if(index &gt;=0)list.remove(index);
+                count++;
+         }
+         while (index &gt;=0);
+         return count;
+  }
+
+public static double getMode (ArrayList nums){
+         // Find the number that repeats the most.
+                // Make a duplicate copy of the
+                // nums argument.
+         ArrayList duplicate = new ArrayList(nums);
+
+         Collections.sort(duplicate);
+         double highest_count = -100;
+         double mode = -100;
+
+         Iterator iterator = nums.iterator();
+                // Iterate through nums removing
+                // each item out of the duplicate.
+                // Calculate the highest_count and the mode.
+         while(iterator.hasNext()){
+                double count = 0;
+                Object item = iterator.next();
+                // Count the number of times the item
+                // occurs in the list.
+                      // If Count is 0, go to the next
+                      // iteration.
+                count = countMode(item, duplicate);
+                if (count == 0) continue;
+
+                      // Determine the highest count. The
+                      // highest counted item is the mode.
+                if (count &gt; highest_count){
+                      highest_count = count;
+                      mode = ((Double)item).doubleValue();
+                }
+         }
+         return mode;
+  }
+
+  public static HashMap reportStatistics(
+                                         ArrayList nums){
+                // Get central tendencies.
+         HashMap averages = new HashMap();
+
+         averages.put(&quot;mean&quot;,
+                new Double(getMean(nums,false)));
+         averages.put(&quot;median&quot;,
+                new Double(getMedian(nums)));
+         averages.put(&quot;mode&quot;, new Double(getMode(nums)));
+
+                // Get range.
+         ArrayList range = getRange(nums);
+         HashMap ranges = new HashMap();
+
+                // Put ranges in a dictionary.
+         ranges.put(&quot;min&quot;, range.get(0));
+         ranges.put(&quot;max&quot;, range.get(1));
+         ranges.put(&quot;range&quot;,range.get(2));
+
+         HashMap report = new HashMap();
+         report = new HashMap();
+         report.put(&quot;averages&quot;, averages);
+         report.put(&quot;ranges&quot;, ranges);
+
+         return report;
+  }
+}
+
+--- RunReport.java ---
+package stat;
+
+import java.util.ArrayList;
+import java.text.MessageFormat;
+import java.util.HashMap;
+
+public class RunReport{
+  public static String range_format = &quot;&quot; +
+  &quot;Range: \n&quot;+
+  &quot;The least expensive house is {0,number,currency} \n&quot;+
+  &quot;The most expensive house is {1,number,currency}  \n&quot;+
+  &quot;The range of house price is {2,number,currency} \n&quot;;
+  public static String average_format = &quot;&quot; +
+  &quot;Averages: \n&quot; +
+  &quot;The mean house price is     {0,number,currency} \n&quot;+
+  &quot;The mode for house price is {1,number,currency} \n&quot;+
+  &quot;The median house price is     {2,number,currency} \n&quot;;
+
+public static void main(String [] args){
+
+       ArrayList houses_in_awahtukee = new ArrayList();
+       houses_in_awahtukee.add(new Double(110000));
+       houses_in_awahtukee.add(new Double(190000));
+       houses_in_awahtukee.add(new Double(140000));
+       houses_in_awahtukee.add(new Double(120000));
+       houses_in_awahtukee.add(new Double(190000));
+       houses_in_awahtukee.add(new Double(180000));
+       houses_in_awahtukee.add(new Double(170000));
+       houses_in_awahtukee.add(new Double(180000));
+       houses_in_awahtukee.add(new Double(180000));
+       houses_in_awahtukee.add(new Double(190000));
+       houses_in_awahtukee.add(new Double(190000));
+       houses_in_awahtukee.add(new Double(250000));
+
+       HashMap report =
+              Stats.reportStatistics(houses_in_awahtukee);
+       HashMap ranges = (HashMap)report.get(&quot;ranges&quot;);
+       HashMap averages =
+              (HashMap)report.get(&quot;averages&quot;);
+
+       Object [] m_args = new Object[]{
+              averages.get(&quot;mean&quot;),
+              averages.get(&quot;mode&quot;),
+              averages.get(&quot;median&quot;)} ;
+
+       Object [] r_args = new Object []{
+              ranges.get(&quot;min&quot;),
+              ranges.get(&quot;max&quot;),
+              ranges.get(&quot;range&quot;)} ;
+
+       System.out.println(
+       MessageFormat.format(range_format,r_args));
+
+       System.out.println(
+       MessageFormat.format(average_format,m_args));
+  }
+}</pre>
+<p class="docText">Which one is shorter?</p>
+<h3 class="docSection1Title" id="ch22lev1sec4">A String Parsing Example</h3>
+<p class="docText">To compare Java and Python string parsing, we're going to 
+create a readable file consisting of a comma-delimited list of house prices.</p>
+<pre>100000,100000,120000,150000,170000,170000,80000,50000</pre>
+<p class="docText">Here's the Python code broken down:</p>
+<p class="docText">Open the file.</p>
+<pre>&gt;&gt;&gt; file = open(&quot;data.txt&quot;)</pre>
+<p class="docText">Read in the file data.</p>
+<pre>&gt;&gt;&gt; data = file.read()</pre>
+<p class="docText">Import the <tt>split()</tt> function to parse the data.</p>
+<pre>&gt;&gt;&gt; from string import split
+&gt;&gt;&gt; housePrices = split(data, &quot;,&quot;)</pre>
+<p class="docText">For demonstration, show that <tt>split()</tt> has split the 
+data string into a list of strings.</p>
+<pre>&gt;&gt;&gt; housePrices
+['100000', '100000', '120000', '150000', '170000', '170000', '80000', '50000']</pre>
+<p class="docText">Convert <tt>housePrices</tt> from strings to floating-point 
+values.</p>
+<pre>&gt;&gt;&gt; housePrices = map(float, housePrices)</pre>
+<p class="docText">Show that <tt>housePrices</tt> is now a list of 
+floating-point values.</p>
+<pre>&gt;&gt;&gt; housePrices
+[100000.0, 100000.0, 120000.0, 150000.0, 170000.0, 170000.0, 80000.0, 50000.0]</pre>
+<p class="docText">Here's the actual code (from <span class="docEmphasis">
+runReport2.py</span>).</p>
+<pre>from stat import reportStatistics
+from string import split
+file = open(&quot;data.txt&quot;)
+data = file.read()
+
+housePrices = split(data, &quot;,&quot;)
+housePrices = map(float, housePrices)
+report = reportStatistics(housePrices)
+
+range_format = &quot;&quot;&quot;
+Range:
+The least expensive house is %(min)20.2f
+The most expensive house is  %(max)20.2f
+The range of house price is  %(range)20.2f
+&quot;&quot;&quot;
+
+average_format = &quot;&quot;&quot;
+Averages:
+The mean house price is          %(mean)20.2f
+The mode for house price is      %(mode)20.2f
+The median house price is        %(median)20.2f
+&quot;&quot;&quot;print range_format     % report[&quot;ranges&quot;]
+print average_format      % report[&quot;averages&quot;]</pre>
+<p class="docText">Here's the Java version of the <span class="docEmphasis">
+RunReport2</span> module. Notice the difference in length.</p>
+<pre>package stat;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
+import java.text.MessageFormat;
+
+import java.io.FileReader;
+import java.io.BufferedReader;
+
+public class RunReport2{
+  public static String range_format = &quot;&quot; +
+  &quot;Range: \n&quot;+
+  &quot;The least expensive house is {0,number,currency} \n&quot; +
+  &quot;The most expensive house is {1,number,currency}  \n&quot;+
+  &quot;The range of house price is {2,number,currency}  \n&quot;;
+
+public static String average_format = &quot;&quot; +
+  &quot;Averages: \n&quot; +
+  &quot;The mean house price is {0,number,currency} \n&quot;+
+  &quot;The mode for house price is {1,number,currency} \n&quot;+
+  &quot;The median house price is {2,number,currency} \n&quot;;
+
+  public static void main(String [] args){
+
+         ArrayList houses_in_awahtukee = new ArrayList();
+
+         try {
+               BufferedReader reader=new BufferedReader(
+                                   new FileReader(&quot;data.txt&quot;));
+               String data = reader.readLine();
+               StringTokenizer tokens=
+                      new StringTokenizer(data, &quot;,\t\n\r &quot;);
+               while (tokens.hasMoreTokens()){
+
+                      houses_in_awahtukee.add(
+                      Double.valueOf(tokens.nextToken()));
+
+               }
+
+         }
+         catch(Exception e){
+               e.printStackTrace();
+         }
+
+         HashMap report =
+               Stats.reportStatistics(houses_in_awahtukee);
+         HashMap ranges = (HashMap)report.get(&quot;ranges&quot;);
+         HashMap averages =
+               (HashMap)report.get(&quot;averages&quot;);
+         Object [] m_args = new Object[]{
+               averages.get(&quot;mean&quot;),
+               averages.get(&quot;mode&quot;),
+               averages.get(&quot;median&quot;)} ;
+
+         Object [] r_args = new Object []{
+               ranges.get(&quot;min&quot;),
+               ranges.get(&quot;max&quot;),
+               ranges.get(&quot;range&quot;)} ;
+
+         System.out.println(
+         MessageFormat.format(range_format,r_args));
+
+         System.out.println(
+         MessageFormat.format(average_format,m_args));
+  }
+}</pre>
+<h3 class="docSection1Title" id="ch22lev1sec5">Embedding Jython in Java</h3>
+<p class="docText">What follows is an example of embedding Jython in the Java 
+code that ships with Jython's standard distribution. I've added comments.</p>
+<pre>import org.python.util.PythonInterpreter;
+import org.python.core.*;
+
+public class SimpleEmbedded {
+    public static void main(String []args) throws PyException {
+
+         // Create a Python interpreter.
+         PythonInterpreter interp = new PythonInterpreter();
+
+         System.out.println(&quot;Hello, brave new world&quot;);
+
+         // Execute an import statement and a
+         // print statement.
+         interp.exec(&quot;import sys&quot;);
+         interp.exec(&quot;print sys&quot;);
+
+         // Create a variable by assigning
+         // it the value 42.
+         // PyInterger is a Python integer.
+         interp.set(&quot;a&quot;, new PyInteger(42));
+
+         // Execute the print statement to
+         // print out the value of a.
+         interp.exec(&quot;print a&quot;);
+
+         // Assign x to equal the expression 2 + 2.
+         interp.exec(&quot;x = 2+2&quot;);
+
+         // Get the value associated with x.
+         PyObject x = interp.get(&quot;x&quot;);
+
+         // Print the value of x.
+         System.out.println(&quot;x: &quot;+x);
+    }
+}</pre>
+<p class="docText">The preceding example doesn't do justice to the true ease of 
+Java-Jython integration.</p>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20c.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20e.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+</body>
+
+</html>

@@ -1,0 +1,968 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 4</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 4.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 4.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 4.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%203.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%205.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 4. Control Flow</h2><ul><li>&nbsp;<a class="docLink" href="#ch04lev1sec1">The if Statement</a></li>
+<li>&nbsp;<a class="docLink" href="#ch04lev1sec2">The while Statement</a></li>
+<li>&nbsp;<a class="docLink" href="#ch04lev1sec3">The for Statement</a></li>
+<li>&nbsp;<a class="docLink" href="#ch04lev1sec4">Putting It All Together</a></li>
+<li>&nbsp;<a class="docLink" href="#ch04lev1sec5">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Argument</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">break and continue statements</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Built-in (intrinsic) functions</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Compound statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">else/elif clause</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">for loop</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">if, for, and while statements</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Iteration</span></li>
+</ul>
+      </td>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Key/value pair</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Looping</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Modulus operator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Nested dictionary</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Sequence</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">String format operator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Subordinate statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Suite</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Control flow instructs Python, on the basis of certain 
+conditions, to execute particular statements and not others. It also allows 
+repeated execution of statements until some conditions are met and permits 
+branching of conditional execution. In this chapter, we'll cover the <tt>if</tt>,
+<tt>while</tt>, and <tt>for</tt> compound statements, all of which control 
+statement execution in Python.</p>
+<h3 class="docSection1Title" id="ch04lev1sec1">The if Statement</h3>
+<p class="docText">The <tt>if</tt> statement conditionally executes a 
+statement's suite. One form is shown here:</p>
+<pre>if(expression):
+       suite</pre>
+<p class="docText">Python has to determine whether <tt>if</tt>'s expression is 
+true or false. If the expression is true, Python executes the suite; if not, it 
+doesn't. As we discussed in
+<a class="docLink" href="_chapter%203.htm">Chapter 3</a>, Python 
+doesn't have a <tt>Boolean</tt> (true/false) type. Instead, it uses any numeric 
+value other than zero to indicate true and uses zero, any empty sequence, and 
+the value <tt>None</tt> to indicate false. For example, the following will print
+<tt>&quot;hello&quot;</tt> because the expression contains a value of 1.</p>
+<pre>&gt;&gt;&gt; # 1 is true
+&gt;&gt;&gt; if(1):
+...     print(&quot;hello&quot;)
+...
+hello</pre>
+<p class="docText">Notice that the subordinate statement, <tt>print</tt>, is 
+indented, which shows that it's part of the suite associated with <tt>if</tt><span class="docEmphasis">.</span> 
+In interactive mode, you indent an <tt>if</tt> suite with the Tab key. The <tt>
+...</tt> prompt indicates a subordinate statement.</p>
+<p class="docText">The next four statements further illustrate how Python 
+determines whether or not to execute an <tt>if</tt> statement based on the value 
+in the expression.</p>
+<pre>&gt;&gt;&gt; #0 is an integer and 0 means false
+&gt;&gt;&gt; if (0):
+...     print(&quot;goodbye&quot;)
+...
+
+&gt;&gt;&gt; #3.3 is a float and not equal to 0 so it is true
+&gt;&gt;&gt; if (3.3):
+...     print(&quot;hello&quot;)
+...
+
+hello
+&gt;&gt;&gt; #0.00 is equal to 0, which means false
+&gt;&gt;&gt; if (0.000):
+...     print(&quot;goodbye&quot;)
+...
+
+&gt;&gt;&gt; if(0.000000000000000000001):
+...     print(&quot;hello&quot;)
+...
+hello</pre>
+<p class="docText"><tt>if</tt> can determine if a list is empty, as seen in the
+<tt>checkSeq()</tt> function shown in the first example below. The result is 
+shown in the second example. Remember, an empty list indicates false.</p>
+<pre>&gt;&gt;&gt; def checkSeq(seq):
+...     if (seq):
+...             print &quot;has item&quot;
+...     else :
+...             print &quot;empty&quot;
+...
+
+&gt;&gt;&gt; non_empty_list = [1,2,3]
+&gt;&gt;&gt; empty_list = []
+
+&gt;&gt;&gt; checkSeq(empty_list)
+empty
+&gt;&gt;&gt; checkSeq(non_empty_list)
+has item</pre>
+<p class="docText">Typically, <tt>if</tt> statements contain expressions that 
+use comparison and logical operators. To illustrate, let's say that a woman is 
+looking for her perfect man—tall, dark, and handsome; the strong, quiet type 
+between the ages of 27 and 35. In Python, she can express her preferences like 
+this:</p>
+<pre>if (tall and dark and handsome and not talksAlot and (age&gt;27) and (age&lt;35)):
+#(same line)
+print (&quot;Hi handsome&quot;)</pre>
+<p class="docText">Here's an interactive session that uses the above information 
+to help our female friend meet the man of her dreams:</p>
+<pre>&gt;&gt;&gt; tall = 1
+&gt;&gt;&gt; dark = 1
+&gt;&gt;&gt; handsome = 1
+&gt;&gt;&gt; talksAlot = 0
+&gt;&gt;&gt; age = 32
+&gt;&gt;&gt; if (tall and dark and handsome and not talksAlot and (age&gt;27) and (age&lt;35)):
+...     print(&quot;Hi handsome&quot;)
+...
+Hi handsome</pre>
+<p class="docText">At the beginning of the chapter, we saw the basic form of <tt>
+if</tt>. We will look at two other forms, containing <tt>else</tt> and <tt>elif</tt> 
+clauses, respectively, in the two sections that follow.</p>
+<h4 class="docSection2Title" id="ch04lev2sec1">else</h4>
+<p class="docText">The <tt>else</tt> form appears as</p>
+<pre>if(expression):
+       suite 1
+else:
+       suite 2</pre>
+<p class="docText">Before it can execute this expression, Python must determine, 
+as usual, whether it's true. If so, Python executes the first suite; if not (&quot;<a class="docLink" href="#ch04lev2sec1">else</a>&quot;), 
+it executes the second suite. The following simple <tt>greet()</tt> function 
+illustrates the <tt>if:else</tt> form:</p>
+<pre>&gt;&gt;&gt; def greet(name, sex):
+...              #if female print Ms.
+...     if(sex == &quot;female&quot;):
+...             print (&quot;Hello Ms. &quot; + name)
+...              #if male print Mr.
+...     else:
+...             print(&quot;Hello Mr. &quot; + name)
+...
+
+&gt;&gt;&gt;    # greet James who is a male
+&gt;&gt;&gt; greet(&quot;James Agular&quot;, &quot;male&quot;)
+Hello Mr. James Agular
+
+&gt;&gt;&gt;    # greet Jane who is a female
+&gt;&gt;&gt; greet(&quot;Jane Doe&quot;, &quot;female&quot;)
+Hello Ms. Jane Doe</pre>
+<p class="docText">We can see that the expression <tt>sex == &quot;female&quot;</tt> is 
+false, which means that the first time we invoke <tt>greet()</tt> Python will 
+execute the second suite and print <tt>(&quot;Hello Mr. &quot; + name&quot;)</tt>. However, the 
+second time we invoke <tt>greet()</tt>, the expression <tt>sex = = &quot;female&quot;</tt> 
+is true, so Python executes the first suite.</p>
+<h4 class="docSection2Title" id="ch04lev2sec2">Separating Suites</h4>
+<p class="docText">These two <tt>if</tt> statements illustrate the two styles of 
+separating suites—semicolons and indenting:</p>
+<pre>&gt;&gt;&gt; sex = &quot;female&quot;
+&gt;&gt;&gt; name = &quot;Fran Dresser&quot;
+
+&gt;&gt;&gt; #First if statement
+&gt;&gt;&gt; if (sex == &quot;female&quot;):print(&quot;Hello,&quot;); print(&quot;It's good to see you Ms.&quot; + name)
+...
+Hello,
+It's good to see you Ms.Fran Dresser
+
+&gt;&gt;&gt; #second if statement
+&gt;&gt;&gt; if (sex == &quot;female&quot;):
+...     print(&quot;Hello,&quot;)
+...     print (&quot;It's good to see you Ms. &quot; + name)
+...
+Hello,
+It's good to see you Ms. Fran Dresser</pre>
+<h4 class="docSection2Title" id="ch04lev2sec3">elif</h4>
+<p class="docText">The <tt>elif</tt> (&quot;else-if&quot;) clause appears as</p>
+<pre>if(expression 1):
+       suite 1
+elif(expression 2):
+       suite 2
+else:
+       suite 3</pre>
+<p class="docText">which Python translates as &quot;If the expression is true, 
+execute the corresponding suite; else, if the next expression is true, execute 
+the corresponding suite,&quot; and so on. The <tt>else</tt> clause here is actually 
+optional.</p>
+<p class="docText">Here's an example of <tt>elif</tt> based on the previous 
+interactive <tt>greet()</tt> session:</p>
+<pre>&gt;&gt;&gt; def greet(name, sex):
+...     if( sex == &quot;female&quot;):
+...             print(&quot;Hello Ms. &quot; + name)
+...     elif( sex == &quot;male&quot;):
+...             print (&quot;Hello Mr. &quot; + name)
+...     elif( sex == &quot;undeclared&quot;):
+...             print(&quot;Hello &quot; + name)
+...     else:
+...             print(&quot;Hello &quot; + name)
+...</pre>
+<p class="docText">As you can see from the added clauses, there can be multiple
+<tt>elif</tt>s in an <tt>if</tt> statement. However, the <tt>if</tt> clause 
+stays the same and uses the same expression. The second clause, <tt>...elif (sex 
+= = &quot;male&quot;):</tt>, checks to see if the sex is male and, if so, prints out <tt>
+&quot;Hello Mr&quot;</tt>. The third clause, <tt>...elif(sex == &quot;undeclared&quot;):</tt>, 
+checks to see if the sex has even been declared; if not, it prints a simple <tt>
+&quot;Hello&quot;</tt>.</p>
+<p class="docText">So, if we invoke the <tt>greet()</tt> function like this, the 
+second suite, associated with the first <tt>elif</tt> clause, is executed:</p>
+<pre>&gt;&gt;&gt; greet(&quot;Bob Dole&quot;, &quot;male&quot;)
+Hello Mr. Bob Dole</pre>
+<p class="docText">But if we invoke it like this, the first suite, associated 
+with the <tt>if</tt> clause, is executed:</p>
+<pre>&gt;&gt;&gt; greet(&quot;Jane Smith&quot;, &quot;female&quot;)
+Hello Ms. Jane Smith</pre>
+<p class="docText">Similarly, if we invoke the <tt>greet()</tt> function like 
+this, the third suite, associated with the second <tt>elif</tt> clause, is 
+executed:</p>
+<pre>&gt;&gt;&gt; greet(&quot;Jean Costello&quot;, &quot;undeclared&quot;)
+Hello Jean Costello</pre>
+<p class="docText">However, if we invoke it like this, the <tt>else</tt> 
+clause's suite is executed:</p>
+<pre>&gt;&gt;&gt; greet(&quot;Jean Smith&quot;, &quot;&quot;)
+Hello Jean Smith</pre>
+<p class="docText">Notice that <tt>else</tt> is the default, which means that 
+its suite is executed if none of the other clauses' expressions turn out to be 
+true.</p>
+<p class="docText">To sum up, the <tt>if</tt> statement is used for conditional 
+execution of suites. As a compound statement, it consists of the <tt>if</tt>,
+<tt>elif</tt>, and <tt>else</tt> clauses, each of which has an associated suite. 
+By evaluating the expression in each clause until one is found to be true, 
+Python determines which clause's suite to execute. As soon as it finds the right 
+one, it stops evaluating. If all of the expressions are found to be false, 
+Python executes the <tt>else</tt> clause's suite. If <tt>else</tt> isn't there 
+and all other clause's expressions are false, no suite is executed.</p>
+<h3 class="docSection1Title" id="ch04lev1sec2">The while Statement</h3>
+<p class="docText">The <tt>while</tt> statement repetitively executes a suite 
+until a condition is met. Its basic form is</p>
+<pre>while( expression ):
+      suite</pre>
+<p class="docText">which you can think of in English as &quot;While the expression 
+remains true, execute the suite repeatedly.&quot; Python carries out this instruction 
+by returning to the top of the statement to check if the expression is still 
+true; if so, it executes the suite a second time and once again returns to the 
+top (this is referred to as looping), repeating this process until the 
+expression becomes false. Once that happens, Python stops executing, and the <tt>
+while</tt> statement's execution comes to a halt.</p>
+<p class="docText">One use of the <tt>while</tt> statement is to remove items 
+from a list—for example, every occurrence of the string <tt>cat</tt> from the 
+list <tt>pets</tt>.</p>
+<pre>&gt;&gt;&gt; pets = [&quot;cat&quot;, &quot;dog&quot;, &quot;bird&quot;, &quot;fish&quot;, &quot;cat&quot;, &quot;cat&quot;, &quot;cat&quot;] #same line</pre>
+<p class="docText">We know from
+<a class="docLink" href="_chapter%202.htm">Chapter 2</a> that a 
+list has a <tt>count()</tt> method that returns the count of an item in the list 
+and a <tt>remove()</tt> method that removes the first occurrence of an item. Our 
+goal is to remove the <tt>cat</tt> string from the <tt>pet</tt> list while its 
+count is greater than zero. We express this in Python as</p>
+<pre>&gt;&gt;&gt; pets = [&quot;cat&quot;,&quot;dog&quot;, &quot;bird&quot;, &quot;fish&quot;, &quot;cat&quot;, &quot;cat&quot;, &quot;cat&quot;] #same line
+&gt;&gt;&gt; while(pets.count(&quot;cat&quot;) &gt; 0):
+...     pets.remove(&quot;cat&quot;)
+...     print (pets)
+...</pre>
+<p class="docText">To demonstrate what happens at each iteration of the loop, we 
+print each iteration's resulting <tt>pets</tt> list to get the following output:</p>
+<pre>['dog', 'bird', 'fish', 'cat', 'cat', 'cat']
+['dog', 'bird', 'fish', 'cat', 'cat']
+['dog', 'bird', 'fish', 'cat']</pre>
+<p class="docText">The first <tt>cat</tt> was removed on the first execution of 
+the <tt>while</tt> statement, but there are still three occurrences of <tt>cat</tt> 
+remaining, so the <tt>while</tt> loop's suite is executed three more times.</p>
+<h4 class="docSection2Title" id="ch04lev2sec4">break</h4>
+<p class="docText">The <tt>break</tt> statement allows you to break out of a <tt>
+while</tt> statement before it loops back to the top. This is useful, for 
+example, when inputting several name/phone-number pairs in an address book 
+application. The following statement uses the <tt>raw</tt>_<tt>input()</tt> 
+built-in function (which reads a line from the console). An empty string 
+indicates that inputting is complete:</p>
+<pre>&gt;&gt;&gt; while(1):
+...     name = raw_input(&quot;Enter in the name: &quot;)
+...     if(name == &quot;&quot;):
+...             break
+...     phone_number = raw_input(&quot;Enter in the phone number: &quot;)
+...     #Do something useful with the name and phone_number</pre>
+<p class="docText">Notice the <tt>while(1):</tt> expression, which in effect 
+tells Python to loop the suite forever. However, the <tt>break</tt> statement 
+stops this &quot;infinite looping&quot; by instructing Python to break out of the loop if 
+it hits an empty name string. Here's the interactive session, followed by its 
+output:</p>
+<pre>...     if(name == &quot;&quot;):
+...             break
+Enter in the name: Rick Hightower
+Enter in the phone number: 555-5555
+Enter in the name: Adam Carr
+Enter in the phone number: 555-6666
+Enter in the name:
+&gt;&gt;&gt;</pre>
+<p class="docText">As you can see, the last time we're asked to enter a name, we 
+hit Enter so that the string returned from <tt>raw_input</tt> is empty.</p>
+<h4 class="docSection2Title" id="ch04lev2sec5">continue</h4>
+<p class="docText">The <tt>continue</tt> statement is similar to the <tt>break</tt> 
+statement. However, instead of instructing Python to break out, it tells it to 
+return to the top of the <tt>while</tt> statement, that is, where the expression 
+is evaluated. We'll stick with the address book example to illustrate <tt>
+continue</tt>, adding the ability to enter an address. If the first line of the 
+address is empty, we can assume that the user doesn't want to exercise this 
+option, and we go back to the top of the loop.</p>
+<pre>&gt;&gt;&gt; while (1):
+...     name = raw_input(&quot;Enter in the name: &quot;)
+...     if (name == &quot;&quot;):
+...             break
+...     phone_number = raw_input(&quot;Enter in the phone number: &quot;)
+...     address_line1 = raw_input(&quot;Enter address line one: &quot;)
+...     if (address_line1 == &quot;&quot;):
+...             continue
+...     address_line2 = raw_input(&quot;Enter address line two: &quot;)
+...     address_line3 = raw_input(&quot;Enter address line three: &quot;)
+...     #Do something useful with the data we just collected
+...</pre>
+<p class="docText">As with <tt>break</tt>, <tt>while(1)</tt> triggers an 
+infinite loop of the associated suite. Again, the only way to end the loop is 
+via the <tt>break</tt> statement.</p>
+<p class="docText">Since we've added the address option, we test to see if <tt>
+address_line1</tt> is empty. If so, we continue with the next entry, that is, 
+the next iteration of the loop, by adding the following statement:</p>
+<pre>...     address_line1 = raw_input(&quot;Enter address line one: &quot;)
+...     if (address_line1 == &quot;&quot;):
+...             continue</pre>
+<p class="docText">In English, this says, &quot;Get the first line of a person's 
+address from the user and test to see if it's an empty string. If so, continue 
+executing at the top of the <tt>while</tt> statement; in other words, get the 
+next person's information.&quot;</p>
+<p class="docText">Below are samples of the output, in order, from the four 
+iterations of the preceding name/phone-number program.</p>
+<pre>Enter in the name: Rick Hightower
+Enter in the phone number: 555-5555
+Enter address line one: 123 Main St.
+Enter address line two: Tucson, Az
+Enter address line three: 85226
+
+Enter in the name: Adam Carr
+Enter in the phone number: 555-6666
+Enter address line one:
+
+Enter in the name: Bob Ninny
+Enter in the phone number: 555-7777
+Enter address line one: 1234 South Dobson
+Enter address line two: Mesa, AZ
+Enter address line three: 85228
+
+Enter in the name:</pre>
+<p class="docText">In the first iteration, we fill in all fields for Rick 
+Hightower, including the optional address fields. In the second, we fill in only 
+Adam Carr's name and phone number, and at the first address field, hit Enter. 
+The statement below instructs Python to return to the top of the <tt>while</tt> 
+statement to begin executing again, thus skipping the rest of the statements in
+<tt>while</tt>'s suite:</p>
+<pre>...     if (address_line1 == &quot;&quot;):
+...             continue</pre>
+<p class="docText">In the third iteration, all of Bob Ninny's fields are filled 
+in. In the fourth iteration, when the program asks us to enter a name, we hit 
+Enter, causing <tt>raw_input()</tt> to return an empty string. This means that 
+the following statement forces the <tt>while</tt> loop to terminate:</p>
+<pre>...     if(name == &quot;&quot;):
+...             break</pre>
+<h4 class="docSection2Title" id="ch04lev2sec6">else</h4>
+<p class="docText">Like <tt>if</tt>, <tt>while</tt> can contain an <tt>else</tt> 
+clause:</p>
+<pre>while (expression):
+       suite 1
+else:
+       suite 2</pre>
+<p class="docText">Like <tt>if</tt>'s <tt>else</tt>, <tt>while</tt>'s <tt>else</tt> 
+repeatedly tests the expression. If the expression is true, the first suite is 
+executed. If the expression is false, or becomes false during the loop, <tt>else</tt>'s 
+suite is executed, and the <tt>while</tt> loop ends. If the executed suite 
+contains a <tt>break</tt> statement, the loop terminates, and the else suite is
+<span class="docEmphasis">not</span> executed.</p>
+<p class="docText">Continuing with our address book example, we'll use the <tt>
+else</tt> clause to add the option of quitting the program by sending an email 
+of the address book to someone—say, me. Typing in <tt>quit</tt> when we get the 
+name means that we want to break—not send—the email. Entering <tt>&quot; &quot;</tt> 
+(empty string) means that we want to execute the statements in the <tt>else</tt> 
+clause and send the email. Of course, we won't actually send any email, so the
+<tt>emailData()</tt> function is commented out.</p>
+<pre>name = &quot; &quot;
+while (name != &quot;&quot;):
+       name = raw_input(&quot;Enter in the name: &quot;)
+       if (name == &quot;&quot;):
+              continue
+       elif (name == &quot;quit&quot;):
+              break
+       phone_number = raw_input(&quot;Enter in the phone number: &quot;)
+       address_line1 = raw_input(&quot;Enter address line one: &quot;)
+       if (address_line1 == &quot;&quot;):
+              continue
+       address_line2 = raw_input(&quot;Enter address line two: &quot;)
+       address_line3 = raw_input(&quot;Enter address line three: &quot;)
+       #do something useful with the addresses
+else:
+       print(&quot;send the email to Rick&quot;)
+       #emailAddresses(&quot;rick_m_hightower@emailcompany.com&quot;)</pre>
+<p class="docText">Let's break down the changes made to the program.</p>
+<p class="docText">First, if the <tt>while</tt> clause encounters an empty 
+string for the <tt>name</tt> variable, it exits the loop.</p>
+<pre>while (name != &quot;&quot;):</pre>
+<p class="docText">If we pass an empty string for <tt>name</tt>, the <tt>
+continue</tt> clause kicks in, returning execution to the beginning of the <tt>
+while</tt> statement. Then the expression in the <tt>while</tt> clause is 
+evaluated. The empty string there allows the <tt>while</tt> loop to terminate 
+gracefully, as opposed to breaking out, so the <tt>else</tt> clause is executed.</p>
+<pre>elif (name == &quot;quit&quot;):
+            break</pre>
+<p class="docText">The <tt>elif</tt> clause in the <tt>if</tt> statement ensures 
+that, if the name string equals <tt>quit</tt>, we break out of the loop (we 
+terminate ungracefully). So the <tt>else</tt> clause <span class="docEmphasis">
+isn't</span> executed, allowing us to quit without sending the email, and I 
+don't get my address list.</p>
+<pre>else:
+       print(&quot;send the email to Rick&quot;)
+       #emailAddresses(&quot;rick_m_hightower@emailcompany.com&quot;)</pre>
+<p class="docText">Here we've added the <tt>else</tt> clause to the <tt>while</tt> 
+loop with the same indentation as that of the <tt>while</tt> clause of the <tt>
+while</tt> statement. Try executing this script.</p>
+
+<h3 class="docSection1Title" id="ch04lev1sec3">The for Statement</h3>
+<p class="docText">The <tt>for</tt> statement repeatedly executes a suite of 
+statements as it iterates through the items in a sequence. It appears as</p>
+<pre>for item in sequence :
+       suite</pre>
+<p class="docText">The expression should be a valid sequence (a tuple, string, 
+or list). At the beginning of each iteration, the next item in the sequence is 
+assigned to the <tt>item</tt> variable, and the suite is executed. This 
+continues until all items have been dealt with.</p>
+<p class="docText">To illustrate <tt>for</tt>, let's say that we have a list of 
+email addresses for a monthly newsletter.</p>
+<pre>&gt;&gt;&gt; email_list = [&quot;rick_m_hightower@emailcompany.com&quot;,
+&quot;adam_s_carr@hottermail.com&quot;, &quot;bill_g_smith@hottestmail.com&quot;]
+&gt;&gt;&gt;
+&gt;&gt;&gt; for address in email_list:
+...     print (&quot;Sending email to &quot; + address)
+...     # sendEmail(address, &quot;Nothing new here&quot;)
+Sending email to rick_m_hightower@emailcompany.com
+Sending email to adam_s_carr@hottermail.com
+Sending email to bill_g_smith@hottestmail.com
+&gt;&gt;&gt;</pre>
+<p class="docText">Like the <tt>while</tt> loop, the <tt>for</tt> loop uses an
+<tt>else</tt> clause—when there are no more items in the list, <tt>else</tt> is 
+executed. The <tt>break</tt> and <tt>continue</tt> statements work in <tt>for</tt> 
+as they do in <tt>while</tt>.</p>
+<h4 class="docSection2Title" id="ch04lev2sec7">The range() Function and for Loops</h4>
+<p class="docText">The <tt>for</tt> loop in Python can be used similarly to the
+<tt>for</tt> loop in Java and C with the <tt>range()</tt> function, whose 
+purpose is to return a list of numeric values. The simplest example is a list of 
+1 through 9 in increments of 1.</p>
+<pre>&gt;&gt;&gt; range(1,10)
+[1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
+<p class="docText">Other examples of <tt>range()</tt> follow. Respectively, they 
+illustrate 1 through 20 by increments of 2; 0 through 100 by increments of 10; 
+-100 through 200 by increments of 30; and 100 through -100 by increments of –20.</p>
+<pre>&gt;&gt;&gt; range(1, 20, 2)
+[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+
+&gt;&gt;&gt; range (0, 100, 10)
+[0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+
+&gt;&gt;&gt; range (-100, 200, 30)
+[-100, -70, -40, -10, 20, 50, 80, 110, 140, 170]
+
+&gt;&gt;&gt; range (100, -100, -20)
+[100, 80, 60, 40, 20, 0, -20, -40, -60, -80]</pre>
+<p class="docText">To create a loop that iterates from 0 through 100 by 
+increments of 10, we enter</p>
+<pre>&gt;&gt;&gt; for x in range(0, 100, 10):
+...     print(&quot;x equals &quot; + `x`)
+...</pre>
+<p class="docText">which outputs</p>
+<pre>x equals 0
+x equals 10
+x equals 20
+x equals 30
+x equals 40
+x equals 50
+x equals 60
+x equals 70
+x equals 80
+x equals 90</pre>
+<p class="docText">Or we can iterate backward from 100 to 0 by decrements of 10 
+by entering</p>
+<pre>&gt;&gt;&gt; for x in range (100, 0, -10):
+...     print(&quot;x equals &quot; + `x`)
+...</pre>
+<p class="docText">which outputs</p>
+<pre>x equals 100
+x equals 90
+x equals 80
+x equals 70
+x equals 60
+x equals 50
+x equals 40
+x equals 30
+x equals 20
+x equals 10</pre>
+<h5 class="docSection3Title" id="ch04lev3sec1">xrange()</h5>
+<p class="docText"><tt>xrange()</tt> is nearly identical to <tt>range()</tt>, 
+except that it doesn't create individual items in a range until requested to do 
+so, which makes it more efficient than <tt>range()</tt> for large ranges. Here's 
+an example of <tt>xrange()</tt>, called <span class="docEmphasis">xrange.py,</span> 
+followed by its output:</p>
+<pre>print (&quot;This for loop uses xrange, which lazily creates members in the range&quot;)
+for x in xrange (-1000000000, 1000000000):
+
+      if( (x % 100000) == 0): print (`x`)
+      if (x == -999900000): break
+print (&quot;Get ready to hit control C&quot;)
+print (&quot;This for loop uses range&quot;)
+
+for x in range (-1000000000, 1000000000):
+      if( (x % 100000) == 0): print (`x`)
+      if (x == -999900000): break
+
+&gt;&gt;&gt; import xrange
+This for loop uses xrange, which lazily creates members in the range
+-1000000000
+-999900000
+Get ready to hit control C
+This for loop uses range
+Out of Memory</pre>
+<p class="docText">Notice that when we try to create the second range we run out 
+of memory. In essence, the second <tt>range()</tt> tries to create a list 
+containing 2 billion integers, each 32 bits wide (4 bytes). For this we need a 
+computer with 8 billion bytes, or 8 gigabytes, of memory.</p>
+<h3 class="docSection1Title" id="ch04lev1sec4">Putting It All Together</h3>
+<p class="docText">Now it's time to create a program that uses everything we've 
+learned so far. This program will generate a list of house prices and find their 
+average (mean, mode, and median) and range. The following sections will describe 
+each function in turn.</p>
+<h4 class="docSection2Title" id="ch04lev2sec8">getRange()</h4>
+<p class="docText"><tt>getRange()</tt> iterates through a set of numbers passed 
+to it and calculates the minimum and maximum values. It then returns these 
+values and their range in a tuple.</p>
+<pre>def getRange (nums):
+       min = 300000000
+       max = -300000000
+for item in nums:
+       if (item &gt; max): max = item
+       if (item &lt; min): min = item
+
+return (min, max, max-min)</pre>
+<p class="docText">First <tt>getRange()</tt> declares two variables, <tt>min</tt> 
+and <tt>max</tt>. The <tt>min</tt> variable refers to a very large number, so 
+the first item extracted from the list is less than that number and is assigned 
+the <tt>min</tt> value. The <tt>max</tt> variable contains a negative number, so 
+the first item extracted will be more than the large negative value and is 
+assigned to the <tt>max</tt> variable.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Making getRange() More Efficient</h2>
+      <p class="docText">The <tt>getRange()</tt> example will work only if the 
+      numbers passed to it are in the range of <tt>min</tt> and <tt>max</tt>. To 
+      make it more general purpose, we can use either of the following:</p>
+      <pre>from java.lang import Double
+
+from java.lang import Double
+</pre>
+      <p class="docText">and then either of these:</p>
+      <pre>min = Double.MAX_VALUE
+max = Double.MIN_VALUE
+min = Integer.MAX_VALUE
+max = Integer.MIN_VALUE
+</pre>
+      <p class="docText">This will make the function work well with <tt>Integer</tt> 
+      or <tt>Double</tt> types. The question is how well it will work with <tt>
+      Long</tt> types. We'll have our answer shortly.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">To figure <tt>min</tt> and <tt>max</tt>, <tt>getRange()</tt> 
+iterates through the <tt>nums</tt> sequence.</p>
+<pre>for item in nums:
+      if (item &gt; max): max = item
+      if (item &lt; min): min = item</pre>
+<p class="docText">The expression <tt>item &gt; max</tt> determines if the item's 
+value is greater than <tt>max</tt>. If so, <tt>max</tt> is assigned to it, as 
+expressed by this compound statement:</p>
+<pre>if (item &gt; max): max = item</pre>
+<p class="docText">The following compound statement indicates that the item's 
+value is less than <tt>min</tt>, so it's assigned to <tt>min</tt>:</p>
+<pre>if (item &lt; min): min = item</pre>
+<p class="docText">When the loop stops iterating through the values, <tt>
+getRange()</tt> returns <tt>min</tt>, <tt>max</tt>, and <tt>max-min</tt> 
+(range).</p>
+<pre>return (min, max, max-min)</pre>
+<p class="docText">The approach just described is a simple one, but it has a 
+flaw. It works only if the numbers passed to <tt>xrange()</tt> are within <tt>
+max-min</tt>. The solution is the <tt>nums</tt> variable, which is a sequence 
+with an intrinsic operation (otherwise known as a built-in function) for finding
+<tt>min</tt> and <tt>max</tt> in a list. <tt>nums</tt> is an improvement over
+<tt>getRange()</tt> because it's much shorter and can work with all numeric 
+types as well as all <tt>Long</tt>s, <tt>Float</tt>s, and <tt>Double</tt>s at 
+their maximum range of precision. With <tt>nums</tt> there's no <tt>for</tt> 
+loop and no figuring out what <tt>max</tt> and <tt>min</tt> should be 
+initialized to (that is, given a default value).</p>
+<p class="docText">Here's an example of <tt>nums</tt>:</p>
+<pre>def getRange2 (nums):
+      return (min(nums), max(nums), max(nums)-min(nums))</pre>
+<h4 class="docSection2Title" id="ch04lev2sec9">getMean()</h4>
+<p class="docText">The <tt>getMean()</tt> function figures out the mean of a 
+number sequence. It iterates through the sequence, adding all of the values 
+together and storing them in <tt>sum</tt>. It then figures out the mean by 
+dividing <tt>sum</tt> by the sequence length.</p>
+<p class="docText">In the following <tt>getMean()</tt> example, notice the use 
+of the <tt>sample</tt> argument, the <tt>for</tt> loop, the <tt>if</tt> and <tt>
+else</tt> clauses, and the <tt>len()</tt> built-in function (which determines 
+the length of a sequence).</p>
+<pre>def getMean (nums, sample):
+             &quot;&quot;&quot;
+
+       Define mean that finds two types of mean,
+       namely: population mean and sample mean
+       &quot;&quot;&quot;
+
+             sum = 0.0      # holds the value of sum
+
+                    #
+                    # iterate through the sequence of
+       # numbers and sum them
+              for x in nums:
+                    sum = sum + x
+
+                    #
+                    # Check to see if this is a sample mean
+              if(sample):
+                    average = sum / (len(nums)-1)
+
+                    #
+                    # Else it is a population mean
+              else:
+                    average = sum / len(nums)
+              return average</pre>
+<p class="docText">Here's the breakdown.</p>
+<p class="docText">First we create a variable called <tt>sum</tt> that holds the 
+sum.</p>
+<pre>sum = 0.0</pre>
+<p class="docText">Then we iterate through the <tt>nums</tt> sequence, 
+accumulating the value of the item <tt>x</tt>.</p>
+<pre>for x in nums:
+     sum = sum + x</pre>
+<p class="docText">Next, using the <tt>sample</tt> argument, we check to see if 
+this is a sample mean. If so, we figure the average by dividing <tt>sum</tt> by 
+the number of items in <tt>nums</tt> less 1, or we divide the sum by the number 
+of items in the <tt>nums</tt> sequence.</p>
+<pre>if(sample):
+       average = sum / (len(nums)-1)
+       #
+       # Else it is a population mean
+else:
+       average = sum / len(nums)</pre>
+<p class="docText">Finally we return the average.</p>
+<pre>return average</pre>
+<h4 class="docSection2Title" id="ch04lev2sec10">getMode()</h4>
+<p class="docText">The <tt>getMode()</tt> function finds the value that repeats 
+most often in a sequence. First it duplicates the sequence so it can modify it. 
+Then it iterates through the items in the <tt>nums</tt> sequence, counting 
+occurrences of the current items with the built-in <tt>count()</tt> method. Once
+<tt>getMode()</tt> counts an item, it removes it from the duplicated sequence.</p>
+<p class="docText">In the <tt>getMode()</tt> example that follows, notice the 
+use of the <tt>for</tt> and <tt>while</tt> loops, the <tt>if</tt> statement, the
+<tt>count()</tt> method, and the nested <tt>for</tt> loop.</p>
+<pre>def getMode (nums):
+
+       &quot;&quot;&quot;Find the number that repeats the most. &quot;&quot;&quot;
+
+             #
+             # make a duplicate copy of the nums argument
+       duplicate = nums[:]
+       highest_count = -100
+       mode = None
+
+             #
+             # calculate the highest_count and the mode
+       for item in nums:
+
+             count = duplicate.count(item)
+             if (count == 0): continue
+
+             if (count &gt; highest_count):
+                    highest_count = count
+                    mode = item
+
+             while(duplicate.count(item) &gt; 0):
+                    duplicate.remove(item)
+
+       return mode</pre>
+<p class="docText">Let's break this down.</p>
+<p class="docText">First we duplicate the <tt>nums</tt> sequence and create a 
+variable to hold <tt>highest_count</tt> (and assign it a negative starting 
+number) and a variable to hold the <tt>nums</tt> sequence mode.</p>
+<pre>duplicate = nums[:]
+highest_count = -100
+mode = None</pre>
+<p class="docText">Next we iterate through each item in <tt>nums</tt> and count 
+duplicate <tt>nums</tt> occurrences.</p>
+<pre>for item in nums:
+
+      count = duplicate.count(item)
+      if (count == 0): continue</pre>
+<p class="docText">As we iterate through the list, we see if the current <tt>
+count</tt> is greater than <tt>highest_count</tt>. If it is, we assign it to <tt>
+highest_count</tt> and <tt>item</tt> to <tt>mode</tt>.</p>
+<pre>if (count &gt; highest_count):
+      highest_count = count
+      mode = item</pre>
+<p class="docText">Continuing our iteration, we remove all occurrences of the 
+item from the duplicate sequence with the following <tt>while</tt> statement:</p>
+<pre>while(duplicate.count(item) &gt; 0):
+       duplicate.remove(item)</pre>
+<p class="docText">Finally we return <tt>mode</tt>.</p>
+<pre>return mode</pre>
+<h4 class="docSection2Title" id="ch04lev2sec11">getMedian()</h4>
+<p class="docText">The <tt>getMedian()</tt> function finds the middlemost value 
+once the sequence is sorted. In the following <tt>getMedian()</tt> example, 
+notice the use of the modulus operator (<tt>%</tt>), the <tt>if</tt> statement, 
+the <tt>else</tt> clause, and the built-in <tt>sort()</tt> operation.</p>
+<pre>def getMedian (nums):
+
+             &quot;Find the Median number&quot;
+
+                   # create a duplicate since
+       # we are going to modify it
+             seq = nums[:]
+
+                   #sort the list of numbers
+             seq.sort()
+
+             median = None # to hold the median value
+
+             length = len(seq) # to hold the length of the seq
+
+                   # Check to see if the length is an even number
+             if ( ( length % 2) == 0):
+                          # since it is an even number
+                          # add the two middle numbers together
+                   index = length / 2
+                   median = (seq[index-1] + seq[index]) /2.0
+       else:
+                          # since it is an odd number
+                          # just grab the middle number
+                   index = (length / 2)
+                   median = seq[index]
+       return median</pre>
+<p class="docText">Once again, let's break it down.</p>
+<p class="docText">First we duplicate the nums sequence and sort the duplicate (<tt>seq</tt>).</p>
+<pre>seq.sort()</pre>
+<p class="docText">Then, with the expression <tt>length%2</tt>, we check if the 
+length is an even number. (Remember that the modulus operator returns the 
+remainder.) If the length is even, the expression <tt>length%2</tt> returns 
+zero, and we calculate the median by adding together the two most central 
+numbers and figuring their average.</p>
+<pre>length = len(seq)
+
+if ( ( length % 2) == 0):
+      index = length / 2
+      median = (seq[index-1] + seq[index]) /2.0</pre>
+<p class="docText">If the length is odd, we grab the middle value.</p>
+<pre>else:
+      index = (length / 2)
+      median = seq[index]</pre>
+<p class="docText">Finally we return the median.</p>
+<pre>return median</pre>
+<h4 class="docSection2Title" id="ch04lev2sec12">reportStatistics()</h4>
+<p class="docText"><tt>reportStatistics()</tt> calls all of the functions 
+implemented in our house prices example—<tt>getMean()</tt>, <tt>getMode()</tt>,
+<tt>getRange()</tt>, <tt>getMedian()</tt>, and nested dictionaries—and stores 
+their return values in two dictionaries, <tt>averages</tt> and <tt>ranges</tt>. 
+It puts these dictionaries in another dictionary called <tt>report</tt>, which 
+it returns.</p>
+<pre>def reportStatistics (nums):
+             # get central tendencies
+      averages = {
+             &quot;mean&quot;:getMean(nums,0),
+             &quot;median&quot;:getMedian(nums),
+             &quot;mode&quot;:getMode(nums)
+             }
+
+             # get range
+      range = getRange(nums)
+
+             # put ranges in a dictionary
+      ranges = {
+             &quot;min&quot;:range[0],
+             &quot;max&quot;:range[1],
+             &quot;range&quot;:range[2]
+             }
+
+      report = {
+             &quot;averages&quot;: averages,
+             &quot;ranges&quot;: ranges
+             }
+
+      return report</pre>
+<p class="docText">Breaking this down, we first get the averages—mean, median, 
+and mode—using <tt>getMean()</tt>, <tt>getMedian()</tt>, and <tt>getMode()</tt>. 
+Notice that <tt>&quot;mean&quot;:getMedian</tt> defines a key/value pair.</p>
+<pre>averages = {
+       &quot;mean&quot;:getMean(nums,0),
+       &quot;median&quot;:getMedian(nums),
+       &quot;mode&quot;:getMode(nums)
+       }</pre>
+<p class="docText">Then we get the range parameters—<tt>min</tt>, <tt>max</tt>, 
+and <tt>max</tt>-<tt>min</tt>—from <tt>getRange()</tt>. We use <tt>range[0]</tt>,
+<tt>range[1]</tt>, and <tt>range[2]</tt> in the returned sequence. Notice that
+<tt>&quot;min&quot;:range[0]</tt> defines a key/value pair in the <tt>ranges</tt> 
+dictionary.</p>
+<pre>       # get range
+range = getRange(nums)
+       # put ranges in a dictionary
+ranges = {
+       &quot;min&quot;:range[0],
+       &quot;max&quot;:range[1],
+       &quot;range&quot;:range[2]
+       }</pre>
+<p class="docText">Now we define a dictionary called <tt>report</tt> that 
+contains the <tt>averages</tt> and <tt>ranges</tt> dictionaries.</p>
+<pre>report = {
+       &quot;averages&quot;: averages,
+       &quot;ranges&quot;: ranges
+       }</pre>
+<p class="docText">Lastly we return the <tt>report</tt> dictionary.</p>
+<pre>return report</pre>
+<h5 class="docSection3Title" id="ch04lev3sec2">Using reportStatistics()</h5>
+<p class="docText"><tt>RunReport()</tt> uses <tt>reportStatistics()</tt> to get 
+the <tt>report</tt> dictionary it needs to print out the report. In the 
+following <tt>runReport()</tt> example, note the use of the string format 
+operator (<tt>%</tt>), the <tt>%f</tt> format directive, nested dictionaries, 
+and the use of the format operator with a dictionary.</p>
+<pre>from chap4 import reportStatistics
+house_in_awahtukee = [100000, 120000, 150000, 200000, 65000, 100000]
+report = reportStatistics(house_in_awahtukee)
+
+range_format = &quot;&quot;&quot;
+Range:
+The least expensive house is %(min)20.2f
+The most expensive house is %(max)20.2f
+The range of house price is %(range)20.2f
+&quot;&quot;&quot;
+
+average_format = &quot;&quot;&quot;
+Averages:
+The mean house price is %(mean)20.2f
+The mode for house price is %(mode)20.2f
+The median house price is %(median)20.2f
+&quot;&quot;&quot;
+
+print range_format % report[&quot;ranges&quot;]
+print average_format % report[&quot;averages&quot;]</pre>
+<p class="docText">Here's the output:</p>
+<pre>Range:
+The least expensive house is 65000.00
+The most expensive house is 200000.00
+The range of house price is 135000.00
+
+Averages:
+The mean house price is 122500.00
+The mode for house price is 100000.00
+The median house price is 110000.00</pre>
+<h3 class="docSection1Title" id="ch04lev1sec5">Summary</h3>
+<p class="docText">Control flow allows programs to execute nonsequentially using 
+the <tt>if</tt>, <tt>while</tt>, and <tt>for</tt> compound statements. <tt>if</tt> 
+conditionally executes a statement, <tt>while</tt> executes a statement while a 
+condition is true, and <tt>for</tt> iterates through a sequence. All three can 
+contain <tt>else</tt> clauses that execute when the <tt>if</tt> condition is 
+false, when it becomes false, or when the items in a list are or become empty, 
+respectively.</p>
+<p class="docText">As compound statements, <tt>if</tt>, <tt>while</tt>, and <tt>
+for</tt> contain clauses. Clauses contain suites and control their execution.
+<tt>if</tt> contains <tt>if</tt>, <tt>elif</tt>, and <tt>else</tt> clauses; <tt>
+while</tt> contains <tt>while</tt> and <tt>else</tt> clauses; and <tt>for</tt> 
+contains <tt>for</tt> and <tt>else</tt> clauses. Within the <tt>while</tt> and
+<tt>for</tt> statements, <tt>break</tt> and <tt>continue</tt>, as their names 
+imply, break out of a loop and continue a loop from the top.</p>
+<p class="docText">Specific to the <tt>for</tt> statement are the <tt>range()</tt> 
+and <tt>xRange()</tt> functions. <tt>range()</tt> returns a list of numbers; <tt>
+xRange()</tt> returns a number in a range only when requested to do so.</p>
+<p class="docText">We created a sample application to compute range, mean, mode, 
+and median for a group of house prices. The application highlighted the 
+following key concepts from
+<a class="docLink" href="_chapter%201.htm">Chapters 1</a> through
+<a class="docLink" href="_chapter%204.htm">4</a>:</p>
+<ul>
+  <li>
+  <p class="docList"><tt>for</tt> loop</li>
+  <li>
+  <p class="docList"><tt>while</tt> loop</li>
+  <li>
+  <p class="docList"><tt>if</tt> statement</li>
+  <li>
+  <p class="docList"><tt>if</tt> and <tt>else</tt> clauses</li>
+  <li>
+  <p class="docList">Nested loops</li>
+  <li>
+  <p class="docList"><tt>len()</tt>, <tt>count()</tt>, and <tt>sort()</tt></li>
+  <li>
+  <p class="docList">Modulus (<tt>%</tt>)</li>
+  <li>
+  <p class="docList"><tt>%f</tt> format directive</li>
+  <li>
+  <p class="docList">Nested dictionaries</li>
+  <li>
+  <p class="docList">Use of a dictionary with the format operator</li>
+</ul>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%203.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%205.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

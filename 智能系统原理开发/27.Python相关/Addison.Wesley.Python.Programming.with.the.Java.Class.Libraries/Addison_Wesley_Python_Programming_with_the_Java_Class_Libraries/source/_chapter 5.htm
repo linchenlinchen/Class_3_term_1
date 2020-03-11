@@ -1,0 +1,1335 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 5</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "_chapter 5.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/_chapter 5.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/_chapter 5.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%204.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%206.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 5. Organizing Your Code</h2><ul><li>&nbsp;<a class="docLink" href="#ch05lev1sec1">Evolution of a Programmer</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec2">Code Blocks and Namespaces</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec3">Modules</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec4">Functions and Methods</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec5">Putting Things Together</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec6">Classes</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec7">Packages</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec8">Globals and the Global Statement</a></li>
+<li>&nbsp;<a class="docLink" href="#ch05lev1sec9">Summary</a></li>
+</ul>
+<p class="docText"><span class="docEmphasis">Terms in This Chapter</span></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+    <tr>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Attribute</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Class</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Code block</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Constructor</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Destructor</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Encapsulation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">First class object</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Flag</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Function</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">global statement, variable, 
+  namespace</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Identity operator</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Immutability</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">import statement</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Instance</span></li>
+</ul>
+      </td>
+      <td width="50%">
+<ul>
+  <li>
+  <p class="docList"><span class="docEmphasis">Interface</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Instantiation</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Introspection</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Keyword argument</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Main block</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Method</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Module</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Namespace</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Nesting</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Package</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Positional argument</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Script</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">Search path</span></li>
+  <li>
+  <p class="docList"><span class="docEmphasis">self argument</span></li>
+</ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">In this chapter, we'll cover how and why you should organize 
+your code. You'll learn about namespaces and code blocks and about modules, 
+functions, classes, and methods.</p>
+<h3 class="docSection1Title" id="ch05lev1sec1">Evolution of a Programmer</h3>
+<p class="docText">As your programs grow, or as you increase your understanding 
+of Python, you'll use more of Python's organization features. For example:</p>
+<ul>
+  <li>
+  <p class="docList">You want to learn how to do a task, so you use the 
+  interactive interpreter to learn Python.</li>
+  <li>
+  <p class="docList">You want to automate a task, so you write a script. (See
+  <a class="docLink" href="appendix%20c.htm">Appendix C</a> on 
+  scripts.)</li>
+  <li>
+  <p class="docList">You want to reuse script functionality, so you organize 
+  scripts into different modules.</li>
+  <li>
+  <p class="docList">You want to use generalization and abstraction to reuse 
+  code common to many scripts, so you organize scripts into classes.</li>
+  <li>
+  <p class="docList">You want to share modules with co-workers or a development 
+  team, so you organize your modules into packages.</li>
+  <li>
+  <p class="docList">You want to use packages of modules from other sources and 
+  share your modules with others, so you organize your packages into other 
+  packages and into subpackages.</li>
+</ul>
+<p class="docText">Even as your needs change, you'll still seek out the least 
+sophisticated approach, even for more complicated tasks. For instance, you might 
+write a script to do testing, or you might use interactive mode to learn a new 
+module or to debug one you've already written.</p>
+<h4 class="docSection2Title" id="ch05lev2sec1">Organizing Your Code</h4>
+<p class="docText">No matter how far you progress as a programmer, you'll need 
+to know how to organize your code. In Python, you can organize your statements 
+into functions and methods; your methods and data into classes; your classes, 
+functions, and statements into modules; your modules into packages; and, lastly, 
+your packages into other packages. <a class="docLink" href="#ch05fig01">Figure 
+5-1</a> illustrates this organization. The following sections show you how to 
+achieve it.</p>
+<center>
+<h5 id="ch05fig01" class="docFigureTitle">Figure 5-1. Program Organization</h5>
+<p class="docText"><img alt="graphics/05fig01.gif" src="05fig01.gif" border="0" width="500" height="267"></p>
+</center>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Nesting</h2>
+      <p class="docText">Classes can have other classes nested within them. 
+      Functions and methods can have nested classes as well as nested functions. 
+      Typically, the inner classes and functions in a method are small and serve 
+      a purpose only in the context of the class in which they nest.</p>
+      <p class="docText">For example, in the following class definition, the 
+      class <tt>topclass</tt> has a member method, <tt>method()</tt>, which has 
+      an inner function, <tt>function()</tt>, which has an inner class, <tt>
+      innerclass1</tt>. Notice that <tt>topclass</tt> has a second inner class,
+      <tt>innerclass2</tt>.</p>
+      <pre>&gt;&gt;&gt; class topclass:
+...     def method():
+...             def function():
+...                     class innerclass1:
+...                             pass
+...     class innerclass2:
+...             pass
+...</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch05lev1sec2">Code Blocks and Namespaces</h3>
+<p class="docText">Code blocks are pieces of executable Python code that you can 
+think of as collections of statements. Modules, classes, and functions are all 
+examples.</p>
+<p class="docText">Modules may be scripts that execute only once. Since Python 
+is unlike other languages in its lack of a main method, it starts executing code 
+(program text) from the top of the module. To re-execute the module, you have to 
+reload it.</p>
+<p class="docText">Modules can contain classes and functions (both code blocks), 
+which may be executed many times. Also, functions can contain classes as well as 
+other functions, and classes can contain methods as well as other classes. 
+Variables defined in a code block are associated with that code block's 
+namespace.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">The Main Block</h2>
+      <p class="docText">Python may not have a main method, but it does have 
+      something similar, the main block, which looks like this:</p>
+      <pre>if __name__ == &quot;__main__&quot;
+     #Put main code here</pre>
+      <p class="docText">Modules have a <tt>__name__</tt> attribute, which 
+      contains the module name (e.g., <span class="docEmphasis">sys, string, 
+      mymodule</span>). The main block is called <tt>__main__</tt> and is 
+      executed from the command line. Since a module is a code block, anything 
+      in it will be executed when it is run from the command line or imported 
+      from another module. <tt>__name__</tt> thus limits execution to the main 
+      module.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">A namespace is a way to organize variables in a large 
+program. It provides separate contexts for individual variables so that two with 
+the same name can be used without one adversely affecting the other. Think of 
+namespaces as directories on your hard drive. If there are two directories, <tt>
+user1</tt> and <tt>user2</tt>, and both have a file named <tt>readme.txt</tt>, 
+you can be sure that these are two different files—one you access as <tt>\user1\readme</tt> 
+and the other as <tt>\user2\readme</tt>.</p>
+<p class="docText">Packages provide namespaces for modules and other packages. 
+Say you create a module called <span class="docEmphasis">sys</span> but
+<span class="docEmphasis">sys</span> is also the name of a standard module. This 
+can cause problems. However, if you put your <span class="docEmphasis">sys</span> 
+module in a package called <span class="docEmphasis">mycompany,</span> you can 
+access it via <span class="docEmphasis">mycompany.sys</span> without interfering 
+with the standard <span class="docEmphasis">sys</span> module. Packages also 
+provide namespaces for other packages, just as file directories provide 
+namespaces for each other.</p>
+<p class="docText">Modules provide namespaces for variables, classes, and 
+functions. You might have a class called <tt>stats</tt> and download a class 
+from the Web also called <tt>stats</tt>. You can use both classes in the same 
+program because they're in their own modules—<span class="docEmphasis">my_module.stats</span> 
+and <span class="docEmphasis">their_module.stats.</span></p>
+<p class="docText">Similarly, classes provide namespaces for variables and 
+methods. For example, a method called <tt>getMean()</tt> in a class called <tt>
+stat</tt> won't interfere with a function called <tt>getMean()</tt> in the same 
+module.</p>
+<p class="docText">We'll discuss namespaces and variable scope more later. The 
+key point here is that Python allows you a lot of flexibility in program 
+organization. It also gives you more control over how you manipulate and 
+introspect your namespace.</p>
+<h3 class="docSection1Title" id="ch05lev1sec3">Modules</h3>
+<p class="docText">Without defining them, we've been using modules since
+<a class="docLink" href="_chapter%201.htm">Chapter 1</a>. These 
+are files that contain Python statements and definitions (classes and functions) 
+and can be imported into other modules or into the main module. Module files are 
+identified by the suffix <span class="docEmphasis">.py.</span></p>
+<p class="docText">If you're a programmer coming from a Java background, you may 
+think that a module is similar to a package. Once you work with Python modules 
+for a while, you may think of them more as a cross between a package and a final 
+public class (with all static variables and a private constructor).</p>
+<h4 class="docSection2Title" id="ch05lev2sec2">Import</h4>
+<p class="docText">The <tt>import</tt> statement allows you to import classes, 
+functions, and variables from one module into the current module's namespace.
+<a class="docLink" href="#ch05table01">Table 5-1</a> describes its forms. Here 
+is an example module, <span class="docEmphasis">module1.py,</span> which we'll 
+use throughout this section to illustrate <tt>import</tt>.</p>
+<pre>def class1:
+  def method1(self):</pre>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch05table01" class="docTableTitle">Table 5-1. <tt>Import</tt> Statement Forms</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Form</span> </th>
+    <th class="docTableHeader" vAlign="top" align="left">
+    <span class="docEmphStrong">Description</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <p class="docText"><tt>import module_name</tt></p>
+    <p class="docText">Example: <tt>import module1</tt></td>
+    <td class="docTableCell" vAlign="top" align="left">Imports the module into 
+    the current module. Items can be accessed as <tt>module1.class1</tt>, <tt>
+    module1.function1</tt>, <tt>module2.function2</tt>. Imports a definition 
+    from the current module but not the module itself. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">
+    <pre>from module_name import class_name,
+func_name</pre>
+    <p class="docText">Example: <tt>from module1 import class1, function1</tt></td>
+    <td class="docTableCell" vAlign="top" align="left">Items can be accessed 
+    without the module name <tt>e</tt> as <tt>class1</tt>, <tt>function1</tt>; 
+    but <tt>module1.function2</tt> needs the module name to be accessed. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" align="left">
+    <p class="docText"><tt>from module_name import *</tt></p>
+    <p class="docText">Example: <tt>from module1 import *</tt></td>
+    <td class="docTableCell" vAlign="top" align="left">Imports all of the 
+    definitions in the module but not the module itself. All items can be 
+    accessed without the module name as <tt>class1</tt>, <tt>function1</tt>, <tt>
+    function2</tt>. </td>
+  </tr>
+</table>
+<pre>  def method2(self, arg1, rg2):
+      self.attribute1 = arg1
+      self.attribute2 = arg2
+
+def function1():
+  pass
+
+def function2():
+  pass
+def class1:
+  def method1(self):
+      pass
+
+  def method2(self, arg1, arg2):
+      self.attribute1 = arg1
+      self.attribute2 = arg2
+
+def function1():
+  pass
+
+def function2():
+  pass</pre>
+<p class="docText">Breaking things down, we first go to the directory that holds
+<span class="docEmphasis">module1.py.</span> Then we start up a new Jython 
+session at the command line.</p>
+<pre>C:\Pythonbook\samples\chap5&gt;jython
+Jython 1.0.3 on java1.2fcs
+Copyright 1997-1998 Corporation for National Research Initiatives</pre>
+<p class="docText">On our first attempt, we use <tt>function1()</tt>, but that 
+results in a <tt>NameError</tt>, which means that Python didn't find that 
+function in the current namespace.</p>
+<p class="docText">Next we try <tt>function1()</tt> with the module name, but 
+again that produces a name error because <span class="docEmphasis">module1</span> 
+is not in the current namespace.</p>
+<pre>&gt;&gt;&gt; module1.function1()
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+NameError: module1</pre>
+<p class="docText">So we import <span class="docEmphasis">module1</span> into 
+the current namespace and use <tt>function1()</tt> as follows:</p>
+<pre>&gt;&gt;&gt; import module1
+&gt;&gt;&gt; module1.function1()</pre>
+<p class="docText">After we import <span class="docEmphasis">module1,</span> we 
+can call <tt>function1()</tt> using the <tt>module1.function1()</tt> form.</p>
+<pre>&gt;&gt;&gt; function1
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+NameError: function1</pre>
+<p class="docText">Yet again, a name error. The problem is that to use <tt>
+function1()</tt> without the module name we have to import <tt>function1()</tt> 
+from <span class="docEmphasis">module1.</span></p>
+<pre>&gt;&gt;&gt; from module1 import function1
+&gt;&gt;&gt; function1
+&lt;function function1 at -1811886282&gt;</pre>
+<p class="docText">Finally, we use the <tt>from module import*</tt> form with
+<span class="docEmphasis">module1</span> and then
+<a class="docLink" href="_chapter%209.htm#ch09lev2sec6">dir()</a> 
+to see the contents of the current namespace. Notice that all of the items in 
+the module have been imported, even the variables <tt>string1</tt> and <tt>
+number1</tt>.</p>
+<pre>&gt;&gt;&gt; from module1 import *
+&gt;&gt;&gt; dir ()
+['__name__', 'class1', 'function1', 'function2', 'module1', 'number1', 'string1']</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Immutability</h2>
+      <p class="docText">Although <tt>string1</tt> and <tt>number1</tt> are in 
+      the current namespace, they're not the same as the variables in
+      <span class="docEmphasis">module1.</span> At first, they refer to the same 
+      object.</p>
+      <pre>&gt;&gt;&gt; import module1
+&gt;&gt;&gt; module1.number1 is number1
+1
+
+returns 1 which means true</pre>
+      <p class="docText">However, they no longer both refer to that object once 
+      their values change. That's because they are immutable. Here's an example 
+      of <tt>number1</tt>:</p>
+      <pre>&gt;&gt;&gt; module1.number1 = 600
+&gt;&gt;&gt; module1.number1
+600
+
+&gt;&gt;&gt; number1
+1
+
+&gt;&gt;&gt; module1.number1 is number1
+0
+
+&gt;&gt;&gt; #returns 0 which means false</pre>
+      <p class="docText">Here's the same example using <tt>string1</tt>:</p>
+      <pre>&gt;&gt;&gt; module1.string1 is string1
+1
+
+&gt;&gt;&gt; string1 = &quot;hi&quot;
+&gt;&gt;&gt; module1.string1 is string1
+0
+
+&gt;&gt;&gt; module1.string1 == string1
+0
+
+&gt;&gt;&gt; module1.string1
+'Hello, how are you?'</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 class="docSection3Title" id="ch05lev3sec1">Module Search Path</h5>
+<p class="docText">So far, we've been importing modules from one place to 
+another within the same directory they were written in. However, as you write 
+more and more modules, you'll want to organize them across directories. You can 
+do this as long as the modules are in your module search path—the equivalent of 
+the DOS <tt>PATH</tt> environment—which tells Python where to look for Python 
+modules.</p>
+<p class="docText">For CPython, you set the module search path by declaring the
+<tt>PYTHONPATH</tt> environment variable. You can't do this in Jython because 
+you can't access environment variables in Java. Instead, you access the search 
+path in the registry file, which is similar to <span class="docEmphasis">*.ini</span> 
+files in Windows or to the Windows registry.</p>
+<p class="docText">You can edit the registry (<span class="docEmphasis">C:\Jython\Registry</span>) 
+with your favorite text editor. The module search path is stored in a registry 
+setting called <tt>python.path</tt>.</p>
+<pre>#Python Registry
+
+python.path=.;
+...
+...</pre>
+<p class="docText">In the example above, the registry setting points to the 
+current directory only. If we want Jython to always search a directory called
+<span class="docEmphasis">C:\Python\modules,</span> we set <tt>python.path</tt> 
+as follows (note the semicolons to delimit directories, as for the DOS <tt>PATH</tt> 
+environment variable):</p>
+<pre>python.path=.;c:\\python\\modules;
+</pre>
+<p class="docText">This means that the current directory is searched first, then 
+the <span class="docEmphasis">C:\JythonLib</span> directory.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle" id="ch05sb04">sys</h2>
+      <p class="docText">The <span class="docEmphasis">sys</span> module holds 
+      the current value of the module search path in the <tt>path</tt> variable.</p>
+      <pre>&gt;&gt;&gt; sys.path
+['.', 'C:\\Jython\\Lib']</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Let's edit the <span class="docEmphasis">python.path</span> 
+module to include <span class="docEmphasis">C:\Python\modules.</span> Open the 
+registry file in your favorite editor, and set <span class="docEmphasis">
+python.path</span> to <span class="docEmphasis">.;C:\\Python\\modules.</span> 
+Then start up an interactive session, and query the value of <tt>python.path</tt>.</p>
+<pre>&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+['.', 'C:\\Python\\modules', 'C:\\Jython-1.0\\Lib']</pre>
+<p class="docText">To test if this is working, create the directory
+<span class="docEmphasis">C:\Python\modules,</span> and create a module called
+<span class="docEmphasis">path.py.</span></p>
+<pre>def youfoundme():
+  print &quot;You found me&quot;</pre>
+<p class="docText">Put <span class="docEmphasis">path.py</span> in
+<span class="docEmphasis">C:\Python\modules.</span> Now go anywhere else in the 
+directory. Start up the Jython interpreter, and try to import
+<span class="docEmphasis">path.py.</span></p>
+<pre>C:\&gt;jython
+Jython 1.0.3 on java1.2fcs
+Copyright 1997-1998 Corporation for National Research Initiatives
+&gt;&gt;&gt; import path
+&gt;&gt;&gt; path.youFoundMe()
+You found me</pre>
+<p class="docText">Because <tt>sys.path</tt> is a list, you can add paths at 
+runtime.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Warning</h2>
+      <p class="docText">When Python is trying to import a module, it loads the 
+      first one it finds on <span class="docEmphasis">python.path.</span> That 
+      means that, if you have a module called <span class="docEmphasis">path</span> 
+      in your current directory that has the following listing:</p>
+      <pre>path.py listing of path in current path:
+print &quot;Wrong one dummy&quot;
+</pre>
+      <p class="docText">and you try to import it from that directory, you will 
+      get the wrong one. This can be a difficult problem to debug, especially if 
+      the first module in the path is an older version of the one you're trying 
+      to load.</p>
+      <pre>&gt;&gt;&gt; import path
+Wrong one dummy
+</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch05lev1sec4">Functions and Methods</h3>
+<p class="docText">Remember that a function is a code block and that code blocks 
+are collections of statements. Methods are similar to functions, and you define 
+them the same way. The only difference is that, unlike functions, methods are 
+associated with classes and are defined within them. Because of the 
+similarities, the terms <span class="docEmphasis">function</span> and
+<span class="docEmphasis">method</span> will be used interchangeably in this 
+section.</p>
+<h4 class="docSection2Title" id="ch05lev2sec3">Step by Step: Defining and Calling a Method</h4>
+<p class="docText">To define, or declare, a function or method, you enter the 
+keyword <tt>def</tt> followed by the function name, a list of arguments enclosed 
+in parentheses, and finally a colon. Next come the statements, which make up the 
+body of the function. They start on a new line and, like all code blocks, are 
+indented (if you don't indent, you'll get an error). The statements are where 
+the action is.</p>
+<p class="docText">Here's an example of a simple function, <tt>sayHello()</tt>:</p>
+<pre>&gt;&gt;&gt; def sayHello (strName):
+...     strHello = &quot;Hello &quot; + strName
+...     print (strHello)
+...
+
+&gt;&gt;&gt; sayHello(&quot;Mom&quot;)
+Hello Mom
+
+&gt;&gt;&gt; sayHello(&quot;Dad&quot;)
+Hello Dad</pre>
+<p class="docText">Here's the breakdown.</p>
+<p class="docText">First we define a method called <tt>sayHello()</tt> with the 
+argument <tt>strName</tt>.</p>
+<pre>&gt;&gt;&gt; def sayHello (strName):</pre>
+<p class="docText">Then we add two statements. The first takes the string 
+literal <tt>&quot;Hello&quot;</tt> and the function argument <tt>strName</tt> and 
+concatenates them. It then assigns their value to the <tt>strHello</tt> 
+variable.</p>
+<pre>...     strHello = &quot;Hello &quot; + strName</pre>
+<p class="docText">The second statement prints out the value of <tt>strHello</tt> 
+to the console.</p>
+<pre>...     print (strHello)</pre>
+<p class="docText">Next we invoke this function a couple of times, each time 
+substituting a value for <tt>strHello</tt>. Notice that we invoke this function 
+the same way we invoke the built-in functions.</p>
+<pre>&gt;&gt;&gt; sayHello(&quot;Mom&quot;)
+Hello Mom
+
+&gt;&gt;&gt; sayHello(&quot;Dad&quot;)
+Hello Dad</pre>
+<p class="docText">The <tt>sayHello()</tt> function doesn't return a value. In 
+fact, all functions return <tt>None</tt> by default.</p>
+<p class="docText">Now we'll create a function, <tt>sumNumbers()</tt>, that does 
+return a value; it sums two numbers and returns the total.</p>
+<pre>&gt;&gt;&gt; def sumNumbers(x, y):
+...     return x + y
+...
+
+&gt;&gt;&gt; sumNumbers(5, 10)
+15</pre>
+<p class="docText">Of course, most functions are more useful, and more complex, 
+than these examples. They can have any number of arguments and can be stored for 
+later use by more than one program.</p>
+<h4 class="docSection2Title" id="ch05lev2sec4">Calling Methods and Defining Arguments</h4>
+<p class="docText">There are three ways to call a method: by positional 
+arguments, by keyword arguments, and by a combination of the two. There are 
+three ways to define a method: with default values, with a variable number of 
+positional arguments, and with a variable number of keyword arguments.</p>
+<p class="docText">Consider the following method:</p>
+<pre>&gt;&gt;&gt; def sayHello(name, title, message):
+...     print (&quot;Hello &quot; + title + &quot; &quot; + name + &quot; &quot; + message)
+...</pre>
+<p class="docText">It can be called using positional arguments:</p>
+<pre>&gt;&gt;&gt; sayHello(&quot;Hightower&quot;, &quot;Mr.&quot;, &quot;How are you&quot;)
+Hello Mr. Hightower How are you</pre>
+<p class="docText">or using keyword arguments (<tt>keyword=value</tt>):</p>
+<pre>&gt;&gt;&gt; sayHello(name=&quot;Hightower&quot;, title=&quot;Mr.&quot;, message=&quot;How are you&quot;)
+Hello Mr. Hightower How are you</pre>
+<p class="docText">Keywords equate to argument names. You can use them in any 
+order, which means that in the last example we could have put the <tt>message</tt> 
+keyword in the first position.</p>
+<pre>&gt;&gt;&gt; sayHello(message=&quot;How are you?&quot;, name=&quot;Hightower&quot;, title=&quot;Mr.&quot;)
+Hello Mr. Hightower How are you?</pre>
+<p class="docText">In the combined form, you can use one positional argument and 
+two keywords.</p>
+<pre>&gt;&gt;&gt; sayHello(&quot;Hightower&quot;, message=&quot;How are you?&quot;, title=&quot;Mr.&quot;)
+Hello Mr. Hightower How are you?</pre>
+<p class="docText">Calling methods with keywords doesn't seem very useful; so 
+far it just adds more typing. The payoff comes when you use keywords with 
+default arguments.</p>
+<p class="docText">Continuing the previous example, if we want default values 
+for <tt>title</tt> and <tt>name</tt>, we first define our function with two 
+default arguments.</p>
+<pre>&gt;&gt;&gt; def sayHello(name, title=&quot;Mr.&quot;, message=&quot;Hello %s %s, how are you?&quot;):
+...     print message % (title, name)
+...</pre>
+<p class="docText">Now we can use the function with only one positional 
+argument.</p>
+<pre>&gt;&gt;&gt; sayHello(&quot;James Estrada&quot;)
+Hello Mr. James Estrada, how are you?</pre>
+<p class="docText">If we need to, we can override the default values.</p>
+<pre>&gt;&gt;&gt; sayHello(&quot;Mark Green&quot;, &quot;Dr.&quot;)
+Hello Dr. Mark Green, how are you?
+
+&gt;&gt;&gt; sayHello(&quot;Ally McBeal&quot;, &quot;Ms.&quot;)
+Hello Ms. Ally McBeal, how are you?</pre>
+<p class="docText">Notice that both of these functions use positional arguments.</p>
+<p class="docText">Another way to override default arguments is with keywords. 
+Let's say that we want to override the last argument from above.</p>
+<pre>&gt;&gt;&gt; sayHello(&quot;Al McMeal&quot;, message=&quot;Hello %s %s, are you hungry, would you like to go to lunch?&quot;)
+Hello Mr. Al McMeal, are you hungry, would you like to go to lunch?</pre>
+<p class="docText">This comes in handy when there are ten arguments with default 
+arguments and you want to override only the tenth one.</p>
+<p class="docText">This example won't work because <tt>name</tt> has no default 
+value.</p>
+<pre>&gt;&gt;&gt; sayHello(title=&quot;Mrs.&quot;, message=&quot;Hi %s %s, how are you doing? How is your husband?&quot;)
+Traceback (innermost last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in ?
+TypeError: sayHello() not enough arguments; expected</pre>
+<h3 class="docSection1Title" id="ch05lev1sec5">Putting Things Together</h3>
+<p class="docText">Recall from
+<a class="docLink" href="_chapter%204.htm">Chapter 4</a> that we 
+wrote a function called <tt>getMean()</tt> that figured the average of a set of 
+house prices. Well, we can change it to accept two default arguments. The first 
+argument, <tt>sample</tt>, is a flag that tells <tt>getMean()</tt> if the set of 
+numbers passed to it is from a sample of a population or the population as a 
+whole. (The mean and the average of a sample are calculated differently.) The 
+second argument, <tt>display</tt>, is a flag that tells <tt>getMean()</tt> to 
+optionally display the results to the monitor.</p>
+<h4 class="docSection2Title" id="ch05lev2sec5">getMean()</h4>
+<p class="docText">Here's <tt>getMean()()</tt> defined:</p>
+<pre>def getMean (nums, sample=0, display=0):
+  for x in nums:
+      sum = sum + x
+  if(sample):
+      average = sum / (len(nums)-1)
+  else:
+      average = sum / len(nums)
+  if(display):
+      print (&quot;mean = &quot; + 'average')
+  return average</pre>
+<p class="docText">Here are some examples:</p>
+<pre>#Define example sample and population numbers
+sample =(1,2,3,3,2,1,1,1,2,2,3,3,2,2,2,2,2,2,2,2,2,2,2,2)
+population=(1,2,3,3,2,1,1,1,2,2,3,3,2,2,2,2,2,2,2,2,2,2,2,2)
+  #call with positional arguments
+populationMean = getMean(population, 0)
+  #call using default arguments
+  #call using default arguments
+sampleMean = getMean(sample)
+
+print (&quot;population mean &quot; + 'populationMean')
+print (&quot;sample mean &quot; + 'sampleMean')
+
+  #call with positional arguments and print
+populationMean = getMean(population, 0, 1)
+
+  #call using keyword arguments
+sampleMean = getMean(sample, display=1)</pre>
+<p class="docText">The script (in the <span class="docEmphasis">samples/chap5</span> 
+directory) essentially demonstrates the use of keywords to include default and 
+keyword arguments.</p>
+<p class="docText">The following definition says in English, &quot;Define a method 
+called <tt>getMean()</tt> with three arguments&quot;:</p>
+<pre>def getMean (nums, sample=1, display=0):</pre>
+<p class="docText">The first argument, <tt>nums</tt>, holds the input numbers; 
+the second, <tt>sample=1</tt>, tells <tt>getMean()</tt> whether or not this is a 
+sample or a population; and the third, <tt>display=0</tt>, tells <tt>getMean()</tt> 
+whether or not it should display the mean to the console. Remember that Python 
+doesn't have a Boolean (true/false) type, so any nonzero value (<tt>1</tt> 
+above) equals true and a zero value (<tt>0</tt> above) equals false.</p>
+<pre>if(sample):
+     average = sum / (len(nums)-1)
+else:
+     average = sum / len(nums)</pre>
+<p class="docText">Once again, in English this says, &quot;If <tt>sample</tt> is 
+equal to true, do the first equation to figure the mean; else, do the second 
+equation.&quot; When this method is invoked without <tt>sample</tt> specified, the 
+default is true. In that case, <tt>average = sum/(len(nums)-1</tt> is invoked. 
+If <tt>sample</tt> is false, <tt>average = sum/len(nums)</tt> is invoked.</p>
+<p class="docText">The <tt>display</tt> argument works like the <tt>sample</tt> 
+argument.</p>
+<pre>if(display):
+     print (&quot;mean = &quot; + 'average')</pre>
+<p class="docText">That is, &quot;If <tt>display</tt> is true, print the mean to the 
+console.&quot;</p>
+<h5 class="docSection3Title" id="ch05lev3sec2">Variable Number of Arguments</h5>
+<p class="docText">Here we use the asterisk symbol (<tt>*</tt>) to define a 
+variable number of <tt>nums</tt> arguments:</p>
+<pre>&gt;&gt;&gt; def sum(*nums):
+...     total = 0
+...     for num in nums:
+...             total = total + num
+...     return total
+...</pre>
+<p class="docText"><tt>nums</tt> is a sequence, so it works with the <tt>for</tt> 
+statement. The <tt>sum()</tt> function iterates through each <tt>num</tt> in the 
+variable argument list.</p>
+<p class="docText">At first it may look as though we could have used any 
+sequence, but see how we call <tt>sum()</tt>.</p>
+<pre>&gt;&gt;&gt; sum(19,20,21)
+60</pre>
+<p class="docText">Note that the variable number of argument declarations is of 
+type <tt>Tuple</tt>.</p>
+<pre>&gt;&gt;&gt; def func(*args):
+...     print type(args)
+...
+&gt;&gt;&gt; func()
+&lt;jclass org.python.core.PyTuple at -801600693&gt;</pre>
+<p class="docText">You can mix and match multiple arguments with the positional 
+arguments, as in this nostalgic <tt>printf()</tt> example:</p>
+<pre>&gt;&gt;&gt; def printf(format, *args):
+...     print format % args
+...</pre>
+<p class="docText">Here are some other examples:</p>
+<pre>&gt;&gt;&gt; printf (&quot;Hi %s, how is %s?&quot;, &quot;Martha&quot;, &quot;Miguel&quot;)
+Hi Martha, how is Miguel?
+
+&gt;&gt;&gt; printf (&quot;Martha is %i, Miguel is %i&quot;, 30, 29)
+Martha is 30, Miguel is 29</pre>
+<p class="docText">Programmers, if you're familiar with C, you can see that C's
+<tt>printf()</tt> and Python's are similar. With the way we've defined <tt>
+printf()</tt>, you need at least one argument and can have as many as you like.</p>
+<h5 class="docSection3Title" id="ch05lev3sec3">Variable Number of Keyword Arguments (with 
+Dictionary)</h5>
+<p class="docText">Another way to declare multiple keyword arguments is with the 
+double asterisk symbol (<tt>**</tt>).</p>
+<pre>&gt;&gt;&gt; def printKeywords(**keywords):
+...     for item in keywords.items():
+...             print item
+...</pre>
+<p class="docText">You can use this function with any number of keyword 
+arguments.</p>
+<pre>&gt;&gt;&gt; printKeywords(name=&quot;Whit&quot;, eyes=&quot;blue&quot;, weight=&quot;28&quot;, age=&quot;2&quot;)
+('age', '2')
+('weight', '28')
+('eyes', 'blue')
+('name', 'Whit')</pre>
+<p class="docText">The variable (i.e., changeable) keyword argument is a 
+dictionary, which we can prove.</p>
+<pre>&gt;&gt;&gt; def func(**args):
+...     print type (args)
+...
+&gt;&gt;&gt; func (arg=1, arg2=2, arg3=3)
+&lt;jclass org.python.core.PyDictionary at -1146189863&gt;</pre>
+<p class="docText">Variable keyword arguments (<tt>**</tt>) can be mixed and 
+matched with variable positional arguments (<tt>*</tt>) and regular arguments to 
+improve the workings of a function. Here's an example using <tt>printf()</tt>:</p>
+<pre>&gt;&gt;&gt; def printf(format, *args, **kargs):
+...     if(len(args)):
+...             print (format % args)
+...     elif(len(kargs)):
+...             print (format % kargs)
+...     else:
+...             print format
+...</pre>
+<p class="docText">Now <tt>printf()</tt> can accept any number of keyword or 
+positional arguments.</p>
+<pre>&gt;&gt;&gt; printf(&quot;Hi %s&quot;, &quot;Missy&quot;)
+Hi Missy
+
+&gt;&gt;&gt; printf(&quot;Hi %(name)s&quot;, name=&quot;Missy&quot;)
+Hi Missy
+
+&gt;&gt;&gt; printf(&quot;Hi Missy&quot;)
+Hi Missy</pre>
+<h5 class="docSection3Title" id="ch05lev3sec4">Step by Step</h5>
+<p class="docText">Define a function, <tt>printf()</tt>, with one positional 
+argument, <tt>format</tt>; one variable argument, <tt>args</tt>; and one 
+variable keyword argument, <tt>kargs</tt>.</p>
+<pre>&gt;&gt;&gt; def printf(format *args, **kargs):</pre>
+<p class="docText">Check if the <tt>args</tt> tuple has items in it.</p>
+<pre>...     if(len(args)):</pre>
+<p class="docText">If so, use it in the <tt>format % args</tt> expression as the 
+tuple in a string format operation. Print the expression.</p>
+<pre>...             print (format % args)</pre>
+<p class="docText">If <tt>args</tt> is empty, check if the <tt>kargs</tt> 
+dictionary has items in it. Print the resulting <tt>format % kargs</tt> 
+expression.</p>
+<pre>...     elif(len(kargs)):
+...             print (format % kargs)</pre>
+<p class="docText">If both <tt>args</tt> and <tt>kargs</tt> are empty, print the 
+format string by itself.</p>
+<pre>...     else:
+...             print format
+...</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle" id="ch05sb06">if(args)</h2>
+      <p class="docText">In the <tt>printf()</tt> example, we used the statement
+      <tt>if(len(args)):</tt> to determine whether the variable number of 
+      positional arguments was equal to zero. Instead, we could have used
+      <a class="docLink" href="#ch05sb06">if(args)</a> to see if the list has 
+      items in it, rewriting <tt>printf()</tt> as</p>
+      <pre>def printf(format, *args, **kargs):
+  if(args):
+      print (format % args)
+            elif(kargs):
+      print (format % kargs)
+  else:
+      print format</pre>
+      <p class="docText">Remember that an empty dictionary is equivalent to 
+      false in a Boolean test.</p>
+      <p class="docText">Of course, you can also rewrite <tt>printf()</tt> to be 
+      very readable.</p>
+      <pre>def printf(format, *args, **kargs):
+  if(len(args) &gt; 0):
+      print (format % args)
+  elif(len(kargs) &gt; 0):
+      print (format % kargs)
+  else:
+      print format</pre>
+      <p class="docText">This approach makes the code a little verbose, but 
+      readability should win out. In six months when you need to read the code 
+      you wrote (to figure out what it's doing so you can change it), you'll be 
+      happy.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Remember, functions are code blocks and code blocks are 
+collections of statements. Default function argument values save time.</p>
+<h3 class="docSection1Title" id="ch05lev1sec6">Classes</h3>
+<p class="docText">A class consists of data and the functions that act on that 
+data. In classes, functions are referred to as methods. A way to understand 
+classes is to think of them as functions with multiple entry points. In this way 
+they provide data encapsulation.</p>
+<p class="docText">You define a class with the <tt>class</tt> keyword.</p>
+<pre>class class_name:
+  class_attributes</pre>
+<p class="docText">Classes can have many attributes. These attributes can be 
+variables or definitions of either functions or other classes. For example, the 
+definition of the class <tt>chapter</tt> has three variable attributes: <tt>
+number_of_pages</tt>, <tt>title</tt>, and <tt>toc</tt>.</p>
+<pre>class chapter:
+        number_of_pages = 20
+        title = &quot;Organizing your program&quot;
+        toc = [&quot;Introduction&quot;, &quot;Modules&quot;, &quot;Functions&quot;, &quot;Packages&quot;, &quot;Classes&quot;]</pre>
+<p class="docText">Notice that the class attributes are indented, just as the 
+subordinate statements in an <tt>if</tt> statement are indented.</p>
+<p class="docText">Class attributes can be accessed with the form <tt>
+class_name.attribute</tt>.</p>
+<pre>chapter.number_of_pages = 30
+print `chapter.number_of_pages`
+toc.append(&quot;Scope and Namespaces&quot;)</pre>
+<p class="docText">Classes can also have function definitions (<span class="docEmphasis">book.py</span>).</p>
+<pre>class chapter:
+  &quot;&quot;&quot; Document String for chapter class &quot;&quot;&quot;
+  number_of_pages = 20
+  title = &quot;Organizing your program&quot;
+  toc = [&quot;Introduction&quot;, &quot;Modules&quot;, \
+      &quot;Functions&quot;, &quot;Packages&quot;, \
+      &quot;Classes&quot;]
+  def print_me(self):
+      print chapter.title + &quot; &quot; +`chapter.number_of_pages`
+      for section in chapter.toc:
+          print &quot; &quot; + section</pre>
+<p class="docText">Note here that the function definitions are indented to show 
+that they're members of the class and that their subordinate statements are 
+further indented to show that they belong to the functions. The point to 
+remember is that <span class="docEmphasis">indentation shows ownership or 
+membership.</span></p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: self</h2>
+      <p class="docText">The <tt>self</tt> argument to the <tt>print-me()</tt> 
+      method in the <tt>chapter</tt> class holds the reference to the class 
+      instance. It's similar to the <tt>this</tt> reference in Java or the <tt>
+      Me</tt> reference in Visual Basic.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch05lev2sec6">Exploring a Defined Class</h4>
+<p class="docText">For this section, follow along in the interactive session by 
+loading class <tt>chapter</tt> using the <tt>-i</tt> option in Jython. You'll 
+find <tt>chapter</tt> in module <span class="docEmphasis">book.py</span> in 
+directory <span class="docEmphasis">chap5.</span> Here's the prompt:</p>
+<pre>C:\python\book\chap5&gt;jython -i book.py</pre>
+<p class="docText">Now enter</p>
+<pre>&gt;&gt;&gt; dir()
+['__name__', 'chapter']</pre>
+<p class="docText">The <tt>dir()</tt> built-in function with no arguments gives 
+you the names in the current namespace. If we supply it with the argument <tt>
+chapter</tt>, it gives us <tt>chapter</tt>'s attributes.</p>
+<pre>&gt;&gt;&gt; dir(chapter)
+['__doc__', '__module__', 'number_of_pages', 'print_me', 'title', 'toc']</pre>
+<p class="docText">The <tt>__doc__</tt> attribute holds the class's document 
+string; the <tt>__module__</tt> attribute holds its associated module. The rest 
+of the attributes are ones we defined for <tt>chapter</tt>. Note that <tt>
+print_me()</tt> is listed as an attribute.</p>
+<p class="docText">We call a method of a class with the form <tt>
+class_name.method_name()</tt>.</p>
+<pre>&gt;&gt;&gt; chapter.print_me(None)
+Organizing your program 20
+    Introduction
+    Modules
+    Functions
+    Packages
+    Classes</pre>
+<p class="docText">This is similar to calling a regular function, the only 
+difference being that the function name must be prepended with the class name. 
+The syntax looks a lot like the syntax for calling a function in a module.</p>
+<p class="docText">If we had imported the <span class="docEmphasis">book.py</span> 
+module (instead of loading it at the command line with Jython), we would have 
+had to use the module name to call <tt>print_me()</tt>.</p>
+<pre>module_name.class_name.function_name.
+
+&gt;&gt;&gt; import book
+&gt;&gt;&gt; book.chapter.print_me(None)
+Organizing your program 20
+    Introduction
+    Modules
+    Functions
+    Packages
+    Classes</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">First Class Object</h2>
+      <p class="docText">In the <tt>print_me()</tt> example, we passed the 
+      argument <tt>None</tt>. The first argument in a method usually refers to 
+      an instance of a class, but not here. Instead we're using the class itself 
+      because, in Python, the class is a first class object.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">To access the member variables in <tt>chapter</tt> we use the 
+form <tt>class_name.variable_name</tt>. Again, the syntax is like that for 
+accessing variables in a module.</p>
+<pre>&gt;&gt;&gt; chapter.number_of_pages, chapter.title
+(20, 'Organizing your program')
+&gt;&gt;&gt; chapter.toc
+['Introduction', 'Modules', 'Functions', 'Packages', 'Classes']</pre>
+<p class="docText">Here we accessed both <tt>number_of_pages</tt> and title (the 
+tuple format). Python returned a tuple containing the values of <tt>
+number_of_pages</tt> and <tt>title</tt>, respectively. Then we accessed the 
+values in the member list called <tt>toc</tt>.</p>
+<p class="docText">We can also change the attributes of a class.</p>
+<pre>&gt;&gt;&gt; chapter.toc.append(&quot;Scope and Namespaces&quot;)
+
+&gt;&gt;&gt; chapter.title=&quot;Organizing your code&quot;
+
+&gt;&gt;&gt; chapter.number_of_pages = 30</pre>
+<p class="docText">To confirm the changes, we run the <tt>print_me()</tt> 
+function.</p>
+<pre>&gt;&gt;&gt; chapter.print_me(None)
+Organizing your Python code into packages, modules, classes and functions 30
+    Introduction
+    Modules
+    Functions
+    Packages
+    Classes
+    Scope and Namespaces</pre>
+<h4 class="docSection2Title" id="ch05lev2sec7">Class Instances</h4>
+<p class="docText">Say we want to create 20 <tt>chapter</tt> classes. To do this 
+with what we've learned so far, we'd have to redefine <tt>chapter</tt> 20 times.</p>
+<pre>class chapter1:
+  number_of_pages = 1
+  ...
+
+class chapter2:
+  number_of_pages = 2
+  ...
+
+class chapter3:
+  number_of_pages = 3
+  ...</pre>
+<p class="docText">Time consuming, isn't it? With what we're about to learn, we 
+can instead create an instance of <tt>chapter</tt> for each chapter in our book.</p>
+<p class="docText">Think of a class as a cookie cutter and an instance as an 
+actual cookie. You use the cookie cutter to stamp the cookie out. With classes, 
+stamping out the class instances is called instantiation.</p>
+<p class="docText">When a class is instantiated, the instance shares all of its 
+attributes. The attributes of both initially refer to the same objects, but the 
+instance can also define its own attributes (just as you can decorate each 
+cookie a different way). You access the instance attributes with the form <tt>
+instance_name.attribute</tt>. This form refers to the class attributes if the 
+instance hasn't defined its own, or to its own if it has.</p>
+<p class="docText">This concept is easier to show than to explain, so we'll 
+instantiate our <tt>chapter</tt> class to illustrate. For the next interactive 
+session, load module <span class="docEmphasis">book.py</span> using the <tt>
+jython</tt> <tt>-i</tt> option.</p>
+<p class="docText">First we assign <tt>chap1</tt> to the results of the class 
+constructor expression, which is an instance of class <tt>chapter</tt>.</p>
+<pre>&gt;&gt;&gt; chap1 = chapter()</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">For Programmers: No new Keyword</h2>
+      <p class="docText">There's no <tt>new</tt> keyword in Python as there is 
+      in Java, C++, and Visual Basic. Therefore, the example</p>
+      <pre>&gt;&gt;&gt; chap1 = chapter()</pre>
+      <p class="docText">is equivalent to the following in Java, C++, and Visual 
+      Basic, respectively:</p>
+      <pre>  chapter chap1 = new chapter();
+
+chapter *chap1 = new chapter();
+
+  Dim chap1 As New chapter
+
+or
+  Dim chap1 As chapter
+  Set chap1 = New chapter</pre>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Here's how we access the members of <tt>chap1</tt>:</p>
+<pre>&gt;&gt;&gt; chap1.title
+'Organizing your program'
+
+&gt;&gt;&gt; chap1.toc
+['Introduction', 'Modules', 'Functions', 'Packages', 'Classes']
+&gt;&gt;&gt; chap1.number_of_pages
+20</pre>
+<p class="docText">Note that all of these attributes are the same as those of 
+the <tt>chapter</tt> class. So, is the instance of <tt>chapter</tt> the same as
+<tt>chapter</tt> itself? Let's see using the <tt>is</tt> identity operator.</p>
+<pre>&gt;&gt;&gt; chap1 is chapter
+0</pre>
+<p class="docText">Okay, <tt>chap1</tt> is <span class="docEmphasis">not</span> 
+the same as <tt>chapter</tt>, even though it has the same attributes. Or does 
+it? We know that <tt>dir()</tt> lists the attributes of a module and a class. It 
+also lists the attributes of an instance, so let's use it to solve this mystery.</p>
+<pre>&gt;&gt;&gt; dir (chap1)
+[]
+&gt;&gt;&gt; dir (chapter)
+['__doc__', '__module__', 'number_of_pages', 'print_me', 'title', 'toc']</pre>
+<p class="docText">It looks like <tt>chap1</tt> has no attributes at all, yet 
+when we accessed its attributes we got back the values for <tt>chapter</tt>. 
+What happens if we try to change a <tt>chap1</tt> attribute? Does the class 
+attribute change?</p>
+<p class="docText">First let's change <tt>chap1.title</tt> and see what the 
+title is.</p>
+<pre>&gt;&gt;&gt; chap1.title = &quot;Getting Started&quot;
+&gt;&gt;&gt; chap1.title
+'Getting Started'</pre>
+<p class="docText">Next let's check the value of the <tt>chapter</tt> class's 
+title.</p>
+<pre>&gt;&gt;&gt; chapter.title
+'Organizing your program'</pre>
+<p class="docText"><tt>chapter.title</tt> and <tt>chap1.title</tt> are no longer 
+the same value. Initially, Python uses the class attributes for <tt>chap1</tt>. 
+However, if we change an instance attribute, Python creates an attribute only 
+for the instance, so we should now have a new attribute in <tt>chap1</tt>'s 
+namespace called <tt>title</tt>. Let's check this with the <tt>dir()</tt> 
+function.</p>
+<pre>&gt;&gt;&gt; dir (chap1)
+['title']</pre>
+<p class="docText">As you can see, there's a new variable called <tt>title</tt> 
+in <tt>chap1</tt>'s namespace. Just as we thought. However, this technique works 
+only for assigning new values. For example, if we append a string to the <tt>toc</tt> 
+list, the instance doesn't get a new attribute.</p>
+<pre>&gt;&gt;&gt; chap1.toc.append(&quot;Welcome to Python&quot;)
+&gt;&gt;&gt; chap1.toc is chapter.toc
+1</pre>
+<p class="docText">Notice that, even after we append a string to <tt>toc</tt>,
+<tt>chap1.toc</tt> and <tt>chapter.toc</tt> point to the same object. But what 
+about this:</p>
+<pre>&gt;&gt;&gt; chap1.toc = [&quot;Do not fear&quot;, &quot;What is Python&quot;, &quot;Why Python&quot;]
+&gt;&gt;&gt; chap1.toc is chapter.toc
+0</pre>
+<p class="docText">It shows that assignments change what an instance's member 
+variables refer to.</p>
+<p class="docText">Let's wrap up this interactive session.</p>
+<pre>&gt;&gt;&gt; chapter.number_of_pages is chap1.number_of_pages
+1
+&gt;&gt;&gt; dir (chap1)
+['title', 'toc']</pre>
+<p class="docText">This shows that, since <tt>number_of_pages</tt> was never 
+assigned a value in <tt>chap1</tt>, the <tt>chapter</tt> and <tt>chap1</tt> 
+attributes for it point to the same object (they're actually the same 
+reference). It also shows that <tt>chap1</tt> has the <tt>title</tt> and <tt>toc</tt> 
+attributes in its namespace but not <tt>number_of_pages</tt>.</p>
+<h5 class="docSection3Title" id="ch05lev3sec5">Constructor (__init__)</h5>
+<p class="docText">The <tt>__init__</tt> method, if present, is called when an 
+instance is first created or constructed. It's the constructor, and its 
+arguments are the same ones passed to the class constructor expression. <tt>
+__init__</tt> is usually used to define (i.e., initialize) instance variables.</p>
+<p class="docText">For example, this class constructor expression passes the <tt>
+title</tt> argument to <tt>__init__</tt>:</p>
+<pre>chap1 = chapter(title=&quot;Introduction&quot;)</pre>
+<p class="docText">Let's define our <tt>chapter</tt> class with a constructor 
+that takes three arguments for each instance variable. Notice that we've removed 
+the class variables and are using only instance variables. (Compare this 
+example, <span class="docEmphasis">book1.py,</span> to our earlier example,
+<span class="docEmphasis">book.py.</span>)</p>
+<pre>class chapter:
+       &quot;&quot;&quot; Document String for chapter class &quot;&quot;&quot;
+
+       def __init__(self, title=&quot;&quot;, numPages=0, toc=[]):
+                    self.numPages = numPages
+            self.title = title
+            self.toc = toc
+       def print_me(self):
+           print self.title + &quot; &quot; + `self.numPages`
+           for section in self.toc:
+               print &quot; &quot; + section</pre>
+<p class="docText">Here we've defined a constructor that initializes all of an 
+instance's attributes. Note that <tt>chapter</tt>'s constructor uses default 
+arguments to initialize the member variables. Remember that the <tt>self</tt> 
+argument refers to the current instance.</p>
+<p class="docText">Below we create an instance of <tt>chapter</tt> and set its 
+title to <tt>Getting started</tt>. When calling a constructor, you don't pass a 
+value for the positional <tt>self</tt> argument.</p>
+<pre>&gt;&gt;&gt; chap1 = chapter(&quot;Getting started&quot;)
+&gt;&gt;&gt; chap1.print_me()
+Getting started 0</pre>
+<p class="docText">Next we create an instance of chapter and set its title to
+<tt>Fundamentals</tt>, its number of pages to <tt>20</tt>, and its table of 
+contents to <tt>Literals</tt>, <tt>Types</tt>, and <tt>Lists</tt>.</p>
+<pre>&gt;&gt;&gt; chap2 = chapter(&quot;Fundamentals&quot;, 20, [&quot;Literals&quot;, &quot;Types&quot;, &quot;Lists&quot;])
+&gt;&gt;&gt; chap2.print_me()
+Fundamentals 20
+    Literals
+    Types
+    Lists</pre>
+<p class="docText">Now we create an instance of <tt>chapter</tt> with the title
+<tt>Operators</tt> and set the table of contents to <tt>String operators</tt> 
+and <tt>Arithmetic</tt>.</p>
+<pre>&gt;&gt;&gt; chap3 = chapter(toc=[&quot;String operators&quot;, &quot;Arithmetic&quot;],title=&quot;Operators&quot;)
+&gt;&gt;&gt; chap3.print_me()
+Operators 0
+    String operators
+    Arithmetic</pre>
+<h5 class="docSection3Title" id="ch05lev3sec6">Destructor (__del__)</h5>
+<p class="docText">The <tt>__del__</tt> method is the destructor, which is 
+called when the class instance is about to be destroyed.</p>
+<pre>class chapter:
+  &quot;&quot;&quot; Document String for chapter class &quot;&quot;&quot;
+
+  def __init__(self, title=&quot;&quot;, numPages=0, toc=[]):
+      self.numPages = numPages
+      self.title = title
+      self.toc = toc
+
+  def __del__(self):
+      print &quot;Leaving&quot;
+
+  def print_me(self):
+      print self.title + &quot; &quot; + `self.numPages`
+      for section in self.toc:
+          print &quot;     &quot; + section
+
+chap = chapter()
+chap.print_me()
+del chap</pre>
+<h4 class="docSection2Title" id="ch05lev2sec8">Encapsulation with Private Variables</h4>
+<p class="docText">One of the things that separate classes from records or 
+structures in other languages is the concept of encapsulation. Encapsulation 
+hides the implementation details of your class and in doing so reduces code 
+coupling. Coupling is bad.</p>
+<p class="docText">Let's say, for example, that you create a simple address book 
+class that downloads all of the addresses from a corporate database and stores 
+them in a list called <tt>names</tt>. Other programmers who use your class 
+simply access this <tt>names</tt> list.</p>
+<p class="docText">Well, imagine that the company you work for has just landed 
+some major accounts and is hiring more employees. Now you want to change your 
+address book class to work with a middleware server that connects to the 
+database and helps you cache addresses based on usage and changes. You also want 
+to provide a dictionary-like object to work with the <tt>names</tt> list. You do 
+all this, but when you change the names over to the dictionary object, all the 
+other company programmers' code stops working. This is coupling, and you can see 
+why it's bad.</p>
+<p class="docText">To reduce coupling you want to hide the implementation 
+details of your class and provide a well-defined interface to outside users. 
+Private variables and private methods allow you to do this because they aren't 
+visible outside the class in which they're defined.</p>
+<p class="docText">A well-defined interface to your class is a collection of 
+public methods for class access, but it prohibits access to the private 
+variables to limit the number of things that can go wrong. Consider if everyone 
+had access to every variable in your class—the number of potential problems 
+would be staggering. By limiting variable access to well-defined methods, you 
+better control the internal state of your class and minimize such problems. If 
+something does go wrong, you're more likely to know which method to fix.</p>
+<p class="docText">What all this comes down to is good code organization. 
+Packages allow you to organize your modules, on the basis of functionality or 
+services, so that you don't run into naming conflicts with other programmers.</p>
+<p class="docText">There's no keyword to declare a variable or method as 
+private. Rather, you prepend a double underscore to the variable or method name. 
+Here's an example (module <span class="docEmphasis">book2.py</span>):</p>
+<pre>class chapter:
+  &quot;&quot;&quot; Document String for chapter class &quot;&quot;&quot;
+
+  def __init__(self, title=&quot;&quot;, numPages=0, toc=[]):
+  self.__numPages = numPages
+      self.__title = title
+      self.__toc = toc
+
+  def print_me(self):
+      print self.__title + &quot; &quot; + `self.__numPages`
+      for section in self.__toc:
+          print &quot;     &quot; + section</pre>
+<p class="docText">Below we define the three instance variables as private, 
+which means that they can't be viewed with the <tt>dir()</tt> function.</p>
+<pre>&gt;&gt;&gt; from book1 import chapter
+&gt;&gt;&gt; dir (chapter)
+['__doc__', '__module__', 'print_me']</pre>
+<h3 class="docSection1Title" id="ch05lev1sec7">Packages</h3>
+<p class="docText">Packages are a way of organizing Python modules and a way to 
+prevent one programmer from stomping on the module of another. You assign a 
+module to a package with the form <tt>Package_Name.Module_Name</tt>. Thus, the 
+module name <span class="docEmphasis">mystuff.sys</span> indicates a module 
+named <span class="docEmphasis">sys</span> in a package named
+<span class="docEmphasis">mystuff.</span></p>
+<p class="docText">Packages are essentially directories that contain a special
+<span class="docEmphasis">__init__.py</span> file to indicate to Python that the 
+directory it's dealing with is a package. This file is used when the package is 
+first loaded. Let's create our own package and call it <span class="docEmphasis">
+package1/__init__.py.</span></p>
+<p class="docText">First we create a directory called <span class="docEmphasis">
+package1.</span> Then we create a file named <span class="docEmphasis">__init 
+__.py</span> with one Python statement that prints <tt>&quot;Hello from package1&quot;</tt>, 
+and save it to the <span class="docEmphasis">package1</span> directory. Next we 
+create a module called <span class="docEmphasis">module1</span> in
+<span class="docEmphasis">package1</span> and put in it a Python statement that 
+prints <tt>&quot;hello from module1 in package1&quot;</tt>. In module1, we define one 
+do-nothing function and one do-nothing class named <tt>class1</tt> that contains 
+a do-nothing method named <tt>method1</tt>.</p>
+<p class="docText">Here's <span class="docEmphasis">package1/__init__.py.</span></p>
+<pre>print &quot;Hello from package1&quot;</pre>
+<p class="docText">Here's <span class="docEmphasis">package1/module1.py:</span></p>
+<pre>print &quot;hello from module1 in package1&quot;
+
+def function1():
+  pass
+
+class class1:
+
+def method1():
+  pass</pre>
+<p class="docText">Make sure that the <span class="docEmphasis">package1</span> 
+directory is in the module search path. Then move out of
+<span class="docEmphasis">package1</span> and fire up the Jython interpreter.</p>
+<pre>&gt;&gt;&gt; from package1.module1 import class1
+Hello from package1
+hello from module1 in package1
+
+&gt;&gt;&gt; dir()
+['__name__', 'class1']</pre>
+<p class="docText">Here we see that the code in <span class="docEmphasis">__init__.py</span> 
+and <span class="docEmphasis">module1</span> is executed when we load <tt>class1</tt>.</p>
+<p class="docText">Now exit and restart the Jython interpreter and try this:</p>
+<pre>&gt;&gt;&gt; import package1
+Hello from package1
+
+&gt;&gt;&gt; dir()
+['__name__', 'package1']
+
+&gt;&gt;&gt; dir(package1)
+['__file__', '__name__', '__path__']
+
+&gt;&gt;&gt; vars(package1)
+{'__file__': 'C:\\python\\book\\chap5\\.\\package1\\__init__.py'
+, '__path__': ['.\\package1'], '__name__': 'package1'}</pre>
+<p class="docText">Notice that, when we import the package, its
+<span class="docEmphasis">__init__.py</span> module is executed. Look at the 
+package's namespace. (Remember that the <tt>vars</tt> command is like the <tt>
+dir</tt> command except that it lists the namespace's names and values.)</p>
+<p class="docText">Within <span class="docEmphasis">__init__.py</span> you can 
+define a list called <tt>__all__</tt>, which is used with <tt>package import*</tt> 
+to tell Python to import all modules in this package. Actually, Python imports 
+all modules listed in the package's <tt>__all__</tt> list, so if you want to 
+import a module with the <tt>*</tt> command, you have to put it in <tt>__all__</tt>.</p>
+<p class="docText">Packages can have subpackages. These are subdirectories under 
+the package with <span class="docEmphasis">__init__.py</span> modules. Since
+<span class="docEmphasis">__init__.py</span> is part of the package, the package 
+can contain anything that you find in a regular module, such as classes and 
+functions.</p>
+<h3 class="docSection1Title" id="ch05lev1sec8">Globals and the Global Statement</h3>
+<p class="docText">The word &quot;global&quot; strikes fear in the hearts of 
+object-oriented programmers (and structured programmers, for that matter). 
+That's because global variables—variables that are in a global namespace (one 
+that's available to all modules, functions, and classes)—are usually a bad thing 
+and should be avoided.</p>
+<p class="docText">In fact, there aren't any real global variables in Python. 
+All variables have to be in the context of a module, class, or function. 
+However, Python does have a <tt>global</tt> statement, which allows you to share 
+variables between functions in the same module.</p>
+<p class="docText">Here's an example that has two functions and a module-level 
+variable:</p>
+<pre>var = &quot;hi&quot;  #module level variable
+
+     def sayHi1():
+         print var
+
+     def sayHi2():
+         print var
+
+     def sayHiMom():
+         var = var + &quot; Mom&quot;
+         print var</pre>
+<p class="docText">Both <tt>sayHi1</tt> and <tt>sayHi2</tt> work, but <tt>
+sayHiMom</tt> doesn't. To make it work you have to import the <tt>var</tt> 
+variable into the functions' local namespaces, using the <tt>global</tt> command 
+like this:</p>
+<pre>var = &quot;hi&quot;  #module level variable
+...
+...
+
+def sayHiMom():
+global var
+var = var + &quot; Mom&quot;
+print var</pre>
+<p class="docText">There's nothing wrong with using the <tt>global</tt> 
+statement to import module-level variables into a function's namespace.</p>
+<h3 class="docSection1Title" id="ch05lev1sec9">Summary</h3>
+<p class="docText">In this chapter, we learned about the benefits and methods of 
+organizing your code. We explained namespaces, code blocks, and working with 
+namespaces for modules, functions, classes, and methods. We also discussed the
+<tt>import</tt> statement, which allows you to import objects from one module to 
+another, and the <tt>global</tt> statement, which allows you to import 
+module-level variables into a local namespace.</p>
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%204.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter%206.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table></body>
+
+</html>

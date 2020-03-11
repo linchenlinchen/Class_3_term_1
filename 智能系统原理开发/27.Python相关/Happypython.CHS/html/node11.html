@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>9. 类别(Classes)</title>
+  
+  <meta name="description" content="9. 类别(Classes) ">
+ 
+  <meta name="keywords" content="tut">
+ 
+  <meta name="resource-type" content="document">
+ 
+  <meta name="distribution" content="global">
+ 
+  <link rel="STYLESHEET" href="tut.css">
+ 
+  <link rel="next" href="node12.html">
+ 
+  <link rel="previous" href="node10.html">
+ 
+  <link rel="up" href="tut.html">
+ 
+  <link rel="next" href="node12.html">
+</head>
+ <body>
+ 
+<div class="navigation">
+<table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+    <tr>
+ <td><a href="node10.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node12.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+  </tbody>
+</table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node10.html">
+8. 程式错误与例外(Exceptions)情形</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node12.html">
+10. 现在呢? </a> <br>
+<hr></div>
+ <!--End of Navigation Panel--> <!--Table of Child-Links--> <a name="CHILD_LINKS"><strong>
+小段落 </strong></a>  
+<ul>
+ 
+  <li><a name="tex2html356" href="node11.html#SECTION0011100000000000000000">
+9.1 术语的使用说明 </a> </li>
+  <li><a name="tex2html357" href="node11.html#SECTION0011200000000000000000">
+9.2 Python的可用范围(Scopes)及命名空间(Naming Spaces) </a> </li>
+  <li><a name="tex2html358" href="node11.html#SECTION0011300000000000000000">
+9.3 Class(类别)初探 </a> 
+    <ul>
+ 
+      <li><a name="tex2html359" href="node11.html#SECTION0011310000000000000000">
+9.3.1 定义Class(类别)的语法 </a> </li>
+      <li><a name="tex2html360" href="node11.html#SECTION0011320000000000000000">
+9.3.2 Class Objects(类别物件) </a> </li>
+      <li><a name="tex2html361" href="node11.html#SECTION0011330000000000000000">
+9.3.3 Instance Objects(特例物件) </a> </li>
+      <li><a name="tex2html362" href="node11.html#SECTION0011340000000000000000">
+9.3.4 Method Objects(方法物件)  </a> </li>
+    </ul>
+ </li>
+  <li><a name="tex2html363" href="node11.html#SECTION0011400000000000000000">
+9.4 一些随意的想法 </a> </li>
+  <li><a name="tex2html364" href="node11.html#SECTION0011500000000000000000">
+9.5 继承 </a> 
+    <ul>
+ 
+      <li><a name="tex2html365" href="node11.html#SECTION0011510000000000000000">
+9.5.1 多重继承 </a> </li>
+    </ul>
+ </li>
+  <li><a name="tex2html366" href="node11.html#SECTION0011600000000000000000">
+9.6 Private变数 </a> </li>
+  <li><a name="tex2html367" href="node11.html#SECTION0011700000000000000000">
+9.7 其它 </a> 
+    <ul>
+ 
+      <li><a name="tex2html368" href="node11.html#SECTION0011710000000000000000">
+9.7.1 例外(Exceptions)也可以是类别 </a> </li>
+    </ul>
+  </li>
+</ul>
+ <!--End of Table of Child-Links--> 
+<hr>  
+<h1> <br>
+ 9. Class(类别)   </h1>
+  
+<p> Python的类别机制在加入最少新的语法及语意的情况下加入了类别的支援。Python的类别机制是C++ 以及Modula-3的综合体。正如同在modules里面的情况一样，Python的
+class也没有在其定义及使用者之间加入绝对的障碍，而是仰赖使用者有礼貌的不要去闯入其定义之中(not to ``break into the definition'')。对于class来说最重要的一些特性在Python里面都完全的保留：类别的继承可以继承自个基础类别(base
+classes)，一个子类别(derived class)可以override其所有基础类别(base class)的任何方法(method)，一个method也可以呼叫一个基础类别的同名方法，物件可以自由决定是否要让某些资料是
+private的。  </p>
+<p> 以C++ 的术语来说，Python所有的类别成员(包含其资料成员)都是  <i>public</i> 的，而且所有的函式成员(member
+functions)都是 <i>virtual</i> 的。也并没有所谓的建构元(constructors)或是解构元(destructors)的存在。
+如同在 Modula-3里面一样，从物件的方法(method)里面要使用物件的成员并没有捷径可以使用：成员函式的宣告必须在第一个参数中明白的在表示所存在其中的物件，而此参数在呼叫时是不用传的。如同在Smalltalk里面一样，类别本身也是一个物件，事实上在Python里面，所有的资料型态(data
+type)都是物件。这提供了在import以及重新命名时候的语意(sematics)。但是如同在C++ 或是Modula-3里面，内建的基本型态是不能被使用者拿来当作基础类别使用的。与C++类似但不同于Modula-3的是，大部分有特别语法的内建运算元(operators)，例如数值运算及subscripting，都可以被拿来在类别中重新定义的。
+  </p>
+<p>  </p>
+<h1> <br>
+ 9.1 术语的使用说明  </h1>
+  
+<p> 由于缺乏普遍性的术语可以讨论类别，我只好偶而从Smalltalk或是C++的术语中借来用。(我其实更想用Modula-3的术语，因为它的术语在语意上比C++还要接近Python，但是我想大部分的读者都没有听过它)。 
+ </p>
+<p> 我也要警告你的是，物件这个字在Python里面不必然指的是类别的一个特例(instance)，这是一个在物件导向读者中常见的陷阱。与C++及Modula-3相同但与Smalltalk不同的是，并非所有在Python里面的资料型态都是类别，像是整数及list这类的基本的内建型态就不是类别，甚至一些特别的资料型态像是file都不是类别。无论如何，
+<i>所有的</i> Python的资料型态都或多或少都有一些基本相同的语意特性，我们可以把这个相同点叫做物件。  </p>
+<p> 物件有其个体性(individuality，独特性)，而且你可以用不同的名字连结到同一个物件去，这在其他的程式语言中也叫做别名(aliasing)。通常你第一次看到Python不会觉得这有什么特别，而且你在处理不可变动的(immutable)基本型态(例如数目字，字串及tuple)时，你根本可以不去管它。但是对于一些都可变动的(mutable)物件，像是list，dictioanry以及其他用来表现在程式之外的实体(像是档案及视窗)的资料型别，对它们来说aliasing就和与它们有关之Python程式码语意的解释，有(故意的)一些影响。这样的影响通常是对程式有正面的效益，因为别名(alias)运作的方式就像是一个有礼貌的指标(pointer)。举例来说，当你传一个物件当参数时，因为所传的其实只是一个指标，所以所费的资源就不多。而且，当在函式之内对这个传入的物件进行修改时，在外面呼叫这个函式的人(caller)会看得见函式所做的修改，这大大的简化了在Pascal里面需要两种不同参数传递机制才能作到的事。 
+</p>
+<p>  </p>
+<h1> <br>
+ 9.2 Python的可用范围(Scopes)及命名空间(Naming Spaces)  </h1>
+  
+<p> 在介绍类别(class)之前，我首先必须介绍Python有关可用范围(scope)的一些准则。类别的定义也对命名空间(namespace)做了一些小技巧，所以你需要对scope及namespace的运作有一些了解才能够完全的掌握到底发生了什么事。对于进阶的Python程式设计师来说，有关这个主题的了解是很有帮助的。
+  </p>
+<p> 现在让我们先来定义一些东西：  </p>
+<p> 一个  <i>namespace</i> 指的是名称与物件的对应关系的组合。目前来说，namespace都是以Python的dictionary来实作出来的，但是这应该没有多大意义(除非对程式的效率)，而且在未来可能也有所改变。Namespace的例子有：一组的内建名称(像是
+<tt class="function">abs()</tt> 的函式，还有内建的exception名称)，在module里的全域变数(global
+variables)，以及在函式里的local变数。某种意义来说，一个物件里的特性(attributes，译：成员)也组成一个namespace。在这里要知道的重点是，不同的namespace里面所定义的名称是彼此没有任何关系的。举例来说，两个不同的module都可以定义一个叫做``maximize''的函式。这一点都不冲突，因为使用者必须要在这个函式的名称前加上module的名称。
+  </p>
+<p> 喔，我在这里所用的 <i>attribute</i> 一字指的事所有在点号后面的东西，举例来说在 <code>z.real</code>
+这个expression里面 <code>real</code> 就是一个属于 <code>z</code> 这个物件的attribute。严格说来，使用module里面的名称也是一个attribute的指称(references)，在
+ <code>modname.funcname</code> 这个expression里面，  <code>modname</code> 就是一个module物件，而
+ <code>funcname</code> 就是其attribute。在这个例子里面，刚好module的attributes就对应了在module里面定义的全域变数，所以我们就说它们就是在一个namespace里面。 
+<a name="tex2html5" href="#foot1309"><sup>9.1</sup></a> </p>
+<p> Attributes可以是唯读的或是可改写的。对可改写的attribute，你可以设定值给它。Module的 attributes是可以改写的：所以你可以写
+"<tt class="samp">modname.the_answer = 42</tt>" 来改变其值。可改写的attributes也可以被删除掉，你可以用
+<tt class="keyword">del</tt> 叙述像是  "<tt class="samp">del modname.the_answer</tt>
+" 来做。   </p>
+<p> 命名空间(Name spaces)是在不同的时候被创造出来的，而且其存在的时间也都不一定。内建名称的namespace是在当Python直译器启动时就被创造出来，而且不会被删除掉。Module里全域(global)的namespace是当module的定义被读入的时候就被创造出来，通常在直译器离开之前也不会被删除。那些在top-level启动直译器里面被执行的指令，不管是在互动模式或是从script里面而来的，都隶属于一个叫做
+ <tt class="module">__main__</tt> 的module，所以它们也算有自己的一个global namespace。 (事实上，内建的名称也都在一个module里面，这个module叫做
+ <tt class="module">__builtin__</tt> )   </p>
+<p> 函式所有的namespace叫做local namespace，是在函式被呼叫时才创造的，而且当函式传回一个值或是引发一个本身无法处理的exception时，这个namespace就被删除(事实上，也许说遗忘是比较贴切的形容词)。当然，递回的函式呼叫会使每个呼叫都有自己的local
+namespace。   </p>
+<p> 一个可用范围( <i>scope</i> )是一个在Python程式里面文字上的范围，在这个范围里面你可以直接使用某个namespace。直接使用(``Directly
+accessible'')的意思是指对一个名称而言不合格的参考(unqualified reference)试图想要在namespace里面找某一个名称。
+  </p>
+<p> 虽然scope是静态的(statically)被决定的，但是我们使用namescope的时候是很动态(dynamically)的来使用之。在任何一个程式执行的地方，都正好有三层的scope正在被使用(也就是有三个可以直接使用的namespace)：首先寻找的是最内圈的scope，包含有local的名称；其次搜寻的是中间一层，包含有目前所在的module的全域名称(global
+names)；最后搜寻的是最外面的一层，也就是包含有内建名称的namespace。   </p>
+<p> 通常，local scope指的是在文字上面目前的函式所拥有的local名称。在函式之外的话，local scope就指的是global
+scope所指的namespace。类别的定义在local scope里面则又放入了另外的一个namespace。   </p>
+<p> 要注意的是scope的决定是依文字的安排来决定的。一个定义在module里面的函式，其global scope就是module的namespace，不管这个函式是从哪里或是用哪一个别名被呼叫的。在另一方面来说，真正的名称搜寻路线是动态的决定的(在程式执行的时候)。但是Python语言本身的定义好像慢慢的往静态决定变化(也就是在编译的时候)，所以，不要过分依赖动态的名称解释。(事实上，local的变数都已经是静态就已经决定了的)。 
+ </p>
+<p> Python有一个很特别的变化就是当设定(assignment)的时候都一定是进入到了最内层的scope。设定并不是复制资料，相反的，它只是把物件及名称连结起来而已。对于删除也是一样的，
+ "<tt class="samp">del x</tt>" 事实上只是把 <code>x</code> 的连结从local scope所代表的namespace中除去。事实上，所有会引进新名称的动作都是使用local
+scope：特别是， import叙述以及函式的定义就是把module以及函式的名称都连结到local scope里面来了。( <tt class="keyword">
+global</tt> 这个叙述可以用来特别指定某个特殊的变数是要放在global scope里的)   </p>
+<p>  </p>
+<h1> <br>
+ 9.3 Class(类别)初探   </h1>
+  
+<p> 类别(Classes)的观念引进了许多新的语法，三种新的物件以及一些新的语言上的意义：  </p>
+<p>  </p>
+<h2> <br>
+ 9.3.1 定义Class(类别)的语法   </h2>
+  
+<p> 最简单的类别定义的形式看起来像是这样的：   </p>
+<p> </p>
+<dl>
+<dd><pre class="verbatim">class ClassName:<br>    &lt;statement-1&gt;<br>    .<br>    .<br>    .<br>    &lt;statement-N&gt;<br></pre>
+  </dd>
+  </dl>
+  
+  <p> 类别的定义与函式的定义(都是用 <tt class="keyword">def</tt> 叙述)相同，都必须在要在它们有任何作用之前就定义好。(你也可以在
+ <tt class="keyword">if</tt> 叙述或是一个函式里面放入类别的定义)。   </p>
+  <p> 在实务上，存在于类别定义内的叙述通常都是函式的定义，但是我们也可以放入其他的叙述。这样的做法有时也很好用，我们之后会再会来看这个用法。类别定义内的函式定义通常都有一个特别的参数形式，这是为了method的特别呼叫习俗的。我们还是留到后面再来讨论之。
+  </p>
+  <p> 当一个类别的定义进来时，就会创造出一个新的namespace，而且会当作是一个local scope来用。所以所有对local变数的设定都会进入到这个新的namespace里面。具体来说，函式的定义也会把新的函式的名称连结到这里来。
+  </p>
+  <p> 当一个类别的定义正常的离开时( 藉由定义的尾端)，一个类别物件( <i>class object</i> )就被创造出来了。这个类别物件基本上来说是只是一个包装起来的东西，其内容是由这个类别定义所创造出来的namespace里面的内容。我们在下一节就会有更多有关类别物件(class
+objects)的讨论。另外在类别的定义离开时，原来的local scope (在进入类别的定义之前的那一个local space)就会被重新使用，并且这个创造出来的类别物件就会被放在这个local
+scope里面，并且被连结到你所定义的类别名称(上面的例子里是 <tt class="class">ClassName</tt> )上面。   </p>
+  <p>  </p>
+  <h2> <br>
+ 9.3.2 类别物件(Class Objects)  </h2>
+  
+  <p> 类别物件可以做两件事情，一是attribute的指涉(references)，另一个是创造出一个特例来(instantiation)。
+  </p>
+  <p> <i>Attribute references</i> 所使用的是在Python里面标准的attribute reference的语法：
+  <code>obj.name</code> 。有效的attribute的名称指的是当类别物件被创造时，所有在类别的namespace里面的名称。所以，如果你的类别定义如同下面例子的话：
+  </p>
+  <p> </p>
+  <dl>
+  <dd><pre class="verbatim">class MyClass:<br>    "A simple example class"<br>    i = 12345<br>    def f(x):<br>        return 'hello world'<br></pre>
+    </dd>
+    </dl>
+  
+    <p> 你就可以使用 <code>MyClass.i</code> 以及  <code>MyClass.f</code> 这两个有效的attribute
+references语法，它们分别会传回一个整数以及一个method物件来。你也可以设定值给这些类别的attributes，如此你就可以改变 <code>
+MyClass.i</code> 的值了。  <tt class="member">__doc__</tt> 也是类别物件的一个有效的attribute，其传回值是这个类别的注释字串(docstring)，也就是：
+    <code>"A simple example class"</code> 。   </p>
+    <p> 类别的特例化( Class <i>instantiation</i> )是使用函式的表示方法。看起来好像这个类别物件是一个没有参数的函式，然后传回来的就是这个类别的的一个特例(instance)。我们再以前面的类别为例子：
+  </p>
+    <p> </p>
+    <dl>
+    <dd><pre class="verbatim">x = MyClass()<br></pre>
+      </dd>
+      </dl>
+  
+      <p> 就会创造出一个新的类别的 <i>instance</i> ，然后我们再把这个物件设定给 <code>x</code> 这个local的变数。
+  </p>
+      <p> 类别的特例化(Class instantiation )这个动作(也就是``呼叫''一个类别物件)所创造出来的是一个空的物件。有许多的类别希望创造出来的物件有一个特定的初始状态，所以你可以在类别里面定义一个特别的method叫做
+      <tt class="method">__init__()</tt>  ，如同下例：   </p>
+      <p> </p>
+      <dl>
+      <dd><pre class="verbatim">    def __init__(self):<br>        self.data = []<br></pre>
+        </dd>
+        </dl>
+  
+        <p> 当你的类别有定义一个 <tt class="method">__init__()</tt> method时，当你在特例化(instantiation)你的类别时，就会自动的引发
+        <tt class="method">__init__()</tt> 执行，并且创造出一个类别的特例(instance)。所以，一个新的物件就可以截由底下的呼叫来创造出来：
+  </p>
+        <p> </p>
+        <dl>
+        <dd><pre class="verbatim">x = MyClass()<br></pre>
+          </dd>
+          </dl>
+  
+          <p> 当然，  <tt class="method">__init__()</tt> 这个method 可以有参数传入，这样可以增加使用时的弹性。在这样做的时候，使用特例化(instantiate)类别的语法时，所传入的参数就会被传到
+          <tt class="method">__init__()</tt> 里面去。如范例：   </p>
+          <p> </p>
+          <dl>
+          <dd><pre class="verbatim">&gt;&gt;&gt; class Complex:<br>...     def __init__(self, realpart, imagpart):<br>...         self.r = realpart<br>...         self.i = imagpart<br>... <br>&gt;&gt;&gt; x = Complex(3.0,-4.5)<br>&gt;&gt;&gt; x.r, x.i<br>(3.0, -4.5)<br></pre>
+            </dd>
+            </dl>
+  
+            <p>  </p>
+            <h2> <br>
+ 9.3.3 特例物件(instance objects) </h2>
+  
+            <p> 现在对于这个被创造出来的特例物件(instance objects)，我们又该怎么用呢？对于这样的特例物件，唯一它们懂得的就是attribute
+references。有两种的attribute names我们可以使用： </p>
+            <p> 第一种我叫他是资料特性(  <i>data attributes</i> )，这类似于在Smalltalk中所说的特例变数(``instance
+variables'')以及在C++中的资料成员(``data members'')。如同local变数一样，Data attributes不需要再宣告，你第一次设定值给它们的时候它们就自动存在了。举例来说，如果
+ <code>x</code> 是 <tt class="class">MyClass</tt> 这个物件的一个instance，底下这个程式码就会印出
+            <code>16</code> 这个结果来：   </p>
+            <p> </p>
+            <dl>
+            <dd><pre class="verbatim">x.counter = 1<br>while x.counter &lt; 10:<br>    x.counter = x.counter * 2<br>print x.counter<br>del x.counter<br></pre>
+              </dd>
+              </dl>
+  
+              <p> 第二种instance objecet可以使用的attribute references叫做方法( <i>methods</i>
+) 。一个method就是一个隶属于某个物件的函式。(在Python中，method一词并不只特定用于类别的instances，其他的物件资料型态也可以有自己的
+method，例如list物件就有很多methods像是append，insert，remove，sort等等。但是我们底下用到method这个词的时候，除非特别说明，要不然我们倒是单独指着instance
+objects 的method说的。)   </p>
+              <p> 一个instance objects 可以用的有效method名称是由其类别所决定的。定义上来说，所有类别里面(使用者定义)为函式物件的attribute，都会成为其instance的相对应method。所以在我们的例子里，
+ <code>x.f</code> 就是一个有效的method的reference，其原因是因为  <code>MyClass.f</code>
+是一个函式；但是 <code>x.i</code> 就不是一个method的reference，因为  <code>MyClass.i</code>
+ 不是一个函式。但是，要注意的是，  <code>x.f</code> 和  <code>MyClass.f</code> 是两回事，它是一个method物件(
+              <i>method object</i> )，而非一个函式物件。   </p>
+              <p>  </p>
+              <h2> <br>
+ 9.3.4 Method Objects(方法物件)  </h2>
+  
+              <p> 通常，一个method可以马上被呼叫，例如：   </p>
+              <p> </p>
+              <dl>
+              <dd><pre class="verbatim">x.f()<br></pre>
+                </dd>
+                </dl>
+  
+                <p> 在我们的例子里，这一个呼叫会传回来 <code>'hello world'</code> 这个字串。但是，因为
+ <code>x.f</code> 是一个method物件，所以我们没有必要马上就呼叫它，我们可以把它储存起来，然后再稍后再呼叫它。举例如下：   
+                </p>
+                <p> </p>
+                <dl>
+                <dd><pre class="verbatim">xf = x.f<br>while 1:<br>    print xf()<br></pre>
+                  </dd>
+                  </dl>
+  
+                  <p> 这个例子同样的会一直不断的印出 "<tt class="samp">hello world</tt>"
+来。   </p>
+                  <p> 到底，你的method被呼叫时，什么事情发生了呢？你也许注意到了 当我们呼叫 <code>x.f()</code>
+ 的时候并没有传入任何参数，但是我们在类别定义的时候确实有定义 <tt class="method">f</tt> 所传入的参数。到底是怎么回事呢？当然，依照Python的定义，当一个函是需要参数而你呼叫时没有传入参数的话，是会引发一个例外状况(exception)的，甚至这个传入的参数没有被用到也是一样&hellip;
+  </p>
+                  <p> 事实上，你也许已经猜到答案了。对于method来说有一个较特殊的事是，method所处的物件会被当作函式传入的第一个参数。所以在我们的例子里面，当我们呼叫
+                  <code>x.f()</code> 的时候，事实上我们是呼叫 <code>MyClass.f(x)</code>
+ 。一般来说，如果你呼叫method的时候传了  <var>n</var> 个参数，其实你是呼叫背后所代表之类别的函式，而且该method所在的物件会插入在传入的参数中当作第一个参数。 
+ </p>
+                  <p> 如果你还不了解到底method如何运作的话，你也许可以看看它的实作来更了解它。当一个instance的attribute被reference，而这个attribute又不是一个data
+attribute的时候，该instance的类别会被寻找。如果这个class attribute的名字在类别里面代表的是一个函式物件的话，就会有一个method物件被创造出来。这个method物件是一个由这个instance物件(的指标)，以及刚刚找到的这个函式物件所包装起来的一个抽象的物件。当这个method物件被带着一串参数呼叫的时候，这个method物件会先打开原来的包装，然后会用instance物件(的指标)以及那一串传进来的参数组成新的参数串，然后我们再用这个新的参数串来呼叫在method物件里面的函式物件。
+  </p>
+                  <p>  </p>
+                  <h1> <br>
+ 9.4 一些随意的想法  </h1>
+  
+                  <p> [这些东西其实应该更多花点心思加以处理的&hellip;]  </p>
+                  <p> 如果data attributes和method attributes 有相同名称的话，data attributes
+会盖过method attributes 。要避免这个命名的冲突(这常常是许多bug的由来)，你可能需要一些命名的规则。比如说，让method的名称都是大写的，在data
+attribute的前面加上一些小字串(或者是底线)，或者对于method都用动词，对data attribute都用名词。   </p>
+                  <p> 除了一般object的使用者(client)之外，Data attributes也可以在method里面被使用到。也就是说，类别(class)是不能用来实作出纯粹的抽象资料型态(abstract
+data types)的。事实上，再Python里面没有东西可以保证资料的隐藏(data hiding)，我们只能仰赖彼此的约定及尊重了。(另一方面来说，用C写成的Python是可能完全隐藏其实作的细节并且在需要的时候可以控制对物件的存取权限的；这是用来给C所写成的Python延伸机制(extension
+to Python)所使用的。)   </p>
+                  <p> 使用data attributes的人要特别小心，你有可能把由method所管理的data attributes弄得一蹋糊涂。值得注意的是，类别的使用者可以自行在instance物件里面加入data
+attributes，只要小心处理命名的问题，这不会对method的正确性有所影响。再次提醒，你可以用命名的规则来避免此事发生。  </p>
+                  <p> 从method里面要使用data attributes (或者是其他的methods)并没有捷径。我发现这样的好处是程式的可读性会增加很多，因为当你在读method的程式码的时候，local变数跟instance变数混淆的机会就会少很多。
+  </p>
+                  <p> 习惯上，我们把一个method的第一个参数叫做 <code>self</code> 。这只是一个习惯而已，
+ <code>self</code> 这个名字对Python来说完全没有什么特殊的意义。(但是你要注意，如果你不用这一个习惯的话，对于某些读你程式的Python程式设计师来说，也许你程式的可读性就低了一点。而且可能有一些类似像
+                  <i>class browser</i> 之类的程式是靠这个约定来分辨class的特性，所以你不遵守的话，你的类别它们可能就读不懂)
+  </p>
+                  <p> 所有的在类别里面的函式物件，在定义上都是该类别之instance的一个method。在类别里面的意思不限定于一定要在文字上是在类别的定义里面，你也可以把一个函式物件设定给一个在类别里面的local变数，这样也算数的。比如说：
+  </p>
+                  <p> </p>
+                  <dl>
+                  <dd><pre class="verbatim"># Function defined outside the class<br>def f1(self, x, y):<br>    return min(x, x+y)<br><br>class C:<br>    f = f1<br>    def g(self):<br>        return 'hello world'<br>    h = g<br></pre>
+                    </dd>
+                    </dl>
+  
+                    <p> 现在 <code>f</code>, <code>g</code> 以及 <code>h</code>
+ 都是类别 <tt class="class">C</tt> attributes，而且都指涉(reference)到某个函式物件去。而且，如此做的话，当
+                    <tt class="class">C</tt> 有instance的时候， <code>f</code>
+ ， <code>g</code>  以及 <code>h</code> 都会变成instance的method(事实上 <code>h</code>
+  所指的函式是跟 <code>g</code> 同一个的)。值得注意的是，如果你真这样做的话，你只是让读你程式的人头昏眼花罢了。  </p>
+                    <p> 你也可以在method里面呼叫其他的method，你所需要的只是用 <code>self</code>
+ 这个参数的method attribute就可以了。例如：    </p>
+                    <p> </p>
+                    <dl>
+                    <dd><pre class="verbatim">class Bag:<br>    def __init__(self):<br>        self.data = []<br>    def add(self, x):<br>        self.data.append(x)<br>    def addtwice(self, x):<br>        self.add(x)<br>        self.add(x)<br></pre>
+                      </dd>
+                      </dl>
+  
+                      <p> method跟一般的函式物件一样可以使用全域名称(global name)。Method的global
+scope所指的是类别的定义所存在的module，(注意：类别本身绝不会是一个global scope！)。 你大概很少有机会在method里面会需要用到global
+scope，但是你还是可以使用global scope的，method可以使用在global scope之中所import进来的函式以及module，也可以使用在global
+scope里面定义的函式及类别。通常，包含method的这个类别本身就定义在这个global space里面，而且下一段我们就要讲到为什么你会需要在method里面用到自己本身的类别。 
+ </p>
+                      <p>  </p>
+                      <h1> <br>
+ 9.5 继承(Inheritance)   </h1>
+  
+                      <p> 当然啦，一个程式语言如果没有继承的话就不需要担心类别(``class'')这个字了。一个子类别(derived
+class)的定义看起来是这样的：   </p>
+                      <p> </p>
+                      <dl>
+                      <dd><pre class="verbatim">class DerivedClassName(BaseClassName):<br>    &lt;statement-1&gt;<br>    .<br>    .<br>    .<br>    &lt;statement-N&gt;<br></pre>
+                        </dd>
+                        </dl>
+  
+                        <p> 其中，基础类别的名字 <tt class="class">BaseClassName</tt>
+ 这个字必须是在子类别所处的scope里面有定义的。除了直接使用基础类别的名字之外，你也可以使用一个expression。这在当你的基础类别是定义在别的module里的时候特别有用：
+  </p>
+                        <p> </p>
+                        <dl>
+                        <dd><pre class="verbatim">class DerivedClassName(modname.BaseClassName):<br></pre>
+                          </dd>
+                          </dl>
+  
+                          <p> 子类别定义的执行过程与基础类别定义的执行过程是一样的。当一个类别物件被创造出来时，基础类别也同样会存在记忆体中。这是为了要确保能够找到正确的attribute的所在，如果你的子类别没有定义某个attribute的话，就会自动去找基础类别的定义。如果这个基础类别也是某个类别的子类别的话，这个法则是一直延伸上去的。
+  </p>
+                          <p> 子类别的特例化(instantiation)也没有什么特别之处，使用  <code>DerivedClassName()</code>
+ 就会创造出子类别的一个新的instance。子类别的method 则是由以下的过程来寻找：会先找该类别的attribute，然后如果需要的话会沿着继承的路线去找基础类别，如果找到任何的函式物件的话，这个method的参考(reference)就是有效的。
+  </p>
+                          <p> 子类别可以override基础类别里的method。因为method在呼叫自己物件的其他method的时候没有特别的权限，当一个基础类别的method呼叫原属于该基础类别的method的时候，有可能真正呼叫到的是一个在子类别里面定义的override的method。(给C++的程式设计师们
+：所有在Python里面的method都是 <tt class="keyword">virtual</tt> 的。)   </p>
+                          <p> 一个在子类别里面override的method也许会需要延伸而非取代基础类别里面同名的method，这时候你就需要呼叫在基础类别里面的method：你只需要呼叫
+"<tt class="samp">BaseClassName.methodname(self, arguments)</tt>" 就可以了。这对于类别的使用者来说，有时候也是有用的。(注意的是，如果你要这样做，你需要将基础类别定义在global
+scope或是import进来global scope 里面。)   </p>
+                          <p>  </p>
+                          <h2> <br>
+ 9.5.1 多重继承  </h2>
+  
+                          <p> Python也支援部分的多重继承形式。一个类别如果要继承多个基础类别的话，其形式如下：
+  </p>
+                          <p> </p>
+                          <dl>
+                          <dd><pre class="verbatim">class DerivedClassName(Base1, Base2, Base3):<br>    &lt;statement-1&gt;<br>    .<br>    .<br>    .<br>    &lt;statement-N&gt;<br></pre>
+                            </dd>
+                            </dl>
+  
+                            <p> 唯一需要解释的规则是，当你寻找一个attribute的定义时你要如何寻找。其规则是先深，而后由左至右(depth-first,
+left-to-right)。所以当你要找一个在子类别  <tt class="class">DerivedClassName</tt> 里面的attribute却找不到时，会先找
+                            <tt class="class">Base1</tt> ，然后沿着 <tt class="class">
+Base1</tt> 的所有基础类别寻找，如果找完还没有找到的话再找 <tt class="class">Base2</tt> 及其基础类别，依此类推。
+  </p>
+                            <p> (也许有些人认为先左至右然后在深才对，应该是先找 <tt class="class">
+Base2</tt> 及  <tt class="class">Base3</tt> ，然后才找 <tt class="class">Base1</tt>
+ 的基础类别。如果你这样想的话，你可以再想一想，当你找 <tt class="class">Base1</tt> 的时候，你需要先知道这个attribute到底是定义在
+                            <tt class="class">Base1</tt> 本身或是其基础类别里面，如此才不会与
+                            <tt class="class">Base2</tt> 里面的attribute有同名的困扰。如果你使用先深，而后由左至右的规则的话，就不会有这个困扰。)
+  </p>
+                            <p> 大家都知道如果不小心使用的话，多重继承可能变成在维护程式时的一个恶梦。Python仰赖程式设计师们的约定俗成的习惯来避免可能的名称冲突。例如一个众所周知多重继承的问题，如果一个类别继承了两个基础类别，这两个基础类别又分别继承了同一个基础类别。也许你很容易就了解在这样的情况下到底会是什么状况，(这个instance将会只有一个单一共用基础类别的``instance
+variables''或是data attributes)，但是很难了解这到底有什么用处。   </p>
+                            <p>  </p>
+                            <h1> <br>
+ 9.6 Private变数  </h1>
+  
+                            <p> 在Python里面只有有限度的支援类别中的private指称 (class-private
+identifiers，译：指变数及函式)。任何的identifier，在之前是以  <code>__spam</code> 这个形式存在的(最前面至少要有两个底线，最后面最多只能有一个底线)
+现在都要以 <code>_classname__spam</code> 这个形式来取代之。在这里的 <code>classname</code>
+指的是所在的类别名称，拿掉所有前面的底线。这个名称的变化不受限于这个identifier其语法上所在的位置，所以可以套用在定义类别的private
+instance，类别变数，method，global名称，甚至用来储存 <i>其他</i> 的类别instance里，对目前这个类别来说是private的instance变数。当这个变化过的名称超过255个字元时，有可能超过的部分是会被截掉的。在类别之外，或者是当类别的名称只包含底线的时候，就没有任何名称的变化产生。
+  </p>
+                            <p> 这个名称的变化主要是用来给类别有一个简单的方法来定义``private''的instance变数及methods，而不需要担心其他子类别里面所定义的instance变数，或者与其他的在类别之外的程式码里的instance变数有所混淆。注意的是这个变化名称的规则主要是用来避免意外的，如果你存心要使用或修改一个private的变数的话，这还是可行的。某方面来说这也是有用的，比如说用在除错器(debugger)上面，这也是为什么这个漏洞没有被补起来的一个原因。(如何制造bug：如果一个类别继承自某个基础类别时用了相同的名字，这会使得你可以从子类别里面使用基础类别里的private的变数。)
+  </p>
+                            <p> 值得注意的是，被传到 <code>exec</code>, <code>eval()</code>
+ 或 <code>evalfile()</code> 的程式码并不用考虑引发这个动作的类别是目前的类别，这是相类似于  <code>global</code>
+ 叙述的效果，但是这个效果只限于这个程式码是一起被编译器编译成bytecode的时候的。同样的限制也存在于  <code>getattr()</code>
+, <code>setattr()</code> 以及 <code>delattr()</code>，或是当直接使用  <code>__dict__</code>
+ 的时候。  </p>
+                            <p> 底下这个例子是一个类别里面定义了自己的 <tt class="method">__getattr__()</tt>
+ 以及  <tt class="method">__setattr__()</tt> 两个方法，并且把所有的attributes都储存在private的变数里面。这个例子适用于所有的Python版本，甚至是包括在这个特性加入之前的版本都可以：
+  </p>
+                            <p> </p>
+                            <dl>
+                            <dd><pre class="verbatim">class VirtualAttributes:<br>    __vdict = None<br>    __vdict_name = locals().keys()[0]<br>     <br>    def __init__(self):<br>        self.__dict__[self.__vdict_name] = {}<br>    <br>    def __getattr__(self, name):<br>        return self.__vdict[name]<br>    <br>    def __setattr__(self, name, value):<br>        self.__vdict[name] = value<br></pre>
+                              </dd>
+                              </dl>
+  
+                              <p>  </p>
+                              <h1> <br>
+ 9.7 其它   </h1>
+  
+                              <p> 有的时候如果有一个像是Pascal的``record''，或者是C的``struct''这类的资料型态是很方便的，这类的资料型态可以把一些的资料成员都放在一起。这种资料型态可以用空白的类别来实作出来，例如：
+  </p>
+                              <p> </p>
+                              <dl>
+                              <dd><pre class="verbatim">class Employee:<br>    pass<br><br>john = Employee() # Create an empty employee record<br><br># Fill the fields of the record<br>john.name = 'John Doe'<br>john.dept = 'computer lab'<br>john.salary = 1000<br></pre>
+                                </dd>
+                                </dl>
+  
+                                <p> 如果有一段的Python程式码需要一个特别的抽象资料型态的时候，通常你可以传给这段程式码一个类似功能的类别来代替。例如，如果你有一个函式是用来格式化一些来自于file物件的资料，你可以定义一个类别，类别里面有类似
+ <tt class="method">read()</tt> 以及  <tt class="method">readline()</tt> 之类method可以从一个字串缓冲区(string
+buffer)读出资料，然后再把这个类别传入函式当作参数。 </p>
+                                <p> Instance的method物件也可以有attributes： <code>
+m.im_self</code> 就是其method为instance的一个物件，  <code>m.im_func</code> 就是这个method相对应的函式物件。
+  </p>
+                                <p>  </p>
+                                <h2> <br>
+ 9.7.1 例外(Exceptions)也可以是类别   </h2>
+  
+                                <p> 使用者自订的exception不用只是被限定于只是字串物件而已，它们现在也可以用类别来定义了。使用这个机制的话，就可以创造出一个可延伸的屋exception的阶层了。 
+ </p>
+                                <p> 有两个新的有效的(语意上的)形式现在可以用来当作引发exception的叙述：
+  </p>
+                                <p> </p>
+                                <dl>
+                                <dd><pre class="verbatim">raise Class, instance<br><br>raise instance<br></pre>
+                                  </dd>
+                                  </dl>
+  
+                                  <p> 在第一个形式里面， <code>instance</code> 必须是
+ <tt class="class">Class</tt> 这个类别或其子类别的一个instance。第二种形式其实是底下这种形式的一个简化：   
+                                  </p>
+                                  <p> </p>
+                                  <dl>
+                                  <dd><pre class="verbatim">raise instance.__class__, instance<br></pre>
+                                    </dd>
+                                    </dl>
+  
+                                    <p> 所以现在在except的语句里面就可以使用字串物件或是类别都可以了。一个在exception子句里的类别可以接受一个是该类别的exception，或者是该类别之子类别的exception。(相反就不可以了，一个except子句里如果用的是子类别，就不能接受一个基础类别的exception。)例如，下面的程式码就会依序的印出B,
+C, D来：  </p>
+                                    <p> </p>
+                                    <dl>
+                                    <dd><pre class="verbatim">class B:<br>    pass<br>class C(B):<br>    pass<br>class D(C):<br>    pass<br><br>for c in [B, C, D]:<br>    try:<br>        raise c()<br>    except D:<br>        print "D"<br>    except C:<br>        print "C"<br>    except B:<br>        print "B"<br></pre>
+                                      </dd>
+                                      </dl>
+  
+                                      <p> 值得注意的是，如果上面的例子里的except子句次序都掉转的话(也就是
+ "<tt class="samp">except B</tt>" 是第一个)，这样子印出来的就是B, B, B，也就是只有第一个可以接受的except子句被执行而已。
+  </p>
+                                      <p> 当一个没有被处理到的exception是一个类别时，所印出来的错误信息会包含其类别的名称，然后是(：)，然后是这个instance用内建的
+                                      <tt class="function">str()</tt> 函式转换成的字串。
+  </p>
+                                      <p> <br>
+                                      </p>
+                                      <hr>
+                                      <h4>Footnotes</h4>
+ 
+                                      <dl>
+                                      <dt><a name="foot1309">... 一个namespace里面。</a><a name="foot1309" href="node11.html#tex2html5"><sup>
+9.1</sup></a> </dt>
+                                        <dd>         除了一件事之外。module物件有一个秘密的attribute叫做
+                                          <tt class="member">__dict__</tt>
+ ，这个attribute会传回这个module的namespace所对应的dictionary。          <tt class="member">
+__dict__</tt> 这个名字就是一个attribute，但却不是一个global的名称。很明显的，使用这个attribite将会破坏这个namespace命名的抽象性(abstraction)，所以应该只限制于像是检验尸体一样的除错器使用。
+   </dd>
+                                          </dl>
+ 
+                                          <div class="navigation">
+                                          <table align="Center" width="100%" cellpadding="0" cellspacing="2">
+ <tbody>
+                                              <tr>
+ <td><a href="node10.html"><img src="../icons/previous.gif" border="0" height="32" alt="Previous Page" width="32"></a></td>
+ <td><a href="tut.html"><img src="../icons/up.gif" border="0" height="32" alt="Up One Level" width="32"></a></td>
+ <td><a href="node12.html"><img src="../icons/next.gif" border="0" height="32" alt="Next Page" width="32"></a></td>
+ <td align="Center" width="100%">Python 教学文件</td>
+ <td><a href="node2.html"><img src="../icons/contents.gif" border="0" height="32" alt="Contents" width="32"></a></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ <td><img src="../icons/blank.gif" border="0" height="32" alt="" width="32"></td>
+ </tr>
+                                            </tbody>
+                                          </table>
+ <b class="navlabel">Previous:</b> <a class="sectref" href="node10.html">
+8. 程式错误与例外(Exceptions)情形</a> <b class="navlabel">Up:</b> <a class="sectref" href="tut.html">
+Python 教学文件</a> <b class="navlabel">Next:</b> <a class="sectref" href="node12.html">
+10. 现在呢? </a> <br>
+                                          <hr></div>
+ <!--End of Navigation Panel--> 
+                                          <address> </address>
+                                          <hr>请看<i><a href="about.html">关于此文件&hellip;</a></i>
+ 里面有关如何给我们建议的说明。  
+                                          </body>
+                                          </html>

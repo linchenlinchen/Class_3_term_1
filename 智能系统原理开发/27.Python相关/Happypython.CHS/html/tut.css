@@ -1,0 +1,135 @@
+.math {
+	FONT-FAMILY: "Century Schoolbook", serif
+}
+.math I {
+	FONT-WEIGHT: bold; FONT-FAMILY: "Century Schoolbook", serif
+}
+.boldmath {
+	FONT-WEIGHT: bold; FONT-FAMILY: "Century Schoolbook", serif
+}
+SMALL.xtiny {
+	FONT-SIZE: xx-small
+}
+SMALL.tiny {
+	FONT-SIZE: x-small
+}
+SMALL.scriptsize {
+	FONT-SIZE: smaller
+}
+SMALL.footnotesize {
+	FONT-SIZE: small
+}
+BIG.xlarge {
+	FONT-SIZE: large
+}
+BIG.xxlarge {
+	FONT-SIZE: x-large
+}
+BIG.huge {
+	FONT-SIZE: larger
+}
+BIG.xhuge {
+	FONT-SIZE: xx-large
+}
+BODY {
+	COLOR: #000000; BACKGROUND-COLOR: #ffffff
+}
+A:active {
+	COLOR: #ff0000
+}
+A:visited {
+	COLOR: #333366
+}
+A:link {
+	COLOR: #336633
+}
+H1 {
+	FONT-WEIGHT: bold; FONT-FAMILY: avantgarde, sans-serif
+}
+H2 {
+	FONT-WEIGHT: bold; FONT-FAMILY: avantgarde, sans-serif
+}
+H3 {
+	FONT-WEIGHT: bold; FONT-FAMILY: avantgarde, sans-serif
+}
+H4 {
+	FONT-WEIGHT: bold; FONT-FAMILY: avantgarde, sans-serif
+}
+H5 {
+	FONT-WEIGHT: bold; FONT-FAMILY: avantgarde, sans-serif
+}
+H6 {
+	FONT-WEIGHT: bold; FONT-FAMILY: avantgarde, sans-serif
+}
+H1 {
+	FONT-SIZE: 180%
+}
+H2 {
+	FONT-SIZE: 150%
+}
+H3 {
+	FONT-SIZE: 120%
+}
+H4 {
+	FONT-SIZE: 120%
+}
+CODE {
+	FONT-FAMILY: monospace
+}
+TT {
+	FONT-FAMILY: monospace
+}
+VAR {
+	FONT-WEIGHT: normal; FONT-STYLE: italic; FONT-FAMILY: serif
+}
+.navigation TD {
+	PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; FONT-WEIGHT: bold; FONT-SIZE: 110%; PADDING-BOTTOM: 0pt; MARGIN: 0pt; COLOR: #ffffcc; PADDING-TOP: 0pt; FONT-FAMILY: avantgarde, sans-serif; BACKGROUND-COLOR: #669933
+}
+.titlepage TABLE {
+	PADDING-RIGHT: 0pt; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt; BORDER-TOP-STYLE: none; PADDING-TOP: 0pt; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.titlegraphic {
+	VERTICAL-ALIGN: top
+}
+.verbatim {
+	COLOR: #00008b
+}
+.email {
+	FONT-FAMILY: avantgarde, sans-serif
+}
+.mimetype {
+	FONT-FAMILY: avantgarde, sans-serif
+}
+.newsgroup {
+	FONT-FAMILY: avantgarde, sans-serif
+}
+.url {
+	FONT-FAMILY: avantgarde, sans-serif
+}
+.file {
+	FONT-FAMILY: avantgarde, sans-serif
+}
+.tableheader TD {
+	COLOR: #ffffcc; BACKGROUND-COLOR: #669933
+}
+.tableheader TH {
+	COLOR: #ffffcc; FONT-FAMILY: avantgarde, sans-serif; BACKGROUND-COLOR: #669933
+}
+.refcount-info {
+	FONT-STYLE: italic
+}
+.refcount-info .value {
+	FONT-WEIGHT: bold; COLOR: #006600
+}
+IMG.offsitelink {
+	
+}
+.seealso {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4pt; BORDER-TOP: black thin solid; PADDING-LEFT: 4pt; PADDING-BOTTOM: 4pt; BORDER-LEFT: black thin solid; PADDING-TOP: 4pt; BORDER-BOTTOM: black thin solid; BACKGROUND-COLOR: #cccccc
+}
+.seealso .heading {
+	FONT-SIZE: 110%
+}
+.availability .platform {
+	FONT-WEIGHT: bold
+}

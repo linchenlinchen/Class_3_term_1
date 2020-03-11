@@ -1,0 +1,267 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Appendix A</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "appendix a.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/appendix a.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/appendix a.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2018.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20b.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+<h2 class="docAppendixTitle">Appendix A. Installing Jython on Windows</h2><ul><li>&nbsp;<a class="docLink" href="#ch19lev1sec1">Installing Java Runtime</a></li>
+<li>&nbsp;<a class="docLink" href="#ch19lev1sec2">Installing the J2SE—Step by Step</a></li>
+<li>&nbsp;<a class="docLink" href="#ch19lev1sec3">Installing Jython</a></li>
+</ul>
+<p class="docText">First we'll install J2SE v.1.4, because it's the most recent 
+version available as I write. Then we'll install the latest version of Jython.</p>
+<p class="docText">Before we start, let's get something straight. You might very 
+well have trouble installing Jython because of the number of steps involved. You 
+may need an expert computer configurator to help you with your Jython 
+installation. This might be a computer technician or programmer, or it might 
+even be that kid next door who's always making bootleg floppies so he can play 
+the latest games.</p>
+<p class="docText">If your local expert fails you, visit the newsgroups for Java 
+and Python. They're usually willing to help new programmers. Just check out the 
+newsgroup's FAQs (frequently asked questions) first to avoid looking stupid.</p>
+<h3 class="docSection1Title" id="ch19lev1sec1">Installing Java Runtime</h3>
+<p class="docText">Before you can use the Jython interactive interpreter, you 
+need a Java development tool or Java runtime environment. The Java Developers 
+Kit (J2SE) is free and, as the reference implementation for Java, is the logical 
+choice, especially for beginners (all of the examples in the book use Jython in 
+conjunction with the J2SE). The J2SE's latest version is available at the 
+Javasoft Web site.</p>
+<p class="docText">Even though I use the J2SE, I should say that Microsoft's 
+free Java Virtual Machine (JVM) has some features that make it a good 
+alternative with Windows. In particular, it streamlines the installation of Java 
+packages and allows integration with ActiveX and Windows API via JDirect. Visit 
+Microsoft's Web site for downloading instructions.</p>
+<p class="docText">One more thing before we get started. All of the examples in 
+the book were created on a Microsoft Windows 98 system, and the references are 
+specific to Windows 98 users (although they should work equally well with 
+Windows 95 and sometimes Windows NT v.4.0). I chose Windows primarily because 
+I'm a recovering Microsoft lackey but also because it would be impossible to 
+document J2SE and Python set up on all of the systems for which they're 
+available. I had to choose something, and Windows was it.</p>
+<p class="docText">I will, however, show you Jython configuration and 
+installation on Linux systems. I figure that if you have a UNIX/Linux 
+background, you're smart enough to translate from DOS to UNIX (or, for that 
+matter, from DOS to Mac).</p>
+<p class="docText">If you're not a Windows or Linux user, go to the
+<span class="docEmphasis">platform.html</span> page at the Python Web site (<a class="docLink" href="http://www.jython.org" target="_blank">www.jython.org</a>) 
+for JVM installation instructions. Check out the links to pages specific to your 
+platform.</p>
+<h3 class="docSection1Title" id="ch19lev1sec2">Installing the J2SE—Step by Step</h3>
+<p class="docText">Before you can start installation, you need to download and 
+install J2SE v.1.4 (or the equivalent for your environment; Linux users, see
+<a class="docLink" href="appendix%20b.htm">Appendix B</a>). Just 
+follow the instructions at
+<a class="docLink" href="http://java.sun.com/products/jdk/1.4/" target="_blank">
+http://java.sun.com/products/jdk/1.4/</a>. This can take a while depending on 
+your modem's speed. Once you have the J2SE, install the software by 
+double-clicking the file in the directory you downloaded it to.</p>
+<p class="docText">During setup, accept all defaults. For example, the default 
+directory is <span class="docEmphasis">C:\j2skd1.4.0.</span> The rest of the 
+instructions assume that you've put the file there.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">If the J2SE Won't Start</h2>
+      <p class="docText">Be sure you saved it with an <span class="docEmphasis">
+      *.exe</span> file extension, which tells Windows that the file is binary 
+      executable.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch19lev2sec1">Startup</h4>
+<p class="docText">Once installation is complete, edit your
+<span class="docEmphasis">c:\autoexec.bat</span> file with your text editor. 
+This file usually has Windows and DOS startup information. Make sure that the
+<tt>PATH</tt> environment variable contains the <span class="docEmphasis">
+J2SE1.4 bin</span> directory. Windows uses <tt>PATH</tt> to find executable 
+programs. It gives you convenient access to Java, the Java interpreter, Javac, 
+the Java compiler, and other Java tools, which will come in handy as you do the 
+exercises.</p>
+<p class="docText">For Windows 95, Windows 98, and Windows ME, add the <tt>
+CLASSPATH</tt> environment variable to <span class="docEmphasis">autoexec.bat</span> 
+after the <tt>PATH</tt> statement. This tells Java, the interpreter, and Javac 
+where to find Java classes.</p>
+<pre>REM ********* settings for J2SE *****************
+SET PATH=%PATH%;C:\j2se1.3\bin;
+SET CLASSPATH=.</pre>
+<p class="docText">Notice that <tt>CLASSPATH</tt> is set to '<tt>.</tt>', which 
+means the current directory. If there's already a <tt>CLASSPATH</tt> statement, 
+make sure a period is specified.</p>
+<p class="docText"><span class="docEmphasis">For Windows NT4.0:</span></p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Go to the Start menu and then the Settings menu. Select 
+  Control Panel.</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">In the control panel, double-click the System icon.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">In the Systems Option dialog box, choose the Environment 
+  tab.</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">Edit the <tt>PATH</tt> environment variable by adding
+  <span class="docEmphasis">C:\j2skd1.4.0\bin</span> to the search path.</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Use the same technique to edit the <tt>CLASSPATH</tt> 
+  variable.</span></li>
+</ol>
+</span>
+<p class="docText"><span class="docEmphasis">For Windows 2000:</span></p>
+<span style="font-weight: bold">
+<ol class="docList">
+  <li><span style="font-weight: normal" value="1">
+  <p class="docList">Go to the Start menu and then the Settings menu; Select 
+  Control Panel.</span></li>
+  <li><span style="font-weight: normal" value="2">
+  <p class="docList">In the control panel, double-click the System icon.</span></li>
+  <li><span style="font-weight: normal" value="3">
+  <p class="docList">In the Systems Properties dialog box, choose the Advanced 
+  tab.</span></li>
+  <li><span style="font-weight: normal" value="4">
+  <p class="docList">In the Advanced tab, hit the Environment Variables button.</span></li>
+  <li><span style="font-weight: normal" value="5">
+  <p class="docList">Edit the <tt>PATH</tt> environmental variable by adding
+  <span class="docEmphasis">C:\j2skd1.4.0\bin</span> to the search path.</span></li>
+  <li><span style="font-weight: normal" value="6">
+  <p class="docList">Use the same technique to edit the <tt>CLASSPATH</tt> 
+  variable.</span></li>
+</ol>
+</span>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">A Little Tip</h2>
+      <p class="docText">Before you add the directory to the <tt>PATH</tt> 
+      statement, make sure there are no older versions of the J2SE already 
+      there. If there are, they'll be executed instead of
+      <span class="docEmphasis">C:\j2se\1.3.</span></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">Once you've installed the J2SE and edited the
+<span class="docEmphasis">autoexec.bat</span> file, reboot your PC. Then, to 
+test that everything is okay, go to the DOS prompt, and enter <tt>java –version</tt> 
+at the command line. You should see the following:</p>
+<pre>c:\java-version &quot;1.3.0&quot;
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.4.0-b92)
+Java HotSpot(TM) Client VM (build 1.4.0-b92, mixed mode)</pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Troubleshooting</h2>
+      <p class="docText">If you don't see the okay message, type <tt>
+      c:\j2skd1.4.0\bin\java</tt> at the DOS prompt.</p>
+      <pre>C:\&gt; c:\j2sjd1.4.0\bin\java -version
+java version &quot;1.3.0&quot;
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.4.0-b92)
+Java HotSpot(TM) Client VM (build 1.4.0-b92, mixed mode)</pre>
+      <p class="docText">If this works, you have a problem with your <tt>PATH</tt> 
+      statement. Try entering <tt>PATH</tt> at the command line to see what it 
+      looks like. Probably you have a typo or you forgot to reboot (<span class="docEmphasis">autoexec.bat</span> 
+      runs only after rebooting).</p>
+      <p class="docText">If you still don't see the okay message and all you're 
+      getting is &quot;Bad command or filename,&quot; then your setup program didn't work. 
+      You may have put the J2SE in the wrong directory. Go to the Start menu and 
+      then Find Files or Folders, and look for <span class="docEmphasis">
+      java.exe.</span> This should tell you where you installed the J2SE or if 
+      you actually installed it. If all else fails, it's time to call in an 
+      expert configurator.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch19lev1sec3">Installing Jython</h3>
+<p class="docText">Jython is free and open source. All you have to do is go to
+<a class="docLink" href="http://www.jython.org/download.html" target="_blank">
+http://www.jython.org/download.html</a> and do what you're told. (Jython is the 
+latest Python release.)</p>
+<p class="docText">Jython is backward compatible with JPython (in which all of 
+the examples are written), so feel free to use it. Just make sure to type <tt>
+jython</tt> instead of <tt>jython</tt> in the interpreter and <tt>jythonc</tt> 
+instead of <tt>jythonc</tt> in the compiler.</p>
+<p class="docText">To install Jython, go to the directory where it's downloaded 
+and type <tt>java jython-20</tt> at the DOS prompt.</p>
+<pre>C:\temp&gt; java jython-20</pre>
+<p class="docText">Note that a Java class name does <span class="docEmphasis">
+not</span> end with a <span class="docEmphasis">.class</span> extension, so 
+leave it off.</p>
+<p class="docText">While the setup program executes, read and accept the license 
+agreement.</p>
+<h4 class="docSection2Title" id="ch19lev2sec2">Startup</h4>
+<p class="docText">Once the setup is complete, edit the
+<span class="docEmphasis">autoexec.bat</span> file to access the Jython 
+interpreter. Open the file with a text editor, and add the following lines after 
+those entered for the J2SE.</p>
+<p class="docText"><span class="docEmphasis">For Jython:</span></p>
+<pre>REM ********* settings for Jython *****************
+SET PATH=%PATH%;C:\Jython
+SET CLASSPATH=%CLASSPATH%;C:\Jython.jar</pre>
+<p class="docText">The <tt>PATH</tt> statement tells Windows to append
+<span class="docEmphasis">c:\Jython</span> to the <tt>PATH</tt> environment 
+variable, which holds the file's executable search path for Windows. The <tt>
+CLASSPATH</tt> statement enables the Java interpreter to find the Jython class 
+libraries.</p>
+<p class="docText">At this point you should be able to run Jython by entering
+<tt>Jython</tt> at the command-line DOS prompt. More installation information is 
+available at
+<a class="docLink" href="http://www.jython.org/installhtml" target="_blank">
+www.jython.org/installhtml</a>.</p>
+<p class="docText">Jython doesn't come with all of the standard Python modules, 
+but you can download them from
+<a class="docLink" href="http://www.jython.org/download.html" target="_blank">
+www.jython.org/download.html</a> and follow the installation instructions.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Installation Tip</h2>
+      <p class="docText">If you have any problems with installation, report them 
+      to <tt>jython-dev@lists.source-forge.net</tt>. (Tell them I sent you.) 
+      Make sure you've done everything you can before reporting what might turn 
+      out to be a nonproblem. You may discover that your problem is unique to 
+      your platform. To find out for sure, go to
+      <a class="docLink" href="http://www.jython.org/platform.html" target="_blank">
+      www.jython.org/platform.html</a>. They'll let you know.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p class="docText">To run your downloaded file, go to the directory that holds 
+the Python library file, and run this at the command line:</p>
+<pre>C:\temp&gt; jython -jar pylib152a.jar</pre>
+<p class="docText">Done at last. If you've come this far, you can call yourself 
+a master configurator. Nothing can stop you from learning Python.</p>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter%2018.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20b.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+</body>
+
+</html>

@@ -1,0 +1,363 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Appendix C</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<SCRIPT language="JavaScript">
+top.pageid = "appendix c.htm";
+</SCRIPT>
+
+</head>
+
+<body><script language="javascript"> 
+if ((window.name != "content") && (navigator.userAgent.indexOf("Opera") <= -1) )   document.write(' <table width="100%" bgcolor="#e1e1e1"cellspacing="2" collspacing="2" style="border-collapse: collapse; font-family: Tahoma, Verdana; font-size: 14px; color: #000000; text-decoration: none;  "> <tr> <td align="center" style="border-bottom: 2px solid gray" > <br>&nbsp;Click <a href="../index.htm?page=source/appendix c.htm">here</a> to show toolbars of the Web Online Help System: <a href="../index.htm?page=source/appendix c.htm">show toolbars</a><br>&nbsp;</TD></TR></table><br> '); 
+</script>
+<!-- this header was added by chm2web -->
+
+
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20b.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20d.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+<h2 class="docAppendixTitle">Appendix C. The Power of Scripting</h2><ul><li>&nbsp;<a class="docLink" href="#ch21lev1sec1">Scripting Versus Programming Languages</a></li>
+<li>&nbsp;<a class="docLink" href="#ch21lev1sec2">Java and Scripting</a></li>
+<li>&nbsp;<a class="docLink" href="#ch21lev1sec3">Integrating Scripting with Jython</a></li>
+<li>&nbsp;<a class="docLink" href="#ch21lev1sec4">Which Scripting Language to Choose</a></li>
+<li>&nbsp;<a class="docLink" href="#ch21lev1sec5">Hello World—The Programming Rosetta Stone</a></li>
+<li>&nbsp;<a class="docLink" href="#ch21lev1sec6">What Does It All Mean?</a></li>
+</ul>
+<p class="docText">Scripting languages are dynamic, interactive environments for 
+rapid development of Java code. Many are either object-oriented or object-based, 
+and almost all are interpreted and use late-bound polymorphism. This makes them 
+extremely dynamic and easy to program—essential ingredients in rapid application 
+development (RAD), component gluing, and project prototyping.</p>
+<h3 class="docSection1Title" id="ch21lev1sec1">Scripting Versus Programming Languages</h3>
+<p class="docText">There's a fine line between scripting and programming 
+languages. For example, Smalltalk is an extremely dynamic interpreted language, 
+but it's not for scripting. A true scripting language, unlike Smalltalk, must 
+employ late-bound polymorphism and dynamic typing.</p>
+<p class="docText">Many UNIX programmers program in C and C++ and glue modules 
+together with higher-level shell programming (Korn, Bourne, C, etc.). Or they 
+use the scripting language Tcl for both programming their GUIs and gluing 
+together their C++ classes and libraries. Another option is to use Python as the 
+glue. It's often preinstalled with UNIX systems and is easy to extend with C.</p>
+<p class="docText">The most prevalent object-based scripting language is Visual 
+Basic, which is often used to glue together COM components written in different 
+languages.</p>
+<p class="docText">Scripting languages don't replace system languages but rather 
+augment them in the following ways:</p>
+<ul>
+  <li>
+  <p class="docList">Extending applications</li>
+  <li>
+  <p class="docList">Debugging</li>
+  <li>
+  <p class="docList">Learning and experimenting with the Java API</li>
+  <li>
+  <p class="docList">Rapid prototyping</li>
+  <li>
+  <p class="docList">Gluing subsystems and components</li>
+  <li>
+  <p class="docList">Automating general testing and regression testing</li>
+</ul>
+<p class="docText">For information about increasing productivity with scripting, 
+read John Ousterhout's online paper <span class="docEmphasis">Scripting: Higher 
+Level Programming for the 21st Century</span> (<a class="docLink" href="http://www.home.pacbell.net/ouster/scripting.html" target="_blank">http://www.home.pacbell.net/ouster/scripting.html</a>), 
+which notes a sharp productivity increase with scripting languages—on the order 
+of 5 to 10 times higher than with a strongly typed language like Java. From my 
+own experience, I'd say they are 2 to 3 times faster depending on the 
+application.</p>
+<h3 class="docSection1Title" id="ch21lev1sec2">Java and Scripting</h3>
+<p class="docText">I call Java a scripting language on steroids. In fact, 
+because it uses statically typed polymorphism, it's more precisely a hybrid. 
+This may at first seem like a disadvantage, but it turns out that Java's 
+statically typed polymorphism, as well as its design by interface, is great for 
+systems programming, framework definition, and component development. It would 
+be wrong to view Java as a system programming language by classical definition. 
+Rather, it's a virtual system programming language for a virtual system—that is, 
+a virtual machine (the Java Virtual Machine). Like its scripting language 
+cousins, it can be very dynamic—not as much as Python or Smalltalk but certainly 
+more than C++.</p>
+<p class="docText">Java's main drawback for scripting is that it can't glue 
+components together. What you need to do is build components with Java and glue 
+them together with a true scripting language.</p>
+<p class="docText">Java's class reflection and bean introspection APIs make a 
+great basis for integrating scripting languages. Essentially, the scripting 
+language can get metadata about a Java class, which it uses to change its 
+properties, handle its events, and invoke its methods. I have metaprogrammed 
+with COM, CORBA, and Java, and of the three Java is my preference because of 
+these features.</p>
+<p class="docText">Some people think that the only language for the JVM is Java. 
+They're wrong. Like many platforms (and the JVM is very much a platform), the 
+virtual machine has many languages, and the list keeps growing. In particular, 
+combining the JVM with scripting enhances rapid application development.</p>
+<h3 class="docSection1Title" id="ch21lev1sec3">Integrating Scripting with Jython</h3>
+<p class="docText">Jython is very close to Python and has been certified as 100 
+percent pure Java. In fact, in a recent Web poll conducted by NetBeans (the Java 
+IDE maker bought by Sun) on integrating a scripting language with its Java IDE, 
+Jython won by a landslide. It also won a similar poll on JDJ and the Java 
+channel.</p>
+<p class="docText">By the way, you can develop Java Server Pages in Jython. 
+They're called Python Server Pages, and they run in a Java servlet. They're also 
+open source. (Find out more about them at
+<a class="docLink" href="http://www.ciobriefings.com" target="_blank">
+http://www.ciobriefings.com</a>.)</p>
+<h4 class="docSection2Title" id="ch21lev2sec1">Tcl</h4>
+<p class="docText">The Java command language (Jacl) implements Tcl8.x for 
+writing scripts for Java components and APIs. Another Tcl blend allows Java 
+objects to be manipulated directly from Tcl. Because Tcl is the premier RAD 
+language, many Jacl users have claimed significant reduction in development 
+costs with its use. (Find out more about Jacl at
+<a class="docLink" href="http://www.tcl.tk/software/java/" target="_blank">
+http://www.tcl.tk/software/java/</a>.)</p>
+<h4 class="docSection2Title" id="ch21lev2sec2">JavaScript (Rhino)</h4>
+<p class="docText">Rhino is an implementation of JavaScript v.1.5, a very 
+powerful object-based language. Freely available and open source, Rhino is a 
+natural for rapid application and prototyping in the JVM.</p>
+<h4 class="docSection2Title" id="ch21lev2sec3">Instant Basic</h4>
+<p class="docText">Halcyon's Instant Basic is a Visual Basic clone that allows 
+quick porting of existing Visual Basic applications to the Java platform (the 
+IDE, database components, etc.). Its iASP, a clone of JSP, works with Java so 
+that you can use VBScript and JavaScript to access JavaBeans, CORBA, EJB, and so 
+forth. Learn more about Instant Basic at
+<a class="docLink" href="http://www.halcyonsoft.com" target="_blank">
+http://www.halcyonsoft.com</a>.</p>
+<h4 class="docSection2Title" id="ch21lev2sec4">Java BeanShell</h4>
+<p class="docText">BeanShell is interpreted Java with a syntax very similar to 
+real Java's that executes Java statements and expressions. Like other scripting 
+languages, it's dynamically typed so much of the Java syntax for type 
+declaration and casting is optional. BeanShell is great for writing prototypes 
+and experimenting with unfamiliar APIs. Also, it supports beans, it's very easy 
+to use, and it's open source. To find out more about BeanShell, visit
+<a class="docLink" href="http://www.Beanshell.org" target="_blank">
+http://www.Beanshell.org</a>.</p>
+<h4 class="docSection2Title" id="ch21lev2sec5">Smalltalk/Bistro</h4>
+<p class="docText">Bistro is a Smalltalk variant with extensions for Java 
+features and integration. It offers software developers the ability to code in a 
+readable and expressive syntax. Although it's dynamically typed, it has the 
+option of static typing for closer Java integration, which means that you can 
+mix and match statically and dynamically typed systems. Bistro combines Java 
+type safeness with Smalltalk fast development.</p>
+<h4 class="docSection2Title" id="ch21lev2sec6">Scheme/Skij</h4>
+<p class="docText">Skij is a small Scheme interpreter implemented in Java. A 
+variant of Lisp, it enables rapid prototyping in the Java environment and has 
+many advanced features such as macros and first class continuations. There are 
+at least 15 Scheme ports to the JVM.</p>
+<p class="docText">You can download a copy of Skij at
+<a class="docLink" href="http://www.alphaworks.ibm.com/tech/skij" target="_blank">
+http://www.alphaworks.ibm.com/tech/skij</a>. If it's not your favorite Java 
+Scheme variant, let me know why.</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Need More?</h2>
+      <p class="docText">If I didn't mention your favorite language, or the if 
+      the ones I covered don't tickle your fancy, see Robert Tolksdorf's 
+      comprehensive list of JVM programming languages.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">Dynamic to Static Typing and Back</h2>
+      <p class="docText">BeanShell is essentially a Java variant with dynamic 
+      and optional static typing. Bistro is a Smalltalk variant with static and 
+      optional dynamic typing. Both languages are on the right track, given that 
+      Visual Basic, the granddaddy of all scripting languages, provides both 
+      static and dynamic typing support.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch21lev1sec4">Which Scripting Language to Choose</h3>
+<p class="docText">In choosing a scripting language, <span class="docEmphasis">
+ease of use</span> is a primary criterion. For example, a language may be easy 
+to learn because it resembles another language that most developers know. Or it 
+may just have an easily grasped syntax.</p>
+<p class="docText">A particular benefit of scripting languages is that they can 
+be embedded in a large application to make it more extensible. The question is 
+how <span class="docEmphasis">embeddable</span> a particular language is and how 
+well it integrates with Java.</p>
+<p class="docText"><span class="docEmphasis">Resemblance to the parent language</span> 
+is important because it can affect how code ports from a legacy system (i.e., 
+non-Java). The degree of resemblance can influence how quickly developers can 
+get up to speed.</p>
+<p class="docText">A language's <span class="docEmphasis">unique features</span> 
+might be those that gear it to a particular problem domain. For example, does it 
+have a library for generating XML and HTML documents? Is it easy to integrate 
+with JSP (making it particularly suitable for Web programming)?</p>
+<p class="docText">Some languages excel at common tasks like
+<span class="docEmphasis">string parsing;</span> some don't.</p>
+<p class="docText">A certain scripting language may be better than Java at tasks 
+like manipulating strings and collections. Features such as extensive class 
+libraries and useful built-in language constructs enhance programming
+<span class="docEmphasis">productivity.</span></p>
+<p class="docText">A key criterion is a language's <span class="docEmphasis">
+ease of integration</span> with Java classes and APIs. For example, a language 
+that permits its classes to subclass Java classes has good integration. So does 
+a language that allows methods to have type signatures.</p>
+<p class="docText">Some scripting languages are better than others at code
+<span class="docEmphasis">debugging.</span> Some have a more pleasant
+<span class="docEmphasis">development environment.</span></p>
+<h3 class="docSection1Title" id="ch21lev1sec5">Hello World—The Programming Rosetta Stone</h3>
+<p class="docText">To give you a feel for scripting, we're going to compare how 
+it's done in three languages, Java, JavaScript, and Python. We'll make the 
+comparison more interesting by adding a Say Hello button, which when pressed 
+causes a window to pop up and display &quot;Hello World&quot; in 18-point bold type.</p>
+<h4 class="docSection2Title" id="ch21lev2sec7">The Java Version</h4>
+<pre>import javax.swing.*;
+import java.awt.Font;
+import java.awt.event.*;
+
+class MyFrame extends JFrame{
+  public MyFrame(){
+      JButton sayHello;
+      sayHello = new JButton(&quot;say hello&quot;);
+      sayHello.setMnemonic('h');
+      this.getContentPane().add(sayHello);
+      this.setVisible(true);
+      this.pack();
+
+      sayHello.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent ae){
+          JButton b = (JButton)ae.getSource();
+          b.setEnabled(false);
+          sayHello();
+      }
+  } );
+}
+private void sayHello(){
+      JFrame helloFrame;
+      JLabel helloLabel;
+      Font font;
+      helloFrame = new JFrame(&quot;Hello Frame&quot;);
+      helloLabel= new JLabel(&quot;Hello World&quot;);
+      font = new Font(&quot;Arial&quot;, Font.BOLD, 20);
+      helloLabel.setFont(font);
+      helloFrame.getContentPane().add(helloLabel);
+      helloFrame.pack();
+      helloFrame.setVisible(true);
+  }
+  public static void main(String [] args){
+      MyFrame frame = new MyFrame();
+      frame.setTitle(&quot;My Frame&quot;);
+  }
+}</pre>
+<p class="docText">Here's the JavaScript (Rhino at JavaScript 1.4) version.</p>
+<pre>function MyFrame(){
+  sayHello = new Packages.javax.swing.JButton(&quot;say hello&quot;);
+
+  sayHello.setMnemonic('h');
+  this.frame = new Packages.javax.swing.JFrame();
+
+  this.frame.getContentPane().add(sayHello);
+  this.frame.setVisible(true);
+  this.frame.pack();
+  sayHello.addActionListener( new Packages.java.awt.event.ActionListener() {
+      __parent__ : this,
+      actionPerformed : function(ae) {
+ae.getSource().setEnabled(false);
+           this.__parent__.sayHello();
+      }
+  } );
+
+  function sayHello(){
+      helloFrame = new Packages.javax.swing.JFrame(&quot;Hello Frame&quot;);
+      helloLabel= new Packages.javax.swing.JLabel(&quot;Hello World&quot;);
+      font = new java.awt.Font(&quot;Arial&quot;, java.awt.Font.BOLD, 20);
+      helloLabel.setFont(font);
+      helloFrame.getContentPane().add(helloLabel);
+      helloFrame.pack();
+      helloFrame.setVisible(true);
+  }
+
+  this.sayHello=sayHello;
+}
+
+function main(){
+  frame = new MyFrame();
+  frame.frame.setTitle(&quot;My Hello&quot;);
+  }
+main();</pre>
+<h4 class="docSection2Title" id="ch21lev2sec8">The Jython Version</h4>
+<pre>from javax.swing import JFrame, JButton, JLabel
+from java.awt import Font
+
+class MyFrame (JFrame):
+  def __init__(self):
+      sayHello = JButton(&quot;say hello&quot;, mnemonic='h')
+      self.contentPane.add(sayHello)
+      self.visible=1
+      self.pack()
+      sayHello.actionPerformed = self.__sayHello
+
+  def __sayHello(self, ae):
+      ae.source.enabled=0
+      helloFrame = JFrame(&quot;Hello Frame&quot;)
+      helloLabel= JLabel(&quot;Hello World&quot;, font=Font(&quot;Arial&quot;, Font.BOLD, 20))
+      helloFrame.contentPane.add(helloLabel)
+      helloFrame.pack()
+      helloFrame.visible=1
+
+if __name__==&quot;__main__&quot;:
+      frame = MyFrame(title = &quot;My Frame&quot;)</pre>
+<p class="docText">Notice how well Jython integrates with the JavaBean 
+properties and event model. Also notice how much it packs into a small package 
+(it's about two-thirds the size of the JavaScript version).</p>
+<h3 class="docSection1Title" id="ch21lev1sec6">What Does It All Mean?</h3>
+<p class="docText">Basically that Python is the best scripting language for the 
+JVM. Here's why:</p>
+<ul>
+  <li>
+  <p class="docText"><span class="docEmphasis">Ease of use</span>. Python was 
+  designed to be easy for beginners. In Virginia, high school students are 
+  taught how to program with it.</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Embeddability</span>. On a scale 
+  from 1 to 10, Python scores 10 for embeddability.</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Resemblance to the parent 
+  language</span>. Jython is syntactically identical to Python.</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Features.</span> Python has some 
+  of the best features of Smalltalk, Scheme, Icon, and Java.</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">String parsing.</span> Python has 
+  libraries for regular-expression string parsing (see
+  <a class="docLink" href="appendix%20e.htm">Appendix E</a>) and 
+  slice notation, as well as other features that make string parsing easy.</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Productivity.</span> Python has 
+  an extensive class library as well as built-in language support for collection 
+  objects (including collection literals for defining collections). These make 
+  Python strikingly productive.</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Working well with Java classes 
+  and APIs.</span> In Jython you instantiate and subclass Java classes and 
+  interfaces, invoke Java methods, set up bean events, and work with JavaBean 
+  properties. You can also compile Jython into Java classes to create JavaBeans, 
+  servlets, and applets.</li>
+  <li>
+  <p class="docText"><span class="docEmphasis">Development environment and 
+  debugging.</span> Jython has a good interactive interpreter, but its 
+  development environment is its weak point. Python has some mature IDEs, but 
+  Jython has nothing. If it did, it would give Java a serious run for its money 
+  as the most popular language for the JVM.</li>
+</ul>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="appendix%20b.htm">
+  <img src="larrow.gif" border="0" width="17" height="19"></a></td><td align="center" valign="middle"><a class="docLink" href="front%20matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="appendix%20d.htm">
+  <img src="rarrow.gif" border="0" width="17" height="19"></a></td></tr></table>
+</body>
+
+</html>
